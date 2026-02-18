@@ -217,9 +217,29 @@ document.addEventListener('DOMContentLoaded', async () => {
     return `data:image/svg+xml;base64,${btoa(unescape(encodeURIComponent(svg)))}`;
   }
 
+  /* 정렬 로직: 주요이력(highlight) -> 연도(year) -> 썸네일(hasImage) -> 원본순서 */
+  function compareItems(a, b) {
+    // 1. Highlight
+    if (!!a.highlight !== !!b.highlight) {
+      return a.highlight ? -1 : 1;
+    }
+    // 2. Year (descending)
+    if (a.year !== b.year) {
+      return a.year > b.year ? -1 : 1;
+    }
+    // 3. Thumbnail (Has Image/Video)
+    const hasImgA = getItemImages(a).length > 0;
+    const hasImgB = getItemImages(b).length > 0;
+    if (hasImgA !== hasImgB) {
+      return hasImgA ? -1 : 1;
+    }
+    // 4. Original Order (Implicit stable sort)
+    return 0;
+  }
+
   /* ═══ 저서 ═══ */
   const pubRow = document.getElementById('pubRow');
-  D.publications.forEach(p => {
+  [...D.publications].sort(compareItems).forEach(p => {
     const card = document.createElement('div');
     card.className = 'pub-card reveal';
     card.setAttribute('data-item-id', p.id);
@@ -274,10 +294,16 @@ document.addEventListener('DOMContentLoaded', async () => {
     filterBar.appendChild(btn);
   });
 
+
+
   const lecGrid = document.getElementById('lecGrid');
   function renderLectures(filter) {
     lecGrid.innerHTML = '';
-    const items = filter ? D.lectures.filter(l => l.category === filter) : D.lectures;
+    let items = filter ? D.lectures.filter(l => l.category === filter) : [...D.lectures];
+
+    // 정렬 적용
+    items.sort(compareItems);
+
     items.forEach((l, i) => {
       const card = document.createElement('div');
       card.className = `lec-card${l.highlight ? ' hl' : ''}`;
@@ -312,7 +338,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   /* ═══ 수상·활동 ═══ */
   const aList = document.getElementById('awardsList');
-  [...D.awards].sort((a, b) => b.year - a.year).forEach(a => {
+  [...D.awards].sort(compareItems).forEach(a => {
     const el = document.createElement('div');
     el.className = `award-item reveal${a.highlight ? ' gold' : ''}`;
     el.innerHTML = `<div class="award-year">${a.year}</div><div class="award-title">${a.title}</div>${a.org ? `<div class="award-org">${a.org}</div>` : ''}`;
