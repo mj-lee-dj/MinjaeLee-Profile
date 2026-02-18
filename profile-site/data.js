@@ -1,6 +1,6 @@
 /* 
   [Profile Data] 
-  Updated at: 2026-02-18T10:19:45.024Z 
+  Updated at: 2026-02-18T10:19:57.147Z 
 */
 const profileData = {
   "personal": {
@@ -617,7 +617,9 @@ const profileData = {
       "title": "대전교육청, '2022 학생언어문화개선 교육주간' 운영",
       "source": "굿모닝충청",
       "date": "2022.09.26",
-      "link": ""
+      "link": "https://www.goodmorningcc.com/news/articleView.html?idxno=276859",
+      "previewDesc": "[굿모닝충청 김지현 기자] 대전시교육청은 제576돌 한글날을 기념하고 학교폭력을 예방하기 위해 교육부 및 한국교원단체총연합회와 함께 ‘2022 학생언어문화개선 교육주간’을 이달 19일부터 다음 달 9일까지 운영한다.이번 교육주간에는 초‧중‧고 모든 학교에서 학생 언어문화 개선 수업을",
+      "images": []
     },
     {
       "id": "p8",
