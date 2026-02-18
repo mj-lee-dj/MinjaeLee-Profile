@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const awardCount = D.awards.length;
   const pressCount = D.press.length;
   const stats = [
-    { val: lecCount, suf: '건+', label: '강의·연수' },
+    { val: 100, suf: '건+', label: '강의·연수' },
     { val: pubCount, suf: '권', label: '출판 저서' },
     { val: awardCount, suf: '건', label: '수상 경력' },
     { val: pressCount, suf: '건', label: '보도 자료' }
