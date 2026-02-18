@@ -844,14 +844,22 @@ section {
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 18px 24px;
+  padding: 16px 20px;
   margin-bottom: 10px;
-  transition: all .3s
+  transition: all .3s;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px
 }
 
 .act-item:hover {
   border-color: #555;
   transform: translateX(4px)
+}
+
+.act-content {
+  flex: 1
 }
 
 .act-period {
@@ -864,7 +872,26 @@ section {
 .act-title {
   font-size: .95rem;
   font-weight: 600;
-  line-height: 1.5
+  line-height: 1.4
+}
+
+.act-link {
+  font-size: .8rem;
+  font-weight: 600;
+  color: var(--text2);
+  text-decoration: none;
+  padding: 6px 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, .03);
+  white-space: nowrap;
+  transition: all .2s
+}
+
+.act-link:hover {
+  background: var(--red);
+  color: #fff;
+  border-color: var(--red)
 }
 
 /* ── 보도 ── */

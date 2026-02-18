@@ -296,7 +296,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         ${l.org ? `<div class="lec-org">${l.org}</div>` : ''}
         ${l.previewDesc ? `<div class="lec-preview-desc">${l.previewDesc}</div>` : ''}
         <span class="lec-cat">${l.category}</span>
-        ${l.link ? `<a href="${l.link}" target="_blank" class="lec-link">관련 자료 →</a>` : ''}
+        ${l.link ? `<a href="${l.link}" target="_blank" class="lec-link">자료 보기 →</a>` : ''}
       `;
       card.style.opacity = '0'; card.style.transform = 'translateY(14px)';
       lecGrid.appendChild(card);
@@ -323,7 +323,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   D.activities.forEach(a => {
     const el = document.createElement('div');
     el.className = 'act-item reveal';
-    el.innerHTML = `${a.period ? `<div class="act-period">${a.period}</div>` : ''}<div class="act-title">${a.title}</div>`;
+    el.innerHTML = `<div class="act-content">${a.period ? `<div class="act-period">${a.period}</div>` : ''}<div class="act-title">${a.title}</div></div>${a.link ? `<a href="${a.link}" target="_blank" class="act-link">보기</a>` : ''}`;
     actList.appendChild(el);
   });
 
