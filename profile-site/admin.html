@@ -896,17 +896,18 @@
         const commitData = await commitRes.json();
         const baseTreeSha = commitData.tree.sha;
 
-        /* 2. Blob 생성 (대용량 파일 업로드) */
-        const newFileContent = `/* \n  [Profile Data] \n  Updated at: ${new Date().toISOString()} \n*/\nconst profileData = ${JSON.stringify(D, null, 2)};\n`;
-        // UTF-8 안전한 Base64 인코딩
-        const contentBase64 = btoa(unescape(encodeURIComponent(newFileContent)));
+        /* 2. Blob 생성 (대용량 파일 — UTF-8 인코딩으로 전송) */
+        const newFileContent = `/* \n  [Profile Data] \n  Updated at: ${new Date().toISOString()} \n*/\nconst profileData = ${JSON.stringify(D)};\n`;
 
         const blobRes = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/git/blobs`, {
           method: 'POST',
           headers,
-          body: JSON.stringify({ content: contentBase64, encoding: 'base64' })
+          body: JSON.stringify({ content: newFileContent, encoding: 'utf-8' })
         });
-        if (!blobRes.ok) throw new Error('파일 업로드 실패 (Blob 생성 오류)');
+        if (!blobRes.ok) {
+          const errBody = await blobRes.json().catch(() => ({}));
+          throw new Error(`Blob 생성 실패 (${blobRes.status}): ${errBody.message || '알 수 없는 오류'}`);
+        }
         const blobData = await blobRes.json();
         const blobSha = blobData.sha;
 
