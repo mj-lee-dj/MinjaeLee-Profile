@@ -882,6 +882,11 @@ const profileData = ${JSON.stringify(D, null, 2)};
         showToast('❌ 저장 실패');
       }
     }
+    function saveProfileData(data) {
+      localStorage.setItem('profileData', JSON.stringify(data));
+      console.log('📦 Local Backup Saved');
+    }
+
     function showToast(msg) { toast.textContent = msg; toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 2200) }
     function openModal(html) { modalBody.innerHTML = html; modal.classList.add('open') }
     function closeModal() { modal.classList.remove('open') }
