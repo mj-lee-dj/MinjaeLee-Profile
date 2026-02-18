@@ -674,6 +674,29 @@
         flex-direction: column
       }
     }
+
+    @keyframes shake {
+
+      0%,
+      100% {
+        transform: translateX(0);
+      }
+
+      20%,
+      60% {
+        transform: translateX(-5px);
+      }
+
+      40%,
+      80% {
+        transform: translateX(5px);
+      }
+    }
+
+    .shake {
+      animation: shake 0.4s ease-in-out;
+      border-color: #ef4444 !important;
+    }
   </style>
 </head>
 
@@ -700,8 +723,50 @@
   </div>
   <div class="toast" id="toast"></div>
 
+  <!-- 관리자 로그인 오버레이 -->
+  <div id="loginOverlay"
+    style="position:fixed;inset:0;background:var(--bg);z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:20px">
+    <div style="text-align:center">
+      <div style="font-size:3rem;margin-bottom:20px">🔒</div>
+      <h2 style="margin-bottom:10px">관리자 접근 권한 확인</h2>
+      <p style="color:var(--text2);margin-bottom:24px">페이지에 접근하려면 비밀번호를 입력하세요.</p>
+      <input type="password" id="adminPw" class="form-input"
+        style="width:280px;text-align:center;font-size:1.2rem;letter-spacing:4px" placeholder="Password" />
+      <button class="btn btn-red" style="width:100%;margin-top:12px;padding:12px" onclick="checkAdmin()">로그인</button>
+      <div id="loginMsg" style="color:#ef4444;margin-top:12px;font-size:.9rem;min-height:20px"></div>
+    </div>
+  </div>
+
   <script src="data.js"></script>
   <script>
+    /* ── 간단한 비밀번호 보호 (클라이언트 사이드) ── */
+    (function () {
+      const isAuth = localStorage.getItem('admin_auth');
+      if (isAuth === 'true') {
+        document.getElementById('loginOverlay').style.display = 'none';
+      } else {
+        document.body.style.overflow = 'hidden'; // 스크롤 방지
+      }
+    })();
+
+    function checkAdmin() {
+      const pw = document.getElementById('adminPw').value;
+      const msg = document.getElementById('loginMsg');
+      if (pw === 'dhdpswnl2@') {
+        localStorage.setItem('admin_auth', 'true');
+        document.getElementById('loginOverlay').style.display = 'none';
+        document.body.style.overflow = '';
+        showToast('🔓 로그인 성공');
+      } else {
+        msg.textContent = '비밀번호가 올바르지 않습니다.';
+        document.getElementById('adminPw').classList.add('shake');
+        setTimeout(() => document.getElementById('adminPw').classList.remove('shake'), 400);
+      }
+    }
+
+    document.getElementById('adminPw')?.addEventListener('keydown', e => {
+      if (e.key === 'Enter') checkAdmin();
+    });
     const D = profileData;
     const main = document.getElementById('mainContent');
     const modal = document.getElementById('modal');
@@ -714,7 +779,7 @@
     function showToast(msg) { toast.textContent = msg; toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 2200) }
     function openModal(html) { modalBody.innerHTML = html; modal.classList.add('open') }
     function closeModal() { modal.classList.remove('open') }
-    modal.addEventListener('click', e => { if (e.target === modal) closeModal() });
+    // modal.addEventListener('click', e => { if (e.target === modal) closeModal() }); // 바깥 클릭 시 닫기 방지
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal() });
 
     /* ── 탭 네비게이션 ── */
@@ -777,53 +842,123 @@
     }
 
     /* ── 링크/파일에서 AI 자동 입력 핸들러 (모달 내) ── */
+    /* PDF에서 전체 텍스트 추출 (pdf.js 사용) */
+    async function extractTextFromPdf(data) {
+      const loadingTask = pdfjsLib.getDocument(data);
+      const pdf = await loadingTask.promise;
+      let fullText = '';
+      for (let i = 1; i <= pdf.numPages; i++) {
+        const page = await pdf.getPage(i);
+        const textContent = await page.getTextContent();
+        const pageText = textContent.items.map(item => item.str).join(' ');
+        fullText += pageText + '\n';
+      }
+      return fullText;
+    }
+
+    function getGoogleDriveId(url) {
+      if (!url) return null;
+      const m = url.match(/[-\w]{25,}/);
+      return m ? m[0] : null;
+    }
+
+    /* ── 링크/파일에서 AI 자동 입력 핸들러 (모달 내) ── */
     async function handleFetchPreview() {
       const urlInput = document.getElementById('f_link');
       const url = urlInput?.value?.trim();
       if (!url) return alert('링크를 먼저 입력해주세요.');
 
       const resultArea = document.getElementById('previewResult');
-      resultArea.innerHTML = '<span class="fetching">🔄 링크에서 정보 가져오는 중...</span>';
+      resultArea.innerHTML = '<span class="fetching">🔄 링크 분석 및 데이터 추출 중...</span>';
 
       try {
-        /* 1) OG 메타데이터 가져오기 */
-        const preview = await fetchLinkPreview(url);
+        let contentText = '';
+        let title = '';
+        const driveId = getGoogleDriveId(url);
 
-        /* 2) 이미지 목록 추가 */
-        const imgInput = document.getElementById('f_images_data');
-        let currentImages = [];
-        try { currentImages = JSON.parse(imgInput.value || '[]'); } catch (e) { }
-        preview.images.forEach(img => { if (!currentImages.includes(img)) currentImages.push(img); });
-        imgInput.value = JSON.stringify(currentImages);
-
-        /* 3) Gemini API로 상세 정보 추출 (키가 있을 때만) */
-        const apiKey = getApiKey();
-        if (apiKey) {
-          resultArea.innerHTML = '<span class="fetching">🤖 AI가 상세 정보 분석 중...</span>';
-          try {
-            const aiResult = await callGeminiText(`다음 URL의 콘텐츠를 분석해주세요.
-URL: ${url}
-제목: ${preview.title || ''}
-설명: ${preview.description || ''}
-
-이 URL의 콘텐츠를 정확히 분석하여 아래 JSON으로만 응답해주세요:
-{"title":"제목","org":"기관/출판사/주최쨰","year":2025,"description":"간단한 설명","tags":["태그1","태그2"],"source":"출처/매체명","date":"날짜"}`);
-            autoFillFormFields(aiResult, preview);
-          } catch (e) { /* Gemini 실패 시 OG 데이터만 사용 */
-            autoFillFormFields({ title: preview.title, description: preview.description }, preview);
+        /* 1) Google Drive 링크인 경우 (권한 필요) */
+        if (url.includes('drive.google.com') || url.includes('docs.google.com')) {
+          if (!accessToken) {
+            // 토큰 없으면 로그인 유도
+            await new Promise((resolve) => {
+              tokenClient.callback = (resp) => {
+                if (resp.error) throw resp;
+                accessToken = resp.access_token;
+                resolve();
+              };
+              tokenClient.requestAccessToken({ prompt: '' }); // 팝업 없이 시도, 안되면 팝업
+            });
           }
-        } else {
-          autoFillFormFields({ title: preview.title, description: preview.description }, preview);
+          if (!gapi.client.drive) await gapi.client.load('drive', 'v3');
+
+          /* 메타데이터 가져오기 */
+          const meta = await gapi.client.drive.files.get({ fileId: driveId, fields: 'id, name, mimeType, description' });
+          title = meta.result.name;
+
+          /* 내용 가져오기 */
+          if (meta.result.mimeType.includes('google-apps')) {
+            const res = await gapi.client.drive.files.export({ fileId: driveId, mimeType: 'text/plain' });
+            contentText = res.body;
+          } else if (meta.result.mimeType.includes('pdf')) {
+            resultArea.innerHTML = '<span class="fetching">📄 PDF 전체 페이지 읽는 중... (시간이 조금 걸릴 수 있습니다)</span>';
+            const resp = await fetch(`https://www.googleapis.com/drive/v3/files/${driveId}?alt=media`, { headers: { 'Authorization': 'Bearer ' + accessToken } });
+            const blob = await resp.blob();
+            const arrayBuffer = await blob.arrayBuffer();
+            contentText = await extractTextFromPdf(new Uint8Array(arrayBuffer));
+          } else {
+            // 그 외 파일은 메타데이터 설명만 사용
+            contentText = meta.result.description || '';
+          }
         }
 
+        /* 2) 일반 URL인 경우 (Microlink) */
+        const preview = await fetchLinkPreview(url); // 기존 로직 재사용 (이미지/파비콘 등)
+        if (!title) title = preview.title;
+
+        /* 3) Gemini API로 전문적인 요약 생성 */
+        const apiKey = getApiKey();
+        if (apiKey) {
+          resultArea.innerHTML = '<span class="fetching">🤖 AI가 전체 내용을 분석하여 전문적인 요약 작성 중...</span>';
+
+          /* 프롬프트 강화: 100자 내외, 전문적, 매력적 */
+          const prompt = `
+다음 자료의 전체 내용(텍스트)을 분석하여 포트폴리오에 들어갈 '전문적이고 매력적인 설명'을 작성해주세요.
+자료 URL: ${url}
+제목: ${title}
+전체 텍스트 내용:
+${contentText ? contentText.slice(0, 15000) : '내용 없음 (제목 및 메타데이터 참조: ' + (preview.description || '') + ')'}
+
+[요청 사항]
+1. 단순한 내용 요약이 아니라, 이 자료가 어떤 가치를 제공하는지, 어떤 전문성을 보여주는지 강조하세요.
+2. 문체는 '전문가스러운', '신뢰감을 주는', '정제된' 톤이어야 합니다. (해요체보다는 '함/음'체나 명사형 종결 추천, 또는 격식있는 해요체)
+3. 분량은 공백 포함 **100자 내외**로 작성해주세요. 너무 길지 않게 핵심만 임팩트 있게.
+4. 기존 텍스트를 그대로 복사하지 말고, **완전히 새로 매력적으로 작성**하세요.
+
+응답 형식 (JSON):
+{"title":"제목(필요시 다듬음)","org":"기관/출판사","year":2025,"description":"전문적인 설명 내용 (100자 내외)","tags":["태그1","태그2"],"source":"출처","date":"날짜"}
+`;
+          try {
+            const aiResult = await callGeminiText(prompt);
+            autoFillFormFields(aiResult, preview);
+          } catch (e) {
+            console.error(e);
+            autoFillFormFields({ title, description: 'AI 분석 실패: ' + e.message }, preview);
+          }
+        } else {
+          autoFillFormFields({ title, description: preview.description }, preview);
+        }
+
+        /* 결과 표시 */
         resultArea.innerHTML = `
-          <div style="font-size:.82rem;color:var(--green);margin-bottom:8px">✅ 자동 입력 완료!</div>
-          ${preview.description ? `<div class="preview-desc">${preview.description}</div>` : ''}
+          <div style="font-size:.82rem;color:var(--green);margin-bottom:8px">✅ AI 정밀 분석 완료! (전체 텍스트 기반)</div>
+          <div class="preview-desc">${document.getElementById('f_preview_desc').value}</div>
           <div class="img-list">${preview.images.map(img => `<div class="img-list-item"><img src="${img}" onerror="this.parentElement.remove()"/></div>`).join('')}</div>
         `;
         refreshImageList();
+
       } catch (err) {
-        resultArea.innerHTML = `<span style="color:#ef4444;font-size:.85rem">❌ ${err.message}</span>`;
+        console.error(err);
+        resultArea.innerHTML = `<span style="color:#ef4444;font-size:.85rem">❌ 오류: ${err.message} (권한 문제일 경우 'Select from Drive' 버튼을 먼저 눌러보세요)</span>`;
       }
     }
 
