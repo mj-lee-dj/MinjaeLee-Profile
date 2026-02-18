@@ -1,6 +1,6 @@
 /* 
   [Profile Data] 
-  Updated at: 2026-02-18T10:19:31.061Z 
+  Updated at: 2026-02-18T10:19:45.024Z 
 */
 const profileData = {
   "personal": {
@@ -608,7 +608,9 @@ const profileData = {
       "title": "대전교육청, 학생언어문화개선 교육주간 운영",
       "source": "에이티엔뉴스",
       "date": "2022.09.26",
-      "link": ""
+      "link": "https://www.atnnews.co.kr/news/articleView.html?idxno=66554",
+      "previewDesc": "대전시교육청(교육감 설동호)은 제576돌 한글날을 기념하고 학교폭력을 예방하기 위해 교육부, 한국교원단체총연합회와 함께 ‘2022 학생언어문화개선 교육주간’을 지",
+      "images": []
     },
     {
       "id": "p7",
