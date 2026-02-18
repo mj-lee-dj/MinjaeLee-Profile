@@ -177,6 +177,32 @@ document.addEventListener('DOMContentLoaded', () => {
     el.querySelectorAll('.gal-dot').forEach((d, i) => d.classList.toggle('active', i === idx));
   };
 
+  /* ═══ 헬퍼: 플레이스홀더 패턴 생성 (이미지 없을 때 시각적 요소 제공) ═══ */
+  function getPlaceholder(type, title) {
+    const chars = title ? title.charAt(0) : '';
+    const colors = [
+      ['#e53e3e', '#ed8936'], ['#4299e1', '#667eea'], ['#38b2ac', '#4fd1c5'],
+      ['#ecc94b', '#d69e2e'], ['#9f7aea', '#b794f4'], ['#ed64a6', '#f687b3']
+    ];
+    // 제목 해시로 색상 결정
+    const hash = title.split('').reduce((a, c) => a + c.charCodeAt(0), 0);
+    const [c1, c2] = colors[hash % colors.length];
+
+    let icon = '';
+    if (type === 'book') icon = '<rect x="30" y="20" width="40" height="60" rx="2" fill="rgba(255,255,255,0.2)"/><path d="M70 20c-5 0-10 2-10 2v60s5-2 10-2V20z" fill="rgba(0,0,0,0.2)"/>';
+    if (type === 'video') icon = '<circle cx="50" cy="50" r="20" fill="rgba(255,255,255,0.2)"/><path d="M45 40l15 10-15 10z" fill="white"/>';
+    if (type === 'news') icon = '<rect x="25" y="30" width="50" height="40" rx="2" fill="rgba(255,255,255,0.2)"/><rect x="30" y="38" width="20" height="4" rx="1" fill="rgba(255,255,255,0.4)"/><rect x="30" y="46" width="40" height="4" rx="1" fill="rgba(255,255,255,0.4)"/><rect x="30" y="54" width="40" height="4" rx="1" fill="rgba(255,255,255,0.4)"/>';
+
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="400" height="250" viewBox="0 0 100 100" preserveAspectRatio="none">
+      <defs><linearGradient id="grad${hash}" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:${c1};stop-opacity:1" /><stop offset="100%" style="stop-color:${c2};stop-opacity:1" /></linearGradient></defs>
+      <rect width="100" height="100" fill="url(#grad${hash})" />
+      ${icon}
+      <text x="50" y="85" text-anchor="middle" fill="rgba(255,255,255,0.3)" font-family="sans-serif" font-weight="bold" font-size="60" dy=".3em" style="display:${icon ? 'none' : 'block'}">${chars}</text>
+    </svg>`;
+
+    return `data:image/svg+xml;base64,${btoa(unescape(encodeURIComponent(svg)))}`;
+  }
+
   /* ═══ 저서 ═══ */
   const pubRow = document.getElementById('pubRow');
   D.publications.forEach(p => {
@@ -184,8 +210,11 @@ document.addEventListener('DOMContentLoaded', () => {
     card.className = 'pub-card reveal';
     card.setAttribute('data-item-id', p.id);
     const imgs = getItemImages(p);
+    // 이미지가 없으면 플레이스홀더 사용
+    const displayImgs = imgs.length ? imgs : [getPlaceholder('book', p.title)];
+
     card.innerHTML = `
-      ${imgGalleryHTML(imgs, p.title)}
+      ${imgGalleryHTML(displayImgs, p.title)}
       <span class="pub-year">${p.year}</span>
       <h3 class="pub-title">${p.title}</h3>
       <p class="pub-publisher">${p.publisher}</p>
@@ -202,15 +231,17 @@ document.addEventListener('DOMContentLoaded', () => {
     card.className = 'course-card reveal';
     card.setAttribute('data-item-id', c.id);
     const imgs = getItemImages(c);
+    const displayImgs = imgs.length ? imgs : [getPlaceholder('video', c.title)];
+
     card.innerHTML = `
-      ${imgs.length ? imgGalleryHTML(imgs, c.title) : '<div class="course-icon">🎥</div>'}
+      ${imgGalleryHTML(displayImgs, c.title)}
       <div class="course-body">
         <div class="course-title">${c.title}</div>
         <div class="course-meta">${c.platform} · ${c.credit}</div>
       </div>
       ${c.link ? `<a href="${c.link}" target="_blank" class="course-link">수강하기 →</a>` : ''}
     `;
-    if (c.link && !imgs.length) { card.style.cursor = 'pointer'; card.onclick = (e) => { if (e.target.tagName !== 'A') window.open(c.link, '_blank'); }; }
+    if (c.link) { card.style.cursor = 'pointer'; card.onclick = (e) => { if (e.target.tagName !== 'A') window.open(c.link, '_blank'); }; }
     courseRow.appendChild(card);
   });
 
@@ -238,8 +269,12 @@ document.addEventListener('DOMContentLoaded', () => {
       card.className = `lec-card${l.highlight ? ' hl' : ''}`;
       card.setAttribute('data-item-id', l.id);
       const imgs = getItemImages(l);
+      /* 강의는 이미지가 없으면 굳이 플레이스홀더 쓰지 않고 깔끔하게 텍스트 위주로 감 (또는 필요시 추가) */
+      /* 하지만 통일성을 위해 하이라이트 항목은 플레이스홀더 추가 가능 */
+      const hasImg = imgs.length > 0;
+
       card.innerHTML = `
-        ${imgGalleryHTML(imgs, l.title)}
+        ${hasImg ? imgGalleryHTML(imgs, l.title) : ''}
         <div class="lec-header">
           <div class="lec-title">${l.title}</div>
           <span class="lec-year">${l.year}</span>
@@ -285,9 +320,11 @@ document.addEventListener('DOMContentLoaded', () => {
     card.className = 'press-card reveal';
     card.setAttribute('data-item-id', p.id);
     const imgs = getItemImages(p);
-    const hasVisual = imgs.length > 0;
+    // 보도자료도 플레이스홀더 적용
+    const displayImgs = imgs.length ? imgs : [getPlaceholder('news', p.title)];
+
     card.innerHTML = `
-      ${hasVisual ? imgGalleryHTML(imgs, p.title) : '<div class="press-icon">📰</div>'}
+      ${imgGalleryHTML(displayImgs, p.title)}
       <div class="press-body">
         <div class="press-title">${p.title}</div>
         ${p.previewDesc ? `<div class="press-preview-desc">${p.previewDesc}</div>` : ''}
@@ -295,6 +332,7 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
       ${p.link ? `<a href="${p.link}" target="_blank" class="press-link">기사 보기 →</a>` : ''}
     `;
+    if (p.link) { card.style.cursor = 'pointer'; card.onclick = (e) => { if (e.target.tagName !== 'A') window.open(p.link, '_blank'); }; }
     pList.appendChild(card);
   });
 
