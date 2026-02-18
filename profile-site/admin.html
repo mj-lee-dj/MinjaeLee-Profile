@@ -1219,10 +1219,11 @@ ${contentText ? contentText.slice(0, 15000) : '내용 없음 (제목 및 메타�
       const hasKey = !!getApiKey();
       return `
         <div class="form-row" style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-top:8px">
-          <label class="form-label" style="font-size:.9rem;color:var(--red);margin-bottom:12px">🤖 AI 자동 입력</label>
+          <label class="form-label" style="font-size:.9rem;color:var(--text);margin-bottom:12px">🔗 관련 링크 / AI 자동 입력</label>
+          <div class="form-hint" style="margin-bottom:8px">이곳에 입력한 링크는 <strong>'보기' 버튼</strong>에 연결되며, <strong>[자동 가져오기]</strong> 클릭 시 AI 분석에도 사용됩니다.</div>
           <div class="link-row">
-            <input class="form-input" id="f_link" value="${item?.link || ''}" placeholder="링크 입력 (YouTube, 뉴스, 교안 등)"/>
-            <button class="btn btn-red btn-sm fetch-btn" type="button" onclick="handleFetchPreview()">🔍 자동 가져오기</button>
+            <input class="form-input" id="f_link" value="${item?.link || ''}" placeholder="링크 입력 (YouTube, 뉴스기사, 웹사이트 등)"/>
+            <button class="btn btn-red btn-sm fetch-btn" type="button" onclick="handleFetchPreview()">🔍 자동 가져오기 (AI)</button>
           </div>
           <div style="display:flex;gap:8px;align-items:center;margin-top:8px">
             <label class="btn btn-outline btn-sm" style="cursor:pointer">
@@ -1902,7 +1903,7 @@ ${preview ? `제목: ${preview.title}\n설명: ${preview.description}` : ''}
 
     async function callGeminiVision(base64, mime) {
       const key = getApiKey();
-      const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${key}`, {
+      const res = await fetch(`https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${key}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -1932,7 +1933,7 @@ category 판단 기준:
 
     async function callGeminiText(prompt) {
       const key = getApiKey();
-      const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${key}`, {
+      const res = await fetch(`https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${key}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
