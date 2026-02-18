@@ -1,6 +1,6 @@
 /* 
   [Profile Data] 
-  Updated at: 2026-02-18T10:20:15.047Z 
+  Updated at: 2026-02-18T10:20:24.730Z 
 */
 const profileData = {
   "personal": {
@@ -635,7 +635,9 @@ const profileData = {
       "title": "대전교육청, 2020년 온라인 교과서 아이디어 공모전 전국 입상",
       "source": "아시아뉴스통신",
       "date": "2020.12.27",
-      "link": ""
+      "link": "https://m.anewsa.com/article_sub3.php?number=2314529",
+      "previewDesc": "대전시교육청 전경./아시아뉴스통신 DB [아시아뉴스통신=이병수 기자] 대전시교육청은 교육부가 주최한 &#39;2020년 온라인 교과서 아이디어 공모전&#39; 중학교 부문에서 금상(한국교육학술정보원장상) 1팀과 초등 부문에서 은상(한국교과서연구재단이사장상) 1팀이 입상하는 실적을 거뒀다.이번…",
+      "images": []
     }
   ]
 };
