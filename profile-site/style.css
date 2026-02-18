@@ -1403,3 +1403,18 @@ footer {
   width: 22px;
   height: 22px;
 }
+
+/* Mobile Scale Fixes for Images */
+@media (max-width: 768px) {
+  .pub-card .card-gallery {
+    height: auto;
+    aspect-ratio: 3/4;
+    /* Better ratio for books on mobile */
+    max-height: 400px;
+  }
+
+  .press-card .card-gallery {
+    height: auto;
+    aspect-ratio: 16/9;
+  }
+}
