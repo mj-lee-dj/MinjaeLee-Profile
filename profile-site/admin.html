@@ -862,26 +862,23 @@
     let _saving = false; // 동시 저장 방지 잠금
 
     async function save() {
-      if (_saving) { showToast('⏳ 저장이 진행 중입니다... 잠시만 기다려주세요.'); return; }
+      if (_saving) { showToast('⏳ 저장이 진행 중입니다...'); return; }
       _saving = true;
 
       let token = localStorage.getItem('gh_token');
       if (!token) {
-        token = prompt('GitHub Personal Access Token을 입력하세요.\n(repo 권한이 필요합니다. 한 번 입력하면 저장됩니다.)');
+        token = prompt('GitHub Personal Access Token을 입력하세요.\n(repo 권한 필요, 한 번 입력하면 저장됩니다.)');
         if (!token) { _saving = false; return; }
         localStorage.setItem('gh_token', token);
       }
 
-      showToast('☁️ GitHub에 대용량 데이터 저장 중... (시간이 걸릴 수 있습니다)');
+      const API = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}`;
+      const headers = { 'Authorization': `token ${token}`, 'Content-Type': 'application/json' };
 
       try {
-        const headers = {
-          'Authorization': `token ${token}`,
-          'Content-Type': 'application/json'
-        };
-
-        /* 1. 최신 커밋 & 트리 SHA 가져오기 */
-        const refRes = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/git/refs/heads/main`, { headers });
+        /* ── 1단계: 최신 커밋 & 트리 SHA ── */
+        showToast('☁️ 저장 준비 중...');
+        const refRes = await fetch(`${API}/git/refs/heads/main`, { headers });
         if (!refRes.ok) {
           if (refRes.status === 401 || refRes.status === 403) {
             localStorage.removeItem('gh_token');
@@ -889,77 +886,107 @@
           }
           throw new Error('브랜치 정보 조회 실패');
         }
-        const refData = await refRes.json();
-        const latestCommitSha = refData.object.sha;
+        const latestCommitSha = (await refRes.json()).object.sha;
+        const baseTreeSha = (await (await fetch(`${API}/git/commits/${latestCommitSha}`, { headers })).json()).tree.sha;
 
-        const commitRes = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/git/commits/${latestCommitSha}`, { headers });
-        const commitData = await commitRes.json();
-        const baseTreeSha = commitData.tree.sha;
+        /* ── 2단계: base64 이미지를 개별 파일로 추출·업로드 ── */
+        const dataClone = JSON.parse(JSON.stringify(D));
+        const treeEntries = [];       // 트리에 추가할 파일 목록
+        const uploadCache = new Map(); // 중복 방지 캐시 (hashKey → url)
+        let imgCount = 0;
 
-        /* 2. Blob 생성 (대용량 파일 — UTF-8 인코딩으로 전송) */
-        const newFileContent = `/* \n  [Profile Data] \n  Updated at: ${new Date().toISOString()} \n*/\nconst profileData = ${JSON.stringify(D)};\n`;
+        /* base64 이미지 URL이면 blob으로 업로드하고 GitHub raw URL 반환 */
+        async function uploadIfBase64(val) {
+          if (typeof val !== 'string' || !val.startsWith('data:image/')) return val;
+          const m = val.match(/^data:image\/([^;]+);base64,(.+)$/s);
+          if (!m) return val;
+          const ext = m[1].replace('+xml', '').replace('jpeg', 'jpg');
+          const b64 = m[2];
 
-        const blobRes = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/git/blobs`, {
-          method: 'POST',
-          headers,
-          body: JSON.stringify({ content: newFileContent, encoding: 'utf-8' })
-        });
-        if (!blobRes.ok) {
-          const errBody = await blobRes.json().catch(() => ({}));
-          throw new Error(`Blob 생성 실패 (${blobRes.status}): ${errBody.message || '알 수 없는 오류'}`);
+          /* 중복 체크 (base64 앞부분+길이로 해시 생성) */
+          const hashKey = b64.substring(0, 64) + '_' + b64.length;
+          if (uploadCache.has(hashKey)) return uploadCache.get(hashKey);
+
+          imgCount++;
+          showToast(`📤 이미지 업로드 중... (${imgCount}장)`);
+
+          const blobRes = await fetch(`${API}/git/blobs`, {
+            method: 'POST', headers,
+            body: JSON.stringify({ content: b64, encoding: 'base64' })
+          });
+          if (!blobRes.ok) {
+            const err = await blobRes.json().catch(() => ({}));
+            throw new Error(`이미지 ${imgCount} 업로드 실패: ${err.message || blobRes.status}`);
+          }
+          const blob = await blobRes.json();
+          const filePath = `profile-site/uploads/${blob.sha.substring(0, 12)}.${ext}`;
+          const rawUrl = `https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/main/${filePath}`;
+
+          treeEntries.push({ path: filePath, mode: '100644', type: 'blob', sha: blob.sha });
+          uploadCache.set(hashKey, rawUrl);
+          return rawUrl;
         }
-        const blobData = await blobRes.json();
-        const blobSha = blobData.sha;
 
-        /* 3. 트리 생성 (파일 업데이트) */
-        const treeRes = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/git/trees`, {
-          method: 'POST',
-          headers,
-          body: JSON.stringify({
-            base_tree: baseTreeSha,
-            tree: [{
-              path: FILE_PATH, // 'profile-site/data.js'
-              mode: '100644',
-              type: 'blob',
-              sha: blobSha
-            }]
-          })
+        /* 객체 전체를 순회하며 base64 이미지 추출 */
+        async function processObj(obj) {
+          if (!obj || typeof obj !== 'object') return;
+          const keys = Array.isArray(obj) ? obj.keys() : Object.keys(obj);
+          for (const k of keys) {
+            if (typeof obj[k] === 'string') {
+              obj[k] = await uploadIfBase64(obj[k]);
+            } else if (typeof obj[k] === 'object') {
+              await processObj(obj[k]);
+            }
+          }
+        }
+
+        await processObj(dataClone);
+
+        /* ── 3단계: 축소된 data.js blob 생성 ── */
+        showToast('📄 데이터 파일 저장 중...');
+        const newContent = `/* \n  [Profile Data] \n  Updated at: ${new Date().toISOString()} \n*/\nconst profileData = ${JSON.stringify(dataClone)};\n`;
+
+        const dataBlobRes = await fetch(`${API}/git/blobs`, {
+          method: 'POST', headers,
+          body: JSON.stringify({ content: newContent, encoding: 'utf-8' })
         });
-        if (!treeRes.ok) throw new Error('트리 갱신 실패');
-        const treeData = await treeRes.json();
-        const newTreeSha = treeData.sha;
+        if (!dataBlobRes.ok) {
+          const err = await dataBlobRes.json().catch(() => ({}));
+          throw new Error(`데이터 저장 실패: ${err.message || dataBlobRes.status}`);
+        }
+        treeEntries.push({ path: FILE_PATH, mode: '100644', type: 'blob', sha: (await dataBlobRes.json()).sha });
 
-        /* 4. 커밋 생성 */
-        const newCommitRes = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/git/commits`, {
-          method: 'POST',
-          headers,
+        /* ── 4단계: 트리 생성 ── */
+        const treeRes = await fetch(`${API}/git/trees`, {
+          method: 'POST', headers,
+          body: JSON.stringify({ base_tree: baseTreeSha, tree: treeEntries })
+        });
+        if (!treeRes.ok) throw new Error('트리 생성 실패');
+
+        /* ── 5단계: 커밋 생성 ── */
+        const commitRes = await fetch(`${API}/git/commits`, {
+          method: 'POST', headers,
           body: JSON.stringify({
             message: `Update profile data via Admin (${new Date().toLocaleDateString()})`,
-            tree: newTreeSha,
+            tree: (await treeRes.json()).sha,
             parents: [latestCommitSha]
           })
         });
-        if (!newCommitRes.ok) throw new Error('커밋 생성 실패');
-        const newCommitData = await newCommitRes.json();
-        const newCommitSha = newCommitData.sha;
+        if (!commitRes.ok) throw new Error('커밋 생성 실패');
 
-        /* 5. Ref 업데이트 (Push) */
-        const updateRes = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/git/refs/heads/main`, {
-          method: 'PATCH',
-          headers,
-          body: JSON.stringify({ sha: newCommitSha })
+        /* ── 6단계: Ref 업데이트 (Push) ── */
+        const updateRes = await fetch(`${API}/git/refs/heads/main`, {
+          method: 'PATCH', headers,
+          body: JSON.stringify({ sha: (await commitRes.json()).sha })
         });
+        if (!updateRes.ok) throw new Error('Push 실패');
 
-        if (updateRes.ok) {
-          showToast('✅ 저장 성공! (대용량 데이터)');
-          saveProfileData(D);
-        } else {
-          throw new Error('Ref 업데이트 실패 (Push 오류)');
-        }
+        showToast(`✅ 저장 성공! (이미지 ${imgCount}장 분리 저장됨)`);
+        saveProfileData(D);
 
       } catch (e) {
         console.error(e);
-        alert('저장 중 오류 발생:\n' + e.message + '\n\n(참고: 파일 크기가 커서 일반적인 저장 방식으로는 실패할 수 있어 Git Data API 방식을 사용했습니다.)');
+        alert('저장 중 오류 발생:\n' + e.message);
         showToast('❌ 저장 실패');
       } finally {
         _saving = false;
