@@ -1,6 +1,6 @@
 /* 
   [Profile Data] 
-  Updated at: 2026-02-18T10:26:39.423Z 
+  Updated at: 2026-02-18T10:27:27.451Z 
 */
 const profileData = {
   "personal": {
@@ -86,7 +86,10 @@ const profileData = {
       "title": "Google 협업 도구, Gemini로 교사 업무 혁신하기",
       "platform": "티처빌",
       "credit": "1학점",
-      "link": ""
+      "link": "https://www.teacherville.co.kr/trainapply/courseDetail.edu?division=T&courseSeq=O1005493&t=G002",
+      "previewDesc": "본 연수는 도서 『Google로 칼퇴근하는 교사들의 시크릿』을 바탕으로 Google Workspace 기반의 핵심 도구(Google Drive, Sheets, Docs, Forms, Classroom, Gemini AI 등)를 수업과 업무에 효과적으로 활용할 수 있는 방안을 제시합니다. 실제 교사들이 자주 겪는 상황을 사례 형태로 제시하여 연수의 몰입도를 높이고, 연수 내용을 수업과 업무에 바로 적용할 수 있도록 구성되었습니다.",
+      "images": [],
+      "image": ""
     },
     {
       "id": "oc_2",
