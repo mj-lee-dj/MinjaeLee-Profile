@@ -1218,11 +1218,16 @@ ${contentText ? contentText.slice(0, 15000) : '내용 없음 (제목 및 메타�
       const images = item?.images || [];
       const hasKey = !!getApiKey();
       return `
+        <div class="form-row" style="margin-top:8px">
+          <label class="form-label" style="font-size:.9rem">🔗 관련 링크 (외부 공개)</label>
+          <div class="form-hint" style="margin-bottom:8px">여기에 입력한 링크가 포트폴리오 사이트의 <strong>'보기' 버튼</strong>에 연결됩니다.</div>
+          <input class="form-input" id="f_view_link" value="${item?.link || ''}" placeholder="공개할 링크 입력 (YouTube, 뉴스기사, 웹사이트 등)"/>
+        </div>
         <div class="form-row" style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-top:8px">
-          <label class="form-label" style="font-size:.9rem;color:var(--text);margin-bottom:12px">🔗 관련 링크 / AI 자동 입력</label>
-          <div class="form-hint" style="margin-bottom:8px">이곳에 입력한 링크는 <strong>'보기' 버튼</strong>에 연결되며, <strong>[자동 가져오기]</strong> 클릭 시 AI 분석에도 사용됩니다.</div>
+          <label class="form-label" style="font-size:.9rem;color:var(--red);margin-bottom:12px">🤖 AI 자동 입력 (분석 전용)</label>
+          <div class="form-hint" style="margin-bottom:8px">여기에 입력한 링크는 <strong>AI 분석에만</strong> 사용되며, 외부에 공개되지 않습니다.</div>
           <div class="link-row">
-            <input class="form-input" id="f_link" value="${item?.link || ''}" placeholder="링크 입력 (YouTube, 뉴스기사, 웹사이트 등)"/>
+            <input class="form-input" id="f_link" value="" placeholder="AI 분석할 링크 (교안, 구글독스 등 - 외부에 공개되지 않음)"/>
             <button class="btn btn-red btn-sm fetch-btn" type="button" onclick="handleFetchPreview()">🔍 자동 가져오기 (AI)</button>
           </div>
           <div style="display:flex;gap:8px;align-items:center;margin-top:8px">
@@ -1345,7 +1350,7 @@ ${contentText ? contentText.slice(0, 15000) : '내용 없음 (제목 및 메타�
         org: document.getElementById('f_org').value.trim(),
         year: +document.getElementById('f_year').value,
         category: document.getElementById('f_cat').value,
-        link: document.getElementById('f_link').value.trim(),
+        link: document.getElementById('f_view_link').value.trim(),
         previewDesc: document.getElementById('f_preview_desc').value.trim(),
         images,
         image: images[0] || '',
@@ -1416,7 +1421,7 @@ ${contentText ? contentText.slice(0, 15000) : '내용 없음 (제목 및 메타�
         year: +document.getElementById('f_year').value,
         description: document.getElementById('f_desc').value.trim(),
         tags: document.getElementById('f_tags').value.split(',').map(s => s.trim()).filter(Boolean),
-        link: document.getElementById('f_link').value.trim(),
+        link: document.getElementById('f_view_link').value.trim(),
         previewDesc: document.getElementById('f_preview_desc').value.trim(),
         images,
         image: images[0] || ''
@@ -1461,7 +1466,7 @@ ${contentText ? contentText.slice(0, 15000) : '내용 없음 (제목 및 메타�
       const obj = {
         id: id || 'oc_' + uid(), title: document.getElementById('f_title').value.trim(),
         platform: document.getElementById('f_plat').value.trim(), credit: document.getElementById('f_credit').value.trim(),
-        link: document.getElementById('f_link').value.trim(),
+        link: document.getElementById('f_view_link').value.trim(),
         previewDesc: document.getElementById('f_preview_desc').value.trim(),
         images, image: images[0] || ''
       };
@@ -1504,7 +1509,7 @@ ${contentText ? contentText.slice(0, 15000) : '내용 없음 (제목 및 메타�
         id: id || 'a_' + uid(), title: document.getElementById('f_title').value.trim(),
         org: document.getElementById('f_org').value.trim(), year: +document.getElementById('f_year').value,
         highlight: document.getElementById('f_hl').checked,
-        link: document.getElementById('f_link').value.trim(),
+        link: document.getElementById('f_view_link').value.trim(),
         previewDesc: document.getElementById('f_preview_desc').value.trim(),
         images, image: images[0] || ''
       };
@@ -1543,7 +1548,7 @@ ${contentText ? contentText.slice(0, 15000) : '내용 없음 (제목 및 메타�
       const obj = {
         id: id || 'act_' + uid(), title: document.getElementById('f_title').value.trim(),
         period: document.getElementById('f_period').value.trim(),
-        link: document.getElementById('f_link').value.trim(),
+        link: document.getElementById('f_view_link').value.trim(),
         previewDesc: document.getElementById('f_preview_desc').value.trim(),
         images, image: images[0] || ''
       };
@@ -1596,7 +1601,7 @@ ${contentText ? contentText.slice(0, 15000) : '내용 없음 (제목 및 메타�
         title: document.getElementById('f_title').value.trim(),
         source: document.getElementById('f_source').value.trim(),
         date: document.getElementById('f_date').value.trim(),
-        link: document.getElementById('f_link').value.trim(),
+        link: document.getElementById('f_view_link').value.trim(),
         previewDesc: document.getElementById('f_preview_desc').value.trim(),
         images
       };
@@ -1903,7 +1908,7 @@ ${preview ? `제목: ${preview.title}\n설명: ${preview.description}` : ''}
 
     async function callGeminiVision(base64, mime) {
       const key = getApiKey();
-      const res = await fetch(`https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${key}`, {
+      const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${key}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -1933,7 +1938,7 @@ category 판단 기준:
 
     async function callGeminiText(prompt) {
       const key = getApiKey();
-      const res = await fetch(`https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${key}`, {
+      const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${key}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
