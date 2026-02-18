@@ -774,51 +774,112 @@
     const toast = document.getElementById('toast');
     let currentTab = 'dashboard';
 
-    /* [구글 시트 연동] 초기 데이터 로드 */
+    const REPO_OWNER = 'mj-lee-dj';
+    const REPO_NAME = 'MinjaeLee-Profile';
+    const FILE_PATH = 'profile-site/data.js';
+
+    /* [GitHub 연동] 초기 데이터 로드 (최신 데이터 동기화) */
     (async function initAdmin() {
-      if (typeof GAS_API_URL !== 'undefined' && GAS_API_URL) {
-        try {
-          const res = await fetch(GAS_API_URL);
-          const json = await res.json();
-          if (json && json.personal) {
-            D = json;
-            console.log('📦 Admin: Data loaded from Google Sheets');
-            if (currentTab === 'dashboard') renderDashboard(); // 데이터 로드 후 갱신
+      // 로컬 스토리지에 토큰이 없으면 패스 (또는 확인)
+      // 최신 데이터가 GitHub에 있을 수 있으므로 raw URL에서 가져오기 시도
+      try {
+        const res = await fetch(`https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/main/${FILE_PATH}`);
+        if (res.ok) {
+          const text = await res.text();
+          // JS 파일에서 JSON 부분 추출: const profileData = { ... };
+          const match = text.match(/const profileData = ({[\s\S]*?});/);
+          if (match && match[1]) {
+            // JSON 파싱 (안전하지 않을 수 있지만 Admin이므로 허용)
+            // Function 등은 없을 것으로 가정
+            // 따옴표 등이 잘 매칭되어야 함. 단순 파싱 시도.
+            // data.js가 기계적으로 생성된 표준 JSON 포맷이라면 성공함.
+            try {
+              const remoteData = JSON.parse(match[1]);
+              console.log('📦 Admin: Data loaded from GitHub');
+              D = remoteData;
+              if (currentTab === 'dashboard') renderDashboard();
+            } catch (jsonErr) {
+              console.warn('GitHub 데이터 파싱 실패 (수동 수정됨?):', jsonErr);
+            }
           }
-        } catch (e) {
-          console.error('Failed to load data:', e);
-          showToast('⚠️ 데이터베이스 연결 실패 (로컬 데이터 사용)');
         }
+      } catch (e) {
+        console.warn('GitHub 연결 실패 (로컬 데이터 사용):', e);
       }
     })();
 
     function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 7) }
 
+    /* ══════════════════════════════════════════
+       GitHub 저장 (데이터베이스)
+       ══════════════════════════════════════════ */
+
+
     async function save() {
-      if (typeof GAS_API_URL !== 'undefined' && GAS_API_URL) {
-        showToast('☁️ 구글 시트에 저장 중...');
-        try {
-          const payload = { ...D, authKey: 'vibecoding2025' };
-          // GAS는 CORS Preflight를 지원하지 않으므로 text/plain 사용 권장
-          const res = await fetch(GAS_API_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-            body: JSON.stringify(payload)
-          });
-          const resJson = await res.json();
-          if (resJson.status === 'success') {
-            showToast('✅ 구글 시트 저장 완료!');
-          } else {
-            throw new Error(resJson.message);
+      const token = localStorage.getItem('gh_token');
+      if (!token) {
+        // 토큰이 없으면 입력 요청
+        const input = prompt('GitHub Personal Access Token을 입력하세요.\n(repo 권한이 필요합니다. 한 번 입력하면 저장됩니다.)');
+        if (!input) return;
+        localStorage.setItem('gh_token', input);
+        save(); // 재귀 호출
+        return;
+      }
+
+      showToast('☁️ GitHub에 저장 중... (약 5초 소요)');
+      try {
+        // 1. 현재 파일의 SHA 가져오기
+        const getRes = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FILE_PATH}`, {
+          headers: { 'Authorization': `token ${token}` }
+        });
+
+        if (!getRes.ok) {
+          if (getRes.status === 401) {
+            localStorage.removeItem('gh_token');
+            throw new Error('토큰이 유효하지 않습니다. 다시 시도해주세요.');
           }
-        } catch (e) {
-          console.error(e);
-          showToast('❌ 저장 실패 (콘솔 확인): ' + e.message);
-          saveProfileData(D); // 로컬 백업
+          throw new Error('파일 정보를 가져오는데 실패했습니다.');
         }
-      } else {
+
+        const getJson = await getRes.json();
+        const currentSha = getJson.sha;
+
+        // 2. 새 파일 내용 생성
+        // data.js 전체 내용을 새로 작성합니다.
+        const newFileContent = `/* 
+  [Profile Data] 
+  Updated at: ${new Date().toISOString()} 
+*/
+const profileData = ${JSON.stringify(D, null, 2)};
+`;
+        // Base64 인코딩 (한글 깨짐 방지)
+        const contentBase64 = btoa(unescape(encodeURIComponent(newFileContent)));
+
+        // 3. GitHub에 커밋 (Update)
+        const putRes = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FILE_PATH}`, {
+          method: 'PUT',
+          headers: {
+            'Authorization': `token ${token}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            message: `Update profile data via Admin (${new Date().toLocaleDateString()})`,
+            content: contentBase64,
+            sha: currentSha
+          })
+        });
+
+        if (!putRes.ok) throw new Error('저장에 실패했습니다.');
+
+        showToast('✅ GitHub 저장 성공! (사이트 반영까지 약 2분 소요)');
+
+        // 로컬 스토리지도 업데이트 (백업용)
         saveProfileData(D);
-        showToast('✅ 로컬 저장 완료! (배포 필요)');
+
+      } catch (e) {
+        console.error(e);
+        alert('오류 발생: ' + e.message);
+        showToast('❌ 저장 실패');
       }
     }
     function showToast(msg) { toast.textContent = msg; toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 2200) }
@@ -1186,7 +1247,7 @@ ${contentText ? contentText.slice(0, 15000) : '내용 없음 (제목 및 메타�
       main.innerHTML = `
         <div class="page-header"><div class="page-title">대시보드</div>
           <div style="display:flex;gap:8px">
-            <button class="btn btn-red" onclick="save()">☁️ 구글 시트로 저장</button>
+            <button class="btn btn-red" onclick="save()">☁️ GitHub에 저장</button>
             <button class="btn btn-outline" onclick="resetData()">🔄 초기화</button>
           </div>
         </div>
