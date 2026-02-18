@@ -1,6 +1,6 @@
 /* 
   [Profile Data] 
-  Updated at: 2026-02-18T10:18:16.967Z 
+  Updated at: 2026-02-18T10:18:27.226Z 
 */
 const profileData = {
   "personal": {
@@ -570,7 +570,9 @@ const profileData = {
       "title": "비상교육, 구글과 미래 교실 디지털 수업 모델 선봬",
       "source": "newstheAI",
       "date": "2024.06.05",
-      "link": ""
+      "link": "https://www.newstheai.com/news/articleView.html?idxno=5624",
+      "previewDesc": "에듀테크 기업 비상교육이 최근 2일 ‘2024 대한민국 글로컬 미래교육박람회’에 참여해 구글과 협업한 교원 연수 프로그램을 선보였다고 5일 밝혔다.비상교육은 미래",
+      "images": []
     },
     {
       "id": "p3",
