@@ -1221,26 +1221,32 @@ ${contentText ? contentText.slice(0, 15000) : '내용 없음 (제목 및 메타�
     /* 이미지 드래그앤드롭 설정 */
     function setupImageDragDrop(container) {
       let dragSrcIdx = null;
-      container.querySelectorAll('.img-list-item[draggable]').forEach(el => {
+      const items = container.querySelectorAll('.img-list-item[draggable]');
+      items.forEach(el => {
+        /* img 태그의 기본 드래그를 차단하여 커스텀 드래그 동작 보장 */
+        const img = el.querySelector('img');
+        if (img) img.draggable = false;
+
         el.addEventListener('dragstart', e => {
           dragSrcIdx = +el.dataset.imgIdx;
           el.classList.add('img-dragging');
           e.dataTransfer.effectAllowed = 'move';
-          e.dataTransfer.setData('text/plain', dragSrcIdx);
+          e.dataTransfer.setData('text/plain', String(dragSrcIdx));
         });
         el.addEventListener('dragend', () => {
           el.classList.remove('img-dragging');
-          container.querySelectorAll('.img-list-item').forEach(x => x.classList.remove('img-drag-over'));
+          items.forEach(x => x.classList.remove('img-drag-over'));
         });
         el.addEventListener('dragover', e => {
           e.preventDefault();
           e.dataTransfer.dropEffect = 'move';
-          container.querySelectorAll('.img-list-item').forEach(x => x.classList.remove('img-drag-over'));
+          items.forEach(x => x.classList.remove('img-drag-over'));
           el.classList.add('img-drag-over');
         });
         el.addEventListener('dragleave', () => el.classList.remove('img-drag-over'));
         el.addEventListener('drop', e => {
           e.preventDefault();
+          e.stopPropagation();
           el.classList.remove('img-drag-over');
           const from = dragSrcIdx;
           const to = +el.dataset.imgIdx;
@@ -1395,7 +1401,7 @@ ${contentText ? contentText.slice(0, 15000) : '내용 없음 (제목 및 메타�
         <table class="data-table">
           <thead><tr><th style="width:36px"></th><th></th><th>연도</th><th>제목</th><th>기관</th><th>카테고리</th><th>부가</th><th>관리</th></tr></thead>
           <tbody id="lecTbody">
-            ${D.lectures.map((l, i) => `<tr draggable="true" data-idx="${i}">
+            ${D.lectures.map((l, i) => `<tr data-idx="${i}">
               <td><span class="drag-handle" title="드래그하여 순서 변경">⠿</span></td>
               <td>${l.images?.length ? `<img src="${l.images[0]}" class="td-thumb" onerror="this.style.display='none'"/>` : ''}</td>
               <td>${l.year}</td>
@@ -1475,7 +1481,7 @@ ${contentText ? contentText.slice(0, 15000) : '내용 없음 (제목 및 메타�
         <table class="data-table">
           <thead><tr><th style="width:36px"></th><th></th><th>연도</th><th>제목</th><th>출판사</th><th>부가</th><th>관리</th></tr></thead>
           <tbody id="pubTbody">
-            ${D.publications.map((p, i) => `<tr draggable="true" data-idx="${i}">
+            ${D.publications.map((p, i) => `<tr data-idx="${i}">
               <td><span class="drag-handle" title="드래그하여 순서 변경">⠿</span></td>
               <td>${p.images?.length ? `<img src="${p.images[0]}" class="td-thumb"/>` : (p.image ? `<img src="${p.image}" class="td-thumb"/>` : '')}</td>
               <td>${p.year}</td><td>${p.title}</td><td style="color:var(--text2)">${p.publisher}</td>
@@ -1543,7 +1549,7 @@ ${contentText ? contentText.slice(0, 15000) : '내용 없음 (제목 및 메타�
         <div class="page-header"><div class="page-title">원격연수 <small>${D.onlineCourses.length}건</small></div>
           <button class="btn btn-red" onclick="openCourseForm()">+ 추가</button></div>
         <table class="data-table"><thead><tr><th style="width:36px"></th><th></th><th>제목</th><th>플랫폼</th><th>학점</th><th>관리</th></tr></thead>
-        <tbody id="courseTbody">${D.onlineCourses.map((c, i) => `<tr draggable="true" data-idx="${i}">
+        <tbody id="courseTbody">${D.onlineCourses.map((c, i) => `<tr data-idx="${i}">
           <td><span class="drag-handle" title="드래그하여 순서 변경">⠿</span></td>
           <td>${c.images?.length ? `<img src="${c.images[0]}" class="td-thumb"/>` : (c.image ? `<img src="${c.image}" class="td-thumb"/>` : '')}</td>
           <td>${c.title}</td><td>${c.platform}</td><td>${c.credit}</td>
@@ -1587,7 +1593,7 @@ ${contentText ? contentText.slice(0, 15000) : '내용 없음 (제목 및 메타�
       main.innerHTML = `<div class="page-header"><div class="page-title">수상 <small>${D.awards.length}건</small></div>
         <button class="btn btn-red" onclick="openAwardForm()">+ 추가</button></div>
         <table class="data-table"><thead><tr><th style="width:36px"></th><th></th><th>연도</th><th>제목</th><th>기관</th><th>주요</th><th>관리</th></tr></thead>
-        <tbody id="awardTbody">${D.awards.map((a, i) => `<tr draggable="true" data-idx="${i}">
+        <tbody id="awardTbody">${D.awards.map((a, i) => `<tr data-idx="${i}">
           <td><span class="drag-handle" title="드래그하여 순서 변경">⠿</span></td>
           <td>${a.images?.length ? `<img src="${a.images[0]}" class="td-thumb"/>` : ''}</td>
           <td>${a.year}</td><td>${a.title}</td><td style="color:var(--text2)">${a.org || '-'}</td>
@@ -1632,7 +1638,7 @@ ${contentText ? contentText.slice(0, 15000) : '내용 없음 (제목 및 메타�
       main.innerHTML = `<div class="page-header"><div class="page-title">주요 활동 <small>${D.activities.length}건</small></div>
         <button class="btn btn-red" onclick="openActForm()">+ 추가</button></div>
         <table class="data-table"><thead><tr><th style="width:36px"></th><th></th><th>기간</th><th>활동명</th><th>관리</th></tr></thead>
-        <tbody id="actTbody">${D.activities.map((a, i) => `<tr draggable="true" data-idx="${i}">
+        <tbody id="actTbody">${D.activities.map((a, i) => `<tr data-idx="${i}">
           <td><span class="drag-handle" title="드래그하여 순서 변경">⠿</span></td>
           <td>${a.images?.length ? `<img src="${a.images[0]}" class="td-thumb"/>` : ''}</td>
           <td>${a.period || '-'}</td><td>${a.title}</td>
@@ -1675,7 +1681,7 @@ ${contentText ? contentText.slice(0, 15000) : '내용 없음 (제목 및 메타�
           <button class="btn btn-red" onclick="openPressForm()">+ 추가</button></div>
         <table class="data-table">
           <thead><tr><th style="width:36px"></th><th></th><th>날짜</th><th>제목</th><th>매체</th><th>부가</th><th>관리</th></tr></thead>
-          <tbody id="pressTbody">${D.press.map((p, i) => `<tr draggable="true" data-idx="${i}">
+          <tbody id="pressTbody">${D.press.map((p, i) => `<tr data-idx="${i}">
             <td><span class="drag-handle" title="드래그하여 순서 변경">⠿</span></td>
             <td>${p.images?.length ? `<img src="${p.images[0]}" class="td-thumb" onerror="this.style.display='none'"/>` : ''}</td>
             <td>${p.date}</td><td>${p.title}</td><td style="color:var(--text2)">${p.source}</td>
@@ -1744,62 +1750,94 @@ ${contentText ? contentText.slice(0, 15000) : '내용 없음 (제목 및 메타�
       const tbody = document.getElementById(tbodyId);
       if (!tbody) return;
       let dragIdx = null;
+      let dragRow = null;
 
-      tbody.querySelectorAll('tr[draggable]').forEach(row => {
-        /* 드래그 핸들에서만 시작하도록 */
-        row.addEventListener('mousedown', e => {
-          if (!e.target.closest('.drag-handle')) row.draggable = false;
-          else row.draggable = true;
-        });
+      const rows = tbody.querySelectorAll('tr[data-idx]');
+      rows.forEach(row => {
+        /* 기본적으로 드래그 비활성화 */
+        row.draggable = false;
+
+        /* 핸들에서만 드래그 활성화 */
+        const handle = row.querySelector('.drag-handle');
+        if (handle) {
+          handle.addEventListener('mousedown', e => {
+            row.draggable = true;
+          });
+        }
 
         row.addEventListener('dragstart', e => {
+          if (!row.draggable) { e.preventDefault(); return; }
           dragIdx = +row.dataset.idx;
+          dragRow = row;
           row.classList.add('dragging');
           e.dataTransfer.effectAllowed = 'move';
-          e.dataTransfer.setData('text/plain', dragIdx);
+          e.dataTransfer.setData('text/plain', String(dragIdx));
+          /* 약간의 지연 후 투명도 적용 (드래그 이미지 생성 후) */
+          setTimeout(() => row.style.opacity = '0.4', 0);
         });
 
         row.addEventListener('dragend', () => {
           row.classList.remove('dragging');
-          tbody.querySelectorAll('tr').forEach(r => {
+          row.style.opacity = '';
+          row.draggable = false;
+          dragRow = null;
+          /* 모든 행의 드래그 오버 스타일 제거 */
+          rows.forEach(r => {
             r.classList.remove('drag-over', 'drag-over-below');
+            r.style.borderTop = '';
+            r.style.borderBottom = '';
           });
         });
 
         row.addEventListener('dragover', e => {
           e.preventDefault();
           e.dataTransfer.dropEffect = 'move';
-          tbody.querySelectorAll('tr').forEach(r => {
-            r.classList.remove('drag-over', 'drag-over-below');
+          /* 모든 행 인디케이터 제거 */
+          rows.forEach(r => {
+            r.style.borderTop = '';
+            r.style.borderBottom = '';
           });
+          /* 드래그 위치에 따라 위/아래 인디케이터 표시 */
           const rect = row.getBoundingClientRect();
           const mid = rect.top + rect.height / 2;
-          if (e.clientY < mid) row.classList.add('drag-over');
-          else row.classList.add('drag-over-below');
+          if (e.clientY < mid) {
+            row.style.borderTop = '3px solid var(--red)';
+          } else {
+            row.style.borderBottom = '3px solid var(--red)';
+          }
         });
 
-        row.addEventListener('dragleave', () => {
-          row.classList.remove('drag-over', 'drag-over-below');
+        row.addEventListener('dragleave', e => {
+          row.style.borderTop = '';
+          row.style.borderBottom = '';
         });
 
         row.addEventListener('drop', e => {
           e.preventDefault();
-          row.classList.remove('drag-over', 'drag-over-below');
+          e.stopPropagation();
+          /* 인디케이터 제거 */
+          rows.forEach(r => {
+            r.style.borderTop = '';
+            r.style.borderBottom = '';
+          });
           const from = dragIdx;
           let to = +row.dataset.idx;
           if (from === null || from === to) return;
-          /* 위치 계산: 마우스가 행의 아래쪽 절반이면 해당 행 뒤로 이동 */
-          const rect = row.getBoundingClientRect();
-          const mid = rect.top + rect.height / 2;
-          if (e.clientY >= mid && to < from) to++;
-          else if (e.clientY < mid && to > from) to--;
           /* 배열 재배치 */
-          const [moved] = D[dataKey].splice(from, 1);
-          D[dataKey].splice(to, 0, moved);
+          const arr = D[dataKey];
+          const [moved] = arr.splice(from, 1);
+          arr.splice(to, 0, moved);
           render();
           showToast('✅ 순서가 변경되었습니다');
         });
       });
+
+      /* document 레벨 mouseup에서 draggable 리셋 */
+      document.addEventListener('mouseup', () => {
+        rows.forEach(r => {
+          if (!r.classList.contains('dragging')) r.draggable = false;
+        });
+      }, { once: true });
     }
 
     /* ══════════════════════════════════════════
