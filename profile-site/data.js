@@ -1,6 +1,6 @@
 /* 
   [Profile Data] 
-  Updated at: 2026-02-18T10:17:18.999Z 
+  Updated at: 2026-02-18T10:18:16.967Z 
 */
 const profileData = {
   "personal": {
@@ -561,7 +561,9 @@ const profileData = {
       "title": "비상교육, 구글과 미래교실 디지털 수업 모델 선보여",
       "source": "디지틀조선일보",
       "date": "2024.06.05",
-      "link": ""
+      "link": "https://digitalchosun.dizzo.com/site/data/html_dir/2024/06/05/2024060580262.html",
+      "previewDesc": "비상교육, 구글과 미래 교실 디지털 수업 모델 선보여",
+      "images": []
     },
     {
       "id": "p2",
