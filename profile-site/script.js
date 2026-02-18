@@ -1,8 +1,22 @@
 /**
  * 이민재 포트폴리오 — Netflix-Style 렌더링 & 인터랙션
  */
-document.addEventListener('DOMContentLoaded', () => {
-  const D = profileData;
+document.addEventListener('DOMContentLoaded', async () => {
+  let D = profileData; // data.js의 기본값
+
+  /* [구글 시트 연동] URL이 있으면 시트 데이터 가져오기 */
+  if (typeof GAS_API_URL !== 'undefined' && GAS_API_URL) {
+    try {
+      const res = await fetch(GAS_API_URL);
+      const json = await res.json();
+      if (json && json.personal) { // 유효한 데이터인지 확인
+        D = json;
+        console.log('📦 Data loaded from Google Sheets');
+      }
+    } catch (e) {
+      console.error('Failed to load data from Google Sheets:', e);
+    }
+  }
 
   /* ═══ 히어로 ═══ */
   const badgesWrap = document.getElementById('heroBadges');

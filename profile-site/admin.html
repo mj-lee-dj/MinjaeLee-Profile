@@ -767,15 +767,54 @@
     document.getElementById('adminPw')?.addEventListener('keydown', e => {
       if (e.key === 'Enter') checkAdmin();
     });
-    const D = profileData;
+    let D = profileData;
     const main = document.getElementById('mainContent');
     const modal = document.getElementById('modal');
     const modalBody = document.getElementById('modalBody');
     const toast = document.getElementById('toast');
     let currentTab = 'dashboard';
 
+    /* [구글 시트 연동] 초기 데이터 로드 */
+    (async function initAdmin() {
+      if (typeof GAS_API_URL !== 'undefined' && GAS_API_URL) {
+        try {
+          const res = await fetch(GAS_API_URL);
+          const json = await res.json();
+          if (json && json.personal) {
+            D = json;
+            console.log('📦 Admin: Data loaded from Google Sheets');
+            if (currentTab === 'dashboard') renderDashboard(); // 데이터 로드 후 갱신
+          }
+        } catch (e) {
+          console.error('Failed to load data:', e);
+          showToast('⚠️ 데이터베이스 연결 실패 (로컬 데이터 사용)');
+        }
+      }
+    })();
+
     function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 7) }
-    function save() { saveProfileData(D); showToast('✅ 저장 완료!') }
+
+    async function save() {
+      if (typeof GAS_API_URL !== 'undefined' && GAS_API_URL) {
+        showToast('☁️ 구글 시트에 저장 중...');
+        try {
+          const payload = { ...D, authKey: 'vibecoding2025' };
+          const res = await fetch(GAS_API_URL, { method: 'POST', body: JSON.stringify(payload) });
+          const resJson = await res.json();
+          if (resJson.status === 'success') {
+            showToast('✅ 구글 시트 저장 완료!');
+          } else {
+            throw new Error(resJson.message);
+          }
+        } catch (e) {
+          showToast('❌ 저장 실패: ' + e.message);
+          saveProfileData(D); // 로컬 백업
+        }
+      } else {
+        saveProfileData(D);
+        showToast('✅ 로컬 저장 완료! (배포 필요)');
+      }
+    }
     function showToast(msg) { toast.textContent = msg; toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 2200) }
     function openModal(html) { modalBody.innerHTML = html; modal.classList.add('open') }
     function closeModal() { modal.classList.remove('open') }

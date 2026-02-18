@@ -176,4 +176,11 @@ function saveProfileData(data) {
     localStorage.setItem('profileData', JSON.stringify(data));
 }
 
+/* 
+  [Google Sheets Database Config]
+  만약 구글 시트와 연동하려면 아래 'GAS_API_URL'에 'Web App URL'을 입력하세요.
+  (비워두면 기존처럼 로컬 파일 데이터만 사용합니다)
+*/
+const GAS_API_URL = '';
+
 const profileData = loadProfileData();
