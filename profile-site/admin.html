@@ -883,8 +883,16 @@ const profileData = ${JSON.stringify(D, null, 2)};
       }
     }
     function saveProfileData(data) {
-      localStorage.setItem('profileData', JSON.stringify(data));
-      console.log('📦 Local Backup Saved');
+      try {
+        localStorage.setItem('profileData', JSON.stringify(data));
+        console.log('📦 Local Backup Saved');
+      } catch (e) {
+        console.warn('⚠️ Local Storage Full (Backup skipped):', e);
+        // 저장 용량 초과 에러는 무시 (GitHub에는 이미 저장됨)
+        if (e.name === 'QuotaExceededError') {
+          console.log('Local Storage Quota Exceeded');
+        }
+      }
     }
 
     function showToast(msg) { toast.textContent = msg; toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 2200) }
