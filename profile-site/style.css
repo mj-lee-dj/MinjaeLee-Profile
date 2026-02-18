@@ -1341,4 +1341,65 @@ footer {
   .stat-val {
     font-size: 1.5rem
   }
+
+  .stat-val {
+    font-size: 1.5rem
+  }
+}
+
+/* ── 아이콘 & 컨택트 수정 ── */
+.svg-icon {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.c-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 1.1rem;
+  color: var(--text2);
+  margin-bottom: 0;
+  /* 기존 마진 제거 */
+}
+
+/* 폰트사이즈/색상 강조 */
+.c-item.highlight {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.c-item.highlight .svg-icon {
+  width: 24px;
+  height: 24px;
+  color: var(--red);
+}
+
+.soc-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--card);
+  border: 1px solid var(--border);
+  transition: all .3s;
+  color: var(--text2);
+}
+
+.soc-btn:hover {
+  background: var(--red);
+  border-color: var(--red);
+  color: #fff;
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(229, 9, 20, 0.4);
+}
+
+.soc-btn .svg-icon {
+  width: 22px;
+  height: 22px;
 }
