@@ -815,72 +815,86 @@
        ══════════════════════════════════════════ */
 
 
+    let _saving = false; // 동시 저장 방지 잠금
+
     async function save() {
+      if (_saving) { showToast('⏳ 저장이 진행 중입니다. 잠시 기다려주세요.'); return; }
+      _saving = true;
+
       const token = localStorage.getItem('gh_token');
       if (!token) {
-        // 토큰이 없으면 입력 요청
         const input = prompt('GitHub Personal Access Token을 입력하세요.\n(repo 권한이 필요합니다. 한 번 입력하면 저장됩니다.)');
-        if (!input) return;
+        if (!input) { _saving = false; return; }
         localStorage.setItem('gh_token', input);
-        save(); // 재귀 호출
+        _saving = false;
+        save();
         return;
       }
 
-      showToast('☁️ GitHub에 저장 중... (약 5초 소요)');
-      try {
-        // 1. 현재 파일의 SHA 가져오기
-        const getRes = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FILE_PATH}`, {
-          headers: { 'Authorization': `token ${token}` }
-        });
+      showToast('☁️ GitHub에 저장 중...');
+      const MAX_RETRY = 3;
 
-        if (!getRes.ok) {
-          if (getRes.status === 401) {
-            localStorage.removeItem('gh_token');
-            throw new Error('토큰이 유효하지 않습니다. 다시 시도해주세요.');
+      for (let attempt = 1; attempt <= MAX_RETRY; attempt++) {
+        try {
+          // 1. 최신 SHA 가져오기 (매 시도마다 새로 가져옴)
+          const getRes = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FILE_PATH}`, {
+            headers: { 'Authorization': `token ${token}`, 'Cache-Control': 'no-cache' }
+          });
+
+          if (!getRes.ok) {
+            if (getRes.status === 401) {
+              localStorage.removeItem('gh_token');
+              throw new Error('토큰이 유효하지 않습니다. 다시 시도해주세요.');
+            }
+            throw new Error('파일 정보를 가져오는데 실패했습니다.');
           }
-          throw new Error('파일 정보를 가져오는데 실패했습니다.');
+
+          const getJson = await getRes.json();
+          const currentSha = getJson.sha;
+
+          // 2. 새 파일 내용 생성
+          const newFileContent = `/* \n  [Profile Data] \n  Updated at: ${new Date().toISOString()} \n*/\nconst profileData = ${JSON.stringify(D, null, 2)};\n`;
+          const contentBase64 = btoa(unescape(encodeURIComponent(newFileContent)));
+
+          // 3. GitHub에 커밋
+          const putRes = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FILE_PATH}`, {
+            method: 'PUT',
+            headers: { 'Authorization': `token ${token}`, 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              message: `Update profile data via Admin (${new Date().toLocaleDateString()})`,
+              content: contentBase64,
+              sha: currentSha
+            })
+          });
+
+          if (putRes.ok) {
+            showToast('✅ GitHub 저장 성공! (사이트 반영까지 약 2분 소요)');
+            saveProfileData(D);
+            _saving = false;
+            return; // 성공 시 종료
+          }
+
+          // 422 = SHA 충돌 → 자동 재시도
+          if (putRes.status === 422 && attempt < MAX_RETRY) {
+            console.warn(`⚠️ SHA 충돌 (시도 ${attempt}/${MAX_RETRY}), 1초 후 재시도...`);
+            showToast(`🔄 버전 충돌 감지, 재시도 중... (${attempt}/${MAX_RETRY})`);
+            await new Promise(r => setTimeout(r, 1000));
+            continue; // 다음 시도
+          }
+
+          throw new Error(`저장 실패 (HTTP ${putRes.status}). 페이지를 새로고침 후 다시 시도해주세요.`);
+
+        } catch (e) {
+          if (attempt === MAX_RETRY || !e.message.includes('충돌')) {
+            console.error(e);
+            alert('오류 발생: ' + e.message);
+            showToast('❌ 저장 실패');
+            _saving = false;
+            return;
+          }
         }
-
-        const getJson = await getRes.json();
-        const currentSha = getJson.sha;
-
-        // 2. 새 파일 내용 생성
-        // data.js 전체 내용을 새로 작성합니다.
-        const newFileContent = `/* 
-  [Profile Data] 
-  Updated at: ${new Date().toISOString()} 
-*/
-const profileData = ${JSON.stringify(D, null, 2)};
-`;
-        // Base64 인코딩 (한글 깨짐 방지)
-        const contentBase64 = btoa(unescape(encodeURIComponent(newFileContent)));
-
-        // 3. GitHub에 커밋 (Update)
-        const putRes = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FILE_PATH}`, {
-          method: 'PUT',
-          headers: {
-            'Authorization': `token ${token}`,
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            message: `Update profile data via Admin (${new Date().toLocaleDateString()})`,
-            content: contentBase64,
-            sha: currentSha
-          })
-        });
-
-        if (!putRes.ok) throw new Error('저장에 실패했습니다.');
-
-        showToast('✅ GitHub 저장 성공! (사이트 반영까지 약 2분 소요)');
-
-        // 로컬 스토리지도 업데이트 (백업용)
-        saveProfileData(D);
-
-      } catch (e) {
-        console.error(e);
-        alert('오류 발생: ' + e.message);
-        showToast('❌ 저장 실패');
       }
+      _saving = false;
     }
     function saveProfileData(data) {
       try {
