@@ -1,6 +1,6 @@
 /* 
   [Profile Data] 
-  Updated at: 2026-02-18T10:20:24.730Z 
+  Updated at: 2026-02-18T10:21:59.425Z 
 */
 const profileData = {
   "personal": {
@@ -556,6 +556,15 @@ const profileData = {
     }
   ],
   "press": [
+    {
+      "id": "p_mlrvuiw1jnj43",
+      "title": "충남대학교 사범대학, AI·에듀테크 연수로 대전 교원 디지털 수업 역량 강화",
+      "source": "한국강사신",
+      "date": "2026.01.17.",
+      "link": "https://www.lecturernews.com/news/articleView.html?idxno=194981",
+      "previewDesc": "[한국강사신문 장한별 기자] 충남대학교(총장 김정겸)는 사범대학이 주최한 ‘AI·에듀테크 기반 디지털 수업 역량 강화 연수’가 1월 3일과 10일(토) 두 차례에 걸쳐 성황리에 마무리됐다고 밝혔다.이번 연수는 대전 Google Educator Group과 ㈜오늘배움, 테바소프트㈜가 공동 주관했으며, 대전 지역 초·중등 교원들이 참여해 Canva, NotebookLM, Gemini, 바이브코딩, Redmenta 등 최신 AI 기반 도구의 수업 활용 방법을 익혔다.1월 3일(1회차)에는 강서현 교사가 Canva를 활용해 학습지·발표자료",
+      "images": []
+    },
     {
       "id": "p1",
       "title": "비상교육, 구글과 미래교실 디지털 수업 모델 선보여",
