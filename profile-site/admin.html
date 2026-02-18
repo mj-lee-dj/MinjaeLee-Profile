@@ -837,8 +837,8 @@
       for (let attempt = 1; attempt <= MAX_RETRY; attempt++) {
         try {
           // 1. 최신 SHA 가져오기 (매 시도마다 새로 가져옴)
-          const getRes = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FILE_PATH}`, {
-            headers: { 'Authorization': `token ${token}`, 'Cache-Control': 'no-cache' }
+          const getRes = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FILE_PATH}?t=${Date.now()}`, {
+            headers: { 'Authorization': `token ${token}` }
           });
 
           if (!getRes.ok) {
