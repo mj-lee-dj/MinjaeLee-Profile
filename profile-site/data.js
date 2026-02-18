@@ -1,6 +1,6 @@
 /* 
   [Profile Data] 
-  Updated at: 2026-02-18T10:19:57.147Z 
+  Updated at: 2026-02-18T10:20:15.047Z 
 */
 const profileData = {
   "personal": {
@@ -626,7 +626,9 @@ const profileData = {
       "title": "대전교육청, 2020년 온라인 교과서 아이디어 공모전 전국 입상",
       "source": "충청매일",
       "date": "2020.12.27",
-      "link": ""
+      "link": "https://www.ccdn.co.kr/news/articleView.html?idxno=680802",
+      "previewDesc": "[충청매일 양병훈 기자] 대전광역시교육청(교육감 설동호)은 교육부가 주최한 「2020년 온라인 교과서 아이디어 공모전」에서 초등학교 부문에서 한국교과서연구재단이사장상(은상 1팀)과 중학교 부문에서 한국교육학술정보원장상(금상 1팀)을 입상하는 실적을 거뒀다.이번 공모전은 교육과정 자율화",
+      "images": []
     },
     {
       "id": "p9",
