@@ -1750,25 +1750,26 @@ ${contentText ? contentText.slice(0, 15000) : '내용 없음 (제목 및 메타�
       const tbody = document.getElementById(tbodyId);
       if (!tbody) return;
       let dragIdx = null;
-      let dragRow = null;
+      /* 핸들 클릭 여부를 추적하는 플래그 */
+      let handleGrabbed = false;
 
       const rows = tbody.querySelectorAll('tr[data-idx]');
       rows.forEach(row => {
-        /* 기본적으로 드래그 비활성화 */
-        row.draggable = false;
+        /* 행에 항상 draggable 설정 (핸들 여부는 dragstart에서 판단) */
+        row.setAttribute('draggable', 'true');
 
-        /* 핸들에서만 드래그 활성화 */
         const handle = row.querySelector('.drag-handle');
         if (handle) {
-          handle.addEventListener('mousedown', e => {
-            row.draggable = true;
+          /* 핸들 mousedown 시 플래그 설정 */
+          handle.addEventListener('mousedown', () => {
+            handleGrabbed = true;
           });
         }
 
         row.addEventListener('dragstart', e => {
-          if (!row.draggable) { e.preventDefault(); return; }
+          /* 핸들 밖에서 드래그 시작 시 차단 */
+          if (!handleGrabbed) { e.preventDefault(); return; }
           dragIdx = +row.dataset.idx;
-          dragRow = row;
           row.classList.add('dragging');
           e.dataTransfer.effectAllowed = 'move';
           e.dataTransfer.setData('text/plain', String(dragIdx));
@@ -1779,8 +1780,7 @@ ${contentText ? contentText.slice(0, 15000) : '내용 없음 (제목 및 메타�
         row.addEventListener('dragend', () => {
           row.classList.remove('dragging');
           row.style.opacity = '';
-          row.draggable = false;
-          dragRow = null;
+          handleGrabbed = false;
           /* 모든 행의 드래그 오버 스타일 제거 */
           rows.forEach(r => {
             r.classList.remove('drag-over', 'drag-over-below');
@@ -1807,7 +1807,7 @@ ${contentText ? contentText.slice(0, 15000) : '내용 없음 (제목 및 메타�
           }
         });
 
-        row.addEventListener('dragleave', e => {
+        row.addEventListener('dragleave', () => {
           row.style.borderTop = '';
           row.style.borderBottom = '';
         });
@@ -1832,12 +1832,10 @@ ${contentText ? contentText.slice(0, 15000) : '내용 없음 (제목 및 메타�
         });
       });
 
-      /* document 레벨 mouseup에서 draggable 리셋 */
+      /* document 레벨 mouseup에서 handleGrabbed 리셋 */
       document.addEventListener('mouseup', () => {
-        rows.forEach(r => {
-          if (!r.classList.contains('dragging')) r.draggable = false;
-        });
-      }, { once: true });
+        handleGrabbed = false;
+      });
     }
 
     /* ══════════════════════════════════════════
