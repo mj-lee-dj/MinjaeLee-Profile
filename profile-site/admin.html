@@ -1179,7 +1179,10 @@ ${contentText ? contentText.slice(0, 15000) : '내용 없음 (제목 및 메타�
       const withLinks = [...D.lectures, ...D.press, ...D.publications].filter(i => i.link).length;
       main.innerHTML = `
         <div class="page-header"><div class="page-title">대시보드</div>
-          <div><button class="btn btn-outline" onclick="resetData()">🔄 초기화</button></div>
+          <div style="display:flex;gap:8px">
+            <button class="btn btn-red" onclick="save()">☁️ 구글 시트로 저장</button>
+            <button class="btn btn-outline" onclick="resetData()">🔄 초기화</button>
+          </div>
         </div>
         <div class="stat-cards">
           <div class="stat-card"><div class="sc-val">${D.lectures.length}</div><div class="sc-label">강의·연수</div></div>
