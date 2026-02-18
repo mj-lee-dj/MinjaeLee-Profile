@@ -1043,23 +1043,43 @@ section {
 }
 
 /* 저서 카드 갤러리 */
+/* 저서 카드 갤러리 - 책 표지 비율 (세로) */
 .pub-card .card-gallery {
   border-radius: 8px;
   margin-bottom: 16px;
-  height: 200px
+  height: 300px;
+  /* 세로 이미지를 위해 높이 증가 */
+  background: transparent;
+  /* 배경 투명 */
+}
+
+.pub-card .card-gallery img {
+  object-fit: contain;
+  /* 잘리지 않게 조정 */
 }
 
 /* 강의 카드 갤러리 */
+/* 강의 카드 갤러리 - 16:9 비율 (프레젠테이션) */
 .lec-card .card-gallery {
   border-radius: 8px;
   margin-bottom: 14px;
-  height: 180px
+  height: auto;
+  aspect-ratio: 16 / 9;
+}
+
+/* 원격연수 카드 갤러리 (동일 클래스 혹은 course-card 사용) */
+.course-card .card-gallery {
+  height: auto;
+  aspect-ratio: 16 / 9;
+  border-radius: 0;
 }
 
 /* 보도 카드 갤러리 */
+/* 보도 카드 갤러리 - 가로 사진 비율 */
 .press-card .card-gallery {
-  height: 180px;
-  border-radius: 0
+  height: auto;
+  aspect-ratio: 16 / 9;
+  border-radius: 0;
 }
 
 /* ── CONTACT ── */
