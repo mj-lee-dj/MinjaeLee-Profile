@@ -825,31 +825,55 @@
 
     /* [GitHub 연동] 초기 데이터 로드 (최신 데이터 동기화) */
     (async function initAdmin() {
-      // 로컬 스토리지에 토큰이 없으면 패스 (또는 확인)
-      // 최신 데이터가 GitHub에 있을 수 있으므로 raw URL에서 가져오기 시도
-      try {
-        const res = await fetch(`https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/main/${FILE_PATH}`);
-        if (res.ok) {
-          const text = await res.text();
-          // JS 파일에서 JSON 부분 추출: const profileData = { ... };
-          const match = text.match(/const profileData = ({[\s\S]*?});/);
-          if (match && match[1]) {
-            // JSON 파싱 (안전하지 않을 수 있지만 Admin이므로 허용)
-            // Function 등은 없을 것으로 가정
-            // 따옴표 등이 잘 매칭되어야 함. 단순 파싱 시도.
-            // data.js가 기계적으로 생성된 표준 JSON 포맷이라면 성공함.
-            try {
-              const remoteData = JSON.parse(match[1]);
-              console.log('📦 Admin: Data loaded from GitHub');
-              D = remoteData;
-              if (currentTab === 'dashboard') renderDashboard();
-            } catch (jsonErr) {
-              console.warn('GitHub 데이터 파싱 실패 (수동 수정됨?):', jsonErr);
+      let remoteText = null;
+      const token = localStorage.getItem('gh_token');
+
+      // 1. 토큰이 있다면 API로 가져오기 (캐시 회피, 최신본 보장)
+      if (token) {
+        try {
+          // commits/main -> sha -> blob 방식이 가장 확실하지만, contents API의 raw 헤더 사용
+          const res = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FILE_PATH}?ref=main`, {
+            headers: {
+              'Authorization': `token ${token}`,
+              'Accept': 'application/vnd.github.v3.raw'
             }
+          });
+          if (res.ok) {
+            remoteText = await res.text();
+            console.log('📦 Admin: Data loaded from GitHub API (Fresh)');
+          } else {
+            if (res.status === 401) localStorage.removeItem('gh_token'); // 토큰 만료 시 삭제
+          }
+        } catch (e) {
+          console.warn('GitHub API Load failed:', e);
+        }
+      }
+
+      // 2. 토큰이 없거나 실패했다면 Raw URL 사용 (CDN 캐시 가능성 있음)
+      if (!remoteText) {
+        try {
+          const res = await fetch(`https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/main/${FILE_PATH}`);
+          if (res.ok) {
+            remoteText = await res.text();
+            console.log('📦 Admin: Data loaded from GitHub Raw (Cached)');
+          }
+        } catch (e) {
+          console.warn('GitHub Raw Load failed:', e);
+        }
+      }
+
+      // 3. 데이터 파싱 및 적용
+      if (remoteText) {
+        const match = remoteText.match(/const profileData = ({[\s\S]*?});/);
+        if (match && match[1]) {
+          try {
+            const remoteData = JSON.parse(match[1]);
+            D = remoteData;
+            if (currentTab === 'dashboard') renderDashboard();
+          } catch (jsonErr) {
+            console.warn('JSON Parse Error:', jsonErr);
           }
         }
-      } catch (e) {
-        console.warn('GitHub 연결 실패 (로컬 데이터 사용):', e);
       }
     })();
 
