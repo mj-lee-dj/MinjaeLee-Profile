@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>이민재 | AI·에듀테크 전문 교사 · Google 공인 트레이너</title>
+    <meta name="description" content="AI와 에듀테크를 활용한 교육 혁신 전문가 이민재. 강의·저서·수상 이력 및 협업 문의." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+    <!-- ── 네비게이션 ── -->
+    <nav id="navbar">
+        <div class="nav-inner">
+            <a href="#hero" class="nav-logo">이민재<span class="dot">.</span></a>
+            <button class="hamburger" id="hamburger" aria-label="메뉴">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#about">ABOUT</a></li>
+                <li><a href="#publications">저서</a></li>
+                <li><a href="#lectures">강의</a></li>
+                <li><a href="#awards">수상·활동</a></li>
+                <li><a href="#press">보도</a></li>
+                <li><a href="#contact" class="nav-cta">문의하기</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- ── 히어로 ── -->
+    <section id="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-img-wrap">
+            <img src="assets/profile.jpg" alt="이민재" class="hero-bg-img" />
+        </div>
+        <div class="hero-content">
+            <div class="hero-badges" id="heroBadges"></div>
+            <h1 class="hero-name">
+                <span class="line1">교실의 미래를</span>
+                <span class="line2">디자인하다</span>
+            </h1>
+            <p class="hero-sub">이민재 — AI · 에듀테크 전문 교사 · Google 공인 트레이너</p>
+            <div class="hero-actions">
+                <a href="#contact" class="btn-hero">강의·협업 문의 →</a>
+                <a href="#about" class="btn-hero-outline">프로필 보기</a>
+            </div>
+        </div>
+        <!-- 통계 오버레이 -->
+        <div class="hero-stats" id="heroStats"></div>
+    </section>
+
+    <!-- ── ABOUT ── -->
+    <section id="about">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-left">
+                    <span class="tag-label">ABOUT ME</span>
+                    <h2 class="big-heading">AI 교육의<br />최전선에 서다</h2>
+                    <p class="about-bio" id="aboutBio"></p>
+                    <div class="credential-list" id="credentialList"></div>
+                </div>
+                <div class="about-right">
+                    <div class="about-photo-wrap">
+                        <img src="assets/profile2.jpg" alt="이민재" />
+                    </div>
+                </div>
+            </div>
+            <!-- 전문분야 -->
+            <div class="expertise-row" id="expertiseRow"></div>
+        </div>
+    </section>
+
+    <!-- ── 저서 ── -->
+    <section id="publications">
+        <div class="container">
+            <span class="tag-label">PUBLICATIONS</span>
+            <h2 class="big-heading">저서 · 출판</h2>
+            <div class="pub-row" id="pubRow"></div>
+            <h3 class="sub-heading">원격연수 콘텐츠</h3>
+            <div class="course-row" id="courseRow"></div>
+        </div>
+    </section>
+
+    <!-- ── 민재쌤 영상 ── -->
+    <section id="youtube_videos">
+        <div class="container">
+            <span class="tag-label">VIDEOS</span>
+            <h2 class="big-heading">민재쌤 영상</h2>
+            <div id="youtubeVideosContainer" class="reveal"></div>
+        </div>
+    </section>
+
+    <!-- ── 강의 ── -->
+    <section id="lectures">
+        <div class="container">
+            <span class="tag-label">LECTURES & TRAINING</span>
+            <h2 class="big-heading">강의 · 연수</h2>
+            <p class="section-desc">카테고리를 선택해 원하는 이력만 확인하세요.</p>
+            <div class="filter-bar" id="filterBar"></div>
+            <div class="lec-grid" id="lecGrid"></div>
+        </div>
+    </section>
+
+    <!-- ── 수상·활동 ── -->
+    <section id="awards">
+        <div class="container">
+            <span class="tag-label">AWARDS & ACTIVITIES</span>
+            <h2 class="big-heading">수상 · 활동</h2>
+            <div class="awards-wrap">
+                <div class="awards-col">
+                    <h3 class="col-head">🏆 수상</h3>
+                    <div id="awardsList"></div>
+                </div>
+                <div class="awards-col">
+                    <h3 class="col-head">📌 주요 활동</h3>
+                    <div id="actList"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── 보도 ── -->
+    <section id="press">
+        <div class="container">
+            <span class="tag-label">PRESS</span>
+            <h2 class="big-heading">보도자료</h2>
+            <div class="press-list" id="pressList"></div>
+        </div>
+    </section>
+
+    <!-- ── 문의 ── -->
+    <section id="contact">
+        <div class="container">
+            <div class="contact-box">
+                <span class="tag-label">CONTACT</span>
+                <h2 class="big-heading">함께 만들어갈<br />교육의 미래</h2>
+                <p class="contact-desc">강의 · 원고 집필 · 프로젝트 협업 등<br />다양한 문의를 환영합니다.</p>
+                <div class="contact-grid" id="contactGrid"></div>
+                <div class="contact-socials" id="contactSocials"></div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container footer-inner">
+            <span>&copy; 2025 이민재. All rights reserved.</span>
+            <a href="admin.html" class="admin-link">관리자</a>
+        </div>
+    </footer>
+
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
