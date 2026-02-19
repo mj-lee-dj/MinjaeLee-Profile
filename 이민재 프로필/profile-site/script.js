@@ -4,6 +4,21 @@
 document.addEventListener('DOMContentLoaded', async () => {
   let D = profileData; // data.js의 기본값
 
+  /* [로컬 스토리지 연동] 관리자 페이지에서 저장한 데이터가 있으면 우선 사용 */
+  try {
+    const localData = localStorage.getItem('profileData');
+    if (localData) {
+      const parsed = JSON.parse(localData);
+      // 필수 필드 체크 (간단히)
+      if (parsed && parsed.personal) {
+        D = parsed;
+        console.log('📦 Data loaded from Local Storage');
+      }
+    }
+  } catch (e) {
+    console.error('Failed to load local data:', e);
+  }
+
   /* [구글 시트 연동] URL이 있으면 시트 데이터 가져오기 */
   if (typeof GAS_API_URL !== 'undefined' && GAS_API_URL) {
     try {
@@ -375,6 +390,65 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (p.link) { card.style.cursor = 'pointer'; card.onclick = (e) => { if (e.target.tagName !== 'A') window.open(p.link, '_blank'); }; }
     pList.appendChild(card);
   });
+
+  /* ═══ 유튜브 영상 ═══ */
+  function renderYoutubeVideos() {
+    const container = document.getElementById('youtubeVideosContainer');
+    if (!container) return; // index.html에 아직 요소가 없으면 패스
+
+    const videos = D.youtubeVideos || [];
+    if (videos.length === 0) {
+      container.closest('section').style.display = 'none';
+      return;
+    }
+
+    // 캐러셀 구조 생성
+    const carouselId = 'yt_carousel_' + Math.random().toString(36).substr(2, 9);
+    container.innerHTML = `
+      <div class="yt-carousel-wrapper">
+        <button class="yt-nav prev" onclick="slideYoutube('${carouselId}', -1)">‹</button>
+        <div class="yt-carousel" id="${carouselId}">
+          ${videos.map(v => `
+            <div class="yt-item">
+              <div class="yt-thumb-wrap" onclick="window.open('${v.link}', '_blank')">
+                <img src="${getYouTubeThumbnail(v.link)}" alt="${v.title}" />
+                <div class="yt-play-icon">▶</div>
+              </div>
+              <div class="yt-info">
+                <div class="yt-title">${v.title}</div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+        <button class="yt-nav next" onclick="slideYoutube('${carouselId}', 1)">›</button>
+      </div>
+    `;
+  }
+
+  /* 유튜브 썸네일 추출 헬퍼 */
+  function getYouTubeThumbnail(url) {
+    if (!url) return '';
+    const m = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([\w-]{11})/);
+    return m ? `https://img.youtube.com/vi/${m[1]}/hqdefault.jpg` : '';
+  }
+
+  /* 유튜브 캐러셀 슬라이드 함수 (전역) */
+  window.slideYoutube = function (id, dir) {
+    const el = document.getElementById(id);
+    if (!el) return;
+
+    // 현재 스크롤 위치 기반으로 다음/이전 아이템으로 스크롤
+    const itemWidth = el.querySelector('.yt-item')?.offsetWidth || 300;
+    const gap = 16;
+    const scrollAmount = itemWidth + gap;
+
+    el.scrollBy({
+      left: dir * scrollAmount * 3, // 3개씩 이동
+      behavior: 'smooth'
+    });
+  };
+
+  renderYoutubeVideos();
 
   /* ═══ CONTACT ═══ */
   const cg = document.getElementById('contactGrid');

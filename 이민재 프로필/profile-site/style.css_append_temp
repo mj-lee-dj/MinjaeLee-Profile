@@ -1,0 +1,134 @@
+/* ═══ 유튜브 영상 캐러셀 ═══ */
+.yt-carousel-wrapper {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.yt-carousel {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding: 4px 4px 20px 4px; /* 하단 스크롤바 공간 확보 */
+  width: 100%;
+  /* 스크롤바 숨기기 */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.yt-carousel::-webkit-scrollbar {
+  display: none;
+}
+
+.yt-item {
+  flex: 0 0 300px; /* 고정 너비 */
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.yt-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+  border-color: var(--red);
+}
+
+.yt-thumb-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16/9;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.yt-thumb-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+
+.yt-thumb-wrap:hover img {
+  transform: scale(1.05);
+}
+
+.yt-play-icon {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.3);
+  color: #fff;
+  font-size: 3rem;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+
+.yt-thumb-wrap:hover .yt-play-icon {
+  opacity: 1;
+  background: rgba(0,0,0,0.1);
+  text-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+.yt-info {
+  padding: 12px 16px;
+}
+
+.yt-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 4px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.4;
+  height: 2.8em; /* 2줄 높이 고정 */
+}
+
+/* 네비게이션 버튼 */
+.yt-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.6);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  cursor: pointer;
+  z-index: 2;
+  transition: all 0.2s;
+  backdrop-filter: blur(4px);
+}
+
+.yt-nav:hover {
+  background: var(--red);
+  border-color: var(--red);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.yt-nav.prev { left: -20px; }
+.yt-nav.next { right: -20px; }
+
+@media (max-width: 768px) {
+  .yt-nav { display: none; } /* 모바일에서는 터치 스크롤 사용 */
+  .yt-carousel {
+    scroll-snap-type: x mandatory;
+  }
+  .yt-item {
+    scroll-snap-align: center;
+    flex: 0 0 260px;
+  }
+}
