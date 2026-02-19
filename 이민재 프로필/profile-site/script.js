@@ -408,17 +408,21 @@ document.addEventListener('DOMContentLoaded', async () => {
       <div class="yt-carousel-wrapper">
         <button class="yt-nav prev" onclick="slideYoutube('${carouselId}', -1)">‹</button>
         <div class="yt-carousel" id="${carouselId}">
-          ${videos.map(v => `
+          ${videos.map(v => {
+      // 사용자 지정 썸네일 확인
+      const thumbUrl = (v.images && v.images.length > 0) ? v.images[0] : getYouTubeThumbnail(v.link);
+      return `
             <div class="yt-item">
               <div class="yt-thumb-wrap" onclick="window.open('${v.link}', '_blank')">
-                <img src="${getYouTubeThumbnail(v.link)}" alt="${v.title}" />
+                <img src="${thumbUrl}" alt="${v.title}" style="object-fit:cover" />
                 <div class="yt-play-icon">▶</div>
               </div>
               <div class="yt-info">
                 <div class="yt-title">${v.title}</div>
               </div>
             </div>
-          `).join('')}
+            `;
+    }).join('')}
         </div>
         <button class="yt-nav next" onclick="slideYoutube('${carouselId}', 1)">›</button>
       </div>
