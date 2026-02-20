@@ -9,17 +9,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const localData = localStorage.getItem('profileData');
     if (localData) {
       const parsed = JSON.parse(localData);
-
-      // 버전 체크: data.js의 버전이 더 높으면 로컬 스토리지 무시 (새로운 데이터 적용 위함)
-      const currentVer = D._version || "0";
-      const localVer = parsed._version || "0";
-
-      if (currentVer > localVer) {
-        console.log(`📦 Local data outdated (${localVer} < ${currentVer}). Using fresh data.`);
-        // 선택사항: 로컬 스토리지 정리?
-        // localStorage.removeItem('profileData'); 
-        // 사용자가 admin에서 작업중일 수 있으니 삭제는 조심. 일단 D 덮어쓰기만 안 함.
-      } else if (parsed && parsed.personal) {
+      if (parsed && parsed.personal) {
         D = parsed;
         console.log('📦 Data loaded from Local Storage');
       }
@@ -419,7 +409,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         <div class="yt-carousel" id="${carouselId}">
           ${videos.map(v => {
       // 사용자 지정 썸네일 확인
-      const thumbUrl = (v.images && v.images.length > 0) ? v.images[0] : getYouTubeThumbnail(v.link);
+      const thumbUrl = (v.images && v.images.length > 0 && v.images[0]) ? v.images[0] : getYouTubeThumbnail(v.link);
       return `
             <div class="yt-item">
               <div class="yt-thumb-wrap" onclick="window.open('${v.link}', '_blank')">
