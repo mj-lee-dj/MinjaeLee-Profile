@@ -5,6 +5,7 @@
   
 */
 const profileData = {
+  "_version": "20260220_01",
   "youtubeVideos": [
     { "id": "l6", "title": "제167회 KERIS 디지털교육 포럼 교사 대표 발표", "link": "https://www.youtube.com/live/CPX7oqKIF8U", "images": [] },
     { "id": "act_mls31d5rdaota", "title": "2025 G-Creator 국제교류 with Taiwan", "link": "https://www.youtube.com/watch?v=u5jIxJis5K0", "images": [] },
