@@ -1551,3 +1551,4 @@ footer {
     flex: 0 0 260px;
   }
 }
+@media (max-width: 768px) { .yt-nav { display: none; } .yt-carousel-wrapper { padding: 0; margin: 0 -20px; width: calc(100% + 40px); } .yt-carousel { padding: 0 20px 20px 20px; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; gap: 12px; } .yt-item { scroll-snap-align: center; flex: 0 0 280px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); } }

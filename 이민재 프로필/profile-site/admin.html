@@ -1969,37 +1969,113 @@ ${contentText ? contentText.slice(0, 15000) : '내용 없음 (제목 및 메타�
     function setupListDragDrop(containerId, dataKey) {
       const list = document.getElementById(containerId);
       if (!list) return;
-      let draggedItem = null;
-      let placeholder = document.createElement('div');
-      placeholder.style.height = '4px';
-      placeholder.style.background = 'var(--red)';
-      placeholder.style.borderRadius = '2px';
 
-      [...list.children].forEach(item => {
+      const items = Array.from(list.children);
+      items.forEach(item => {
         const handle = item.querySelector('.drag-handle');
         if (!handle) return;
-        handle.addEventListener('mousedown', () => item.setAttribute('draggable', 'true'));
-        item.addEventListener('dragstart', e => {
-          draggedItem = item;
-          e.dataTransfer.effectAllowed = 'move';
-          item.style.opacity = '0.5';
-        });
-        item.addEventListener('dragend', () => {
-          draggedItem = null;
-          item.style.opacity = '1';
-          item.removeAttribute('draggable');
-          if (placeholder.parentNode) placeholder.parentNode.removeChild(placeholder);
-          const newOrderIndices = [...list.children].map(child => +child.dataset.idx);
-          D[dataKey] = newOrderIndices.map(i => D[dataKey][i]);
-          save(); render();
-        });
-        item.addEventListener('dragover', e => {
-          e.preventDefault();
-          if (item === draggedItem) return;
+
+        handle.style.cursor = 'grab';
+        handle.addEventListener('mousedown', e => {
+          e.preventDefault(); // 텍스트 선택 방지
+          const fromIdx = +item.dataset.idx;
+          let currentTargetItem = null;
+          
+          item.classList.add('dragging');
+          item.style.position = 'relative';
+          item.style.zIndex = '1000';
+          item.style.opacity = '0.6';
+          item.style.boxShadow = '0 8px 16px rgba(0,0,0,0.2)';
+          document.body.style.cursor = 'grabbing';
+          
+          const initialY = e.clientY;
           const rect = item.getBoundingClientRect();
-          const next = (e.clientY - rect.top) / (rect.bottom - rect.top) > 0.5;
-          list.insertBefore(placeholder, next ? item.nextSibling : item);
-          list.insertBefore(draggedItem, placeholder);
+          const offsetY = initialY - rect.top;
+
+          // Placeholder 생성
+          const placeholder = document.createElement('div');
+          placeholder.style.height = rect.height + 'px';
+          placeholder.style.background = 'rgba(229, 9, 20, 0.1)';
+          placeholder.style.border = '2px dashed var(--red)';
+          placeholder.style.borderRadius = '8px';
+          placeholder.style.marginBottom = '12px';
+          
+          item.parentNode.insertBefore(placeholder, item);
+          item.style.position = 'absolute';
+          item.style.top = (rect.top + window.scrollY) + 'px';
+          item.style.left = rect.left + 'px';
+          item.style.width = rect.width + 'px';
+          
+          function onMouseMove(ev) {
+            const moveY = ev.clientY;
+            item.style.top = (moveY - offsetY + window.scrollY) + 'px';
+            
+            // 현재 위치 아래의 아이템 찾기
+            const siblings = Array.from(list.children).filter(el => el !== item && el !== placeholder && el.dataset.idx);
+            
+            let found = false;
+            for (const sibling of siblings) {
+              const sibRect = sibling.getBoundingClientRect();
+              const sibMid = sibRect.top + sibRect.height / 2;
+              
+              if (moveY < sibMid) {
+                list.insertBefore(placeholder, sibling);
+                found = true;
+                break;
+              }
+            }
+            if (!found) {
+              list.appendChild(placeholder);
+            }
+          }
+
+          function onMouseUp() {
+            document.removeEventListener('mousemove', onMouseMove);
+            document.removeEventListener('mouseup', onMouseUp);
+            
+            // 스타일 복구
+            item.classList.remove('dragging');
+            item.style.position = '';
+            item.style.zIndex = '';
+            item.style.opacity = '';
+            item.style.boxShadow = '';
+            item.style.top = '';
+            item.style.left = '';
+            item.style.width = '';
+            document.body.style.cursor = '';
+            
+            // 실제 DOM 이동
+            list.insertBefore(item, placeholder);
+            placeholder.remove();
+
+            // 데이터 순서 업데이트
+            const newOrderIndices = Array.from(list.children).map(child => +child.dataset.idx).filter(n => !isNaN(n));
+             
+            // 현재 UI 순서대로 데이터 재정렬 (인덱스 보정 필요 없음, map으로 재구성)
+            // 주의: data-idx는 초기 렌더링 시의 인덱스이므로, 현재 DOM 순서대로 데이터를 가져와야 함
+            const currentData = D[dataKey];
+            const newData = [];
+            
+            // DOM 순서대로 기존 데이터 매핑
+            const domItems = Array.from(list.children).filter(el => el.hasAttribute('data-idx'));
+            domItems.forEach(el => {
+               const oldIdx = +el.dataset.idx;
+               if(currentData[oldIdx]) newData.push(currentData[oldIdx]);
+            });
+
+            if (newData.length === currentData.length) {
+                D[dataKey] = newData;
+                save(); 
+                render();
+                showToast('✅ 순서가 변경되었습니다');
+            } else {
+                console.error('Data mismatch during resort');
+                render(); // 복구
+            }
+          }
+
+          document.addEventListener('mousemove', onMouseMove);
+          document.addEventListener('mouseup', onMouseUp);
         });
       });
     }
