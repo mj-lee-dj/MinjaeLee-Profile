@@ -15,6 +15,12 @@ const profileData = {
       "images": []
     },
     {
+      "id": "yt_mluvaatexdb2c",
+      "title": "[LIVE] 일본, 학교에서 뭐했게? 👀 : 흙바닥 유치원부터 코딩하는 중학교까지 찐 탐방 썰전!",
+      "link": "https://www.youtube.com/watch?v=yfouTetvn7I",
+      "images": []
+    },
+    {
       "id": "yt_mlte9bjg4niyv",
       "title": "[Edu 로켓배송] 구글 도구를 활용하는 가장 중요한 포인트! 1년이 편해지는 구글 기반 학급 루틴 세우기",
       "link": "https://www.youtube.com/watch?v=JesUZK8vHR4",
