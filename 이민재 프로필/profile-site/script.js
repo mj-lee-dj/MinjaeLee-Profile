@@ -2,7 +2,7 @@
  * 이민재 포트폴리오 — Netflix-Style 렌더링 & 인터랙션
  */
 document.addEventListener('DOMContentLoaded', async () => {
-  let D = profileData; // data.js의 기본값
+  let D = profileData; // data_v3.js의 기본값
 
   // 로컬 스토리지 연동 로직 제거 (캐시 충돌 방지)
 

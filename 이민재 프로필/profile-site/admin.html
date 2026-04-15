@@ -759,7 +759,7 @@
         <li><button data-tab="activities">📌 활동</button></li>
         <li><button data-tab="press">📰 보도자료</button></li>
         <li style="margin-top:20px;border-top:1px solid var(--border);padding-top:20px">
-          <button onclick="downloadDataJs()" style="color:var(--green)">💾 data.js 다운로드 (모바일 픽스)</button>
+          <button onclick="downloadDataJs()" style="color:var(--green)">💾 data_v3.js 다운로드 (모바일 픽스)</button>
         </li>
         <li><a href="index.html">← 사이트로 이동</a></li>
       </ul>
@@ -785,7 +785,7 @@
     </div>
   </div>
 
-  <script src="data.js"></script>
+  <script src="data_v3.js"></script>
   <script>
     /* ── 간단한 비밀번호 보호 (클라이언트 사이드) ── */
     (function () {
@@ -824,7 +824,7 @@
 
     const REPO_OWNER = 'mj-lee-dj';
     const REPO_NAME = 'MinjaeLee-Profile';
-    const FILE_PATH = 'profile-site/data.js';
+    const FILE_PATH = 'profile-site/data_v3.js';
 
     /* [GitHub 연동] 초기 데이터 로드 (최신 데이터 동기화) */
     (async function initAdmin() {
@@ -2109,12 +2109,12 @@ ${contentText ? contentText.slice(0, 15000) : '내용 없음 (제목 및 메타�
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = "data.js";
+      a.download = "data_v3.js";
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
-      alert('data.js 파일이 다운로드되었습니다.\n이 파일을 프로젝트 폴더의 data.js와 교체하고 배포하면 모바일에서도 정상적으로 보입니다.');
+      alert('data_v3.js 파일이 다운로드되었습니다.\n이 파일을 프로젝트 폴더의 data_v3.js와 교체하고 배포하면 모바일에서도 정상적으로 보입니다.');
     }
 
 
