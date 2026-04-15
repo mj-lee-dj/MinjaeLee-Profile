@@ -4,19 +4,7 @@
 document.addEventListener('DOMContentLoaded', async () => {
   let D = profileData; // data.js의 기본값
 
-  /* [로컬 스토리지 연동] 관리자 페이지에서 저장한 데이터가 있으면 우선 사용 */
-  try {
-    const localData = localStorage.getItem('profileData');
-    if (localData) {
-      const parsed = JSON.parse(localData);
-      if (parsed && parsed.personal) {
-        D = parsed;
-        console.log('📦 Data loaded from Local Storage');
-      }
-    }
-  } catch (e) {
-    console.error('Failed to load local data:', e);
-  }
+  // 로컬 스토리지 연동 로직 제거 (캐시 충돌 방지)
 
   /* [구글 시트 연동] URL이 있으면 시트 데이터 가져오기 */
   if (typeof GAS_API_URL !== 'undefined' && GAS_API_URL) {
