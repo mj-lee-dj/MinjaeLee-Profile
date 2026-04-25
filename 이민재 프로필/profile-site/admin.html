@@ -958,7 +958,7 @@
         /* 객체 전체를 순회하며 base64 이미지 추출 */
         async function processObj(obj) {
           if (!obj || typeof obj !== 'object') return;
-          const keys = Array.isArray(obj) ? obj.keys() : Object.keys(obj);
+          const keys = Object.keys(obj);
           for (const k of keys) {
             if (typeof obj[k] === 'string') {
               obj[k] = await uploadIfBase64(obj[k]);
