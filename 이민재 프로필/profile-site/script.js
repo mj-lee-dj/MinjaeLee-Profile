@@ -157,6 +157,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         gallery.className = 'card-gallery';
         gallery.innerHTML = `<img src="${imgUrl}" alt="" onerror="this.parentElement.remove()"/>`;
         card.prepend(gallery);
+      } else {
+        const exGal = card.querySelector('.card-gallery');
+        if (!exGal.classList.contains('multi')) {
+          exGal.innerHTML = `<img src="${imgUrl}" alt="" onerror="this.parentElement.remove()"/>`;
+        }
       }
     });
   }
