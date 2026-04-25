@@ -983,6 +983,32 @@
           throw new Error(`데이터 저장 실패: ${err.message || dataBlobRes.status}`);
         }
         treeEntries.push({ path: FILE_PATH, mode: '100644', type: 'blob', sha: (await dataBlobRes.json()).sha });
+        
+        /* ── 3.5단계: index.html 캐시 버스터 업데이트 ── */
+        try {
+          const indexRes = await fetch(`${API}/contents/profile-site/index.html`, { headers });
+          if (indexRes.ok) {
+            const indexData = await indexRes.json();
+            // Base64 decode (UTF-8 대응)
+            const decoded = atob(indexData.content.replace(/\s/g, ''));
+            let indexText = new TextDecoder('utf-8').decode(Uint8Array.from(decoded, c => c.charCodeAt(0)));
+            
+            const timestamp = Date.now();
+            // data_v3.js(?v=...) 패턴을 찾아 현재 타임스탬프로 교체
+            indexText = indexText.replace(/data_v3\.js(\?v=\d+)?/g, `data_v3.js?v=${timestamp}`);
+            
+            const indexBlobRes = await fetch(`${API}/git/blobs`, {
+              method: 'POST', headers,
+              body: JSON.stringify({ content: indexText, encoding: 'utf-8' })
+            });
+            if (indexBlobRes.ok) {
+              const indexBlob = await indexBlobRes.json();
+              treeEntries.push({ path: 'profile-site/index.html', mode: '100644', type: 'blob', sha: indexBlob.sha });
+            }
+          }
+        } catch (err) {
+          console.warn('index.html 자동 갱신 실패 (데이터 저장은 계속 진행):', err);
+        }
 
         /* ── 4단계: 트리 생성 ── */
         const treeRes = await fetch(`${API}/git/trees`, {
@@ -1009,7 +1035,7 @@
         });
         if (!updateRes.ok) throw new Error('Push 실패');
 
-        showToast(`✅ 저장 성공! (이미지 ${imgCount}장 분리 저장됨)`);
+        showToast(`✅ 저장 완료! Vercel 배포가 자동으로 시작되었습니다. (약 1분 후 반영)`);
         saveProfileData(D);
 
       } catch (e) {
