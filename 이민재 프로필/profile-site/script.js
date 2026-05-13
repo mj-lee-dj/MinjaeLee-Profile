@@ -69,6 +69,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   /* ═══ ABOUT ═══ */
   document.getElementById('aboutBio').textContent = D.personal.bio;
+  // About Me 제목: 관리자에서 설정된 값이 있으면 사용
+  if (D.personal.aboutTitle) {
+    const titleEl = document.getElementById('aboutTitle');
+    if (titleEl) titleEl.innerHTML = D.personal.aboutTitle.replace(/\n/g, '<br />');
+  }
   const credList = document.getElementById('credentialList');
   D.personal.credentials.forEach(c => {
     const el = document.createElement('div');
@@ -174,28 +179,32 @@ document.addEventListener('DOMContentLoaded', async () => {
     const id = 'g_' + Math.random().toString(36).slice(2, 8);
     return `
       <div class="card-gallery multi" id="${id}">
-        ${images.map((img, i) => `<img src="${img}" alt="${alt} ${i + 1}" class="${i === 0 ? 'active' : ''}" onerror="this.remove()"/>`).join('')}
-        <button class="gal-prev" onclick="slideGallery('${id}',-1)">‹</button>
-        <button class="gal-next" onclick="slideGallery('${id}',1)">›</button>
-        <div class="gal-dots">${images.map((_, i) => `<span class="gal-dot${i === 0 ? ' active' : ''}" onclick="goSlide('${id}',${i})"></span>`).join('')}</div>
+      ${images.map((img, i) => `<img src="${img}" alt="${alt} ${i + 1}" class="${i === 0 ? 'active' : ''}" onerror="this.remove()"/>`).join('')}
+      <div class="gallery-controls">
+        <button class="gallery-prev" onclick="event.stopPropagation(); changeSlide(this, -1)">&#10094;</button>
+        <div class="gallery-dots">
+          ${images.map((_, i) => `<span class="dot ${i === 0 ? 'active' : ''}" onclick="event.stopPropagation(); setSlide(this, ${i})"></span>`).join('')}
+        </div>
+        <button class="gallery-next" onclick="event.stopPropagation(); changeSlide(this, 1)">&#10095;</button>
       </div>
+    </div>
     `;
   }
 
   /* 갤러리 전역 함수 */
-  window.slideGallery = function (id, dir) {
-    const el = document.getElementById(id); if (!el) return;
-    const imgs = el.querySelectorAll('img');
-    const dots = el.querySelectorAll('.gal-dot');
+  window.changeSlide = function(btn, dir) {
+    const gallery = btn.closest('.card-gallery');
+    const imgs = gallery.querySelectorAll('img');
+    const dots = gallery.querySelectorAll('.dot');
     let cur = [...imgs].findIndex(i => i.classList.contains('active'));
-    imgs[cur]?.classList.remove('active'); dots[cur]?.classList.remove('active');
+    imgs[cur].classList.remove('active'); dots[cur].classList.remove('active');
     cur = (cur + dir + imgs.length) % imgs.length;
-    imgs[cur]?.classList.add('active'); dots[cur]?.classList.add('active');
+    imgs[cur].classList.add('active'); dots[cur].classList.add('active');
   };
-  window.goSlide = function (id, idx) {
-    const el = document.getElementById(id); if (!el) return;
-    el.querySelectorAll('img').forEach((img, i) => img.classList.toggle('active', i === idx));
-    el.querySelectorAll('.gal-dot').forEach((d, i) => d.classList.toggle('active', i === idx));
+  window.setSlide = function(dot, idx) {
+    const gallery = dot.closest('.card-gallery');
+    gallery.querySelectorAll('img').forEach((img, i) => img.classList.toggle('active', i === idx));
+    gallery.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === idx));
   };
 
   /* ═══ 헬퍼: 플레이스홀더 패턴 생성 (이미지 없을 때 시각적 요소 제공) ═══ */
@@ -261,7 +270,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       <p class="pub-publisher">${p.publisher}</p>
       <p class="pub-desc">${p.previewDesc || p.description}</p>
       <div class="pub-tags">${(p.tags || []).map(t => `<span class="pub-tag">${t}</span>`).join('')}</div>
-      ${p.link ? `<a href="${p.link}" target="_blank" class="pub-link">구입 링크 →</a>` : ''}
+      ${p.link ? `<a href="${p.link}" target="_blank" class="pub-link">보러가기 →</a>` : ''}
     `;
     pubRow.appendChild(card);
   });
@@ -282,7 +291,14 @@ document.addEventListener('DOMContentLoaded', async () => {
       </div>
       ${c.link ? `<a href="${c.link}" target="_blank" class="course-link">수강하기 →</a>` : ''}
     `;
-    if (c.link) { card.style.cursor = 'pointer'; card.onclick = (e) => { if (e.target.tagName !== 'A') window.open(c.link, '_blank'); }; }
+    if (c.link) {
+      card.style.cursor = 'pointer';
+      card.onclick = (e) => {
+        // 갤러리 컨트롤 버튼이나 도트를 클릭한 경우 무시
+        if (e.target.closest('.gallery-prev, .gallery-next, .dot')) return;
+        if (c.link) window.open(c.link, '_blank');
+      };
+    }
     courseRow.appendChild(card);
   });
 
@@ -379,7 +395,14 @@ document.addEventListener('DOMContentLoaded', async () => {
       </div>
       ${p.link ? `<a href="${p.link}" target="_blank" class="press-link">기사 보기 →</a>` : ''}
     `;
-    if (p.link) { card.style.cursor = 'pointer'; card.onclick = (e) => { if (e.target.tagName !== 'A') window.open(p.link, '_blank'); }; }
+    if (p.link) {
+      card.style.cursor = 'pointer';
+      card.onclick = (e) => {
+        // 갤러리 컨트롤 버튼이나 도트를 클릭한 경우 무시
+        if (e.target.closest('.gallery-prev, .gallery-next, .dot')) return;
+        if (p.link) window.open(p.link, '_blank');
+      };
+    }
     pList.appendChild(card);
   });
 
