@@ -2598,27 +2598,43 @@ category 판단 기준:
       if (!D.personal) D.personal = {};
       const currentTitle = D.personal.aboutTitle || 'AI 교육의\n최전선에 서다';
       const currentBio = D.personal.bio || '';
+      const currentCredentials = (D.personal.credentials || []).join('\n');
+      const currentExpertise = (D.expertise || []).join('\n');
+
       main.innerHTML = `
         <div class="page-header">
           <div class="page-title">👤 About Me 관리</div>
           <button class="btn btn-red" onclick="saveAboutMe()">☁️ 저장 & 배포</button>
         </div>
-        <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:28px;max-width:780px">
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:28px;max-width:880px">
           <div style="background:rgba(229,9,20,.07);border:1px solid rgba(229,9,20,.2);border-radius:8px;padding:16px;margin-bottom:24px;font-size:.88rem;color:var(--text2);line-height:1.6">
             💡 <strong>안내:</strong> 제목과 내용을 수정하면 포트폴리오 사이트의 <strong>About Me</strong> 섹션에 바로 반영됩니다.<br/>
-            제목은 줄바꿈을 <code>\n</code>으로 입력하면 두 줄로 나뉩니다.
+            제목은 줄바꿈을 <code>\\n</code>으로 입력하면 두 줄로 나뉩니다.
           </div>
 
           <div class="form-row">
             <label class="form-label" style="font-size:1rem;margin-bottom:10px">📌 섹션 제목</label>
-            <div class="form-hint" style="margin-bottom:10px">포트폴리오에 크게 표시되는 제목입니다. \n으로 줄바꿈 (예: AI 교육의\n최전선에 서다)</div>
-            <input class="form-input" id="about_title" value="${(currentTitle || '').replace(/\n/g, '\\n').replace(/</g, '&lt;').replace(/>/g, '&gt;')}" placeholder="예: AI 교육의\n최전선에 서다" style="font-size:1.1rem;font-weight:600"/>
+            <div class="form-hint" style="margin-bottom:10px">포트폴리오에 크게 표시되는 제목입니다. \\n으로 줄바꿈 (예: AI 교육의\\n최전선에 서다)</div>
+            <input class="form-input" id="about_title" value="${(currentTitle || '').replace(/\n/g, '\\n').replace(/"/g, '&quot;')}" placeholder="예: AI 교육의\\n최전선에 서다" style="font-size:1.1rem;font-weight:600"/>
           </div>
 
           <div class="form-row" style="margin-top:20px">
             <label class="form-label" style="font-size:1rem;margin-bottom:10px">📝 소개글 (Bio)</label>
             <div class="form-hint" style="margin-bottom:10px">이름 아래에 표시되는 자기소개 문장입니다.</div>
-            <textarea class="form-textarea" id="about_bio" rows="7" style="min-height:160px;line-height:1.8;font-size:.97rem">${(currentBio || '').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</textarea>
+            <textarea class="form-textarea" id="about_bio" rows="6" style="min-height:140px;line-height:1.8;font-size:.97rem">${(currentBio || '').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</textarea>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:24px">
+            <div class="form-row">
+              <label class="form-label">📜 주요 약력 (Credentials)</label>
+              <div class="form-hint" style="margin-bottom:8px">한 줄에 하나씩 입력하세요.</div>
+              <textarea class="form-textarea" id="about_credentials" rows="6" style="font-size:.9rem;line-height:1.6">${currentCredentials.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</textarea>
+            </div>
+            <div class="form-row">
+              <label class="form-label">🚀 전문 분야 (Expertise)</label>
+              <div class="form-hint" style="margin-bottom:8px">한 줄에 하나씩 입력하세요.</div>
+              <textarea class="form-textarea" id="about_expertise" rows="6" style="font-size:.9rem;line-height:1.6">${currentExpertise.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</textarea>
+            </div>
           </div>
 
           <div style="margin-top:24px;padding:20px;background:var(--card2);border-radius:10px;border:1px dashed var(--border)">
@@ -2648,11 +2664,17 @@ category 판단 기준:
     function saveAboutMe() {
       const rawTitle = document.getElementById('about_title').value.trim();
       const bio = document.getElementById('about_bio').value.trim();
+      const credentials = document.getElementById('about_credentials').value.split('\n').map(s => s.trim()).filter(s => s);
+      const expertise = document.getElementById('about_expertise').value.split('\n').map(s => s.trim()).filter(s => s);
+
       if (!rawTitle) return alert('제목을 입력하세요.');
       if (!bio) return alert('소개글을 입력하세요.');
-      // \n 리터럴을 실제 줄바꿈 문자로 변환하여 저장
+      
       D.personal.aboutTitle = rawTitle.replace(/\\n/g, '\n');
       D.personal.bio = bio;
+      D.personal.credentials = credentials;
+      D.expertise = expertise;
+      
       save();
       showToast('✅ About Me 저장 완료!');
     }
