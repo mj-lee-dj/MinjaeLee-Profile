@@ -69,6 +69,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   /* ═══ ABOUT ═══ */
   document.getElementById('aboutBio').textContent = D.personal.bio;
+  // About Me 제목: 관리자에서 설정된 값이 있으면 사용
+  if (D.personal.aboutTitle) {
+    const titleEl = document.getElementById('aboutTitle');
+    if (titleEl) titleEl.innerHTML = D.personal.aboutTitle.replace(/\n/g, '<br />');
+  }
   const credList = document.getElementById('credentialList');
   D.personal.credentials.forEach(c => {
     const el = document.createElement('div');
@@ -265,7 +270,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       <p class="pub-publisher">${p.publisher}</p>
       <p class="pub-desc">${p.previewDesc || p.description}</p>
       <div class="pub-tags">${(p.tags || []).map(t => `<span class="pub-tag">${t}</span>`).join('')}</div>
-      ${p.link ? `<a href="${p.link}" target="_blank" class="pub-link">구입 링크 →</a>` : ''}
+      ${p.link ? `<a href="${p.link}" target="_blank" class="pub-link">보러가기 →</a>` : ''}
     `;
     pubRow.appendChild(card);
   });
