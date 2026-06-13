@@ -1069,8 +1069,74 @@ section {
   transform: scale(1.25)
 }
 
-/* ???移대뱶 媛ㅻ윭由?*/
-/* ???移대뱶 媛ㅻ윭由?- 梨??쒖? 鍮꾩쑉 (?몃줈) */
+/* ── 다중 이미지 캐러셀 컨트롤 (gallery-prev/next/dots/dot) ── */
+.gallery-controls {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.gallery-prev,
+.gallery-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, .6);
+  color: #fff;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity .2s;
+  pointer-events: all;
+}
+
+.card-gallery:hover .gallery-prev,
+.card-gallery:hover .gallery-next {
+  opacity: 1;
+}
+
+.gallery-prev { left: 8px; }
+.gallery-next { right: 8px; }
+
+.gallery-prev:hover,
+.gallery-next:hover {
+  background: rgba(229, 9, 20, .8);
+}
+
+.gallery-dots {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 5px;
+  pointer-events: all;
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .35);
+  cursor: pointer;
+  transition: all .2s;
+}
+
+.dot.active {
+  background: var(--red);
+  transform: scale(1.25);
+}
+
+/* ?€??移대뱶 媛ㅻ윭由?*/
+/* ?€??移대뱶 媛ㅻ윭由?- 梨??쒖? 鍮꾩쑉 (?몃줈) */
 .pub-card .card-gallery {
   border-radius: 8px;
   margin-bottom: 16px;
