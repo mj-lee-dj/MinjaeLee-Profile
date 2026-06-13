@@ -272,7 +272,7 @@ const profileData = {
       "year": 2026,
       "category": "Google/Gemini",
       "link": "",
-      "previewDesc": "Gemini 사이드 패널을 기반으로 한 평가 설계 - 수행 - 결과 분석 워크플로우 효율화에 관한 연수입니다.",
+      "previewDesc": "Gemini 사이드 패널을 기반으로 한 평가 설계 - 수행 - 결과 분석 워크플로우 효율화에 및 서논술형 평가의 효과적인 운영에 관한 연수입니다.",
       "images": [
         "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/b28b860e7bdc.png",
         "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/d9c0a15b2216.png",
