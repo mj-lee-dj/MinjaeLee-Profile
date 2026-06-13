@@ -234,7 +234,7 @@ const profileData = {
       "year": 2026,
       "category": "에듀테크",
       "link": "",
-      "previewDesc": "Canva의 핵심 기능을 교사의 워크플로우에 맞춰 실습형으로 진행하는 연수입니다.",
+      "previewDesc": "Canva 2.0을 기반으로, Canva의 핵심 기능을 교사의 업무 흐름에 맞춰 체계적인 단계별 실습으로 정리한 연수입니다.",
       "images": [
         "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/a28a564b5176.png",
         "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/0b665ca4f803.png",
@@ -253,7 +253,7 @@ const profileData = {
       "year": 2026,
       "category": "Google/Gemini",
       "link": "",
-      "previewDesc": "",
+      "previewDesc": "NotebookLM을 활용해 교직원 업무자료 지식 아카이브 생성 및 챗봇 활용하기, 수업 자료를 효육적으로 제작해서 수업의 질 높이기에 관한 심화 세션입니다.",
       "images": [
         "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/421763f315ac.png",
         "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/860cc8737afb.png",
@@ -272,7 +272,7 @@ const profileData = {
       "year": 2026,
       "category": "Google/Gemini",
       "link": "",
-      "previewDesc": "",
+      "previewDesc": "Gemini 사이드 패널을 기반으로 한 평가 설계 - 수행 - 결과 분석 워크플로우 효율화에 관한 연수입니다.",
       "images": [
         "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/b28b860e7bdc.png",
         "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/d9c0a15b2216.png",
@@ -309,7 +309,7 @@ const profileData = {
       "year": 2026,
       "category": "Google/Gemini",
       "link": "",
-      "previewDesc": "NotebookLM을 활용해 학교 구성원의 업무자료 아카이브를 구성하고, 수업자료를 효과적으로 제작하는 방법에 관한 4시간 분량의 심화 세션입니다.",
+      "previewDesc": "NotebookLM을 활용해 특수학교 선생님들의 업무 효율화 및 수업자료 제작 능력 향상에 관한 4시간 분량의 심화 세션입니다.",
       "images": [
         "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/41f5b3761279.png"
       ],
@@ -340,7 +340,7 @@ const profileData = {
       "year": 2026,
       "category": "에듀테크",
       "link": "",
-      "previewDesc": "",
+      "previewDesc": "Canva 전문가 5인의 시각으로 바라본 Canva 활용 꿀팁에 관한 라이브 연수입니다.",
       "images": [
         "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/945c0e40db2f.png",
         "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/b5618614bd10.png",
