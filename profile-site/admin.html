@@ -2610,14 +2610,15 @@ category 판단 기준:
         <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:28px;max-width:880px">
           <div style="background:rgba(229,9,20,.07);border:1px solid rgba(229,9,20,.2);border-radius:8px;padding:16px;margin-bottom:24px;font-size:.88rem;color:var(--text2);line-height:1.6">
             💡 <strong>안내:</strong> 제목과 내용을 수정하면 포트폴리오 사이트의 <strong>About Me</strong> 섹션에 바로 반영됩니다.<br/>
-            제목은 줄바꿈을 <code>\\n</code>으로 입력하면 두 줄로 나뉩니다.<br/>
+            제목은 <strong>Enter 키</strong>로 줄바꿈하면 두 줄로 나뉩니다.<br/>
             <span style="color:var(--red)">* 만약 메뉴가 보이지 않거나 수정 사항이 반영되지 않으면 브라우저에서 <strong>Ctrl + Shift + R</strong> (강력 새로고침)을 눌러주세요.</span>
           </div>
 
           <div class="form-row">
             <label class="form-label" style="font-size:1rem;margin-bottom:10px">📌 섹션 제목</label>
-            <div class="form-hint" style="margin-bottom:10px">포트폴리오에 크게 표시되는 제목입니다. \\n으로 줄바꿈 (예: AI 교육의\\n최전선에 서다)</div>
-            <input class="form-input" id="about_title" value="${(currentTitle || '').replace(/\n/g, '\\n').replace(/"/g, '&quot;')}" placeholder="예: AI 교육의\\n최전선에 서다" style="font-size:1.1rem;font-weight:600"/>
+            <div class="form-hint" style="margin-bottom:10px">포트폴리오에 크게 표시되는 제목입니다. Enter 키로 줄바꿈할 수 있습니다.</div>
+            <textarea class="form-textarea" id="about_title" rows="3" style="font-size:1.1rem;font-weight:600;min-height:80px;line-height:1.6" placeholder="예: 교사의 여유가
+교육의 질을 결정합니다">${(currentTitle || '').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</textarea>
           </div>
 
           <div class="form-row" style="margin-top:20px">
@@ -2655,7 +2656,7 @@ category 판단 기준:
 
       /* 실시간 미리보기 */
       document.getElementById('about_title').addEventListener('input', function() {
-        const v = this.value.replace(/\\n/g, '\n');
+        const v = this.value;
         document.getElementById('previewTitle').innerHTML = v.replace(/\n/g, '<br/>');
       });
       document.getElementById('about_bio').addEventListener('input', function() {
@@ -2672,7 +2673,7 @@ category 판단 기준:
       if (!rawTitle) return alert('제목을 입력하세요.');
       if (!bio) return alert('소개글을 입력하세요.');
       
-      D.personal.aboutTitle = rawTitle.replace(/\\n/g, '\n');
+      D.personal.aboutTitle = rawTitle;
       D.personal.bio = bio;
       D.personal.credentials = credentials;
       D.expertise = expertise;
