@@ -1,8 +1,4 @@
-# uploads 폴더는 admin.html의 save()가 GitHub API로 직접 관리
-# 로컬 git에서 추적할 필요 없음 (로컬에 없어도 GitHub에 존재함)
-uploads/
-
-# 임시 파일
+# 임시 파일 제외
 *.css_append_temp
 *.tmp
 *.bak
