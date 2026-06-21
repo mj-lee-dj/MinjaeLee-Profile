@@ -98,8 +98,19 @@ document.addEventListener('DOMContentLoaded', async () => {
   function saveOgCache() { try { localStorage.setItem('ogImageCache', JSON.stringify(ogCache)); } catch (e) { } }
 
   function getItemImages(item) {
-    if (item.images && item.images.length) return item.images;
-    if (item.image) return [item.image];
+    let rawImgs = [];
+    if (item.images && item.images.length) rawImgs = [...item.images];
+    else if (item.image) rawImgs = [item.image];
+
+    // relative path (uploads/...) -> absolute GitHub path
+    const GITHUB_BASE = 'https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/';
+    const processed = rawImgs.map(src => {
+      if (src && src.startsWith('uploads/')) return GITHUB_BASE + src;
+      return src;
+    });
+
+    if (processed.length) return processed;
+
     /* YouTube 링크에서 자동 썸네일 */
     if (item.link) {
       const m = item.link.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([\w-]{11})/);
@@ -270,7 +281,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       <p class="pub-publisher">${p.publisher}</p>
       <p class="pub-desc">${p.previewDesc || p.description}</p>
       <div class="pub-tags">${(p.tags || []).map(t => `<span class="pub-tag">${t}</span>`).join('')}</div>
-      ${p.link ? `<a href="${p.link}" target="_blank" class="pub-link">보러가기 →</a>` : ''}
+      ${p.link ? `<a href="${p.link}" target="_blank" class="pub-link">보러가기</a>` : ''}
     `;
     pubRow.appendChild(card);
   });

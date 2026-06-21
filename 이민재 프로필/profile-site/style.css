@@ -568,10 +568,13 @@ section {
   align-items: center;
   align-self: flex-end;
   gap: 6px;
-  margin-top: auto; font-size: 1.6rem;
-  font-weight: 700;
+  margin-top: auto; 
+  font-size: 2.2rem;
+  font-weight: 900;
   color: var(--red);
-  transition: opacity .2s
+  transition: opacity .2s;
+  text-align: right;
+  line-height: 1.2;
 }
 
 .pub-link:hover {
@@ -632,12 +635,13 @@ section {
 
 .course-link {
   display: block;
-  padding: 10px 24px;
-  font-size: 1.6rem;
-  font-weight: 600;
+  padding: 12px 24px;
+  font-size: 2.2rem;
+  font-weight: 900;
   color: var(--red);
   border-top: 1px solid var(--border);
-  text-align: right
+  text-align: right;
+  line-height: 1.2;
 }
 
 .course-link:hover {
@@ -649,7 +653,7 @@ section {
   border-radius: 0
 }
 
-/* ?? 媛뺤쓽 ?? */
+/* ?€?€ 媛뺤쓽 ?€?€ */
 .filter-bar {
   display: flex;
   flex-wrap: wrap;
@@ -788,7 +792,7 @@ section {
   text-decoration: underline
 }
 
-/* ?? ?섏긽쨌?쒕룞 ?? */
+/* ?€?€ ?섏긽쨌?쒕룞 ?€?€ */
 .awards-wrap {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -894,14 +898,14 @@ section {
   border-color: var(--red)
 }
 
-/* ?? 蹂대룄 ?? */
+/* ?€?€ 蹂대룄 ?€?€ */
 .press-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
   gap: 14px
 }
 
-/* 蹂대룄?먮즺 移대뱶 ???대?吏 ?ы븿 ???몃줈 ?덉씠?꾩썐 */
+/* 蹂대룄?먮즺 移대뱶 ???대?吏€ ?ы븿 ???몃줈 ?덉씠?꾩썐 */
 .press-card {
   background: var(--card);
   border: 1px solid var(--border);
@@ -966,11 +970,12 @@ section {
 .press-link {
   display: block;
   padding: 12px 24px;
-  font-size: 1.6rem;
-  font-weight: 600;
+  font-size: 2.2rem;
+  font-weight: 900;
   color: var(--red);
   border-top: 1px solid var(--border);
-  text-align: right
+  text-align: right;
+  line-height: 1.2;
 }
 
 .press-link:hover {
@@ -1069,74 +1074,8 @@ section {
   transform: scale(1.25)
 }
 
-/* ── 다중 이미지 캐러셀 컨트롤 (gallery-prev/next/dots/dot) ── */
-.gallery-controls {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 2;
-}
-
-.gallery-prev,
-.gallery-next {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: rgba(0, 0, 0, .6);
-  color: #fff;
-  font-size: 1.2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  cursor: pointer;
-  opacity: 0;
-  transition: opacity .2s;
-  pointer-events: all;
-}
-
-.card-gallery:hover .gallery-prev,
-.card-gallery:hover .gallery-next {
-  opacity: 1;
-}
-
-.gallery-prev { left: 8px; }
-.gallery-next { right: 8px; }
-
-.gallery-prev:hover,
-.gallery-next:hover {
-  background: rgba(229, 9, 20, .8);
-}
-
-.gallery-dots {
-  position: absolute;
-  bottom: 8px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 5px;
-  pointer-events: all;
-}
-
-.dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, .35);
-  cursor: pointer;
-  transition: all .2s;
-}
-
-.dot.active {
-  background: var(--red);
-  transform: scale(1.25);
-}
-
-/* ?€??移대뱶 媛ㅻ윭由?*/
-/* ?€??移대뱶 媛ㅻ윭由?- 梨??쒖? 鍮꾩쑉 (?몃줈) */
+/* ???移대뱶 媛ㅻ윭由?*/
+/* ???移대뱶 媛ㅻ윭由?- 梨??쒖? 鍮꾩쑉 (?몃줈) */
 .pub-card .card-gallery {
   border-radius: 8px;
   margin-bottom: 16px;

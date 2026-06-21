@@ -1,0 +1,2883 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>관리자 — 이민재 포트폴리오</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <style>
+    :root {
+      --bg: #0e0e10;
+      --card: #1a1a1e;
+      --card2: #222228;
+      --border: #2e2e34;
+      --red: #e50914;
+      --blue: #3b82f6;
+      --green: #22c55e;
+      --text: #f5f5f5;
+      --text2: #9ca3af;
+      --font: 'Pretendard', 'Noto Sans KR', 'Inter', sans-serif;
+      --radius: 10px
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box
+    }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none
+    }
+
+    .layout {
+      display: flex;
+      min-height: 100vh
+    }
+
+    .sidebar {
+      width: 240px;
+      background: var(--card);
+      border-right: 1px solid var(--border);
+      padding: 24px 0;
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      overflow-y: auto;
+      z-index: 10
+    }
+
+    .sidebar-logo {
+      font-size: 1.1rem;
+      font-weight: 800;
+      padding: 0 24px 24px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 12px
+    }
+
+    .sidebar-logo span {
+      color: var(--red)
+    }
+
+    .sidebar-nav {
+      list-style: none
+    }
+
+    .sidebar-nav a,
+    .sidebar-nav button {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      padding: 12px 24px;
+      font-size: .9rem;
+      font-weight: 600;
+      color: var(--text2);
+      transition: all .2s;
+      cursor: pointer;
+      border: none;
+      background: none;
+      text-align: left;
+      font-family: inherit
+    }
+
+    .sidebar-nav a:hover,
+    .sidebar-nav button:hover {
+      background: rgba(255, 255, 255, .04);
+      color: #fff
+    }
+
+    .sidebar-nav a.active,
+    .sidebar-nav button.active {
+      color: #fff;
+      background: rgba(229, 9, 20, .12);
+      border-right: 3px solid var(--red)
+    }
+
+    .main {
+      margin-left: 240px;
+      flex: 1;
+      padding: 32px 40px;
+      max-width: 1100px
+    }
+
+    .page-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+      gap: 12px
+    }
+
+    .page-title {
+      font-size: 1.6rem;
+      font-weight: 800
+    }
+
+    .page-title small {
+      font-size: .85rem;
+      font-weight: 500;
+      color: var(--text2);
+      margin-left: 8px
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: .88rem;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      transition: all .2s;
+      font-family: inherit
+    }
+
+    .btn-red {
+      background: var(--red);
+      color: #fff
+    }
+
+    .btn-red:hover {
+      background: #b20710
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text2)
+    }
+
+    .btn-outline:hover {
+      border-color: #555;
+      color: #fff
+    }
+
+    .btn-green {
+      background: var(--green);
+      color: #fff
+    }
+
+    .btn-green:hover {
+      background: #16a34a
+    }
+
+    .btn-blue {
+      background: var(--blue);
+      color: #fff
+    }
+
+    .btn-blue:hover {
+      background: #2563eb
+    }
+
+    .btn-sm {
+      padding: 7px 14px;
+      font-size: .8rem
+    }
+
+    .btn-danger {
+      background: transparent;
+      border: 1px solid #ef4444;
+      color: #ef4444
+    }
+
+    .btn-danger:hover {
+      background: rgba(239, 68, 68, .12)
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse
+    }
+
+    .data-table th {
+      font-size: .75rem;
+      font-weight: 700;
+      color: var(--text2);
+      text-align: left;
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      letter-spacing: .06em;
+      text-transform: uppercase
+    }
+
+    .data-table td {
+      font-size: .88rem;
+      padding: 12px 14px;
+      border-bottom: 1px solid rgba(255, 255, 255, .04);
+      vertical-align: top
+    }
+
+    .data-table tr:hover td {
+      background: rgba(255, 255, 255, .02)
+    }
+
+    .data-table .actions {
+      display: flex;
+      gap: 6px;
+      white-space: nowrap
+    }
+
+    .hl-badge {
+      font-size: .7rem;
+      padding: 2px 8px;
+      border-radius: 4px;
+      background: rgba(229, 9, 20, .15);
+      color: var(--red);
+      font-weight: 700
+    }
+
+    .link-badge {
+      font-size: .7rem;
+      padding: 2px 8px;
+      border-radius: 4px;
+      background: rgba(59, 130, 246, .15);
+      color: var(--blue);
+      font-weight: 700
+    }
+
+    .img-badge {
+      font-size: .7rem;
+      padding: 2px 8px;
+      border-radius: 4px;
+      background: rgba(34, 197, 94, .15);
+      color: var(--green);
+      font-weight: 700
+    }
+
+    .td-thumb {
+      width: 60px;
+      height: 40px;
+      object-fit: cover;
+      border-radius: 4px;
+      border: 1px solid var(--border)
+    }
+
+    /* 모달 */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, .7);
+      z-index: 100;
+      display: none;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 40px 20px;
+      overflow-y: auto;
+      backdrop-filter: blur(4px)
+    }
+
+    .modal-overlay.open {
+      display: flex
+    }
+
+    .modal {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      width: 640px;
+      max-width: 100%;
+      padding: 32px
+    }
+
+    .modal h3 {
+      font-size: 1.2rem;
+      font-weight: 800;
+      margin-bottom: 20px
+    }
+
+    .form-row {
+      margin-bottom: 16px
+    }
+
+    .form-label {
+      font-size: .8rem;
+      font-weight: 700;
+      color: var(--text2);
+      margin-bottom: 6px;
+      display: block
+    }
+
+    .form-input,
+    .form-select,
+    .form-textarea {
+      width: 100%;
+      padding: 10px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--card2);
+      color: var(--text);
+      font-size: .9rem;
+      font-family: inherit;
+      outline: none;
+      transition: border .2s
+    }
+
+    .form-input:focus,
+    .form-textarea:focus {
+      border-color: var(--red)
+    }
+
+    .form-textarea {
+      height: 80px;
+      resize: vertical
+    }
+
+    .form-check {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: .9rem
+    }
+
+    .form-check input {
+      accent-color: var(--red);
+      width: 18px;
+      height: 18px
+    }
+
+    .form-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+      margin-top: 24px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border)
+    }
+
+    .form-hint {
+      font-size: .75rem;
+      color: var(--text2);
+      margin-top: 4px
+    }
+
+    /* 링크 미리보기 영역 */
+    .link-preview-area {
+      margin-top: 8px;
+      padding: 16px;
+      border-radius: var(--radius);
+      background: var(--card2);
+      border: 1px solid var(--border)
+    }
+
+    .link-row {
+      display: flex;
+      gap: 8px;
+      align-items: center
+    }
+
+    .link-row .form-input {
+      flex: 1
+    }
+
+    .fetch-btn {
+      white-space: nowrap
+    }
+
+    .preview-result {
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, .03);
+      border: 1px solid var(--border)
+    }
+
+    .preview-result img {
+      max-height: 120px;
+      border-radius: 6px;
+      margin-top: 8px;
+      border: 1px solid var(--border)
+    }
+
+    .preview-desc {
+      font-size: .85rem;
+      color: var(--text2);
+      margin-top: 8px;
+      line-height: 1.5
+    }
+
+    .fetching {
+      color: var(--blue);
+      font-size: .85rem;
+      animation: pulse 1.2s ease infinite
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 1
+      }
+
+      50% {
+        opacity: .4
+      }
+    }
+
+    /* 이미지 목록 */
+    .img-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px
+    }
+
+    .img-list-item {
+      position: relative;
+      width: 100px;
+      height: 70px;
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1px solid var(--border)
+    }
+
+    .img-list-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover
+    }
+
+    .img-list-item .remove-img {
+      position: absolute;
+      top: 2px;
+      right: 2px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, .7);
+      color: #fff;
+      border: none;
+      font-size: 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center
+    }
+
+    /* 통계 카드 */
+    .stat-cards {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 36px
+    }
+
+    .stat-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      text-align: center
+    }
+
+    .sc-val {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--red)
+    }
+
+    .sc-label {
+      font-size: .82rem;
+      color: var(--text2);
+      margin-top: 4px
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      padding: 14px 24px;
+      border-radius: 10px;
+      background: var(--green);
+      color: #fff;
+      font-weight: 700;
+      font-size: .9rem;
+      z-index: 200;
+      transform: translateY(80px);
+      opacity: 0;
+      transition: all .35s ease
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1
+    }
+
+    .preview-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--blue);
+      font-size: .85rem;
+      font-weight: 600;
+      margin-top: 8px
+    }
+
+    .preview-link:hover {
+      text-decoration: underline
+    }
+
+    /* 자동 등록 */
+    .auto-zone {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+      margin-bottom: 24px
+    }
+
+    .auto-zone h4 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 16px
+    }
+
+    .drop-area {
+      border: 2px dashed var(--border);
+      border-radius: var(--radius);
+      padding: 40px;
+      text-align: center;
+      color: var(--text2);
+      cursor: pointer;
+      transition: all .2s;
+      margin-bottom: 16px
+    }
+
+    .drop-area:hover,
+    .drop-area.dragover {
+      border-color: var(--red);
+      background: rgba(229, 9, 20, .04);
+      color: #fff
+    }
+
+    .drop-area input[type=file] {
+      display: none
+    }
+
+    .ai-status {
+      padding: 16px;
+      border-radius: var(--radius);
+      background: var(--card2);
+      border: 1px solid var(--border);
+      margin-top: 12px;
+      font-size: .9rem;
+      line-height: 1.7
+    }
+
+    .ai-result-card {
+      background: var(--card2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      margin-top: 16px
+    }
+
+    .ai-result-card h4 {
+      color: var(--red);
+      margin-bottom: 12px
+    }
+
+    .ai-field {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 8px;
+      font-size: .88rem
+    }
+
+    .ai-field .label {
+      font-weight: 700;
+      color: var(--text2);
+      min-width: 80px;
+      flex-shrink: 0
+    }
+
+    .ai-field .value {
+      flex: 1
+    }
+
+    .ai-img-preview {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin: 12px 0
+    }
+
+    .ai-img-preview img {
+      height: 80px;
+      border-radius: 6px;
+      border: 1px solid var(--border)
+    }
+
+    .api-key-area {
+      margin-bottom: 24px;
+      padding: 20px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius)
+    }
+
+    .api-key-area .form-input {
+      max-width: 480px
+    }
+
+    @media(max-width:768px) {
+      .sidebar {
+        width: 100%;
+        position: static;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+        padding: 16px
+      }
+
+      .sidebar-nav {
+        display: flex;
+        overflow-x: auto;
+        gap: 4px
+      }
+
+      .sidebar-nav a,
+      .sidebar-nav button {
+        white-space: nowrap;
+        padding: 8px 16px;
+        border-right: none !important
+      }
+
+      .main {
+        margin-left: 0;
+        padding: 20px
+      }
+
+      .stat-cards {
+        grid-template-columns: repeat(2, 1fr)
+      }
+
+      .layout {
+        flex-direction: column
+      }
+    }
+
+    @keyframes shake {
+
+      0%,
+      100% {
+        transform: translateX(0);
+      }
+
+      20%,
+      60% {
+        transform: translateX(-5px);
+      }
+
+      40%,
+      80% {
+        transform: translateX(5px);
+      }
+    }
+
+    .shake {
+      animation: shake 0.4s ease-in-out;
+      border-color: #ef4444 !important;
+    }
+
+    /* 드래그앤드롭 스타일 */
+    .drag-handle {
+      cursor: grab;
+      font-size: 1.1rem;
+      color: var(--text2);
+      user-select: none;
+      padding: 4px 8px;
+      border-radius: 4px;
+      transition: all .2s;
+    }
+
+    .drag-handle:hover {
+      color: var(--red);
+      background: rgba(229, 9, 20, .1);
+    }
+
+    .drag-handle:active {
+      cursor: grabbing;
+    }
+
+    tr.dragging {
+      opacity: .4;
+      background: var(--card2) !important;
+    }
+
+    tr.drag-over {
+      border-top: 2px solid var(--red) !important;
+    }
+
+    tr.drag-over-below {
+      border-bottom: 2px solid var(--red) !important;
+    }
+
+    /* 이미지 드래그앤드롭 */
+    .img-list-item.img-dragging {
+      opacity: .35;
+      transform: scale(.9);
+    }
+
+    .img-list-item.img-drag-over {
+      outline: 2px solid var(--blue);
+      outline-offset: 2px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-logo">관리자<span>.</span></div>
+      <ul class="sidebar-nav" id="sideNav">
+        <li><button class="active" data-tab="dashboard">📊 대시보드</button></li>
+        <li><button data-tab="autoRegister" style="color:var(--red);font-weight:800">🤖 자동 등록</button></li>
+        <li><button data-tab="lectures">🎤 강의이력</button></li>
+        <li><button data-tab="publications">📚 저서</button></li>
+        <li><button data-tab="courses">📺 원격연수</button></li>
+        <li><button onclick="currentTab='youtube';render()">🎬 민재쌤 영상</button></li>
+        <li><button data-tab="awards">🏆 수상</button></li>
+        <li><button data-tab="activities">📌 활동</button></li>
+        <li><button data-tab="press">📰 보도자료</button></li>
+        <li><button data-tab="aboutMe">👤 About Me</button></li>
+        <li style="margin-top:20px;border-top:1px solid var(--border);padding-top:20px">
+          <button onclick="downloadDataJs()" style="color:var(--green)">💾 data_v3.js 다운로드 (모바일 픽스)</button>
+        </li>
+        <li><a href="index.html">← 사이트로 이동</a></li>
+      </ul>
+    </aside>
+    <div class="main" id="mainContent"></div>
+  </div>
+  <div class="modal-overlay" id="modal">
+    <div class="modal" id="modalBody"></div>
+  </div>
+  <div class="toast" id="toast"></div>
+
+  <!-- 관리자 로그인 오버레이 -->
+  <div id="loginOverlay"
+    style="position:fixed;inset:0;background:var(--bg);z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:20px">
+    <div style="text-align:center">
+      <div style="font-size:3rem;margin-bottom:20px">🔒</div>
+      <h2 style="margin-bottom:10px">관리자 접근 권한 확인</h2>
+      <p style="color:var(--text2);margin-bottom:24px">페이지에 접근하려면 비밀번호를 입력하세요.</p>
+      <input type="password" id="adminPw" class="form-input"
+        style="width:280px;text-align:center;font-size:1.2rem;letter-spacing:4px" placeholder="Password" />
+      <button class="btn btn-red" style="width:100%;margin-top:12px;padding:12px" onclick="checkAdmin()">로그인</button>
+      <div id="loginMsg" style="color:#ef4444;margin-top:12px;font-size:.9rem;min-height:20px"></div>
+    </div>
+  </div>
+
+  <script src="data_v3.js"></script>
+  <script>
+    /* ── 간단한 비밀번호 보호 (클라이언트 사이드) ── */
+    (function () {
+      const isAuth = localStorage.getItem('admin_auth');
+      if (isAuth === 'true') {
+        document.getElementById('loginOverlay').style.display = 'none';
+      } else {
+        document.body.style.overflow = 'hidden'; // 스크롤 방지
+      }
+    })();
+
+    function checkAdmin() {
+      const pw = document.getElementById('adminPw').value;
+      const msg = document.getElementById('loginMsg');
+      if (pw === 'dhdpswnl2@') {
+        localStorage.setItem('admin_auth', 'true');
+        document.getElementById('loginOverlay').style.display = 'none';
+        document.body.style.overflow = '';
+        showToast('🔓 로그인 성공');
+      } else {
+        msg.textContent = '비밀번호가 올바르지 않습니다.';
+        document.getElementById('adminPw').classList.add('shake');
+        setTimeout(() => document.getElementById('adminPw').classList.remove('shake'), 400);
+      }
+    }
+
+    document.getElementById('adminPw')?.addEventListener('keydown', e => {
+      if (e.key === 'Enter') checkAdmin();
+    });
+    let D = profileData;
+    const main = document.getElementById('mainContent');
+    const modal = document.getElementById('modal');
+    const modalBody = document.getElementById('modalBody');
+    const toast = document.getElementById('toast');
+    let currentTab = 'dashboard';
+
+    const REPO_OWNER = 'mj-lee-dj';
+    const REPO_NAME = 'MinjaeLee-Profile';
+    const FILE_PATH = 'profile-site/data_v3.js';
+
+    /* [GitHub 연동] 초기 데이터 로드 (최신 데이터 동기화) */
+    (async function initAdmin() {
+      let remoteText = null;
+      const token = localStorage.getItem('gh_token');
+
+      // 1. 토큰이 있다면 API로 가져오기 (캐시 회피, 최신본 보장)
+      if (token) {
+        try {
+          // commits/main -> sha -> blob 방식이 가장 확실하지만, contents API의 raw 헤더 사용
+          const res = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FILE_PATH}?ref=main`, {
+            headers: {
+              'Authorization': `token ${token}`,
+              'Accept': 'application/vnd.github.v3.raw'
+            }
+          });
+          if (res.ok) {
+            remoteText = await res.text();
+            console.log('📦 Admin: Data loaded from GitHub API (Fresh)');
+          } else {
+            if (res.status === 401) localStorage.removeItem('gh_token'); // 토큰 만료 시 삭제
+          }
+        } catch (e) {
+          console.warn('GitHub API Load failed:', e);
+        }
+      }
+
+      // 2. 토큰이 없거나 실패했다면 Raw URL 사용 (CDN 캐시 가능성 있음)
+      if (!remoteText) {
+        try {
+          const res = await fetch(`https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/main/${FILE_PATH}`);
+          if (res.ok) {
+            remoteText = await res.text();
+            console.log('📦 Admin: Data loaded from GitHub Raw (Cached)');
+          }
+        } catch (e) {
+          console.warn('GitHub Raw Load failed:', e);
+        }
+      }
+
+      // 3. 데이터 파싱 및 적용
+      if (remoteText) {
+        const match = remoteText.match(/const profileData = ({[\s\S]*?});/);
+        if (match && match[1]) {
+          try {
+            const remoteData = JSON.parse(match[1]);
+            D = remoteData;
+            if (currentTab === 'dashboard') renderDashboard();
+          } catch (jsonErr) {
+            console.warn('JSON Parse Error:', jsonErr);
+          }
+        }
+      }
+    })();
+
+    function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 7) }
+
+    /* ══════════════════════════════════════════
+       GitHub 저장 (데이터베이스)
+       ══════════════════════════════════════════ */
+
+
+    let _saving = false; // 동시 저장 방지 잠금
+
+    async function save() {
+      if (_saving) { showToast('⏳ 저장이 진행 중입니다...'); return; }
+      _saving = true;
+
+      let token = localStorage.getItem('gh_token');
+      if (!token) {
+        token = prompt('GitHub Personal Access Token을 입력하세요.\n(repo 권한 필요, 한 번 입력하면 저장됩니다.)');
+        if (!token) { _saving = false; return; }
+        localStorage.setItem('gh_token', token);
+      }
+
+      const API = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}`;
+      const headers = { 'Authorization': `token ${token}`, 'Content-Type': 'application/json' };
+
+      try {
+        /* ── 1단계: 최신 커밋 & 트리 SHA ── */
+        showToast('☁️ 저장 준비 중...');
+        const refRes = await fetch(`${API}/git/refs/heads/main`, { headers });
+        if (!refRes.ok) {
+          if (refRes.status === 401 || refRes.status === 403) {
+            localStorage.removeItem('gh_token');
+            throw new Error('토큰이 유효하지 않거나 권한이 없습니다.');
+          }
+          throw new Error('브랜치 정보 조회 실패');
+        }
+        const latestCommitSha = (await refRes.json()).object.sha;
+        const baseTreeSha = (await (await fetch(`${API}/git/commits/${latestCommitSha}`, { headers })).json()).tree.sha;
+
+        /* ── 2단계: base64 이미지를 개별 파일로 추출·업로드 ── */
+        const dataClone = JSON.parse(JSON.stringify(D));
+        const treeEntries = [];       // 트리에 추가할 파일 목록
+        const uploadCache = new Map(); // 중복 방지 캐시 (hashKey → url)
+        let imgCount = 0;
+
+        /* base64 이미지 URL이면 blob으로 업로드하고 GitHub raw URL 반환 */
+        async function uploadIfBase64(val) {
+          if (typeof val !== 'string' || !val.startsWith('data:image/')) return val;
+          const m = val.match(/^data:image\/([^;]+);base64,(.+)$/s);
+          if (!m) return val;
+          const ext = m[1].replace('+xml', '').replace('jpeg', 'jpg');
+          const b64 = m[2];
+
+          /* 중복 체크 (base64 앞부분+길이로 해시 생성) */
+          const hashKey = b64.substring(0, 64) + '_' + b64.length;
+          if (uploadCache.has(hashKey)) return uploadCache.get(hashKey);
+
+          imgCount++;
+          showToast(`📤 이미지 업로드 중... (${imgCount}장)`);
+
+          const blobRes = await fetch(`${API}/git/blobs`, {
+            method: 'POST', headers,
+            body: JSON.stringify({ content: b64, encoding: 'base64' })
+          });
+          if (!blobRes.ok) {
+            const err = await blobRes.json().catch(() => ({}));
+            throw new Error(`이미지 ${imgCount} 업로드 실패: ${err.message || blobRes.status}`);
+          }
+          const blob = await blobRes.json();
+          const filePath = `profile-site/uploads/${blob.sha.substring(0, 12)}.${ext}`;
+          const rawUrl = `https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/main/${filePath}`;
+
+          treeEntries.push({ path: filePath, mode: '100644', type: 'blob', sha: blob.sha });
+          uploadCache.set(hashKey, rawUrl);
+          return rawUrl;
+        }
+
+        /* 객체 전체를 순회하며 base64 이미지 추출 */
+        async function processObj(obj) {
+          if (!obj || typeof obj !== 'object') return;
+          const keys = Object.keys(obj);
+          for (const k of keys) {
+            if (typeof obj[k] === 'string') {
+              obj[k] = await uploadIfBase64(obj[k]);
+            } else if (typeof obj[k] === 'object') {
+              await processObj(obj[k]);
+            }
+          }
+        }
+
+        await processObj(dataClone);
+
+        /* ── 3단계: 축소된 data.js blob 생성 ── */
+        showToast('📄 데이터 파일 저장 중...');
+        const newContent = `/* \n  [Profile Data] \n  Updated at: ${new Date().toISOString()} \n*/\nconst profileData = ${JSON.stringify(dataClone)};\n`;
+
+        const dataBlobRes = await fetch(`${API}/git/blobs`, {
+          method: 'POST', headers,
+          body: JSON.stringify({ content: newContent, encoding: 'utf-8' })
+        });
+        if (!dataBlobRes.ok) {
+          const err = await dataBlobRes.json().catch(() => ({}));
+          throw new Error(`데이터 저장 실패: ${err.message || dataBlobRes.status}`);
+        }
+        treeEntries.push({ path: FILE_PATH, mode: '100644', type: 'blob', sha: (await dataBlobRes.json()).sha });
+        
+        /* ── 3.5단계: index.html 캐시 버스터 업데이트 ── */
+        try {
+          const indexRes = await fetch(`${API}/contents/profile-site/index.html`, { headers });
+          if (indexRes.ok) {
+            const indexData = await indexRes.json();
+            // Base64 decode (UTF-8 대응)
+            const decoded = atob(indexData.content.replace(/\s/g, ''));
+            let indexText = new TextDecoder('utf-8').decode(Uint8Array.from(decoded, c => c.charCodeAt(0)));
+            
+            const timestamp = Date.now();
+            // data_v3.js(?v=...) 패턴을 찾아 현재 타임스탬프로 교체
+            indexText = indexText.replace(/data_v3\.js(\?v=\d+)?/g, `data_v3.js?v=${timestamp}`);
+            
+            const indexBlobRes = await fetch(`${API}/git/blobs`, {
+              method: 'POST', headers,
+              body: JSON.stringify({ content: indexText, encoding: 'utf-8' })
+            });
+            if (indexBlobRes.ok) {
+              const indexBlob = await indexBlobRes.json();
+              treeEntries.push({ path: 'profile-site/index.html', mode: '100644', type: 'blob', sha: indexBlob.sha });
+            }
+          }
+        } catch (err) {
+          console.warn('index.html 자동 갱신 실패 (데이터 저장은 계속 진행):', err);
+        }
+
+        /* ── 4단계: 트리 생성 ── */
+        const treeRes = await fetch(`${API}/git/trees`, {
+          method: 'POST', headers,
+          body: JSON.stringify({ base_tree: baseTreeSha, tree: treeEntries })
+        });
+        if (!treeRes.ok) throw new Error('트리 생성 실패');
+
+        /* ── 5단계: 커밋 생성 ── */
+        const commitRes = await fetch(`${API}/git/commits`, {
+          method: 'POST', headers,
+          body: JSON.stringify({
+            message: `Update profile data via Admin (${new Date().toLocaleDateString()})`,
+            tree: (await treeRes.json()).sha,
+            parents: [latestCommitSha]
+          })
+        });
+        if (!commitRes.ok) throw new Error('커밋 생성 실패');
+
+        /* ── 6단계: Ref 업데이트 (Push) ── */
+        const updateRes = await fetch(`${API}/git/refs/heads/main`, {
+          method: 'PATCH', headers,
+          body: JSON.stringify({ sha: (await commitRes.json()).sha })
+        });
+        if (!updateRes.ok) throw new Error('Push 실패');
+
+        showToast(`✅ 저장 완료! Vercel 배포가 자동으로 시작되었습니다. (약 1분 후 반영)`);
+        saveProfileData(D);
+
+      } catch (e) {
+        console.error(e);
+        alert('저장 중 오류 발생:\n' + e.message);
+        showToast('❌ 저장 실패');
+      } finally {
+        _saving = false;
+      }
+    }
+    function saveProfileData(data) {
+      try {
+        localStorage.setItem('profileData', JSON.stringify(data));
+        console.log('📦 Local Backup Saved');
+      } catch (e) {
+        console.warn('⚠️ Local Storage Full (Backup skipped):', e);
+        // 저장 용량 초과 에러는 무시 (GitHub에는 이미 저장됨)
+        if (e.name === 'QuotaExceededError') {
+          console.log('Local Storage Quota Exceeded');
+        }
+      }
+    }
+
+    function showToast(msg) { toast.textContent = msg; toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 2200) }
+    function openModal(html) { modalBody.innerHTML = html; modal.classList.add('open') }
+    function closeModal() { modal.classList.remove('open') }
+    // modal.addEventListener('click', e => { if (e.target === modal) closeModal() }); // 바깥 클릭 시 닫기 방지
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal() });
+
+    /* ── 탭 네비게이션 ── */
+    document.getElementById('sideNav').addEventListener('click', e => {
+      const btn = e.target.closest('button[data-tab]'); if (!btn) return;
+      document.querySelectorAll('.sidebar-nav button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active'); currentTab = btn.dataset.tab; render();
+    });
+
+    /* ══════════════════════════════════════════
+       링크 미리보기 가져오기 유틸
+       ══════════════════════════════════════════ */
+
+    /* YouTube 비디오 ID 추출 */
+    function getYouTubeId(url) {
+      if (!url) return null;
+      const m = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([\w-]{11})/);
+      return m ? m[1] : null;
+    }
+
+    /* YouTube 썸네일 URL 생성 */
+    function getYouTubeThumbnail(videoId) {
+      return `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+    }
+
+    /* Microlink API로 OG 메타데이터 가져오기 (무료 티어) */
+    async function fetchLinkPreview(url) {
+      if (!url) throw new Error('URL이 없습니다.');
+
+      /* YouTube인 경우 바로 썸네일 반환 */
+      const ytId = getYouTubeId(url);
+      if (ytId) {
+        return {
+          title: '',
+          description: 'YouTube 영상',
+          images: [
+            `https://img.youtube.com/vi/${ytId}/maxresdefault.jpg`,
+            `https://img.youtube.com/vi/${ytId}/hqdefault.jpg`
+          ]
+        };
+      }
+
+      /* 일반 URL → Microlink API */
+      const apiUrl = `https://api.microlink.io?url=${encodeURIComponent(url)}`;
+      const res = await fetch(apiUrl);
+      const json = await res.json();
+
+      if (json.status !== 'success') throw new Error('미리보기를 가져올 수 없습니다.');
+
+      const d = json.data;
+      const images = [];
+      if (d.image?.url) images.push(d.image.url);
+      if (d.logo?.url && images.length < 3) images.push(d.logo.url);
+
+      return {
+        title: d.title || '',
+        description: d.description || '',
+        images
+      };
+    }
+
+    /* ── 링크/파일에서 AI 자동 입력 핸들러 (모달 내) ── */
+    /* PDF에서 전체 텍스트 추출 (pdf.js 사용) */
+    async function extractTextFromPdf(data) {
+      const loadingTask = pdfjsLib.getDocument(data);
+      const pdf = await loadingTask.promise;
+      let fullText = '';
+      for (let i = 1; i <= pdf.numPages; i++) {
+        const page = await pdf.getPage(i);
+        const textContent = await page.getTextContent();
+        const pageText = textContent.items.map(item => item.str).join(' ');
+        fullText += pageText + '\n';
+      }
+      return fullText;
+    }
+
+    function getGoogleDriveId(url) {
+      if (!url) return null;
+      const m = url.match(/[-\w]{25,}/);
+      return m ? m[0] : null;
+    }
+
+    /* ── 링크/파일에서 AI 자동 입력 핸들러 (모달 내) ── */
+    async function handleFetchPreview() {
+      const urlInput = document.getElementById('f_link');
+      const url = urlInput?.value?.trim();
+      if (!url) return alert('링크를 먼저 입력해주세요.');
+
+      const resultArea = document.getElementById('previewResult');
+      resultArea.innerHTML = '<span class="fetching">🔄 링크 분석 및 데이터 추출 중...</span>';
+
+      try {
+        let contentText = '';
+        let title = '';
+        const driveId = getGoogleDriveId(url);
+
+        /* 1) Google Drive 링크인 경우 (권한 필요) */
+        if (url.includes('drive.google.com') || url.includes('docs.google.com')) {
+          if (!accessToken) {
+            // 토큰 없으면 로그인 유도
+            await new Promise((resolve) => {
+              tokenClient.callback = (resp) => {
+                if (resp.error) throw resp;
+                accessToken = resp.access_token;
+                resolve();
+              };
+              tokenClient.requestAccessToken({ prompt: '' }); // 팝업 없이 시도, 안되면 팝업
+            });
+          }
+          if (!gapi.client.drive) await gapi.client.load('drive', 'v3');
+
+          /* 메타데이터 가져오기 */
+          const meta = await gapi.client.drive.files.get({ fileId: driveId, fields: 'id, name, mimeType, description' });
+          title = meta.result.name;
+
+          /* 내용 가져오기 */
+          if (meta.result.mimeType.includes('google-apps')) {
+            const res = await gapi.client.drive.files.export({ fileId: driveId, mimeType: 'text/plain' });
+            contentText = res.body;
+          } else if (meta.result.mimeType.includes('pdf')) {
+            resultArea.innerHTML = '<span class="fetching">📄 PDF 전체 페이지 읽는 중... (시간이 조금 걸릴 수 있습니다)</span>';
+            const resp = await fetch(`https://www.googleapis.com/drive/v3/files/${driveId}?alt=media`, { headers: { 'Authorization': 'Bearer ' + accessToken } });
+            const blob = await resp.blob();
+            const arrayBuffer = await blob.arrayBuffer();
+            contentText = await extractTextFromPdf(new Uint8Array(arrayBuffer));
+          } else {
+            // 그 외 파일은 메타데이터 설명만 사용
+            contentText = meta.result.description || '';
+          }
+        }
+
+        /* 2) 일반 URL인 경우 (Microlink) */
+        const preview = await fetchLinkPreview(url); // 기존 로직 재사용 (이미지/파비콘 등)
+        if (!title) title = preview.title;
+
+        /* 3) Gemini API로 전문적인 요약 생성 */
+        const apiKey = getApiKey();
+        if (apiKey) {
+          resultArea.innerHTML = '<span class="fetching">🤖 AI가 전체 내용을 분석하여 전문적인 요약 작성 중...</span>';
+
+          /* 프롬프트 강화: 100자 내외, 전문적, 매력적 */
+          const prompt = `
+다음 자료의 전체 내용(텍스트)을 분석하여 포트폴리오에 들어갈 '전문적이고 매력적인 설명'을 작성해주세요.
+자료 URL: ${url}
+제목: ${title}
+전체 텍스트 내용:
+${contentText ? contentText.slice(0, 15000) : '내용 없음 (제목 및 메타데이터 참조: ' + (preview.description || '') + ')'}
+
+[요청 사항]
+1. 단순한 내용 요약이 아니라, 이 자료가 어떤 가치를 제공하는지, 어떤 전문성을 보여주는지 강조하세요.
+2. 문체는 '전문가스러운', '신뢰감을 주는', '정제된' 톤이어야 합니다. (해요체보다는 '함/음'체나 명사형 종결 추천, 또는 격식있는 해요체)
+3. 분량은 공백 포함 **100자 내외**로 작성해주세요. 너무 길지 않게 핵심만 임팩트 있게.
+4. 기존 텍스트를 그대로 복사하지 말고, **완전히 새로 매력적으로 작성**하세요.
+
+응답 형식 (JSON):
+{"title":"제목(필요시 다듬음)","org":"기관/출판사","year":2025,"description":"전문적인 설명 내용 (100자 내외)","tags":["태그1","태그2"],"source":"출처","date":"날짜"}
+`;
+          try {
+            const aiResult = await callGeminiText(prompt);
+            autoFillFormFields(aiResult, preview);
+          } catch (e) {
+            console.error(e);
+            autoFillFormFields({ title, description: 'AI 분석 실패: ' + e.message }, preview);
+          }
+        } else {
+          autoFillFormFields({ title, description: preview.description }, preview);
+        }
+
+        /* 결과 표시 */
+        resultArea.innerHTML = `
+          <div style="font-size:.82rem;color:var(--green);margin-bottom:8px">✅ AI 정밀 분석 완료! (전체 텍스트 기반)</div>
+          <div class="preview-desc">${document.getElementById('f_preview_desc').value}</div>
+          <div class="img-list">${preview.images.map(img => `<div class="img-list-item"><img src="${img}" onerror="this.parentElement.remove()"/></div>`).join('')}</div>
+        `;
+        refreshImageList();
+
+      } catch (err) {
+        console.error(err);
+        resultArea.innerHTML = `<span style="color:#ef4444;font-size:.85rem">❌ 오류: ${err.message} (권한 문제일 경우 'Select from Drive' 버튼을 먼저 눌러보세요)</span>`;
+      }
+    }
+
+    /* 모달 내 파일 업로드 → AI 분석 → 폼 자동 채우기 */
+    async function handleFormFileUpload() {
+      const input = document.getElementById('f_file_upload');
+      const file = input?.files?.[0];
+      if (!file) return;
+
+      /* PDF인 경우 페이지 선택기 호출 */
+      if (file.type === 'application/pdf') {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          openPageSelector(new Uint8Array(e.target.result));
+        };
+        reader.readAsArrayBuffer(file);
+        return;
+      }
+
+      const apiKey = getApiKey();
+      if (!apiKey) return alert('Gemini API 키를 먼저 설정해주세요.\n(대시보드 → 자동 등록 탭에서 설정 가능)');
+
+      const resultArea = document.getElementById('previewResult');
+      resultArea.innerHTML = `<span class="fetching">🤖 "${file.name}" AI 분석 중...</span>`;
+
+      try {
+        const base64 = await fileToBase64(file);
+        const mime = file.type || 'image/jpeg';
+        const aiResult = await callGeminiVision(base64, mime);
+
+        /* 이미지를 이미지 목록에 추가 (base64 data URL) */
+        const dataUrl = base64ToDataUrl(base64, mime);
+        const imgInput = document.getElementById('f_images_data');
+        let imgs = [];
+        try { imgs = JSON.parse(imgInput.value || '[]'); } catch (e) { }
+        imgs.push(dataUrl);
+        imgInput.value = JSON.stringify(imgs);
+
+        autoFillFormFields(aiResult, { title: aiResult.title, description: aiResult.description, images: [dataUrl] });
+
+        resultArea.innerHTML = `
+          <div style="font-size:.82rem;color:var(--green);margin-bottom:8px">✅ AI 분석 완료! 폼이 자동 입력되었습니다.</div>
+          <div class="img-list"><div class="img-list-item"><img src="${dataUrl}"/></div></div>
+        `;
+        refreshImageList();
+      } catch (err) {
+        resultArea.innerHTML = `<span style="color:#ef4444;font-size:.85rem">❌ ${err.message}</span>`;
+      }
+      input.value = '';
+    }
+
+    /* 폼 필드 자동 채우기 (비어있는 필드만) */
+    function autoFillFormFields(data, preview) {
+      const fill = (id, val) => { const el = document.getElementById(id); if (el && !el.value.trim() && val) el.value = val; };
+      fill('f_title', data.title);
+      fill('f_org', data.org || data.source);
+      fill('f_pub', data.org);
+      fill('f_source', data.source || data.org);
+      fill('f_year', data.year);
+      fill('f_date', data.date);
+      fill('f_desc', data.description);
+      fill('f_preview_desc', data.description);
+      if (data.tags?.length) fill('f_tags', data.tags.join(', '));
+    }
+
+    /* 이미지 목록 리프레시 (모달 내) — 마우스 이벤트 드래그앤드롭 지원 */
+    function refreshImageList() {
+      const imgInput = document.getElementById('f_images_data');
+      const container = document.getElementById('imageListView');
+      if (!imgInput || !container) return;
+      let images = [];
+      try { images = JSON.parse(imgInput.value || '[]'); } catch (e) { }
+      container.innerHTML = images.map((img, i) => `
+        <div class="img-list-item" data-img-idx="${i}">
+          <img src="${img}" draggable="false" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2260%22 height=%2240%22><rect fill=%22%23333%22 width=%2260%22 height=%2240%22/><text x=%2230%22 y=%2224%22 text-anchor=%22middle%22 fill=%22%23777%22 font-size=%228%22>오류</text></svg>'"/>
+          <button class="remove-img" onclick="removeImage(${i})">✕</button>
+        </div>
+      `).join('');
+      /* 이미지 마우스 드래그앤드롭 이벤트 바인딩 */
+      setupImageMouseDrag(container);
+    }
+
+    /* 이미지 순수 마우스 이벤트 기반 드래그앤드롭 */
+    function setupImageMouseDrag(container) {
+      const items = Array.from(container.querySelectorAll('.img-list-item'));
+      items.forEach(el => {
+        el.style.cursor = 'grab';
+        el.addEventListener('mousedown', e => {
+          if (e.target.closest('.remove-img')) return; /* 삭제 버튼 클릭은 무시 */
+          e.preventDefault();
+          const fromIdx = +el.dataset.imgIdx;
+          let currentOverEl = null;
+          el.classList.add('img-dragging');
+          el.style.cursor = 'grabbing';
+
+          function onMouseMove(ev) {
+            items.forEach(x => x.classList.remove('img-drag-over'));
+            const target = document.elementFromPoint(ev.clientX, ev.clientY)?.closest('.img-list-item');
+            if (target && target !== el) {
+              target.classList.add('img-drag-over');
+              currentOverEl = target;
+            } else {
+              currentOverEl = null;
+            }
+          }
+
+          function onMouseUp() {
+            document.removeEventListener('mousemove', onMouseMove);
+            document.removeEventListener('mouseup', onMouseUp);
+            el.classList.remove('img-dragging');
+            el.style.cursor = 'grab';
+            items.forEach(x => x.classList.remove('img-drag-over'));
+
+            if (currentOverEl) {
+              const toIdx = +currentOverEl.dataset.imgIdx;
+              if (fromIdx !== toIdx) {
+                const imgInput = document.getElementById('f_images_data');
+                let images = [];
+                try { images = JSON.parse(imgInput.value || '[]'); } catch (ex) { }
+                const [moved] = images.splice(fromIdx, 1);
+                images.splice(toIdx, 0, moved);
+                imgInput.value = JSON.stringify(images);
+                refreshImageList();
+                showToast('🖼️ 이미지 순서가 변경되었습니다');
+              }
+            }
+          }
+
+          document.addEventListener('mousemove', onMouseMove);
+          document.addEventListener('mouseup', onMouseUp);
+        });
+      });
+    }
+
+    function removeImage(index) {
+      const imgInput = document.getElementById('f_images_data');
+      let images = [];
+      try { images = JSON.parse(imgInput.value || '[]'); } catch (e) { }
+      images.splice(index, 1);
+      imgInput.value = JSON.stringify(images);
+      refreshImageList();
+    }
+
+    function addManualImage() {
+      const url = document.getElementById('f_new_image_url')?.value?.trim();
+      if (!url) return;
+      const imgInput = document.getElementById('f_images_data');
+      let images = [];
+      try { images = JSON.parse(imgInput.value || '[]'); } catch (e) { }
+      if (!images.includes(url)) images.push(url);
+      imgInput.value = JSON.stringify(images);
+      document.getElementById('f_new_image_url').value = '';
+      refreshImageList();
+    }
+
+    /* 클립보드 이미지 붙여넣기 지원 */
+    function setupClipboardPaste() {
+      const modal = document.getElementById('modal');
+      if (!modal) return;
+      /* 기존 리스너 제거를 위해 named function 사용 */
+      modal._pasteHandler && modal.removeEventListener('paste', modal._pasteHandler);
+      modal._pasteHandler = async function (e) {
+        const items = e.clipboardData?.items;
+        if (!items) return;
+        for (const item of items) {
+          if (item.type.startsWith('image/')) {
+            e.preventDefault();
+            const file = item.getAsFile();
+            if (!file) continue;
+            const reader = new FileReader();
+            reader.onload = () => {
+              const dataUrl = reader.result;
+              const imgInput = document.getElementById('f_images_data');
+              if (!imgInput) return;
+              let imgs = [];
+              try { imgs = JSON.parse(imgInput.value || '[]'); } catch (ex) { }
+              imgs.push(dataUrl);
+              imgInput.value = JSON.stringify(imgs);
+              refreshImageList();
+              showToast('📋 클립보드 이미지가 추가되었습니다!');
+            };
+            reader.readAsDataURL(file);
+            break;
+          }
+        }
+      };
+      modal.addEventListener('paste', modal._pasteHandler);
+    }
+
+    /* ── 이미지 & 링크 관리용 공통 폼 HTML ── */
+    function linkPreviewFormHTML(item) {
+      const images = item?.images || [];
+      const hasKey = !!getApiKey();
+      return `
+        <div class="form-row" style="margin-top:8px">
+          <label class="form-label" style="font-size:.9rem">🔗 관련 링크 (외부 공개)</label>
+          <div class="form-hint" style="margin-bottom:8px">여기에 입력한 링크가 포트폴리오 사이트의 <strong>'보기' 버튼</strong>에 연결됩니다.</div>
+          <input class="form-input" id="f_view_link" value="${item?.link || ''}" placeholder="공개할 링크 입력 (YouTube, 뉴스기사, 웹사이트 등)"/>
+        </div>
+        <div class="form-row" style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-top:8px">
+          <label class="form-label" style="font-size:.9rem;color:var(--red);margin-bottom:12px">🤖 AI 자동 입력 (분석 전용)</label>
+          <div class="form-hint" style="margin-bottom:8px">여기에 입력한 링크는 <strong>AI 분석에만</strong> 사용되며, 외부에 공개되지 않습니다.</div>
+          <div class="link-row">
+            <input class="form-input" id="f_link" value="" placeholder="AI 분석할 링크 (교안, 구글독스 등 - 외부에 공개되지 않음)"/>
+            <button class="btn btn-red btn-sm fetch-btn" type="button" onclick="handleFetchPreview()">🔍 자동 가져오기 (AI)</button>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center;margin-top:8px">
+            <label class="btn btn-outline btn-sm" style="cursor:pointer">
+              📄 파일로 AI 분석
+              <input type="file" id="f_file_upload" accept="image/*,.pdf" style="display:none" onchange="handleFormFileUpload()"/>
+            </label>
+            <button class="btn btn-outline btn-sm" onclick="handleAuthClick()">☁️ Drive에서 선택</button>
+            <span class="form-hint" style="margin:0">${hasKey ? '✅ API 키 설정됨' : '⚠️ API 키 필요'}</span>
+          </div>
+          <div id="previewResult"></div>
+        </div>
+        <div class="form-row">
+          <label class="form-label">📝 미리보기 설명</label>
+          <textarea class="form-textarea" id="f_preview_desc" placeholder="링크에서 자동 추출되거나 직접 입력하세요">${item?.previewDesc || ''}</textarea>
+        </div>
+        <div class="form-row">
+          <label class="form-label">🖼️ 이미지 목록</label>
+          <div class="form-hint">링크/파일에서 자동 추출되거나, 아래에 직접 이미지 URL을 추가할 수 있습니다.<br/><strong>📋 Ctrl+V로 클립보드 이미지를 바로 붙여넣을 수도 있습니다.</strong></div>
+          <div id="imageListView" class="img-list" style="margin-top:8px"></div>
+          <input type="hidden" id="f_images_data" value='${JSON.stringify(images)}'/>
+          <div class="link-row" style="margin-top:8px">
+            <input class="form-input" id="f_new_image_url" placeholder="이미지 URL 직접 추가"/>
+            <button class="btn btn-outline btn-sm" type="button" onclick="addManualImage()">추가</button>
+          </div>
+        </div>
+      `;
+    }
+
+    /* ══════════════════════════════════════════
+       대시보드
+       ══════════════════════════════════════════ */
+    function renderDashboard() {
+      const withImages = [...D.lectures, ...D.press, ...D.publications].filter(i => i.images?.length > 0).length;
+      const withLinks = [...D.lectures, ...D.press, ...D.publications].filter(i => i.link).length;
+      main.innerHTML = `
+        <div class="page-header"><div class="page-title">대시보드</div>
+          <div style="display:flex;gap:8px">
+            <button class="btn btn-red" onclick="save()">☁️ GitHub에 저장</button>
+            <button class="btn btn-outline" onclick="resetData()">🔄 초기화</button>
+          </div>
+        </div>
+        <div class="stat-cards">
+          <div class="stat-card"><div class="sc-val">${D.lectures.length}</div><div class="sc-label">강의·연수</div></div>
+          <div class="stat-card"><div class="sc-val">${D.publications.length}</div><div class="sc-label">저서</div></div>
+          <div class="stat-card"><div class="sc-val">${D.awards.length}</div><div class="sc-label">수상</div></div>
+          <div class="stat-card"><div class="sc-val">${D.press.length}</div><div class="sc-label">보도자료</div></div>
+        </div>
+        <div style="display:flex;gap:16px;flex-wrap:wrap">
+          <div class="stat-card" style="flex:1;min-width:180px"><div class="sc-val" style="color:var(--blue)">${withLinks}</div><div class="sc-label">링크 등록 항목</div></div>
+          <div class="stat-card" style="flex:1;min-width:180px"><div class="sc-val" style="color:var(--green)">${withImages}</div><div class="sc-label">이미지 포함 항목</div></div>
+        </div>
+        <a href="index.html" class="preview-link" target="_blank" style="margin-top:20px">🖥 포트폴리오 사이트 미리보기 →</a>
+      `;
+    }
+
+    /* ══════════════════════════════════════════
+       강의 관리
+       ══════════════════════════════════════════ */
+    function renderLectures() {
+      main.innerHTML = `
+        <div class="page-header">
+          <div class="page-title">강의·연수 이력 <small>${D.lectures.length}건</small></div>
+          <button class="btn btn-red" onclick="openLecForm()">+ 강의 추가</button>
+        </div>
+        <table class="data-table">
+          <thead><tr><th style="width:36px"></th><th></th><th>연도</th><th>제목</th><th>기관</th><th>카테고리</th><th>부가</th><th>관리</th></tr></thead>
+          <tbody id="lecTbody">
+            ${D.lectures.map((l, i) => `<tr data-idx="${i}">
+              <td><span class="drag-handle" title="드래그하여 순서 변경">⠿</span></td>
+              <td>${l.images?.length ? `<img src="${l.images[0]}" class="td-thumb" onerror="this.style.display='none'"/>` : ''}</td>
+              <td>${l.year}</td>
+              <td>${l.title}</td>
+              <td style="color:var(--text2);max-width:160px">${l.org || '-'}</td>
+              <td>${l.category}</td>
+              <td>
+                ${l.highlight ? '<span class="hl-badge">★</span> ' : ''}
+                ${l.link ? '<span class="link-badge">🔗</span> ' : ''}
+                ${l.images?.length ? `<span class="img-badge">🖼${l.images.length}</span>` : ''}
+              </td>
+              <td class="actions">
+                <button class="btn btn-outline btn-sm" onclick="openLecForm('${l.id}')">수정</button>
+                <button class="btn btn-danger btn-sm" onclick="delItem('lectures','${l.id}')">삭제</button>
+              </td>
+            </tr>`).join('')}
+          </tbody>
+        </table>
+      `;
+      setupTableDragDrop('lecTbody', 'lectures');
+    }
+
+    function openLecForm(id) {
+      const item = id ? D.lectures.find(l => l.id === id) : null;
+      const cats = ['Google/Gemini', 'ChatGPT/AI', '에듀테크', '메타버스/VR', '학급경영', '기조강연/발표'];
+      openModal(`
+        <h3>${item ? '강의 수정' : '강의 추가'}</h3>
+        <div class="form-row"><label class="form-label">제목 *</label><input class="form-input" id="f_title" value="${item?.title || ''}"/></div>
+        <div class="form-row"><label class="form-label">기관/설명</label><input class="form-input" id="f_org" value="${item?.org || ''}"/></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div class="form-row"><label class="form-label">연도 *</label><input class="form-input" id="f_year" type="number" value="${item?.year || new Date().getFullYear()}"/></div>
+          <div class="form-row"><label class="form-label">카테고리 *</label>
+            <select class="form-select" id="f_cat">${cats.map(c => `<option value="${c}" ${item?.category === c ? 'selected' : ''}>${c}</option>`).join('')}</select>
+          </div>
+        </div>
+        <div class="form-row"><label class="form-check"><input type="checkbox" id="f_hl" ${item?.highlight ? 'checked' : ''}/> 주요 이력으로 표시</label></div>
+        ${linkPreviewFormHTML(item)}
+        <div class="form-actions">
+          <button class="btn btn-outline" onclick="closeModal()">취소</button>
+          <button class="btn btn-red" onclick="saveLec('${id || ''}')">${item ? '수정' : '추가'}</button>
+        </div>
+      `);
+      refreshImageList();
+      setupClipboardPaste();
+    }
+
+    function saveLec(id) {
+      let images = [];
+      try { images = JSON.parse(document.getElementById('f_images_data').value || '[]'); } catch (e) { }
+      const obj = {
+        id: id || 'l_' + uid(),
+        title: document.getElementById('f_title').value.trim(),
+        org: document.getElementById('f_org').value.trim(),
+        year: +document.getElementById('f_year').value,
+        category: document.getElementById('f_cat').value,
+        link: document.getElementById('f_view_link').value.trim(),
+        previewDesc: document.getElementById('f_preview_desc').value.trim(),
+        images,
+        image: images[0] || '',
+        highlight: document.getElementById('f_hl').checked
+      };
+      if (!obj.title) return alert('제목을 입력하세요.');
+      if (id) { const idx = D.lectures.findIndex(l => l.id === id); D.lectures[idx] = obj; }
+      else { D.lectures.unshift(obj); }
+      save(); closeModal(); render();
+    }
+
+    /* ══════════════════════════════════════════
+       저서 관리
+       ══════════════════════════════════════════ */
+    function renderPublications() {
+      main.innerHTML = `
+        <div class="page-header">
+          <div class="page-title">저서 <small>${D.publications.length}권</small></div>
+          <button class="btn btn-red" onclick="openPubForm()">+ 저서 추가</button>
+        </div>
+        <table class="data-table">
+          <thead><tr><th style="width:36px"></th><th></th><th>연도</th><th>제목</th><th>출판사</th><th>부가</th><th>관리</th></tr></thead>
+          <tbody id="pubTbody">
+            ${D.publications.map((p, i) => `<tr data-idx="${i}">
+              <td><span class="drag-handle" title="드래그하여 순서 변경">⠿</span></td>
+              <td>${p.images?.length ? `<img src="${p.images[0]}" class="td-thumb"/>` : (p.image ? `<img src="${p.image}" class="td-thumb"/>` : '')}</td>
+              <td>${p.year}</td><td>${p.title}</td><td style="color:var(--text2)">${p.publisher}</td>
+              <td>${p.link ? '<span class="link-badge">🔗</span> ' : ''}${(p.images?.length || p.image) ? '<span class="img-badge">🖼</span>' : ''}</td>
+              <td class="actions">
+                <button class="btn btn-outline btn-sm" onclick="openPubForm('${p.id}')">수정</button>
+                <button class="btn btn-danger btn-sm" onclick="delItem('publications','${p.id}')">삭제</button>
+              </td>
+            </tr>`).join('')}
+          </tbody>
+        </table>
+      `;
+      setupTableDragDrop('pubTbody', 'publications');
+    }
+
+    function openPubForm(id) {
+      const item = id ? D.publications.find(p => p.id === id) : null;
+      const existingImages = item?.images || (item?.image ? [item.image] : []);
+      const fakeItem = { ...item, images: existingImages };
+      openModal(`
+        <h3>${item ? '저서 수정' : '저서 추가'}</h3>
+        <div class="form-row"><label class="form-label">제목 *</label><input class="form-input" id="f_title" value="${item?.title || ''}"/></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div class="form-row"><label class="form-label">출판사</label><input class="form-input" id="f_pub" value="${item?.publisher || ''}"/></div>
+          <div class="form-row"><label class="form-label">연도</label><input class="form-input" id="f_year" type="number" value="${item?.year || new Date().getFullYear()}"/></div>
+        </div>
+        <div class="form-row"><label class="form-label">설명</label><textarea class="form-textarea" id="f_desc">${item?.description || ''}</textarea></div>
+        <div class="form-row"><label class="form-label">태그 (쉼표 구분)</label><input class="form-input" id="f_tags" value="${item?.tags?.join(', ') || ''}"/></div>
+        ${linkPreviewFormHTML(fakeItem)}
+        <div class="form-actions">
+          <button class="btn btn-outline" onclick="closeModal()">취소</button>
+          <button class="btn btn-red" onclick="savePub('${id || ''}')">${item ? '수정' : '추가'}</button>
+        </div>
+      `);
+      refreshImageList();
+      setupClipboardPaste();
+    }
+
+    function savePub(id) {
+      let images = [];
+      try { images = JSON.parse(document.getElementById('f_images_data').value || '[]'); } catch (e) { }
+      const obj = {
+        id: id || 'pub_' + uid(),
+        title: document.getElementById('f_title').value.trim(),
+        publisher: document.getElementById('f_pub').value.trim(),
+        year: +document.getElementById('f_year').value,
+        description: document.getElementById('f_desc').value.trim(),
+        tags: document.getElementById('f_tags').value.split(',').map(s => s.trim()).filter(Boolean),
+        link: document.getElementById('f_view_link').value.trim(),
+        previewDesc: document.getElementById('f_preview_desc').value.trim(),
+        images,
+        image: images[0] || ''
+      };
+      if (!obj.title) return alert('제목을 입력하세요.');
+      if (id) { const idx = D.publications.findIndex(p => p.id === id); D.publications[idx] = obj; }
+      else { D.publications.unshift(obj); }
+      save(); closeModal(); render();
+    }
+
+    /* ══════════════════════════════════════════
+       원격연수
+       ══════════════════════════════════════════ */
+    function renderCourses() {
+      main.innerHTML = `
+        <div class="page-header"><div class="page-title">원격연수 <small>${D.onlineCourses.length}건</small></div>
+          <button class="btn btn-red" onclick="openCourseForm()">+ 추가</button></div>
+        <table class="data-table"><thead><tr><th style="width:36px"></th><th></th><th>제목</th><th>플랫폼</th><th>학점</th><th>관리</th></tr></thead>
+        <tbody id="courseTbody">${D.onlineCourses.map((c, i) => `<tr data-idx="${i}">
+          <td><span class="drag-handle" title="드래그하여 순서 변경">⠿</span></td>
+          <td>${c.images?.length ? `<img src="${c.images[0]}" class="td-thumb"/>` : (c.image ? `<img src="${c.image}" class="td-thumb"/>` : '')}</td>
+          <td>${c.title}</td><td>${c.platform}</td><td>${c.credit}</td>
+          <td class="actions"><button class="btn btn-outline btn-sm" onclick="openCourseForm('${c.id}')">수정</button>
+            <button class="btn btn-danger btn-sm" onclick="delItem('onlineCourses','${c.id}')">삭제</button></td></tr>`).join('')}</tbody></table>`;
+      setupTableDragDrop('courseTbody', 'onlineCourses');
+    }
+    function openCourseForm(id) {
+      const item = id ? D.onlineCourses.find(c => c.id === id) : null;
+      openModal(`<h3>${item ? '수정' : '추가'}</h3>
+        <div class="form-row"><label class="form-label">제목 *</label><input class="form-input" id="f_title" value="${item?.title || ''}"/></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div class="form-row"><label class="form-label">플랫폼</label><input class="form-input" id="f_plat" value="${item?.platform || ''}"/></div>
+          <div class="form-row"><label class="form-label">학점</label><input class="form-input" id="f_credit" value="${item?.credit || ''}"/></div>
+        </div>
+        ${linkPreviewFormHTML(item)}
+        <div class="form-actions"><button class="btn btn-outline" onclick="closeModal()">취소</button>
+          <button class="btn btn-red" onclick="saveCourse('${id || ''}')">${item ? '수정' : '추가'}</button></div>`);
+      refreshImageList();
+      setupClipboardPaste();
+    }
+    function saveCourse(id) {
+      let images = [];
+      try { images = JSON.parse(document.getElementById('f_images_data').value || '[]'); } catch (e) { }
+      const obj = {
+        id: id || 'oc_' + uid(), title: document.getElementById('f_title').value.trim(),
+        platform: document.getElementById('f_plat').value.trim(), credit: document.getElementById('f_credit').value.trim(),
+        link: document.getElementById('f_view_link').value.trim(),
+        previewDesc: document.getElementById('f_preview_desc').value.trim(),
+        images, image: images[0] || ''
+      };
+      if (!obj.title) return alert('제목을 입력하세요.');
+      if (id) { const idx = D.onlineCourses.findIndex(c => c.id === id); D.onlineCourses[idx] = obj } else { D.onlineCourses.unshift(obj) }
+      save(); closeModal(); render();
+    }
+
+    /* ══════════════════════════════════════════
+       수상
+       ══════════════════════════════════════════ */
+    function renderAwards() {
+      main.innerHTML = `<div class="page-header"><div class="page-title">수상 <small>${D.awards.length}건</small></div>
+        <button class="btn btn-red" onclick="openAwardForm()">+ 추가</button></div>
+        <table class="data-table"><thead><tr><th style="width:36px"></th><th></th><th>연도</th><th>제목</th><th>기관</th><th>주요</th><th>관리</th></tr></thead>
+        <tbody id="awardTbody">${D.awards.map((a, i) => `<tr data-idx="${i}">
+          <td><span class="drag-handle" title="드래그하여 순서 변경">⠿</span></td>
+          <td>${a.images?.length ? `<img src="${a.images[0]}" class="td-thumb"/>` : ''}</td>
+          <td>${a.year}</td><td>${a.title}</td><td style="color:var(--text2)">${a.org || '-'}</td>
+          <td>${a.highlight ? '<span class="hl-badge">★</span>' : ''}</td>
+          <td class="actions"><button class="btn btn-outline btn-sm" onclick="openAwardForm('${a.id}')">수정</button>
+          <button class="btn btn-danger btn-sm" onclick="delItem('awards','${a.id}')">삭제</button></td></tr>`).join('')}</tbody></table>`;
+      setupTableDragDrop('awardTbody', 'awards');
+    }
+    function openAwardForm(id) {
+      const item = id ? D.awards.find(a => a.id === id) : null;
+      openModal(`<h3>${item ? '수정' : '추가'}</h3>
+        <div class="form-row"><label class="form-label">제목 *</label><input class="form-input" id="f_title" value="${item?.title || ''}"/></div>
+        <div class="form-row"><label class="form-label">기관</label><input class="form-input" id="f_org" value="${item?.org || ''}"/></div>
+        <div class="form-row"><label class="form-label">연도</label><input class="form-input" id="f_year" type="number" value="${item?.year || new Date().getFullYear()}"/></div>
+        <div class="form-row"><label class="form-check"><input type="checkbox" id="f_hl" ${item?.highlight ? 'checked' : ''}/> 주요 수상</label></div>
+        ${linkPreviewFormHTML(item)}
+        <div class="form-actions"><button class="btn btn-outline" onclick="closeModal()">취소</button>
+          <button class="btn btn-red" onclick="saveAward('${id || ''}')">${item ? '수정' : '추가'}</button></div>`);
+      refreshImageList();
+      setupClipboardPaste();
+    }
+    function saveAward(id) {
+      let images = [];
+      try { images = JSON.parse(document.getElementById('f_images_data').value || '[]'); } catch (e) { }
+      const obj = {
+        id: id || 'a_' + uid(), title: document.getElementById('f_title').value.trim(),
+        org: document.getElementById('f_org').value.trim(), year: +document.getElementById('f_year').value,
+        highlight: document.getElementById('f_hl').checked,
+        link: document.getElementById('f_view_link').value.trim(),
+        previewDesc: document.getElementById('f_preview_desc').value.trim(),
+        images, image: images[0] || ''
+      };
+      if (!obj.title) return alert('제목을 입력하세요.');
+      if (id) { const idx = D.awards.findIndex(a => a.id === id); D.awards[idx] = obj } else { D.awards.unshift(obj) }
+      save(); closeModal(); render();
+    }
+
+    /* ══════════════════════════════════════════
+       활동
+       ══════════════════════════════════════════ */
+    function renderActivities() {
+      main.innerHTML = `<div class="page-header"><div class="page-title">주요 활동 <small>${D.activities.length}건</small></div>
+        <button class="btn btn-red" onclick="openActForm()">+ 추가</button></div>
+        <table class="data-table"><thead><tr><th style="width:36px"></th><th></th><th>기간</th><th>활동명</th><th>관리</th></tr></thead>
+        <tbody id="actTbody">${D.activities.map((a, i) => `<tr data-idx="${i}">
+          <td><span class="drag-handle" title="드래그하여 순서 변경">⠿</span></td>
+          <td>${a.images?.length ? `<img src="${a.images[0]}" class="td-thumb"/>` : ''}</td>
+          <td>${a.period || '-'}</td><td>${a.title}</td>
+          <td class="actions"><button class="btn btn-outline btn-sm" onclick="openActForm('${a.id}')">수정</button>
+          <button class="btn btn-danger btn-sm" onclick="delItem('activities','${a.id}')">삭제</button></td></tr>`).join('')}</tbody></table>`;
+      setupTableDragDrop('actTbody', 'activities');
+    }
+    function openActForm(id) {
+      const item = id ? D.activities.find(a => a.id === id) : null;
+      openModal(`<h3>${item ? '수정' : '추가'}</h3>
+        <div class="form-row"><label class="form-label">활동명 *</label><input class="form-input" id="f_title" value="${item?.title || ''}"/></div>
+        <div class="form-row"><label class="form-label">기간</label><input class="form-input" id="f_period" value="${item?.period || ''}" placeholder="예: 2022~2024"/></div>
+        ${linkPreviewFormHTML(item)}
+        <div class="form-actions"><button class="btn btn-outline" onclick="closeModal()">취소</button>
+          <button class="btn btn-red" onclick="saveAct('${id || ''}')">${item ? '수정' : '추가'}</button></div>`);
+      refreshImageList();
+      setupClipboardPaste();
+    }
+    function saveAct(id) {
+      let images = [];
+      try { images = JSON.parse(document.getElementById('f_images_data').value || '[]'); } catch (e) { }
+      const obj = {
+        id: id || 'act_' + uid(), title: document.getElementById('f_title').value.trim(),
+        period: document.getElementById('f_period').value.trim(),
+        link: document.getElementById('f_view_link').value.trim(),
+        previewDesc: document.getElementById('f_preview_desc').value.trim(),
+        images, image: images[0] || ''
+      };
+      if (!obj.title) return alert('활동명을 입력하세요.');
+      if (id) { const idx = D.activities.findIndex(a => a.id === id); D.activities[idx] = obj } else { D.activities.unshift(obj) }
+      save(); closeModal(); render();
+    }
+
+    /* ══════════════════════════════════════════
+       보도자료
+       ══════════════════════════════════════════ */
+    function renderPress() {
+      main.innerHTML = `
+        <div class="page-header"><div class="page-title">보도자료 <small>${D.press.length}건</small></div>
+          <button class="btn btn-red" onclick="openPressForm()">+ 추가</button></div>
+        <table class="data-table">
+          <thead><tr><th style="width:36px"></th><th></th><th>날짜</th><th>제목</th><th>매체</th><th>부가</th><th>관리</th></tr></thead>
+          <tbody id="pressTbody">${D.press.map((p, i) => `<tr data-idx="${i}">
+            <td><span class="drag-handle" title="드래그하여 순서 변경">⠿</span></td>
+            <td>${p.images?.length ? `<img src="${p.images[0]}" class="td-thumb" onerror="this.style.display='none'"/>` : ''}</td>
+            <td>${p.date}</td><td>${p.title}</td><td style="color:var(--text2)">${p.source}</td>
+            <td>${p.link ? '<span class="link-badge">🔗</span> ' : ''}${p.images?.length ? `<span class="img-badge">🖼${p.images.length}</span>` : ''}</td>
+            <td class="actions"><button class="btn btn-outline btn-sm" onclick="openPressForm('${p.id}')">수정</button>
+            <button class="btn btn-danger btn-sm" onclick="delItem('press','${p.id}')">삭제</button></td></tr>`).join('')}</tbody></table>`;
+      setupTableDragDrop('pressTbody', 'press');
+    }
+
+    function openPressForm(id) {
+      const item = id ? D.press.find(p => p.id === id) : null;
+      openModal(`
+        <h3>${item ? '보도자료 수정' : '보도자료 추가'}</h3>
+        <div class="form-row"><label class="form-label">제목 *</label><input class="form-input" id="f_title" value="${item?.title || ''}"/></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div class="form-row"><label class="form-label">매체명</label><input class="form-input" id="f_source" value="${item?.source || ''}"/></div>
+          <div class="form-row"><label class="form-label">날짜</label><input class="form-input" id="f_date" value="${item?.date || ''}" placeholder="2024.06.05"/></div>
+        </div>
+        ${linkPreviewFormHTML(item)}
+        <div class="form-actions">
+          <button class="btn btn-outline" onclick="closeModal()">취소</button>
+          <button class="btn btn-red" onclick="savePress('${id || ''}')">${item ? '수정' : '추가'}</button>
+        </div>
+      `);
+      refreshImageList();
+      setupClipboardPaste();
+    }
+
+    function savePress(id) {
+      let images = [];
+      try { images = JSON.parse(document.getElementById('f_images_data').value || '[]'); } catch (e) { }
+      const obj = {
+        id: id || 'p_' + uid(),
+        title: document.getElementById('f_title').value.trim(),
+        source: document.getElementById('f_source').value.trim(),
+        date: document.getElementById('f_date').value.trim(),
+        link: document.getElementById('f_view_link').value.trim(),
+        previewDesc: document.getElementById('f_preview_desc').value.trim(),
+        images
+      };
+      if (!obj.title) return alert('제목을 입력하세요.');
+      if (id) { const idx = D.press.findIndex(p => p.id === id); D.press[idx] = obj; }
+      else { D.press.unshift(obj); }
+      save(); closeModal(); render();
+    }
+
+    /* ══════════════════════════════════════════
+       유튜브 영상 관리
+       ══════════════════════════════════════════ */
+    function handleSimpleUpload() {
+      const input = document.getElementById('f_thumb_upload');
+      const file = input?.files?.[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const dataUrl = e.target.result;
+        const imgInput = document.getElementById('f_images_data');
+        let imgs = [];
+        try { imgs = JSON.parse(imgInput.value || '[]'); } catch (ex) { }
+        // 썸네일은 1개만 허용 (덮어쓰기)
+        imgs = [dataUrl];
+        imgInput.value = JSON.stringify(imgs);
+        refreshImageList();
+        showToast('🖼️ 썸네일이 업로드되었습니다');
+      };
+      reader.readAsDataURL(file);
+      input.value = '';
+    }
+
+    function renderYoutube() {
+      if (!D.youtubeVideos) D.youtubeVideos = [];
+      main.innerHTML = `
+        <div class="page-header">
+          <div class="page-title">민재쌤 영상 <small>${D.youtubeVideos.length}건</small></div>
+          <button class="btn btn-red" onclick="openYoutubeForm()">+ 영상 추가</button>
+        </div>
+        <div class="section-desc" style="margin-bottom:16px;color:var(--text2);font-size:0.9rem">
+          💡 메인 페이지의 '민재쌤 영상' 섹션에 표시될 유튜브 링크들을 관리합니다.<br/>
+          (드래그 앤 드롭으로 순서를 변경할 수 있습니다.)
+        </div>
+        <div class="img-list" id="ytList" style="flex-direction:column;gap:12px">
+          ${D.youtubeVideos.map((v, i) => {
+        const thumb = (v.images && v.images.length > 0) ? v.images[0] : getYouTubeThumbnail(getYouTubeId(v.link));
+        return `
+            <div class="card-row" data-idx="${i}" style="display:flex;gap:12px;background:var(--card);padding:12px;border:1px solid var(--border);border-radius:var(--radius);align-items:center">
+              <span class="drag-handle" style="font-size:1.5rem;cursor:grab;padding:0 8px">⠿</span>
+              <img src="${thumb}" style="width:120px;height:68px;object-fit:cover;border-radius:4px;flex-shrink:0" onerror="this.src='https://via.placeholder.com/120x68?text=No+Img'"/>
+              <div style="flex:1">
+                <div style="font-weight:700;font-size:1rem;margin-bottom:4px;color:var(--text)">${v.title}</div>
+                <a href="${v.link}" target="_blank" style="font-size:0.85rem;color:var(--blue)">${v.link}</a>
+                ${(v.images && v.images.length > 0) ? '<span class="img-badge" style="margin-left:8px">🖼 사용자 썸네일</span>' : ''}
+              </div>
+              <div class="actions">
+                <button class="btn btn-outline btn-sm" onclick="openYoutubeForm('${v.id}')">수정</button>
+                <button class="btn btn-danger btn-sm" onclick="delItem('youtubeVideos','${v.id}')">삭제</button>
+              </div>
+            </div>
+          `}).join('')}
+        </div>
+      `;
+      setupListDragDrop('ytList', 'youtubeVideos');
+    }
+
+    function openYoutubeForm(id) {
+      if (!D.youtubeVideos) D.youtubeVideos = [];
+      const item = id ? D.youtubeVideos.find(v => v.id === id) : null;
+      const images = item?.images || [];
+
+      openModal(`
+        <h3>${item ? '영상 수정' : '영상 추가'}</h3>
+        <div class="form-row">
+          <label class="form-label">제목 *</label>
+          <input class="form-input" id="f_title" value="${item?.title || ''}" placeholder="영상 제목 (자동 입력 추천)"/>
+        </div>
+        <div class="form-row">
+          <label class="form-label">유튜브 링크 *</label>
+          <div class="link-row">
+            <input class="form-input" id="f_link" value="${item?.link || ''}" placeholder="https://youtu.be/..."/>
+            <button class="btn btn-red btn-sm fetch-btn" onclick="fetchYtInfo()">정보 가져오기</button>
+          </div>
+        </div>
+        <div class="preview-result" id="ytPreview" style="display:${item && !images.length ? 'block' : 'none'};text-align:center;margin-bottom:16px">
+          ${item ? `<img src="${getYouTubeThumbnail(getYouTubeId(item.link))}" style="width:100%;max-width:320px;border-radius:8px"/>` : ''}
+        </div>
+
+        <div class="form-row" style="border-top:1px solid var(--border);padding-top:16px;margin-top:16px">
+          <label class="form-label">🖼️ 사용자 지정 썸네일 (선택사항)</label>
+          <div class="form-hint">유튜브 기본 썸네일 대신 사용할 이미지를 업로드하세요. (여기에 이미지가 있으면 우선 사용됩니다)</div>
+          
+          <div id="imageListView" class="img-list" style="margin-top:8px"></div>
+          <input type="hidden" id="f_images_data" value='${JSON.stringify(images)}'/>
+          
+          <div style="display:flex;gap:8px;align-items:center;margin-top:8px">
+             <label class="btn btn-green btn-sm" style="cursor:pointer">
+              📁 파일 업로드
+              <input type="file" id="f_thumb_upload" accept="image/*" style="display:none" onchange="handleSimpleUpload()"/>
+            </label>
+            <div class="link-row" style="flex:1;gap:4px">
+              <input class="form-input" id="f_new_image_url" placeholder="이미지 URL 직접 입력" style="font-size:0.85rem"/>
+              <button class="btn btn-outline btn-sm" type="button" onclick="addManualImage()">추가</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button class="btn btn-outline" onclick="closeModal()">취소</button>
+          <button class="btn btn-red" onclick="saveYoutube('${id || ''}')">${item ? '수정' : '추가'}</button>
+        </div>
+      `);
+      refreshImageList();
+      setupClipboardPaste();
+    }
+
+    async function fetchYtInfo() {
+      const url = document.getElementById('f_link').value.trim();
+      if (!url) return alert('링크를 입력하세요');
+      const id = getYouTubeId(url);
+      if (!id) return alert('유효한 유튜브 링크가 아닙니다.');
+
+      // 사용자 지정 이미지가 없을 때만 미리보기 갱신
+      const imgInput = document.getElementById('f_images_data');
+      let customImgs = [];
+      try { customImgs = JSON.parse(imgInput.value || '[]'); } catch (e) { }
+
+      if (customImgs.length === 0) {
+        const thumb = getYouTubeThumbnail(id);
+        const preview = document.getElementById('ytPreview');
+        preview.innerHTML = `<img src="${thumb}" style="width:100%;max-width:320px;border-radius:8px"/>`;
+        preview.style.display = 'block';
+      }
+
+      // 제목 가져오기는 Noembed API 사용
+      try {
+        const res = await fetch(`https://noembed.com/embed?url=${encodeURIComponent(url)}`);
+        const json = await res.json();
+        if (json.title) document.getElementById('f_title').value = json.title;
+      } catch (e) { console.warn('제목 가져오기 실패', e); }
+    }
+
+    function saveYoutube(id) {
+      const title = document.getElementById('f_title').value.trim();
+      const link = document.getElementById('f_link').value.trim();
+      let images = [];
+      try { images = JSON.parse(document.getElementById('f_images_data').value || '[]'); } catch (e) { }
+
+      if (!title || !link) return alert('제목과 링크를 모두 입력하세요.');
+
+      if (!D.youtubeVideos) D.youtubeVideos = [];
+      const obj = { id: id || 'yt_' + uid(), title, link, images }; // images 추가
+
+      if (id) {
+        const idx = D.youtubeVideos.findIndex(v => v.id === id);
+        if (idx !== -1) D.youtubeVideos[idx] = obj;
+      } else {
+        D.youtubeVideos.push(obj);
+      }
+      save(); closeModal(); render();
+    }
+
+    function setupListDragDrop(containerId, dataKey) {
+      const list = document.getElementById(containerId);
+      if (!list) return;
+
+      const items = Array.from(list.children);
+      items.forEach(item => {
+        const handle = item.querySelector('.drag-handle');
+        if (!handle) return;
+
+        handle.style.cursor = 'grab';
+        handle.addEventListener('mousedown', e => {
+          e.preventDefault(); // 텍스트 선택 방지
+          const fromIdx = +item.dataset.idx;
+          let currentTargetItem = null;
+
+          item.classList.add('dragging');
+          item.style.position = 'relative';
+          item.style.zIndex = '1000';
+          item.style.opacity = '0.6';
+          item.style.boxShadow = '0 8px 16px rgba(0,0,0,0.2)';
+          document.body.style.cursor = 'grabbing';
+
+          const initialY = e.clientY;
+          const rect = item.getBoundingClientRect();
+          const offsetY = initialY - rect.top;
+
+          // Placeholder 생성
+          const placeholder = document.createElement('div');
+          placeholder.style.height = rect.height + 'px';
+          placeholder.style.background = 'rgba(229, 9, 20, 0.1)';
+          placeholder.style.border = '2px dashed var(--red)';
+          placeholder.style.borderRadius = '8px';
+          placeholder.style.marginBottom = '12px';
+
+          item.parentNode.insertBefore(placeholder, item);
+          item.style.position = 'absolute';
+          item.style.top = (rect.top + window.scrollY) + 'px';
+          item.style.left = rect.left + 'px';
+          item.style.width = rect.width + 'px';
+
+          function onMouseMove(ev) {
+            const moveY = ev.clientY;
+            item.style.top = (moveY - offsetY + window.scrollY) + 'px';
+
+            // 현재 위치 아래의 아이템 찾기
+            const siblings = Array.from(list.children).filter(el => el !== item && el !== placeholder && el.dataset.idx);
+
+            let found = false;
+            for (const sibling of siblings) {
+              const sibRect = sibling.getBoundingClientRect();
+              const sibMid = sibRect.top + sibRect.height / 2;
+
+              if (moveY < sibMid) {
+                list.insertBefore(placeholder, sibling);
+                found = true;
+                break;
+              }
+            }
+            if (!found) {
+              list.appendChild(placeholder);
+            }
+          }
+
+          function onMouseUp() {
+            document.removeEventListener('mousemove', onMouseMove);
+            document.removeEventListener('mouseup', onMouseUp);
+
+            // 스타일 복구
+            item.classList.remove('dragging');
+            item.style.position = '';
+            item.style.zIndex = '';
+            item.style.opacity = '';
+            item.style.boxShadow = '';
+            item.style.top = '';
+            item.style.left = '';
+            item.style.width = '';
+            document.body.style.cursor = '';
+
+            // 실제 DOM 이동
+            list.insertBefore(item, placeholder);
+            placeholder.remove();
+
+            // 데이터 순서 업데이트
+            const newOrderIndices = Array.from(list.children).map(child => +child.dataset.idx).filter(n => !isNaN(n));
+
+            // 현재 UI 순서대로 데이터 재정렬 (인덱스 보정 필요 없음, map으로 재구성)
+            // 주의: data-idx는 초기 렌더링 시의 인덱스이므로, 현재 DOM 순서대로 데이터를 가져와야 함
+            const currentData = D[dataKey];
+            const newData = [];
+
+            // DOM 순서대로 기존 데이터 매핑
+            const domItems = Array.from(list.children).filter(el => el.hasAttribute('data-idx'));
+            domItems.forEach(el => {
+              const oldIdx = +el.dataset.idx;
+              if (currentData[oldIdx]) newData.push(currentData[oldIdx]);
+            });
+
+            if (newData.length === currentData.length) {
+              D[dataKey] = newData;
+              save();
+              render();
+              showToast('✅ 순서가 변경되었습니다');
+            } else {
+              console.error('Data mismatch during resort');
+              render(); // 복구
+            }
+          }
+
+          document.addEventListener('mousemove', onMouseMove);
+          document.addEventListener('mouseup', onMouseUp);
+        });
+      });
+    }
+
+    /* ══════════════════════════════════════════
+       공통
+       ══════════════════════════════════════════ */
+    function delItem(key, id) {
+      if (!confirm('정말 삭제하시겠습니까?')) return;
+      D[key] = D[key].filter(item => item.id !== id);
+      save(); render();
+    }
+
+    function resetData() {
+      if (!confirm('모든 데이터를 초기 상태로 되돌립니다.\n(이미지/링크 등 모든 편집 내용이 사라집니다)\n\n계속하시겠습니까?')) return;
+      localStorage.removeItem('profileData');
+      location.reload();
+    }
+
+    function logout() {
+      // localStorage.removeItem('adminToken'); // 토큰 삭제 안 함 (편의성)
+      location.reload();
+    }
+
+    function downloadDataJs() {
+      const dataStr = "const profileData = " + JSON.stringify(D, null, 2) + ";\n\nif (typeof window !== 'undefined') {\n  window.profileData = profileData;\n}\nif (typeof module !== 'undefined' && module.exports) {\n  module.exports = profileData;\n}";
+      const blob = new Blob([dataStr], { type: "text/javascript" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "data_v3.js";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      alert('data_v3.js 파일이 다운로드되었습니다.\n이 파일을 프로젝트 폴더의 data_v3.js와 교체하고 배포하면 모바일에서도 정상적으로 보입니다.');
+    }
+
+
+    /* ══════════════════════════════════════════
+       테이블 행 드래그앤드롭 (순수 마우스 이벤트 기반)
+       ══════════════════════════════════════════ */
+    function setupTableDragDrop(tbodyId, dataKey) {
+      const tbody = document.getElementById(tbodyId);
+      if (!tbody) return;
+
+      const rows = Array.from(tbody.querySelectorAll('tr[data-idx]'));
+      rows.forEach(row => {
+        const handle = row.querySelector('.drag-handle');
+        if (!handle) return;
+
+        handle.addEventListener('mousedown', e => {
+          e.preventDefault();
+          const fromIdx = +row.dataset.idx;
+          let currentTargetRow = null;
+          row.classList.add('dragging');
+          row.style.opacity = '0.4';
+          document.body.style.cursor = 'grabbing';
+          document.body.style.userSelect = 'none';
+
+          function onMouseMove(ev) {
+            /* 모든 행의 인디케이터 제거 */
+            rows.forEach(r => {
+              r.style.borderTop = '';
+              r.style.borderBottom = '';
+            });
+            /* 현재 마우스 위치 아래의 행 찾기 */
+            const allRows = Array.from(tbody.querySelectorAll('tr[data-idx]'));
+            currentTargetRow = null;
+            for (const r of allRows) {
+              const rect = r.getBoundingClientRect();
+              if (ev.clientY >= rect.top && ev.clientY <= rect.bottom) {
+                if (r !== row) {
+                  currentTargetRow = r;
+                  const mid = rect.top + rect.height / 2;
+                  if (ev.clientY < mid) {
+                    r.style.borderTop = '3px solid var(--red)';
+                  } else {
+                    r.style.borderBottom = '3px solid var(--red)';
+                  }
+                }
+                break;
+              }
+            }
+          }
+
+          function onMouseUp() {
+            document.removeEventListener('mousemove', onMouseMove);
+            document.removeEventListener('mouseup', onMouseUp);
+            row.classList.remove('dragging');
+            row.style.opacity = '';
+            document.body.style.cursor = '';
+            document.body.style.userSelect = '';
+            /* 모든 인디케이터 제거 */
+            rows.forEach(r => {
+              r.style.borderTop = '';
+              r.style.borderBottom = '';
+            });
+
+            if (currentTargetRow) {
+              const toIdx = +currentTargetRow.dataset.idx;
+              if (fromIdx !== toIdx) {
+                const arr = D[dataKey];
+                const [moved] = arr.splice(fromIdx, 1);
+                arr.splice(toIdx, 0, moved);
+                render();
+                showToast('✅ 순서가 변경되었습니다');
+              }
+            }
+          }
+
+          document.addEventListener('mousemove', onMouseMove);
+          document.addEventListener('mouseup', onMouseUp);
+        });
+      });
+    }
+
+    /* ══════════════════════════════════════════
+       🤖 AI 자동 등록 (Gemini API & Google Drive)
+       ══════════════════════════════════════════ */
+    function showToast(msg) { const t = document.createElement('div'); t.textContent = msg; Object.assign(t.style, { position: 'fixed', bottom: '24px', left: '50%', transform: 'translateX(-50%)', background: '#22c55e', color: '#fff', padding: '10px 24px', borderRadius: '8px', fontSize: '.85rem', fontWeight: '600', zIndex: '9999', boxShadow: '0 4px 16px rgba(0,0,0,.3)' }); document.body.appendChild(t); setTimeout(() => t.remove(), 2000); }
+    function getApiKey() { return localStorage.getItem('gemini_api_key') || ''; }
+    function setApiKey(k) { localStorage.setItem('gemini_api_key', k); }
+    function getClientId() { return localStorage.getItem('google_client_id') || ''; }
+    function setClientId(k) { localStorage.setItem('google_client_id', k); }
+
+    /* Google Drive API 관련 변수 */
+    let tokenClient;
+    let accessToken = null;
+    let pickerInited = false;
+    let gisInited = false;
+
+    function gapiLoaded() { gapi.load('client:picker', async () => { await gapi.client.load('drive', 'v3'); pickerInited = true; }); }
+    function gisLoaded() {
+      tokenClient = google.accounts.oauth2.initTokenClient({
+        client_id: getClientId(),
+        scope: 'https://www.googleapis.com/auth/drive.readonly',
+        callback: (resp) => {
+          if (resp.error !== undefined) throw (resp);
+          accessToken = resp.access_token;
+          if (pendingPicker) createPicker();
+        },
+      });
+      gisInited = true;
+    }
+
+    let pendingPicker = false;
+    function handleAuthClick() {
+      const clientId = getClientId();
+      if (!clientId) return alert('Google Client ID를 먼저 설정해주세요.');
+
+      /* Client ID가 변경되었을 수 있으므로 재초기화 시도 */
+      if (!tokenClient || tokenClient.client_id !== clientId) {
+        tokenClient = google.accounts.oauth2.initTokenClient({
+          client_id: clientId,
+          scope: 'https://www.googleapis.com/auth/drive.readonly',
+          callback: (resp) => {
+            if (resp.error !== undefined) throw (resp);
+            accessToken = resp.access_token;
+            if (pendingPicker) createPicker();
+          },
+        });
+      }
+
+      pendingPicker = true;
+      if (accessToken === null) {
+        tokenClient.requestAccessToken({ prompt: 'consent' });
+      } else {
+        tokenClient.requestAccessToken({ prompt: '' });
+      }
+    }
+
+    function createPicker() {
+      if (!pickerInited) return alert('Google API 로딩 중...');
+      const view = new google.picker.View(google.picker.ViewId.DOCS);
+      view.setMimeTypes('application/vnd.google-apps.document,application/vnd.google-apps.presentation,application/pdf,image/png,image/jpeg');
+      const picker = new google.picker.PickerBuilder()
+        .enableFeature(google.picker.Feature.NAV_HIDDEN)
+        .enableFeature(google.picker.Feature.MULTISELECT_ENABLED)
+        .setAppId(getClientId())
+        .setOAuthToken(accessToken)
+        .addView(view)
+        .setCallback(pickerCallback)
+        .build();
+      picker.setVisible(true);
+      pendingPicker = false;
+    }
+
+    async function pickerCallback(data) {
+      if (data.action === google.picker.Action.PICKED) {
+        const fileId = data.docs[0].id;
+        const mimeType = data.docs[0].mimeType;
+        const name = data.docs[0].name;
+
+        const status = document.getElementById('fileStatus') || document.getElementById('previewResult');
+        if (status) status.innerHTML = `<div class="ai-status"><span class="fetching">🔄 "${name}" 내용 가져오는 중...</span></div>`;
+
+        try {
+          const content = await fetchDriveContent(fileId, mimeType);
+
+          /* PDF인 경우 페이지 선택기 호출 */
+          if (mimeType.includes('pdf')) {
+            openPageSelector(content);
+            if (status) status.innerHTML = '';
+            window.pendingAnalysisFile = name;
+            return;
+          }
+
+          /* Auto Register 탭인지 개별 폼인지 확인 */
+          if (currentTab === 'autoRegister') {
+            const prompt = `다음 문서의 내용을 분석해주세요.
+파일이름: ${name}
+내용:
+${content.substring(0, 30000)} ... (생략)
+
+아래 JSON 형식으로 응답해주세요(JSON만, 설명 없이):
+{"category":"lectures|awards|press|publications|activities","title":"제목","org":"기관명","year":2025,"date":"날짜","description":"설명","highlight":false}`;
+
+            status.innerHTML = `<div class="ai-status"><span class="fetching">🤖 "${name}" 분석 중...</span></div>`;
+            const result = await callGeminiText(prompt);
+            /* 이미지가 있다면 추가 처리 필요하지만 여기선 텍스트 위주 */
+            showAiResult(result, [`https://lh3.googleusercontent.com/d/${fileId}=w400`]); // 썸네일은 공개 여부에 따라 안 보일 수 있음
+          } else {
+            /* 개별 폼 자동 입력 */
+            status.innerHTML = `<div class="ai-status"><span class="fetching">🤖 "${name}" 분석 중...</span></div>`;
+            const prompt = `다음 문서의 내용을 분석해주세요.
+파일이름: ${name}
+내용:
+${content.substring(0, 30000)}
+
+이 내용을 분석하여 아래 JSON으로만 응답해주세요:
+{"title":"제목","org":"기관/출판사/주최","year":2025,"description":"간단한 설명","tags":["태그1","태그2"],"source":"출처/매체명","date":"날짜"}`;
+            const aiResult = await callGeminiText(prompt);
+            autoFillFormFields(aiResult, { title: name, description: aiResult.description });
+
+            /* 썸네일 추가 시도 (권한 문제로 보일지 모르지만 링크라도 저장) */
+            const imgInput = document.getElementById('f_images_data');
+            if (imgInput) {
+              let imgs = [];
+              try { imgs = JSON.parse(imgInput.value || '[]'); } catch (e) { }
+              imgs.push(`https://lh3.googleusercontent.com/d/${fileId}=w1000`);
+              imgInput.value = JSON.stringify(imgs);
+              refreshImageList();
+            }
+
+            if (status) status.innerHTML = `<div style="font-size:.82rem;color:var(--green);margin-bottom:8px">✅ 구글 드라이브 파일 분석 완료!</div>`;
+          }
+        } catch (err) {
+          if (status) status.innerHTML = `<div class="ai-status" style="color:#ef4444">❌ 오류: ${err.message}</div>`;
+        }
+      }
+    }
+
+    async function fetchDriveContent(fileId, mimeType) {
+      if (!gapi.client.drive) await gapi.client.load('drive', 'v3');
+
+      let res;
+      if (mimeType.includes('google-apps.document') || mimeType.includes('google-apps.presentation')) {
+        /* 구글 문서는 텍스트로 내보내기 */
+        res = await gapi.client.drive.files.export({ fileId: fileId, mimeType: 'text/plain' });
+        return res.body;
+      } else if (mimeType.includes('pdf') || mimeType.includes('image')) {
+        /* PDF나 이미지는 Vision API 사용을 위해 Base64로 받아야 함 - 일단 텍스트 추출 불가 시 메타데이터만? 
+           PDF 내용을 읽으려면 drive.files.get alt=media로 받아서 pdf.js 필요... 
+           여기선 간단히 이미지는 base64 get, PDF는 파일명/메타데이터만 사용하는 것으로 타협하거나
+           Gemini Vision이 PDF도 지원하므로 PDF도 base64로 받아서 Vision에 던질 수 있음.
+        */
+        /* PDF Download logic needs token */
+        const resp = await fetch(`https://www.googleapis.com/drive/v3/files/${fileId}?alt=media`, {
+          headers: { 'Authorization': 'Bearer ' + accessToken }
+        });
+        // For now, simpler approach: return just file name/metadata if binary
+        // Actually Gemini Vision can handle PDF base64. Let's try to get blob -> base64
+        const blob = await resp.blob();
+        return new Promise((resolve) => {
+          const reader = new FileReader();
+          reader.onloadend = () => resolve(reader.result); // Data URL
+          reader.readAsDataURL(blob);
+        });
+      }
+      return '';
+    }
+
+
+    function renderAutoRegister() {
+      const key = getApiKey();
+      const clientId = getClientId();
+      main.innerHTML = `
+        <div class="page-header"><div class="page-title">🤖 AI 자동 등록</div></div>
+        <div class="api-key-area">
+          <label class="form-label">API 설정</label>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div>
+              <label class="form-label" style="font-size:.75rem">Gemini API 키</label>
+              <div class="link-row">
+                <input class="form-input" id="apiKeyInput" type="password" value="${key}" placeholder="AIza..."/>
+                <button class="btn btn-green btn-sm" onclick="setApiKey(document.getElementById('apiKeyInput').value.trim());showToast('저장됨')">저장</button>
+              </div>
+            </div>
+            <div>
+              <label class="form-label" style="font-size:.75rem">Google Client ID (드라이브 연동용)</label>
+              <div class="link-row">
+                <input class="form-input" id="clientIdInput" value="${clientId}" placeholder="...apps.googleusercontent.com"/>
+                <button class="btn btn-blue btn-sm" onclick="setClientId(document.getElementById('clientIdInput').value.trim());showToast('저장됨')">저장</button>
+              </div>
+            </div>
+          </div>
+          <div class="form-hint">Google Cloud Console에서 <strong>OAuth 2.0 클라이언트 ID</strong>를 생성하여 입력하세요. (승인된 자바스크립트 원본에 현재 도메인 추가 필수)</div>
+        </div>
+        <div class="auto-zone">
+          <h4>📎 파일 업로드 (상장, 공문, 강의자료 이미지 등)</h4>
+          <div style="display:flex;gap:12px;margin-bottom:12px">
+            <button class="btn btn-outline" style="flex:1;padding:20px" onclick="document.getElementById('fileInput').click()">
+              <span style="font-size:1.5rem">📂</span><br/>내 PC에서 선택
+            </button>
+            <button class="btn btn-outline" style="flex:1;padding:20px" onclick="handleAuthClick()">
+              <span style="font-size:1.5rem">☁️</span><br/>Google Drive에서 선택
+            </button>
+          </div>
+          <input type="file" id="fileInput" accept="image/*,.pdf" multiple style="display:none"/>
+          <div id="fileStatus"></div>
+        </div>
+        <div class="auto-zone">
+          <h4>🔗 URL 입력 (유튜브 강의, 뉴스 기사 등)</h4>
+          <div class="link-row">
+            <input class="form-input" id="autoUrl" placeholder="https://... (유튜브, 뉴스 기사, 교안 링크 등)"/>
+            <button class="btn btn-red" onclick="analyzeUrl()">AI 분석</button>
+          </div>
+          <div id="urlStatus"></div>
+        </div>
+        <div id="aiResults"></div>
+      `;
+      setupDropArea();
+    }
+
+    function setupDropArea() {
+      const drop = document.getElementById('dropArea');
+      const input = document.getElementById('fileInput');
+      if (!drop) return;
+      drop.addEventListener('dragover', e => { e.preventDefault(); drop.classList.add('dragover'); });
+      drop.addEventListener('dragleave', () => drop.classList.remove('dragover'));
+      drop.addEventListener('drop', e => { e.preventDefault(); drop.classList.remove('dragover'); handleFiles(e.dataTransfer.files); });
+      input.addEventListener('change', e => handleFiles(e.target.files));
+    }
+
+    async function handleFiles(files) {
+      if (!getApiKey()) return alert('Gemini API 키를 먼저 설정해주세요.');
+      const status = document.getElementById('fileStatus');
+      for (const file of files) {
+        status.innerHTML = `<div class="ai-status"><span class="fetching">🔄 "${file.name}" 분석 중... (Gemini AI)</span></div>`;
+        try {
+          const base64 = await fileToBase64(file);
+          const mime = file.type || 'image/jpeg';
+          const result = await callGeminiVision(base64, mime);
+          showAiResult(result, [base64ToDataUrl(base64, mime)]);
+        } catch (err) {
+          status.innerHTML = `<div class="ai-status" style="color:#ef4444">❌ 분석 실패: ${err.message}</div>`;
+        }
+      }
+    }
+
+    async function analyzeUrl() {
+      const url = document.getElementById('autoUrl')?.value?.trim();
+      if (!url) return alert('URL을 입력해주세요.');
+      if (!getApiKey()) return alert('Gemini API 키를 먼저 설정해주세요.');
+      const status = document.getElementById('urlStatus');
+      status.innerHTML = `<div class="ai-status"><span class="fetching">🔄 URL 분석 중...</span></div>`;
+      try {
+        let preview = null;
+        try { preview = await fetchLinkPreview(url); } catch (e) { }
+        const prompt = `다음 URL의 내용을 분석해주세요.
+URL: ${url}
+${preview ? `제목: ${preview.title}\n설명: ${preview.description}` : ''}
+
+아래 JSON 형식으로 응답해주세요(JSON만, 설명 없이):
+{"category":"lectures|awards|press|publications|activities","title":"제목","org":"기관명","year":2025,"date":"날짜","description":"설명","highlight":false}`;
+        const result = await callGeminiText(prompt);
+        result.link = url;
+        result.images = preview?.images || [];
+        const ytId = getYouTubeId(url);
+        if (ytId && !result.images.length) result.images = [`https://img.youtube.com/vi/${ytId}/maxresdefault.jpg`];
+        showAiResult(result, result.images);
+      } catch (err) {
+        status.innerHTML = `<div class="ai-status" style="color:#ef4444">❌ ${err.message}</div>`;
+      }
+    }
+
+    function fileToBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result.split(',')[1]);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+    function base64ToDataUrl(b64, mime) { return `data:${mime};base64,${b64}`; }
+
+    async function callGeminiVision(base64, mime) {
+      const key = getApiKey();
+      const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${key}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{
+            parts: [
+              { inlineData: { mimeType: mime, data: base64 } },
+              {
+                text: `이 이미지를 분석해주세요. 상장, 공문(강의 의뢰서), 강의 슬라이드, 뉴스 기사 스크린샷 등일 수 있습니다.
+이미지 내용을 파악하여 아래 JSON 형식으로만 응답해주세요(JSON만, 설명 없이):
+{"category":"lectures|awards|press|publications|activities","title":"제목 또는 상장명","org":"수여기관/주최기관","year":2025,"date":"날짜(있으면)","description":"주요 내용 요약","highlight":false,"source":"매체명(보도자료인 경우)"}
+
+category 판단 기준:
+- 상장/표창장/감사장 → awards
+- 강의 의뢰 공문/강연 관련 → lectures
+- 신문기사/보도자료 → press
+- 책 표지/출판 관련 → publications
+- 기타 활동 → activities` }
+            ]
+          }]
+        })
+      });
+      const json = await res.json();
+      if (json.error) throw new Error(json.error.message);
+      const text = json.candidates?.[0]?.content?.parts?.[0]?.text || '';
+      return parseGeminiJson(text);
+    }
+
+    async function callGeminiText(prompt) {
+      const key = getApiKey();
+      const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${key}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+      });
+      const json = await res.json();
+      if (json.error) throw new Error(json.error.message);
+      const text = json.candidates?.[0]?.content?.parts?.[0]?.text || '';
+      return parseGeminiJson(text);
+    }
+
+    function parseGeminiJson(text) {
+      const m = text.match(/\{[\s\S]*\}/);
+      if (!m) throw new Error('AI 응답을 파싱할 수 없습니다.');
+      return JSON.parse(m[0]);
+    }
+
+    function showAiResult(result, previewImages) {
+      const area = document.getElementById('aiResults');
+      const catLabels = { lectures: '🎤 강의', awards: '🏆 수상', press: '📰 보도자료', publications: '📚 저서', activities: '📌 활동' };
+      area.innerHTML = `
+        <div class="ai-result-card">
+          <h4>✅ AI 분석 결과</h4>
+          <div class="ai-field"><span class="label">카테고리</span><span class="value">${catLabels[result.category] || result.category}</span></div>
+          <div class="ai-field"><span class="label">제목</span><span class="value">${result.title || '-'}</span></div>
+          <div class="ai-field"><span class="label">기관</span><span class="value">${result.org || result.source || '-'}</span></div>
+          <div class="ai-field"><span class="label">연도</span><span class="value">${result.year || '-'}</span></div>
+          ${result.date ? `<div class="ai-field"><span class="label">날짜</span><span class="value">${result.date}</span></div>` : ''}
+          ${result.description ? `<div class="ai-field"><span class="label">설명</span><span class="value">${result.description}</span></div>` : ''}
+          ${previewImages?.length ? `<div class="ai-img-preview">${previewImages.map(i => `<img src="${i}" onerror="this.remove()"/>`).join('')}</div>` : ''}
+          <div style="display:flex;gap:8px;margin-top:16px">
+            <button class="btn btn-red" onclick='confirmAutoRegister(${JSON.stringify(result).replace(/'/g, "\\'")},[${(previewImages || []).map(i => '"' + i.replace(/"/g, '') + '"').join(',')}])'>이대로 등록</button>
+            <button class="btn btn-outline" onclick="document.getElementById('aiResults').innerHTML=''">취소</button>
+          </div>
+        </div>
+      `;
+    }
+
+    function confirmAutoRegister(result, images) {
+      const id = uid();
+      const cat = result.category;
+      if (cat === 'lectures') {
+        D.lectures.unshift({ id: 'l_' + id, title: result.title || '', org: result.org || '', year: result.year || new Date().getFullYear(), category: result.lecCategory || '기조강연/발표', highlight: !!result.highlight, link: result.link || '', previewDesc: result.description || '', images: images || [], image: images?.[0] || '' });
+      } else if (cat === 'awards') {
+        D.awards.unshift({ id: 'a_' + id, title: result.title || '', org: result.org || '', year: result.year || new Date().getFullYear(), highlight: !!result.highlight });
+      } else if (cat === 'press') {
+        D.press.unshift({ id: 'p_' + id, title: result.title || '', source: result.source || result.org || '', date: result.date || '', link: result.link || '', previewDesc: result.description || '', images: images || [] });
+      } else if (cat === 'publications') {
+        D.publications.unshift({ id: 'pub_' + id, title: result.title || '', publisher: result.org || '', year: result.year || new Date().getFullYear(), description: result.description || '', tags: [], images: images || [], image: images?.[0] || '', link: result.link || '' });
+      } else if (cat === 'activities') {
+        D.activities.unshift({ id: 'act_' + id, title: result.title || '', period: result.date || '' });
+      }
+      save();
+      document.getElementById('aiResults').innerHTML = `<div class="ai-status" style="color:var(--green)">✅ <strong>${result.title}</strong>이(가) <strong>${cat}</strong>에 등록되었습니다!</div>`;
+    }
+
+    /* ══════════════════════════════════════════
+       About Me 관리
+       ══════════════════════════════════════════ */
+    function renderAboutMe() {
+      if (!D.personal) D.personal = {};
+      const currentTitle = D.personal.aboutTitle || 'AI 교육의\n최전선에 서다';
+      const currentBio = D.personal.bio || '';
+      main.innerHTML = `
+        <div class="page-header">
+          <div class="page-title">👤 About Me 관리</div>
+          <button class="btn btn-red" onclick="saveAboutMe()">☁️ 저장 & 배포</button>
+        </div>
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:28px;max-width:780px">
+          <div style="background:rgba(229,9,20,.07);border:1px solid rgba(229,9,20,.2);border-radius:8px;padding:16px;margin-bottom:24px;font-size:.88rem;color:var(--text2);line-height:1.6">
+            💡 <strong>안내:</strong> 제목과 내용을 수정하면 포트폴리오 사이트의 <strong>About Me</strong> 섹션에 바로 반영됩니다.<br/>
+            제목은 줄바꿈을 <code>\n</code>으로 입력하면 두 줄로 나뉩니다.
+          </div>
+
+          <div class="form-row">
+            <label class="form-label" style="font-size:1rem;margin-bottom:10px">📌 섹션 제목</label>
+            <div class="form-hint" style="margin-bottom:10px">포트폴리오에 크게 표시되는 제목입니다. <strong>Enter 키</strong>로 줄바꿈할 수 있습니다.</div>
+            <textarea class="form-textarea" id="about_title" rows="3" style="font-size:1.1rem;font-weight:600;min-height:80px;line-height:1.6" placeholder="예: 교사의 여유가&#10;교육의 질을 결정합니다">${(currentTitle || '').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</textarea>
+          </div>
+
+          <div class="form-row" style="margin-top:20px">
+            <label class="form-label" style="font-size:1rem;margin-bottom:10px">📝 소개글 (Bio)</label>
+            <div class="form-hint" style="margin-bottom:10px">이름 아래에 표시되는 자기소개 문장입니다.</div>
+            <textarea class="form-textarea" id="about_bio" rows="7" style="min-height:160px;line-height:1.8;font-size:.97rem">${(currentBio || '').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</textarea>
+          </div>
+
+          <div style="margin-top:24px;padding:20px;background:var(--card2);border-radius:10px;border:1px dashed var(--border)">
+            <div style="font-size:.85rem;color:var(--text2);margin-bottom:12px">📱 미리보기</div>
+            <div id="aboutPreview" style="font-family:'Pretendard','Noto Sans KR',sans-serif">
+              <div style="font-size:clamp(1.4rem,3vw,2rem);font-weight:900;line-height:1.3;margin-bottom:16px;color:var(--text)" id="previewTitle">${(currentTitle || '').replace(/\n/g, '<br/>')}</div>
+              <div style="font-size:.96rem;color:var(--text2);line-height:1.9;white-space:pre-wrap" id="previewBio">${currentBio || ''}</div>
+            </div>
+          </div>
+
+          <div class="form-actions" style="margin-top:28px;justify-content:flex-end">
+            <button class="btn btn-red" onclick="saveAboutMe()" style="min-width:180px;padding:14px">☁️ 저장 & GitHub 배포</button>
+          </div>
+        </div>
+      `;
+
+      /* 실시간 미리보기 */
+      document.getElementById('about_title').addEventListener('input', function() {
+        const v = this.value;
+        document.getElementById('previewTitle').innerHTML = v.replace(/\n/g, '<br/>');
+      });
+      document.getElementById('about_bio').addEventListener('input', function() {
+        document.getElementById('previewBio').textContent = this.value;
+      });
+    }
+
+    function saveAboutMe() {
+      const rawTitle = document.getElementById('about_title').value.trim();
+      const bio = document.getElementById('about_bio').value.trim();
+      if (!rawTitle) return alert('제목을 입력하세요.');
+      if (!bio) return alert('소개글을 입력하세요.');
+      D.personal.aboutTitle = rawTitle;
+      D.personal.bio = bio;
+      save();
+      showToast('✅ About Me 저장 완료!');
+    }
+
+    function render() {
+      switch (currentTab) {
+        case 'dashboard': renderDashboard(); break;
+        case 'autoRegister': renderAutoRegister(); break;
+        case 'lectures': renderLectures(); break;
+        case 'publications': renderPublications(); break;
+        case 'courses': renderCourses(); break;
+        case 'awards': renderAwards(); break;
+        case 'activities': renderActivities(); break;
+        case 'press': renderPress(); break;
+        case 'youtube': renderYoutube(); break;
+        case 'aboutMe': renderAboutMe(); break;
+      }
+    }
+    render();
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script>pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';</script>
+  <script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
+  <script async defer src="https://accounts.google.com/gsi/client" onload="gisLoaded()"></script>
+
+  <!-- PDF 페이지 선택 모달 -->
+  <div class="modal-overlay" id="pageSelectorModal" style="z-index:9999">
+    <div class="modal"
+      style="width:1000px;max-width:95vw;height:90vh;display:flex;flex-direction:column;padding:0;background:var(--bg)">
+      <div
+        style="padding:16px 24px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;background:var(--card)">
+        <h3 style="margin:0;font-size:1.1rem">📄 핵심 페이지 선택</h3>
+        <button class="btn btn-outline btn-sm" onclick="closePageSelector()">닫기</button>
+      </div>
+      <div id="pdfPageGrid"
+        style="flex:1;overflow-y:auto;padding:24px;display:grid;grid-template-columns:repeat(auto-fill, minmax(200px, 1fr));gap:20px;align-content:start;">
+        <!-- 썸네일 그리드 -->
+      </div>
+      <div
+        style="padding:16px 24px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:12px;background:var(--card);align-items:center">
+        <div style="margin-right:auto;display:flex;align-items:center;gap:8px">
+          <span id="selectedCount" style="font-weight:700;color:var(--blue)">0장 선택됨</span>
+          <span style="font-size:.85rem;color:var(--text2)">(클릭하여 선택/해제)</span>
+        </div>
+        <button class="btn btn-outline" onclick="closePageSelector()">취소</button>
+        <button class="btn btn-blue" onclick="confirmPageSelection()">선택 완료</button>
+      </div>
+    </div>
+  </div>
+  <style>
+    .pdf-page-item {
+      position: relative;
+      cursor: pointer;
+      border: 2px solid transparent;
+      border-radius: 8px;
+      overflow: hidden;
+      transition: all .2s;
+      background: #000;
+    }
+
+    .pdf-page-item:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, .5);
+    }
+
+    .pdf-page-item.selected {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, .5);
+    }
+
+    .pdf-page-item img {
+      width: 100%;
+      height: auto;
+      display: block;
+      opacity: .85;
+      transition: opacity .2s
+    }
+
+    .pdf-page-item.selected img {
+      opacity: 1
+    }
+
+    .pdf-page-num {
+      position: absolute;
+      bottom: 8px;
+      right: 8px;
+      background: rgba(0, 0, 0, .7);
+      color: #fff;
+      font-size: .75rem;
+      padding: 2px 6px;
+      border-radius: 4px;
+      pointer-events: none;
+    }
+
+    .pdf-check {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      width: 24px;
+      height: 24px;
+      background: rgba(0, 0, 0, .6);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: transparent;
+      border: 2px solid rgba(255, 255, 255, .5);
+      transition: all .2s;
+      pointer-events: none;
+    }
+
+    .pdf-page-item.selected .pdf-check {
+      background: var(--blue);
+      border-color: var(--blue);
+      color: #fff;
+    }
+  </style>
+  <script>
+    let currentPdfDoc = null;
+    let selectedPdfPages = new Set();
+    let currentPdfImages = []; /* 렌더링된 이미지 데이터 저장 */
+
+    async function openPageSelector(data) {
+      const modal = document.getElementById('pageSelectorModal');
+      const grid = document.getElementById('pdfPageGrid');
+      const counter = document.getElementById('selectedCount');
+
+      modal.classList.add('open');
+      grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px"><span class="fetching">PDF 로딩 중...</span></div>';
+      selectedPdfPages.clear();
+      currentPdfImages = [];
+      counter.textContent = '0장 선택됨';
+
+      try {
+        const loadingTask = pdfjsLib.getDocument(data);
+        currentPdfDoc = await loadingTask.promise;
+
+        grid.innerHTML = '';
+        for (let i = 1; i <= currentPdfDoc.numPages; i++) {
+          renderPdfPageThumbnail(i, grid);
+        }
+      } catch (err) {
+        grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;color:var(--red)">PDF 로드 실패: ${err.message}</div>`;
+      }
+    }
+
+    async function renderPdfPageThumbnail(num, container) {
+      const page = await currentPdfDoc.getPage(num);
+      const scale = 0.5; /* 썸네일용 스케일 */
+      const viewport = page.getViewport({ scale });
+
+      const canvas = document.createElement('canvas');
+      const context = canvas.getContext('2d');
+      canvas.height = viewport.height;
+      canvas.width = viewport.width;
+
+      await page.render({ canvasContext: context, viewport: viewport }).promise;
+
+      const imgData = canvas.toDataURL('image/jpeg', 0.8);
+      currentPdfImages[num] = imgData;
+
+      const div = document.createElement('div');
+      div.className = 'pdf-page-item';
+      div.onclick = () => togglePdfPage(num, div);
+      div.innerHTML = `
+        <img src="${imgData}"/>
+        <div class="pdf-check">✔</div>
+        <div class="pdf-page-num">${num}</div>
+      `;
+      container.appendChild(div);
+    }
+
+    function togglePdfPage(num, el) {
+      if (selectedPdfPages.has(num)) {
+        selectedPdfPages.delete(num);
+        el.classList.remove('selected');
+      } else {
+        selectedPdfPages.add(num);
+        el.classList.add('selected');
+      }
+      document.getElementById('selectedCount').textContent = `${selectedPdfPages.size}장 선택됨`;
+    }
+
+    function closePageSelector() {
+      document.getElementById('pageSelectorModal').classList.remove('open');
+      currentPdfDoc = null;
+    }
+
+    function confirmPageSelection() {
+      if (selectedPdfPages.size === 0) return alert('최소 1장의 페이지를 선택해주세요.');
+
+      /* 선택된 페이지를 이미지 리스트에 추가 */
+      const sortedPages = Array.from(selectedPdfPages).sort((a, b) => a - b);
+      const newImages = sortedPages.map(p => currentPdfImages[p]);
+
+      /* 현재 열려있는 폼이 있는지 확인 (Auto Register vs Individual Form) */
+      if (currentTab === 'autoRegister') {
+        /* Auto Register에서는 'showAiResult' 호출 시 이미지를 전달해야 함 */
+        /* 하지만 analyzeUrl 등이 호출된 상태가 아니므로, 전역 변수나 콜백 필요 */
+        /* 여기서는 간단히 'aiResults' 영역에 미리보기를 띄우고, 추후 AI 분석 시 사용되도록... */
+        /* 복잡: Auto Register 로직이 Analyze -> Show Result 순서임. */
+        /* 따라서, Auto Register에서는 'File Upload' -> 'Page Selector' -> 'Gemini Calc' 순서로 가야 함. */
+        /* handleFormFileUpload나 pickerCallback에서 이 흐름을 제어해야 함. */
+
+        /* 일단 이벤트를 발생시켜 처리하거나 전역 변수 사용 */
+        window.lastSelectedImages = newImages;
+        /* Analyze Trigger */
+        if (window.pendingAnalysisFile) {
+          analyzePdfTextWithImages(window.pendingAnalysisFile, newImages);
+        }
+      } else {
+        /* 개별 폼 (Edit Mode) */
+        const imgInput = document.getElementById('f_images_data');
+        if (imgInput) {
+          let imgs = [];
+          try { imgs = JSON.parse(imgInput.value || '[]'); } catch (e) { }
+          /* 기존 이미지 유지? 아니면 교체? 사용자 선택 존중하여 추가 */
+          newImages.forEach(img => imgs.push(img));
+          imgInput.value = JSON.stringify(imgs);
+          refreshImageList();
+          showToast(`페이지 ${newImages.length}장이 추가되었습니다.`);
+        }
+      }
+      closePageSelector();
+    }
+  </script>
+</body>
+
+</html>
