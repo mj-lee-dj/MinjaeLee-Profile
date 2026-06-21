@@ -1,5 +1,6 @@
 /**
  * 이민재 포트폴리오 — Netflix-Style 렌더링 & 인터랙션
+ * v5 — 캐러셀 터치 스와이프 + 이미지 에러 핸들링 포함
  */
 document.addEventListener('DOMContentLoaded', async () => {
   let D = profileData; // data_v3.js의 기본값
@@ -181,11 +182,11 @@ document.addEventListener('DOMContentLoaded', async () => {
       <div class="card-gallery multi" id="${id}">
       ${images.map((img, i) => `<img src="${img}" alt="${alt} ${i + 1}" class="${i === 0 ? 'active' : ''}" onerror="handleImgError(this)"/>`).join('')}
       <div class="gallery-controls">
-        <button class="gallery-prev" onclick="event.stopPropagation(); changeSlide(this, -1)">&#10094;</button>
+        <button type="button" class="gallery-prev" onclick="event.stopPropagation(); changeSlide(this, -1)">&#10094;</button>
         <div class="gallery-dots">
           ${images.map((_, i) => `<span class="dot ${i === 0 ? 'active' : ''}" onclick="event.stopPropagation(); setSlide(this, ${i})"></span>`).join('')}
         </div>
-        <button class="gallery-next" onclick="event.stopPropagation(); changeSlide(this, 1)">&#10095;</button>
+        <button type="button" class="gallery-next" onclick="event.stopPropagation(); changeSlide(this, 1)">&#10095;</button>
       </div>
     </div>
     `;
@@ -267,6 +268,38 @@ document.addEventListener('DOMContentLoaded', async () => {
     imgs.forEach((img, i) => img.classList.toggle('active', i === idx));
     dots.forEach((d, i) => d.classList.toggle('active', i === idx));
   };
+
+  /* 모바일 스와이프 지원 (이벤트 위임) */
+  let touchStartX = 0;
+  let touchEndX = 0;
+  document.addEventListener('touchstart', e => {
+    const gallery = e.target.closest('.card-gallery.multi');
+    if (gallery) {
+      touchStartX = e.changedTouches[0].screenX;
+    }
+  }, { passive: true });
+
+  document.addEventListener('touchend', e => {
+    const gallery = e.target.closest('.card-gallery.multi');
+    if (gallery) {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipe(gallery);
+    }
+  }, { passive: true });
+
+  function handleSwipe(gallery) {
+    const threshold = 40; // 최소 스와이프 거리
+    if (touchEndX < touchStartX - threshold) {
+      // 왼쪽으로 스와이프 -> 다음 슬라이드
+      const nextBtn = gallery.querySelector('.gallery-next');
+      if (nextBtn) nextBtn.click();
+    }
+    if (touchEndX > touchStartX + threshold) {
+      // 오른쪽으로 스와이프 -> 이전 슬라이드
+      const prevBtn = gallery.querySelector('.gallery-prev');
+      if (prevBtn) prevBtn.click();
+    }
+  }
 
   /* ═══ 헬퍼: 플레이스홀더 패턴 생성 (이미지 없을 때 시각적 요소 제공) ═══ */
   function getPlaceholder(type, title) {
