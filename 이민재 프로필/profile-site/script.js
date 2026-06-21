@@ -1,5 +1,6 @@
 /**
  * 이민재 포트폴리오 — Netflix-Style 렌더링 & 인터랙션
+ * v5 — 캐러셀 터치 스와이프 + 이미지 에러 핸들링 포함
  */
 document.addEventListener('DOMContentLoaded', async () => {
   let D = profileData; // data_v3.js의 기본값
@@ -98,19 +99,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   function saveOgCache() { try { localStorage.setItem('ogImageCache', JSON.stringify(ogCache)); } catch (e) { } }
 
   function getItemImages(item) {
-    let rawImgs = [];
-    if (item.images && item.images.length) rawImgs = [...item.images];
-    else if (item.image) rawImgs = [item.image];
-
-    // relative path (uploads/...) -> absolute GitHub path
-    const GITHUB_BASE = 'https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/';
-    const processed = rawImgs.map(src => {
-      if (src && src.startsWith('uploads/')) return GITHUB_BASE + src;
-      return src;
-    });
-
-    if (processed.length) return processed;
-
+    if (item.images && item.images.length) return item.images;
+    if (item.image) return [item.image];
     /* YouTube 링크에서 자동 썸네일 */
     if (item.link) {
       const m = item.link.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([\w-]{11})/);
@@ -190,33 +180,126 @@ document.addEventListener('DOMContentLoaded', async () => {
     const id = 'g_' + Math.random().toString(36).slice(2, 8);
     return `
       <div class="card-gallery multi" id="${id}">
-      ${images.map((img, i) => `<img src="${img}" alt="${alt} ${i + 1}" class="${i === 0 ? 'active' : ''}" onerror="this.remove()"/>`).join('')}
+      ${images.map((img, i) => `<img src="${img}" alt="${alt} ${i + 1}" class="${i === 0 ? 'active' : ''}" onerror="handleImgError(this)"/>`).join('')}
       <div class="gallery-controls">
-        <button class="gallery-prev" onclick="event.stopPropagation(); changeSlide(this, -1)">&#10094;</button>
+        <button type="button" class="gallery-prev" onclick="event.stopPropagation(); changeSlide(this, -1)">&#10094;</button>
         <div class="gallery-dots">
           ${images.map((_, i) => `<span class="dot ${i === 0 ? 'active' : ''}" onclick="event.stopPropagation(); setSlide(this, ${i})"></span>`).join('')}
         </div>
-        <button class="gallery-next" onclick="event.stopPropagation(); changeSlide(this, 1)">&#10095;</button>
+        <button type="button" class="gallery-next" onclick="event.stopPropagation(); changeSlide(this, 1)">&#10095;</button>
       </div>
     </div>
     `;
   }
 
+  /* 이미지 로드 실패 핸들러 */
+  window.handleImgError = function(imgEl) {
+    const gallery = imgEl.closest('.card-gallery');
+    if (!gallery) return;
+
+    const imgs = [...gallery.querySelectorAll('img')];
+    const idx = imgs.indexOf(imgEl);
+
+    // 활성화된 이미지가 삭제되는 경우의 백업 확인
+    const wasActive = imgEl.classList.contains('active');
+
+    // 이미지 엘리먼트 제거
+    imgEl.remove();
+
+    // 대응하는 하단 도트(dot) 제거
+    const dots = gallery.querySelectorAll('.dot');
+    if (dots[idx]) {
+      dots[idx].remove();
+    }
+
+    // 제거 후 남은 요소들 재평가
+    const remainingImgs = gallery.querySelectorAll('img');
+    const remainingDots = gallery.querySelectorAll('.dot');
+
+    if (remainingImgs.length === 0) {
+      // 남은 이미지가 없다면 갤러리 영역 전체 제거
+      gallery.remove();
+    } else if (remainingImgs.length === 1) {
+      // 1개만 남으면 멀티 모드 및 컨트롤 버튼 제거하여 일반 카드처럼 작동
+      gallery.classList.remove('multi');
+      const controls = gallery.querySelector('.gallery-controls');
+      if (controls) controls.remove();
+      remainingImgs[0].classList.add('active');
+      remainingImgs[0].style.position = 'relative';
+    } else if (wasActive) {
+      // 지워진 이미지가 active 상태였다면 남은 첫 번째 이미지를 활성화
+      remainingImgs[0].classList.add('active');
+      if (remainingDots[0]) remainingDots[0].classList.add('active');
+    }
+  };
+
   /* 갤러리 전역 함수 */
   window.changeSlide = function(btn, dir) {
     const gallery = btn.closest('.card-gallery');
+    if (!gallery) return;
     const imgs = gallery.querySelectorAll('img');
     const dots = gallery.querySelectorAll('.dot');
+    if (!imgs.length) return;
+
     let cur = [...imgs].findIndex(i => i.classList.contains('active'));
-    imgs[cur].classList.remove('active'); dots[cur].classList.remove('active');
+    // active 클래스를 가진 요소를 찾지 못한 경우 첫 번째로 지정
+    if (cur === -1 || cur >= imgs.length) {
+      cur = 0;
+      imgs[0].classList.add('active');
+      if (dots[0]) dots[0].classList.add('active');
+      return;
+    }
+
+    imgs[cur].classList.remove('active'); 
+    if (dots[cur]) dots[cur].classList.remove('active');
+
     cur = (cur + dir + imgs.length) % imgs.length;
-    imgs[cur].classList.add('active'); dots[cur].classList.add('active');
+
+    if (imgs[cur]) imgs[cur].classList.add('active'); 
+    if (dots[cur]) dots[cur].classList.add('active');
   };
+
   window.setSlide = function(dot, idx) {
     const gallery = dot.closest('.card-gallery');
-    gallery.querySelectorAll('img').forEach((img, i) => img.classList.toggle('active', i === idx));
-    gallery.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === idx));
+    if (!gallery) return;
+    const imgs = gallery.querySelectorAll('img');
+    const dots = gallery.querySelectorAll('.dot');
+
+    imgs.forEach((img, i) => img.classList.toggle('active', i === idx));
+    dots.forEach((d, i) => d.classList.toggle('active', i === idx));
   };
+
+  /* 모바일 스와이프 지원 (이벤트 위임) */
+  let touchStartX = 0;
+  let touchEndX = 0;
+  document.addEventListener('touchstart', e => {
+    const gallery = e.target.closest('.card-gallery.multi');
+    if (gallery) {
+      touchStartX = e.changedTouches[0].screenX;
+    }
+  }, { passive: true });
+
+  document.addEventListener('touchend', e => {
+    const gallery = e.target.closest('.card-gallery.multi');
+    if (gallery) {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipe(gallery);
+    }
+  }, { passive: true });
+
+  function handleSwipe(gallery) {
+    const threshold = 40; // 최소 스와이프 거리
+    if (touchEndX < touchStartX - threshold) {
+      // 왼쪽으로 스와이프 -> 다음 슬라이드
+      const nextBtn = gallery.querySelector('.gallery-next');
+      if (nextBtn) nextBtn.click();
+    }
+    if (touchEndX > touchStartX + threshold) {
+      // 오른쪽으로 스와이프 -> 이전 슬라이드
+      const prevBtn = gallery.querySelector('.gallery-prev');
+      if (prevBtn) prevBtn.click();
+    }
+  }
 
   /* ═══ 헬퍼: 플레이스홀더 패턴 생성 (이미지 없을 때 시각적 요소 제공) ═══ */
   function getPlaceholder(type, title) {
@@ -281,7 +364,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       <p class="pub-publisher">${p.publisher}</p>
       <p class="pub-desc">${p.previewDesc || p.description}</p>
       <div class="pub-tags">${(p.tags || []).map(t => `<span class="pub-tag">${t}</span>`).join('')}</div>
-      ${p.link ? `<a href="${p.link}" target="_blank" class="pub-link">보러가기</a>` : ''}
+      ${p.link ? `<a href="${p.link}" target="_blank" class="pub-link">보러가기 →</a>` : ''}
     `;
     pubRow.appendChild(card);
   });
