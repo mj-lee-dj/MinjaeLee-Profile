@@ -996,7 +996,7 @@ section {
   transition: opacity .45s ease
 }
 
-.card-gallery img:first-child,
+.card-gallery:not(.multi) img:first-child,
 .card-gallery img.active {
   opacity: 1
 }
@@ -1394,6 +1394,11 @@ footer {
   .contact-grid {
     flex-direction: column;
     align-items: center
+  }
+
+  .gallery-prev,
+  .gallery-next {
+    opacity: 0.8 !important;
   }
 }
 
