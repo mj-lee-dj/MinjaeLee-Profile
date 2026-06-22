@@ -1,0 +1,14 @@
+# 중복 폴더 제외 (이민재 프로필/profile-site가 유일한 소스)
+/profile-site/
+/profile-site_backup/
+/.agent/
+
+# 임시/비교 파일
+compare.js
+new_uploads.txt
+old_uploads.txt
+
+# 임시 파일
+*.css_append_temp
+*.tmp
+*.bak

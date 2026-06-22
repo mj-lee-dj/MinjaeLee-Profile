@@ -5,9 +5,9 @@ const profileData = {
       "title": "2026 제1회 Canva Day",
       "link": "https://youtu.be/Rtx8xLv6vMQ?si=-urVyFUq3_6afamd&t=211",
       "images": [
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/5c6cccccc50f.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/90546f9995aa.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/86c58f837954.png"
+        "uploads/5c6cccccc50f.png",
+        "uploads/90546f9995aa.png",
+        "uploads/86c58f837954.png"
       ]
     },
     {
@@ -15,7 +15,7 @@ const profileData = {
       "title": "제167회 KERIS 디지털교육 포럼(학교 디지털 교육과 과제)",
       "link": "https://www.youtube.com/live/CPX7oqKIF8U?si=569tTCGEg5SfJPxL&t=5615",
       "images": [
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/8b074a5aef2c.png"
+        "uploads/8b074a5aef2c.png"
       ]
     },
     {
@@ -41,7 +41,7 @@ const profileData = {
       "title": "2025 G-Creator 해외교류사업 with Taiwan",
       "link": "https://www.youtube.com/watch?v=u5jIxJis5K0",
       "images": [
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/d21a7a0cff44.png"
+        "uploads/d21a7a0cff44.png"
       ]
     },
     {
@@ -236,9 +236,9 @@ const profileData = {
       "link": "",
       "previewDesc": "경기벌원초를에서 실시한 갤럭시탭 활용사례 온라인 연수입니다.",
       "images": [
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/3111d8a1122d.png"
+        "uploads/3111d8a1122d.png"
       ],
-      "image": "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/3111d8a1122d.png",
+      "image": "uploads/3111d8a1122d.png",
       "highlight": true
     },
     {
@@ -250,17 +250,17 @@ const profileData = {
       "link": "",
       "previewDesc": "Google Korea에서 실시한 2024년 신규 구글 트레이너를 위한 교육 자료입니다.",
       "images": [
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/91042f4985df.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/4a2aaa5d3399.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/9a6cf8cd66b2.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/7e90a2d44deb.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/b4cf6b4703a1.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/6371b8061f2b.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/70c7fea54cbe.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/d5e01f87375d.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/b5be323abfaf.png"
+        "uploads/91042f4985df.png",
+        "uploads/4a2aaa5d3399.png",
+        "uploads/9a6cf8cd66b2.png",
+        "uploads/7e90a2d44deb.png",
+        "uploads/b4cf6b4703a1.png",
+        "uploads/6371b8061f2b.png",
+        "uploads/70c7fea54cbe.png",
+        "uploads/d5e01f87375d.png",
+        "uploads/b5be323abfaf.png"
       ],
-      "image": "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/91042f4985df.png",
+      "image": "uploads/91042f4985df.png",
       "highlight": false
     },
     {
@@ -272,14 +272,14 @@ const profileData = {
       "link": "",
       "previewDesc": "Canva 2.0을 기반으로, Canva의 핵심 기능을 교사의 업무 흐름에 맞춰 체계적인 단계별 실습으로 정리한 연수입니다.",
       "images": [
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/a28a564b5176.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/0b665ca4f803.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/e6148de4a574.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/db7b88450c99.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/9bb3dc50a47a.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/bc4b15ed775b.png"
+        "uploads/a28a564b5176.png",
+        "uploads/0b665ca4f803.png",
+        "uploads/e6148de4a574.png",
+        "uploads/db7b88450c99.png",
+        "uploads/9bb3dc50a47a.png",
+        "uploads/bc4b15ed775b.png"
       ],
-      "image": "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/a28a564b5176.png",
+      "image": "uploads/a28a564b5176.png",
       "highlight": true
     },
     {
@@ -291,14 +291,14 @@ const profileData = {
       "link": "",
       "previewDesc": "NotebookLM을 활용해 교직원 업무자료 지식 아카이브 생성 및 챗봇 활용하기, 수업 자료를 효육적으로 제작해서 수업의 질 높이기에 관한 심화 세션입니다.",
       "images": [
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/421763f315ac.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/860cc8737afb.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/008bfee89932.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/3aee4f858441.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/e07b628b6715.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/3574e7b5dac6.png"
+        "uploads/421763f315ac.png",
+        "uploads/860cc8737afb.png",
+        "uploads/008bfee89932.png",
+        "uploads/3aee4f858441.png",
+        "uploads/e07b628b6715.png",
+        "uploads/3574e7b5dac6.png"
       ],
-      "image": "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/421763f315ac.png",
+      "image": "uploads/421763f315ac.png",
       "highlight": true
     },
     {
@@ -310,15 +310,15 @@ const profileData = {
       "link": "",
       "previewDesc": "Gemini 사이드 패널을 기반으로 한 평가 설계 - 수행 - 결과 분석 워크플로우 효율화 및 서논술형 평가의 효과적인 운영에 관한 연수입니다.",
       "images": [
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/b28b860e7bdc.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/d9c0a15b2216.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/54038890db47.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/7c1c24b3cc83.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/7a6e63d24a77.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/8bfb40faa7a3.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/b7406d995fed.png"
+        "uploads/b28b860e7bdc.png",
+        "uploads/d9c0a15b2216.png",
+        "uploads/54038890db47.png",
+        "uploads/7c1c24b3cc83.png",
+        "uploads/7a6e63d24a77.png",
+        "uploads/8bfb40faa7a3.png",
+        "uploads/b7406d995fed.png"
       ],
-      "image": "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/b28b860e7bdc.png",
+      "image": "uploads/b28b860e7bdc.png",
       "highlight": true
     },
     {
@@ -330,12 +330,12 @@ const profileData = {
       "link": "",
       "previewDesc": "2026년 리뉴얼된 Google Certified Educator Lv1 / Lv2 과정 연수입니다.",
       "images": [
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/c8858f696542.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/bf9cd122964e.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/cd9b6e207a5b.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/ebf8b2ab700a.png"
+        "uploads/c8858f696542.png",
+        "uploads/bf9cd122964e.png",
+        "uploads/cd9b6e207a5b.png",
+        "uploads/ebf8b2ab700a.png"
       ],
-      "image": "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/c8858f696542.png",
+      "image": "uploads/c8858f696542.png",
       "highlight": true
     },
     {
@@ -347,9 +347,9 @@ const profileData = {
       "link": "",
       "previewDesc": "NotebookLM을 활용해 특수학교 선생님들의 업무 효율화 및 수업자료 제작 능력 향상에 관한 4시간 분량의 심화 세션입니다.",
       "images": [
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/41f5b3761279.png"
+        "uploads/41f5b3761279.png"
       ],
-      "image": "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/41f5b3761279.png",
+      "image": "uploads/41f5b3761279.png",
       "highlight": true
     },
     {
@@ -361,12 +361,12 @@ const profileData = {
       "link": "",
       "previewDesc": "",
       "images": [
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/37ee9c27e252.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/4ad0bf1a90bb.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/be04c2ee2245.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/47c84973c0f6.png"
+        "uploads/37ee9c27e252.png",
+        "uploads/4ad0bf1a90bb.png",
+        "uploads/be04c2ee2245.png",
+        "uploads/47c84973c0f6.png"
       ],
-      "image": "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/37ee9c27e252.png",
+      "image": "uploads/37ee9c27e252.png",
       "highlight": false
     },
     {
@@ -378,11 +378,11 @@ const profileData = {
       "link": "",
       "previewDesc": "Canva 전문가 5인의 시각으로 바라본 Canva 활용 꿀팁에 관한 라이브 연수입니다.",
       "images": [
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/945c0e40db2f.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/b5618614bd10.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/e99a622fbf58.png"
+        "uploads/945c0e40db2f.png",
+        "uploads/b5618614bd10.png",
+        "uploads/e99a622fbf58.png"
       ],
-      "image": "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/945c0e40db2f.png",
+      "image": "uploads/945c0e40db2f.png",
       "highlight": true
     },
     {
@@ -394,14 +394,14 @@ const profileData = {
       "link": "",
       "previewDesc": "",
       "images": [
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/47e06b4bed4e.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/196a22bdfb7e.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/db70a40d38a4.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/1f32dc6c759e.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/89581e85d7ac.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/ba4d0b93d280.png"
+        "uploads/47e06b4bed4e.png",
+        "uploads/196a22bdfb7e.png",
+        "uploads/db70a40d38a4.png",
+        "uploads/1f32dc6c759e.png",
+        "uploads/89581e85d7ac.png",
+        "uploads/ba4d0b93d280.png"
       ],
-      "image": "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/47e06b4bed4e.png",
+      "image": "uploads/47e06b4bed4e.png",
       "highlight": true
     },
     {
@@ -413,15 +413,15 @@ const profileData = {
       "link": "",
       "previewDesc": "",
       "images": [
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/aa7158647e52.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/d0e5b119be49.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/887471b5553c.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/e4cb78a321e7.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/a4a5487a80d7.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/abe4d5eb96a5.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/e720538cfe42.png"
+        "uploads/aa7158647e52.png",
+        "uploads/d0e5b119be49.png",
+        "uploads/887471b5553c.png",
+        "uploads/e4cb78a321e7.png",
+        "uploads/a4a5487a80d7.png",
+        "uploads/abe4d5eb96a5.png",
+        "uploads/e720538cfe42.png"
       ],
-      "image": "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/aa7158647e52.png",
+      "image": "uploads/aa7158647e52.png",
       "highlight": true
     },
     {
@@ -433,11 +433,11 @@ const profileData = {
       "link": "",
       "previewDesc": "",
       "images": [
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/4c2316149b69.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/a516307277a5.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/7c7fc73493b0.png"
+        "uploads/4c2316149b69.png",
+        "uploads/a516307277a5.png",
+        "uploads/7c7fc73493b0.png"
       ],
-      "image": "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/4c2316149b69.png",
+      "image": "uploads/4c2316149b69.png",
       "highlight": false
     },
     {
@@ -807,12 +807,12 @@ const profileData = {
       "link": "",
       "previewDesc": "세종시 교육청 소속 교사들을 대상으로 한 갤럭시탭 기본 세팅법 및 교실 활용 루틴과 수업 사례 강의입니다.",
       "images": [
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/18c8557993a7.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/26f4e1b2836b.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/fba20a5c5d4d.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/94ea6816d75d.png"
+        "uploads/18c8557993a7.png",
+        "uploads/26f4e1b2836b.png",
+        "uploads/fba20a5c5d4d.png",
+        "uploads/94ea6816d75d.png"
       ],
-      "image": "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/18c8557993a7.png",
+      "image": "uploads/18c8557993a7.png",
       "highlight": false
     },
     {
@@ -824,10 +824,10 @@ const profileData = {
       "link": "",
       "previewDesc": "",
       "images": [
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/45d2bb67d227.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/809d80d919a8.png"
+        "uploads/45d2bb67d227.png",
+        "uploads/809d80d919a8.png"
       ],
-      "image": "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/45d2bb67d227.png",
+      "image": "uploads/45d2bb67d227.png",
       "highlight": false
     },
     {
@@ -839,11 +839,11 @@ const profileData = {
       "link": "",
       "previewDesc": "대전 관내 교장/교감, 고경력 교원, 저경력 교원을 대상으로 각각 실시한 생성AI 및 ChatGPT 활용 연수입니다.",
       "images": [
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/4333a41c8642.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/f879a88853e1.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/dacb40711d1e.png"
+        "uploads/4333a41c8642.png",
+        "uploads/f879a88853e1.png",
+        "uploads/dacb40711d1e.png"
       ],
-      "image": "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/4333a41c8642.png",
+      "image": "uploads/4333a41c8642.png",
       "highlight": false
     },
     {
@@ -855,12 +855,12 @@ const profileData = {
       "link": "",
       "previewDesc": "",
       "images": [
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/dfc307fb7eab.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/f86b37e09087.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/4b6ba2d09cb2.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/17be42abe1c7.png"
+        "uploads/dfc307fb7eab.png",
+        "uploads/f86b37e09087.png",
+        "uploads/4b6ba2d09cb2.png",
+        "uploads/17be42abe1c7.png"
       ],
-      "image": "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/dfc307fb7eab.png",
+      "image": "uploads/dfc307fb7eab.png",
       "highlight": false
     },
     {
@@ -890,9 +890,9 @@ const profileData = {
       "link": "",
       "previewDesc": "",
       "images": [
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/f6891f609eb6.png"
+        "uploads/f6891f609eb6.png"
       ],
-      "image": "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/f6891f609eb6.png",
+      "image": "uploads/f6891f609eb6.png",
       "highlight": false
     },
     {
@@ -904,9 +904,9 @@ const profileData = {
       "link": "",
       "previewDesc": "Gemini Academy 강사로서 실시한 Gemini 기초과정 및 심화과정 연수입니다.",
       "images": [
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/0134c79fdacb.png"
+        "uploads/0134c79fdacb.png"
       ],
-      "image": "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/0134c79fdacb.png",
+      "image": "uploads/0134c79fdacb.png",
       "highlight": false
     },
     {
@@ -918,11 +918,11 @@ const profileData = {
       "link": "",
       "previewDesc": "",
       "images": [
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/c3fb48cd3747.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/8c01be28f323.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/3535e85ee731.png"
+        "uploads/c3fb48cd3747.png",
+        "uploads/8c01be28f323.png",
+        "uploads/3535e85ee731.png"
       ],
-      "image": "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/c3fb48cd3747.png",
+      "image": "uploads/c3fb48cd3747.png",
       "highlight": false
     },
     {
@@ -934,12 +934,12 @@ const profileData = {
       "link": "",
       "previewDesc": "세종특별자치시 및 충청남도 소속 교원들을 대상으로 한 Chromebook 활용사례 연수입니다.",
       "images": [
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/3b608b1ac6a4.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/43678244f62b.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/153665623fdb.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/3f17ab4a200a.png"
+        "uploads/3b608b1ac6a4.png",
+        "uploads/43678244f62b.png",
+        "uploads/153665623fdb.png",
+        "uploads/3f17ab4a200a.png"
       ],
-      "image": "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/3b608b1ac6a4.png",
+      "image": "uploads/3b608b1ac6a4.png",
       "highlight": true
     },
     {
@@ -951,13 +951,13 @@ const profileData = {
       "link": "",
       "previewDesc": "",
       "images": [
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/8fe1206653da.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/8d31b084d96f.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/726f9ba6c259.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/42e354a20bfc.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/8f11aeadf065.png"
+        "uploads/8fe1206653da.png",
+        "uploads/8d31b084d96f.png",
+        "uploads/726f9ba6c259.png",
+        "uploads/42e354a20bfc.png",
+        "uploads/8f11aeadf065.png"
       ],
-      "image": "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/8fe1206653da.png",
+      "image": "uploads/8fe1206653da.png",
       "highlight": false
     },
     {
@@ -969,13 +969,13 @@ const profileData = {
       "link": "",
       "previewDesc": "",
       "images": [
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/1d2d2ae1ce53.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/b89d37932689.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/3e886219fe54.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/eacff75ee0c8.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/109ee40f6f05.png"
+        "uploads/1d2d2ae1ce53.png",
+        "uploads/b89d37932689.png",
+        "uploads/3e886219fe54.png",
+        "uploads/eacff75ee0c8.png",
+        "uploads/109ee40f6f05.png"
       ],
-      "image": "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/1d2d2ae1ce53.png",
+      "image": "uploads/1d2d2ae1ce53.png",
       "highlight": false
     },
     {
@@ -987,9 +987,9 @@ const profileData = {
       "link": "",
       "previewDesc": "전라북도교육청 기관특별연수 강의입니다.",
       "images": [
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/b5be23901eb9.png"
+        "uploads/b5be23901eb9.png"
       ],
-      "image": "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/b5be23901eb9.png",
+      "image": "uploads/b5be23901eb9.png",
       "highlight": false
     },
     {
@@ -1001,9 +1001,9 @@ const profileData = {
       "link": "",
       "previewDesc": "",
       "images": [
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/412fe94c933e.png"
+        "uploads/412fe94c933e.png"
       ],
-      "image": "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/412fe94c933e.png",
+      "image": "uploads/412fe94c933e.png",
       "highlight": false
     },
     {
@@ -1015,9 +1015,9 @@ const profileData = {
       "link": "",
       "previewDesc": "",
       "images": [
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/c1d72131d63a.png"
+        "uploads/c1d72131d63a.png"
       ],
-      "image": "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/c1d72131d63a.png",
+      "image": "uploads/c1d72131d63a.png",
       "highlight": false
     },
     {
@@ -1029,9 +1029,9 @@ const profileData = {
       "link": "",
       "previewDesc": "",
       "images": [
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/d4e6aa10a70b.png"
+        "uploads/d4e6aa10a70b.png"
       ],
-      "image": "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/d4e6aa10a70b.png",
+      "image": "uploads/d4e6aa10a70b.png",
       "highlight": false
     },
     {
@@ -1043,11 +1043,11 @@ const profileData = {
       "link": "",
       "previewDesc": "경인교대 재학생 대상 AI 메타버스 Core과정 특강 자료입니다.",
       "images": [
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/165a3aba290d.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/6e7b7c355932.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/294390a1eca4.png"
+        "uploads/165a3aba290d.png",
+        "uploads/6e7b7c355932.png",
+        "uploads/294390a1eca4.png"
       ],
-      "image": "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/165a3aba290d.png",
+      "image": "uploads/165a3aba290d.png",
       "highlight": true
     },
     {
@@ -1059,11 +1059,11 @@ const profileData = {
       "link": "",
       "previewDesc": "진잠초등학교 유튜브 동아리 학생들을 대상으로 실시한 크리에이터 되기 강의 자료입니다.",
       "images": [
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/fa29db8b3225.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/7bdb160f55ee.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/28d7a863718c.png"
+        "uploads/fa29db8b3225.png",
+        "uploads/7bdb160f55ee.png",
+        "uploads/28d7a863718c.png"
       ],
-      "image": "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/fa29db8b3225.png",
+      "image": "uploads/fa29db8b3225.png",
       "highlight": false
     },
     {
@@ -1075,10 +1075,10 @@ const profileData = {
       "link": "",
       "previewDesc": "",
       "images": [
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/47293ef58ac8.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/5fbb01d94d0c.png"
+        "uploads/47293ef58ac8.png",
+        "uploads/5fbb01d94d0c.png"
       ],
-      "image": "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/47293ef58ac8.png",
+      "image": "uploads/47293ef58ac8.png",
       "highlight": false
     },
     {
@@ -1090,11 +1090,11 @@ const profileData = {
       "link": "",
       "previewDesc": "",
       "images": [
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/568baa149099.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/a9cdad308dd8.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/085045d700ad.png"
+        "uploads/568baa149099.png",
+        "uploads/a9cdad308dd8.png",
+        "uploads/085045d700ad.png"
       ],
-      "image": "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/568baa149099.png",
+      "image": "uploads/568baa149099.png",
       "highlight": false
     },
     {
@@ -1106,10 +1106,10 @@ const profileData = {
       "link": "",
       "previewDesc": "",
       "images": [
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/70d0bcb94725.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/952cd905033c.png"
+        "uploads/70d0bcb94725.png",
+        "uploads/952cd905033c.png"
       ],
-      "image": "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/70d0bcb94725.png",
+      "image": "uploads/70d0bcb94725.png",
       "highlight": false
     }
   ],
