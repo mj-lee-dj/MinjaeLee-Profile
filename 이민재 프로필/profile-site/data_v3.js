@@ -150,7 +150,7 @@ const profileData = {
         "AI교육"
       ],
       "link": "https://www.yes24.com/product/goods/125581310",
-      "previewDesc": "7가지 만들기 프로젝트로 완성하는 AI 메이킹 프로젝트!! 교육 현장에서 활동하는 10명의 선생님들의 다양한 경험과 노하우를 담은 7가지 도안의 AI 메이킹 프로젝트이다. 실과, 미술, 체육, 음악 교과 및 AI, SW, 피지컬 컴퓨팅을 융합하여 단순한 코딩활용이 아닌 작품을 직접 만듦으로써…",
+      "previewDesc": "7가지 만들기 프로젝트로 완성하는 AI 메이킹 프로젝트!!\n\n교육 현장에서 활동하는 10명의 선생님들의 다양한 경험과 노하우를 담은 7가지 도안의 AI 메이킹 프로젝트이다. 실과, 미술, 체육, 음악 교과 및 AI, SW, 피지컬 컴퓨팅을 융합하여 단순한 코딩활용이 아닌 작품을 직접 만듦으로써 정형화되지 않은 나만의 작품 만들기가 가능해 예술성과 감수성을 키울 수 있도록 구성되어 있다. 또한 코딩의 기본을 익히는 것에 그치지 않고 실생활에 어떻게 적용할 수 있을지에 대한 실질적인 경험을 제공한다. 학생들에게 미래교육을 선사하고자 하는 선생님들께서 어려움 없이 손쉽게 수업을 진행할 수 있도록 교수학습지도안 및 수업 PPT, 교재, 도안, 키트 등 교육에 필요한 모든 것을 하나의 콘텐츠에 담았다.",
       "images": [
         "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/91b03bf9a89f.png"
       ],
@@ -245,6 +245,22 @@ const profileData = {
     }
   ],
   "lectures": [
+    {
+      "id": "l_mr29yai68xvad",
+      "title": "AI 워크플로우로 실현하는 고품격 강의 설계",
+      "org": "ADE 사업단 강사 역량 강화연수",
+      "year": 2026,
+      "category": "기조강연/발표",
+      "link": "",
+      "previewDesc": "ADE사업단 소속 코디네이터 및 강사들을 대상으로 실시한 강사 교육 및 코칭 연수입니다. 효과적인 강의를 하기 위한 조건, 디자인적으로 잘 설계된 프레젠테이션 작성하기, 내 철학이 담긴 강의 설계하기 등으로 구성되어 있습니다.",
+      "images": [
+        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/a3fb4cf1237d.png",
+        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/6ca674bb0d12.png",
+        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/4253b64bd32b.png"
+      ],
+      "image": "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/a3fb4cf1237d.png",
+      "highlight": true
+    },
     {
       "id": "l_mr29fqzwolflm",
       "title": "Gemini & Chrome Academy",
