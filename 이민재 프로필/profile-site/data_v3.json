@@ -5,9 +5,9 @@
       "title": "2026 제1회 Canva Day",
       "link": "https://youtu.be/Rtx8xLv6vMQ?si=-urVyFUq3_6afamd&t=211",
       "images": [
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/5c6cccccc50f.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/90546f9995aa.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/86c58f837954.png"
+        "uploads/5c6cccccc50f.png",
+        "uploads/90546f9995aa.png",
+        "uploads/86c58f837954.png"
       ]
     },
     {
@@ -15,7 +15,7 @@
       "title": "제167회 KERIS 디지털교육 포럼(학교 디지털 교육과 과제)",
       "link": "https://www.youtube.com/live/CPX7oqKIF8U?si=569tTCGEg5SfJPxL&t=5615",
       "images": [
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/8b074a5aef2c.png"
+        "uploads/8b074a5aef2c.png"
       ]
     },
     {
@@ -41,7 +41,7 @@
       "title": "2025 G-Creator 해외교류사업 with Taiwan",
       "link": "https://www.youtube.com/watch?v=u5jIxJis5K0",
       "images": [
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/d21a7a0cff44.png"
+        "uploads/d21a7a0cff44.png"
       ]
     },
     {
@@ -112,7 +112,7 @@
     "photo": "assets/profile.jpg",
     "photo2": "assets/profile2.jpg",
     "tagline": "AI와 에듀테크로 교실의 내일을 만들어가는 교사",
-    "bio": "현재 대전에서 근무하며, Google 공인 혁신가(Innovator)이자 공인 트레이너(Trainer)로서, 생성형 AI와 에듀테크 도구를 활용한 교사 역량 강화 및 수업 혁신에 앞장서고 있습니다. 전국 규모의 교육 박람회, 교장자격연수, 정교사연수 등에서 강연하며, 다수의 저서를 통해 교사와 학생 모두에게 디지털 전환의 실질적 가치를 전하고 있습니다.",
+    "bio": "교육의 진정한 본질은 아이들과 눈을 맞추는 깊이 있는 시간에 있습니다. AI와 디지털 도구는 교사의 반복적인 업무를 자동화하여 잃어버린 시간을 되찾아주고, 학생들에게는 맞춤형 학습 경험을 제공하는 핵심 열쇠입니다.  부단한 연구와 강연, 저술 활동을 통해 누구나 쉽게 누릴 수 있는 따뜻하고 스마트한 교실의 청사진을 제시하고자 노력하고 있습니다.",
     "credentials": [
       "GEG(Google Educator Group) Daejeon Leader",
       "Google Certified Innovator (#SEO24)",
@@ -124,7 +124,8 @@
       "email": "lang2kmj@gmail.com",
       "instagram": "https://joo.is/민재쌤인스타",
       "youtube": "https://www.youtube.com/@LeePDesigner"
-    }
+    },
+    "aboutTitle": "기술에 따뜻함을 더해, \n교실의 본질을 켜다"
   },
   "expertise": [
     "Google Workspace for Education",
@@ -137,6 +138,22 @@
     "교사 역량 강화 연수"
   ],
   "publications": [
+    {
+      "id": "pub_mr29b0grgnumy",
+      "title": "코딩 미술 융합 프로젝트를 위한 코드위즈 AI 메이커 스케치북",
+      "publisher": "상상충전소",
+      "year": 2024,
+      "description": "7가지 만들기 프로젝트로 완성하는 AI 메이킹 프로젝트!!\n\n교육 현장에서 활동하는 10명의 선생님들의 다양한 경험과 노하우를 담은 7가지 도안의 AI 메이킹 프로젝트이다. 실과, 미술, 체육, 음악 교과 및 AI, SW, 피지컬 컴퓨팅을 융합하여 단순한 코딩활용이 아닌 작품을 직접 만듦으로써 정형화되지 않은 나만의 작품 만들기가 가능해 예술성과 감수성을 키울 수 있도록 구성되어 있다. 또한 코딩의 기본을 익히는 것에 그치지 않고 실생활에 어떻게 적용할 수 있을지에 대한 실질적인 경험을 제공한다. 학생들에게 미래교육을 선사하고자 하는 선생님들께서 어려움 없이 손쉽게 수업을 진행할 수 있도록 교수학습지도안 및 수업 PPT, 교재, 도안, 키트 등 교육에 필요한 모든 것을 하나의 콘텐츠에 담았다.",
+      "tags": [
+        "#코딩미술융합 #코드위즈 #엔트리 #피지컬컴퓨팅 #AI교육"
+      ],
+      "link": "https://www.yes24.com/product/goods/125581310",
+      "previewDesc": "7가지 만들기 프로젝트로 완성하는 AI 메이킹 프로젝트!!\n\n교육 현장에서 활동하는 10명의 선생님들의 다양한 경험과 노하우를 담은 7가지 도안의 AI 메이킹 프로젝트이다. 실과, 미술, 체육, 음악 교과 및 AI, SW, 피지컬 컴퓨팅을 융합하여 단순한 코딩활용이 아닌 작품을 직접 만듦으로써 정형화되지 않은 나만의 작품 만들기가 가능해 예술성과 감수성을 키울 수 있도록 구성되어 있다. 또한 코딩의 기본을 익히는 것에 그치지 않고 실생활에 어떻게 적용할 수 있을지에 대한 실질적인 경험을 제공한다. 학생들에게 미래교육을 선사하고자 하는 선생님들께서 어려움 없이 손쉽게 수업을 진행할 수 있도록 교수학습지도안 및 수업 PPT, 교재, 도안, 키트 등 교육에 필요한 모든 것을 하나의 콘텐츠에 담았다.",
+      "images": [
+        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/91b03bf9a89f.png"
+      ],
+      "image": "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/91b03bf9a89f.png"
+    },
     {
       "id": "pub_mlrv9tugxeozh",
       "title": "그리와 로미의 제미나이 탐험대",
@@ -227,6 +244,150 @@
   ],
   "lectures": [
     {
+      "id": "l_mr29fqzwolflm",
+      "title": "Gemini & Chrome Academy",
+      "org": "GEG충남",
+      "year": 2026,
+      "category": "Google/Gemini",
+      "link": "",
+      "previewDesc": "충남GEG회원 200명을 대상으로  Chromebook활용 / Gemini 최신 모델 소개 / Gemini 활용 방법 / 세계에서 3개 나라에만 런칭한 Google AI Educator Series 소개 및 시험 대비 등의 내용으로 실시한 연수입니다.",
+      "images": [
+        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/78090a1a1df5.png",
+        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/31fece3586d1.png",
+        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/92e3b7746ad7.png",
+        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/141db896c506.png",
+        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/9be3402fa34c.png",
+        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/0d84a60f0532.png"
+      ],
+      "image": "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/78090a1a1df5.png",
+      "highlight": true
+    },
+    {
+      "id": "l_mqdcutzp4kuad",
+      "title": "갤럭시탭 SMART하게 100% 활용하기",
+      "org": "경기벌원초",
+      "year": 2024,
+      "category": "Google/Gemini",
+      "link": "",
+      "previewDesc": "경기벌원초를에서 실시한 갤럭시탭 활용사례 온라인 연수입니다.",
+      "images": [
+        "uploads/3111d8a1122d.png"
+      ],
+      "image": "uploads/3111d8a1122d.png",
+      "highlight": true
+    },
+    {
+      "id": "l_mqdcq680gbx2i",
+      "title": "2024 GTC in KOREA",
+      "org": "Google Korea, 교사크리에이터협회",
+      "year": 2024,
+      "category": "Google/Gemini",
+      "link": "",
+      "previewDesc": "Google Korea에서 실시한 2024년 신규 구글 트레이너를 위한 교육 자료입니다.",
+      "images": [
+        "uploads/91042f4985df.png",
+        "uploads/4a2aaa5d3399.png",
+        "uploads/9a6cf8cd66b2.png",
+        "uploads/7e90a2d44deb.png",
+        "uploads/b4cf6b4703a1.png",
+        "uploads/6371b8061f2b.png",
+        "uploads/70c7fea54cbe.png",
+        "uploads/d5e01f87375d.png",
+        "uploads/b5be323abfaf.png"
+      ],
+      "image": "uploads/91042f4985df.png",
+      "highlight": false
+    },
+    {
+      "id": "l_mqcuqz7aplqgo",
+      "title": "Canva 완전정복 - 교사를 위한 캔바 핵심 기능 익히기",
+      "org": "대전괴정고등학교",
+      "year": 2026,
+      "category": "에듀테크",
+      "link": "",
+      "previewDesc": "Canva 2.0을 기반으로, Canva의 핵심 기능을 교사의 업무 흐름에 맞춰 체계적인 단계별 실습으로 정리한 연수입니다.",
+      "images": [
+        "uploads/a28a564b5176.png",
+        "uploads/0b665ca4f803.png",
+        "uploads/e6148de4a574.png",
+        "uploads/db7b88450c99.png",
+        "uploads/9bb3dc50a47a.png",
+        "uploads/bc4b15ed775b.png"
+      ],
+      "image": "uploads/a28a564b5176.png",
+      "highlight": true
+    },
+    {
+      "id": "l_mqcuft10ar67s",
+      "title": "공문의 늪에서 교육의 본질로 - 모든 교사를 위한 NotebookLM 활용",
+      "org": "대전가오중학교",
+      "year": 2026,
+      "category": "Google/Gemini",
+      "link": "",
+      "previewDesc": "NotebookLM을 활용해 교직원 업무자료 지식 아카이브 생성 및 챗봇 활용하기, 수업 자료를 효육적으로 제작해서 수업의 질 높이기에 관한 심화 세션입니다.",
+      "images": [
+        "uploads/421763f315ac.png",
+        "uploads/860cc8737afb.png",
+        "uploads/008bfee89932.png",
+        "uploads/3aee4f858441.png",
+        "uploads/e07b628b6715.png",
+        "uploads/3574e7b5dac6.png"
+      ],
+      "image": "uploads/421763f315ac.png",
+      "highlight": true
+    },
+    {
+      "id": "l_mqcu97usa7rhx",
+      "title": "디지털 협업 도구를 활용한 학생 평가 - 구글 도구를 중심으로",
+      "org": "대전교육연수원",
+      "year": 2026,
+      "category": "Google/Gemini",
+      "link": "",
+      "previewDesc": "Gemini 사이드 패널을 기반으로 한 평가 설계 - 수행 - 결과 분석 워크플로우 효율화 및 서논술형 평가의 효과적인 운영에 관한 연수입니다.",
+      "images": [
+        "uploads/b28b860e7bdc.png",
+        "uploads/d9c0a15b2216.png",
+        "uploads/54038890db47.png",
+        "uploads/7c1c24b3cc83.png",
+        "uploads/7a6e63d24a77.png",
+        "uploads/8bfb40faa7a3.png",
+        "uploads/b7406d995fed.png"
+      ],
+      "image": "uploads/b28b860e7bdc.png",
+      "highlight": true
+    },
+    {
+      "id": "l_mqcu55t77snr4",
+      "title": "Google Certified Educator Lv1 / Lv2 인증과정",
+      "org": "대전신일중학교",
+      "year": 2026,
+      "category": "Google/Gemini",
+      "link": "",
+      "previewDesc": "2026년 리뉴얼된 Google Certified Educator Lv1 / Lv2 과정 연수입니다.",
+      "images": [
+        "uploads/c8858f696542.png",
+        "uploads/bf9cd122964e.png",
+        "uploads/cd9b6e207a5b.png",
+        "uploads/ebf8b2ab700a.png"
+      ],
+      "image": "uploads/c8858f696542.png",
+      "highlight": true
+    },
+    {
+      "id": "l_mqcu08y2dsitn",
+      "title": "특수 선생님들을 위한 NotebookLM",
+      "org": "대전혜광학교",
+      "year": 2026,
+      "category": "Google/Gemini",
+      "link": "",
+      "previewDesc": "NotebookLM을 활용해 특수학교 선생님들의 업무 효율화 및 수업자료 제작 능력 향상에 관한 4시간 분량의 심화 세션입니다.",
+      "images": [
+        "uploads/41f5b3761279.png"
+      ],
+      "image": "uploads/41f5b3761279.png",
+      "highlight": true
+    },
+    {
       "id": "l_mo02gfjnypkr7",
       "title": "다양한 생성형 AI 플랫폼 활용해 수업하기",
       "org": "대전교육정보원",
@@ -235,12 +396,12 @@
       "link": "",
       "previewDesc": "",
       "images": [
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/37ee9c27e252.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/4ad0bf1a90bb.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/be04c2ee2245.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/47c84973c0f6.png"
+        "uploads/37ee9c27e252.png",
+        "uploads/4ad0bf1a90bb.png",
+        "uploads/be04c2ee2245.png",
+        "uploads/47c84973c0f6.png"
       ],
-      "image": "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/37ee9c27e252.png",
+      "image": "uploads/37ee9c27e252.png",
       "highlight": false
     },
     {
@@ -250,13 +411,13 @@
       "year": 2026,
       "category": "에듀테크",
       "link": "",
-      "previewDesc": "",
+      "previewDesc": "Canva 전문가 5인의 시각으로 바라본 Canva 활용 꿀팁에 관한 라이브 연수입니다.",
       "images": [
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/945c0e40db2f.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/b5618614bd10.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/e99a622fbf58.png"
+        "uploads/945c0e40db2f.png",
+        "uploads/b5618614bd10.png",
+        "uploads/e99a622fbf58.png"
       ],
-      "image": "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/945c0e40db2f.png",
+      "image": "uploads/945c0e40db2f.png",
       "highlight": true
     },
     {
@@ -268,15 +429,15 @@
       "link": "",
       "previewDesc": "",
       "images": [
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/47e06b4bed4e.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/196a22bdfb7e.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/db70a40d38a4.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/1f32dc6c759e.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/89581e85d7ac.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/ba4d0b93d280.png"
+        "uploads/47e06b4bed4e.png",
+        "uploads/196a22bdfb7e.png",
+        "uploads/db70a40d38a4.png",
+        "uploads/1f32dc6c759e.png",
+        "uploads/89581e85d7ac.png",
+        "uploads/ba4d0b93d280.png"
       ],
-      "image": "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/47e06b4bed4e.png",
-      "highlight": false
+      "image": "uploads/47e06b4bed4e.png",
+      "highlight": true
     },
     {
       "id": "l_mo01yljucrwyx",
@@ -287,15 +448,15 @@
       "link": "",
       "previewDesc": "",
       "images": [
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/aa7158647e52.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/d0e5b119be49.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/887471b5553c.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/e4cb78a321e7.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/a4a5487a80d7.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/abe4d5eb96a5.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/e720538cfe42.png"
+        "uploads/aa7158647e52.png",
+        "uploads/d0e5b119be49.png",
+        "uploads/887471b5553c.png",
+        "uploads/e4cb78a321e7.png",
+        "uploads/a4a5487a80d7.png",
+        "uploads/abe4d5eb96a5.png",
+        "uploads/e720538cfe42.png"
       ],
-      "image": "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/aa7158647e52.png",
+      "image": "uploads/aa7158647e52.png",
       "highlight": true
     },
     {
@@ -307,17 +468,17 @@
       "link": "",
       "previewDesc": "",
       "images": [
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/4c2316149b69.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/a516307277a5.png",
-        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/7c7fc73493b0.png"
+        "uploads/4c2316149b69.png",
+        "uploads/a516307277a5.png",
+        "uploads/7c7fc73493b0.png"
       ],
-      "image": "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/4c2316149b69.png",
+      "image": "uploads/4c2316149b69.png",
       "highlight": false
     },
     {
       "id": "l_mls8mo9epkzye",
       "title": "[학부모연수] 우리 아이 학급의 디지털 도구 체험하기",
-      "org": "대전복용초등학",
+      "org": "대전복용초등학교",
       "year": 2025,
       "category": "Google/Gemini",
       "link": "",
@@ -678,9 +839,16 @@
       "org": "크롬북, 갤럭시탭",
       "year": 2024,
       "category": "에듀테크",
-      "highlight": false,
-      "image": "",
-      "link": ""
+      "link": "",
+      "previewDesc": "세종시 교육청 소속 교사들을 대상으로 한 갤럭시탭 기본 세팅법 및 교실 활용 루틴과 수업 사례 강의입니다.",
+      "images": [
+        "uploads/18c8557993a7.png",
+        "uploads/26f4e1b2836b.png",
+        "uploads/fba20a5c5d4d.png",
+        "uploads/94ea6816d75d.png"
+      ],
+      "image": "uploads/18c8557993a7.png",
+      "highlight": false
     },
     {
       "id": "l13",
@@ -688,9 +856,14 @@
       "org": "대전교육정보원",
       "year": 2024,
       "category": "에듀테크",
-      "highlight": false,
-      "image": "",
-      "link": ""
+      "link": "",
+      "previewDesc": "",
+      "images": [
+        "uploads/45d2bb67d227.png",
+        "uploads/809d80d919a8.png"
+      ],
+      "image": "uploads/45d2bb67d227.png",
+      "highlight": false
     },
     {
       "id": "l14",
@@ -698,9 +871,15 @@
       "org": "대전교육정보원",
       "year": 2024,
       "category": "ChatGPT/AI",
-      "highlight": false,
-      "image": "",
-      "link": ""
+      "link": "",
+      "previewDesc": "대전 관내 교장/교감, 고경력 교원, 저경력 교원을 대상으로 각각 실시한 생성AI 및 ChatGPT 활용 연수입니다.",
+      "images": [
+        "uploads/4333a41c8642.png",
+        "uploads/f879a88853e1.png",
+        "uploads/dacb40711d1e.png"
+      ],
+      "image": "uploads/4333a41c8642.png",
+      "highlight": false
     },
     {
       "id": "l15",
@@ -708,9 +887,16 @@
       "org": "대전교육정보원",
       "year": 2024,
       "category": "Google/Gemini",
-      "highlight": false,
-      "image": "",
-      "link": ""
+      "link": "",
+      "previewDesc": "",
+      "images": [
+        "uploads/dfc307fb7eab.png",
+        "uploads/f86b37e09087.png",
+        "uploads/4b6ba2d09cb2.png",
+        "uploads/17be42abe1c7.png"
+      ],
+      "image": "uploads/dfc307fb7eab.png",
+      "highlight": false
     },
     {
       "id": "l17",
@@ -736,9 +922,13 @@
       "org": "대전과학고, 명석고, 보문고, 대전글꽃초, 세종 늘봄초 등",
       "year": 2024,
       "category": "학급경영",
-      "highlight": false,
-      "image": "",
-      "link": ""
+      "link": "",
+      "previewDesc": "",
+      "images": [
+        "uploads/f6891f609eb6.png"
+      ],
+      "image": "uploads/f6891f609eb6.png",
+      "highlight": false
     },
     {
       "id": "l20",
@@ -746,19 +936,13 @@
       "org": "교사크리에이터협회, GEG Daejeon, 영동산업과학고, 충남대 등",
       "year": 2024,
       "category": "Google/Gemini",
-      "highlight": false,
-      "image": "",
-      "link": ""
-    },
-    {
-      "id": "l21",
-      "title": "NotebookLM으로 업무와 일상생활을 스마트하게 운영하기",
-      "org": "대전교육정보원, 충남대",
-      "year": 2024,
-      "category": "Google/Gemini",
-      "highlight": false,
-      "image": "",
-      "link": ""
+      "link": "",
+      "previewDesc": "Gemini Academy 강사로서 실시한 Gemini 기초과정 및 심화과정 연수입니다.",
+      "images": [
+        "uploads/0134c79fdacb.png"
+      ],
+      "image": "uploads/0134c79fdacb.png",
+      "highlight": false
     },
     {
       "id": "l22",
@@ -766,9 +950,15 @@
       "org": "대전복용초등학교",
       "year": 2024,
       "category": "에듀테크",
-      "highlight": false,
-      "image": "",
-      "link": ""
+      "link": "",
+      "previewDesc": "",
+      "images": [
+        "uploads/c3fb48cd3747.png",
+        "uploads/8c01be28f323.png",
+        "uploads/3535e85ee731.png"
+      ],
+      "image": "uploads/c3fb48cd3747.png",
+      "highlight": false
     },
     {
       "id": "l24",
@@ -776,9 +966,16 @@
       "org": "세종특별자치시 교육청, 충청남도교육청",
       "year": 2024,
       "category": "에듀테크",
-      "highlight": false,
-      "image": "",
-      "link": ""
+      "link": "",
+      "previewDesc": "세종특별자치시 및 충청남도 소속 교원들을 대상으로 한 Chromebook 활용사례 연수입니다.",
+      "images": [
+        "uploads/3b608b1ac6a4.png",
+        "uploads/43678244f62b.png",
+        "uploads/153665623fdb.png",
+        "uploads/3f17ab4a200a.png"
+      ],
+      "image": "uploads/3b608b1ac6a4.png",
+      "highlight": true
     },
     {
       "id": "l25",
@@ -786,19 +983,17 @@
       "org": "GEG Daejeon, 지식샘터, 서울 중동고, 명석고, 경기 벌원초 등",
       "year": 2024,
       "category": "에듀테크",
-      "highlight": false,
-      "image": "",
-      "link": ""
-    },
-    {
-      "id": "l27",
-      "title": "생성AI 안전하고 효과적으로 활용하기",
-      "org": "충남고 재학생 연수",
-      "year": 2024,
-      "category": "ChatGPT/AI",
-      "highlight": false,
-      "image": "",
-      "link": ""
+      "link": "",
+      "previewDesc": "",
+      "images": [
+        "uploads/8fe1206653da.png",
+        "uploads/8d31b084d96f.png",
+        "uploads/726f9ba6c259.png",
+        "uploads/42e354a20bfc.png",
+        "uploads/8f11aeadf065.png"
+      ],
+      "image": "uploads/8fe1206653da.png",
+      "highlight": false
     },
     {
       "id": "l28",
@@ -806,9 +1001,17 @@
       "org": "지식샘터, 대전월평중, 대덕초",
       "year": 2024,
       "category": "ChatGPT/AI",
-      "highlight": false,
-      "image": "",
-      "link": ""
+      "link": "",
+      "previewDesc": "",
+      "images": [
+        "uploads/1d2d2ae1ce53.png",
+        "uploads/b89d37932689.png",
+        "uploads/3e886219fe54.png",
+        "uploads/eacff75ee0c8.png",
+        "uploads/109ee40f6f05.png"
+      ],
+      "image": "uploads/1d2d2ae1ce53.png",
+      "highlight": false
     },
     {
       "id": "l29",
@@ -816,9 +1019,13 @@
       "org": "전라북도교육청 기관특별연수",
       "year": 2024,
       "category": "ChatGPT/AI",
-      "highlight": false,
-      "image": "",
-      "link": ""
+      "link": "",
+      "previewDesc": "전라북도교육청 기관특별연수 강의입니다.",
+      "images": [
+        "uploads/b5be23901eb9.png"
+      ],
+      "image": "uploads/b5be23901eb9.png",
+      "highlight": false
     },
     {
       "id": "l30",
@@ -826,9 +1033,13 @@
       "org": "대전교육정보원",
       "year": 2024,
       "category": "ChatGPT/AI",
-      "highlight": false,
-      "image": "",
-      "link": ""
+      "link": "",
+      "previewDesc": "",
+      "images": [
+        "uploads/412fe94c933e.png"
+      ],
+      "image": "uploads/412fe94c933e.png",
+      "highlight": false
     },
     {
       "id": "l31",
@@ -836,9 +1047,13 @@
       "org": "대전 서부 5지구 자율장학 연수",
       "year": 2024,
       "category": "ChatGPT/AI",
-      "highlight": false,
-      "image": "",
-      "link": ""
+      "link": "",
+      "previewDesc": "",
+      "images": [
+        "uploads/c1d72131d63a.png"
+      ],
+      "image": "uploads/c1d72131d63a.png",
+      "highlight": false
     },
     {
       "id": "l32",
@@ -846,9 +1061,13 @@
       "org": "대전관평초",
       "year": 2024,
       "category": "ChatGPT/AI",
-      "highlight": false,
-      "image": "",
-      "link": ""
+      "link": "",
+      "previewDesc": "",
+      "images": [
+        "uploads/d4e6aa10a70b.png"
+      ],
+      "image": "uploads/d4e6aa10a70b.png",
+      "highlight": false
     },
     {
       "id": "l33",
@@ -856,9 +1075,15 @@
       "org": "경인교대 특강",
       "year": 2024,
       "category": "메타버스/VR",
-      "highlight": false,
-      "image": "",
-      "link": ""
+      "link": "",
+      "previewDesc": "경인교대 재학생 대상 AI 메타버스 Core과정 특강 자료입니다.",
+      "images": [
+        "uploads/165a3aba290d.png",
+        "uploads/6e7b7c355932.png",
+        "uploads/294390a1eca4.png"
+      ],
+      "image": "uploads/165a3aba290d.png",
+      "highlight": true
     },
     {
       "id": "l34",
@@ -866,9 +1091,15 @@
       "org": "진잠초",
       "year": 2024,
       "category": "에듀테크",
-      "highlight": false,
-      "image": "",
-      "link": ""
+      "link": "",
+      "previewDesc": "진잠초등학교 유튜브 동아리 학생들을 대상으로 실시한 크리에이터 되기 강의 자료입니다.",
+      "images": [
+        "uploads/fa29db8b3225.png",
+        "uploads/7bdb160f55ee.png",
+        "uploads/28d7a863718c.png"
+      ],
+      "image": "uploads/fa29db8b3225.png",
+      "highlight": false
     },
     {
       "id": "l35",
@@ -876,9 +1107,14 @@
       "org": "GEG Daejeon / 교사크리에이터협회 / 쌤동네 등",
       "year": 2024,
       "category": "Google/Gemini",
-      "highlight": false,
-      "image": "",
-      "link": ""
+      "link": "",
+      "previewDesc": "",
+      "images": [
+        "uploads/47293ef58ac8.png",
+        "uploads/5fbb01d94d0c.png"
+      ],
+      "image": "uploads/47293ef58ac8.png",
+      "highlight": false
     },
     {
       "id": "l36",
@@ -886,19 +1122,15 @@
       "org": "대전교육정보원",
       "year": 2023,
       "category": "메타버스/VR",
-      "highlight": false,
-      "image": "",
-      "link": ""
-    },
-    {
-      "id": "l37",
-      "title": "360도 카메라 활용 연수",
-      "org": "대전교육정보원",
-      "year": 2023,
-      "category": "메타버스/VR",
-      "highlight": false,
-      "image": "",
-      "link": ""
+      "link": "",
+      "previewDesc": "",
+      "images": [
+        "uploads/568baa149099.png",
+        "uploads/a9cdad308dd8.png",
+        "uploads/085045d700ad.png"
+      ],
+      "image": "uploads/568baa149099.png",
+      "highlight": false
     },
     {
       "id": "l38",
@@ -906,19 +1138,14 @@
       "org": "대전교육정보원",
       "year": 2022,
       "category": "메타버스/VR",
-      "highlight": false,
-      "image": "",
-      "link": ""
-    },
-    {
-      "id": "l39",
-      "title": "ChatGPT, 수업에 날개를 달다",
-      "org": "교육사랑연수원 직무연수, 1학점",
-      "year": 2024,
-      "category": "ChatGPT/AI",
-      "highlight": false,
-      "image": "",
-      "link": ""
+      "link": "",
+      "previewDesc": "",
+      "images": [
+        "uploads/70d0bcb94725.png",
+        "uploads/952cd905033c.png"
+      ],
+      "image": "uploads/70d0bcb94725.png",
+      "highlight": false
     }
   ],
   "awards": [

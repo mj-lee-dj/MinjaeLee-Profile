@@ -139,6 +139,22 @@ const profileData = {
   ],
   "publications": [
     {
+      "id": "pub_mr29b0grgnumy",
+      "title": "코딩 미술 융합 프로젝트를 위한 코드위즈 AI 메이커 스케치북",
+      "publisher": "상상충전소",
+      "year": 2024,
+      "description": "7가지 만들기 프로젝트로 완성하는 AI 메이킹 프로젝트!!\n\n교육 현장에서 활동하는 10명의 선생님들의 다양한 경험과 노하우를 담은 7가지 도안의 AI 메이킹 프로젝트이다. 실과, 미술, 체육, 음악 교과 및 AI, SW, 피지컬 컴퓨팅을 융합하여 단순한 코딩활용이 아닌 작품을 직접 만듦으로써 정형화되지 않은 나만의 작품 만들기가 가능해 예술성과 감수성을 키울 수 있도록 구성되어 있다. 또한 코딩의 기본을 익히는 것에 그치지 않고 실생활에 어떻게 적용할 수 있을지에 대한 실질적인 경험을 제공한다. 학생들에게 미래교육을 선사하고자 하는 선생님들께서 어려움 없이 손쉽게 수업을 진행할 수 있도록 교수학습지도안 및 수업 PPT, 교재, 도안, 키트 등 교육에 필요한 모든 것을 하나의 콘텐츠에 담았다.",
+      "tags": [
+        "#코딩미술융합 #코드위즈 #엔트리 #피지컬컴퓨팅 #AI교육"
+      ],
+      "link": "https://www.yes24.com/product/goods/125581310",
+      "previewDesc": "7가지 만들기 프로젝트로 완성하는 AI 메이킹 프로젝트!!\n\n교육 현장에서 활동하는 10명의 선생님들의 다양한 경험과 노하우를 담은 7가지 도안의 AI 메이킹 프로젝트이다. 실과, 미술, 체육, 음악 교과 및 AI, SW, 피지컬 컴퓨팅을 융합하여 단순한 코딩활용이 아닌 작품을 직접 만듦으로써 정형화되지 않은 나만의 작품 만들기가 가능해 예술성과 감수성을 키울 수 있도록 구성되어 있다. 또한 코딩의 기본을 익히는 것에 그치지 않고 실생활에 어떻게 적용할 수 있을지에 대한 실질적인 경험을 제공한다. 학생들에게 미래교육을 선사하고자 하는 선생님들께서 어려움 없이 손쉽게 수업을 진행할 수 있도록 교수학습지도안 및 수업 PPT, 교재, 도안, 키트 등 교육에 필요한 모든 것을 하나의 콘텐츠에 담았다.",
+      "images": [
+        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/91b03bf9a89f.png"
+      ],
+      "image": "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/91b03bf9a89f.png"
+    },
+    {
       "id": "pub_mlrv9tugxeozh",
       "title": "그리와 로미의 제미나이 탐험대",
       "publisher": "앤써북",
@@ -227,6 +243,25 @@ const profileData = {
     }
   ],
   "lectures": [
+    {
+      "id": "l_mr29fqzwolflm",
+      "title": "Gemini & Chrome Academy",
+      "org": "GEG충남",
+      "year": 2026,
+      "category": "Google/Gemini",
+      "link": "",
+      "previewDesc": "충남GEG회원 200명을 대상으로  Chromebook활용 / Gemini 최신 모델 소개 / Gemini 활용 방법 / 세계에서 3개 나라에만 런칭한 Google AI Educator Series 소개 및 시험 대비 등의 내용으로 실시한 연수입니다.",
+      "images": [
+        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/78090a1a1df5.png",
+        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/31fece3586d1.png",
+        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/92e3b7746ad7.png",
+        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/141db896c506.png",
+        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/9be3402fa34c.png",
+        "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/0d84a60f0532.png"
+      ],
+      "image": "https://raw.githubusercontent.com/mj-lee-dj/MinjaeLee-Profile/main/profile-site/uploads/78090a1a1df5.png",
+      "highlight": true
+    },
     {
       "id": "l_mqdcutzp4kuad",
       "title": "갤럭시탭 SMART하게 100% 활용하기",
