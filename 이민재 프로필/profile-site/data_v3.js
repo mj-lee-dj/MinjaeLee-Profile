@@ -252,13 +252,13 @@ const profileData = {
       "year": 2026,
       "category": "기조강연/발표",
       "link": "",
-      "previewDesc": "ADE사업단 소속 코디네이터 및 강사들을 대상으로 실시한 강사 교육 및 코칭 연수입니다. 효과적인 강의를 하기 위한 조건, 디자인적으로 잘 설계된 프레젠테이션 작성하기, 내 철학이 담긴 강의 설계하기 등으로 구성되어 있습니다.",
+      "previewDesc": "효과적인 강의를 하기 위한 조건, 디자인적으로 잘 설계된 프레젠테이션 작성하기, 내 철학이 담긴 강의 설계하기 등으로 구성된 강의법 및 강사 코칭 연수입니다.",
       "images": [
-        "uploads/a3fb4cf1237d.png",
-        "uploads/6ca674bb0d12.png",
-        "uploads/4253b64bd32b.png"
+        "uploads/61e0cf975810.png",
+        "uploads/a684f63b5956.png",
+        "uploads/bfa1b2c30bb3.png"
       ],
-      "image": "uploads/a3fb4cf1237d.png",
+      "image": "uploads/61e0cf975810.png",
       "highlight": true
     },
     {
