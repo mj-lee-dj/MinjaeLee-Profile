@@ -949,11 +949,12 @@
           }
           const blob = await blobRes.json();
           const filePath = `profile-site/uploads/${blob.sha.substring(0, 12)}.${ext}`;
-          const rawUrl = `https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/main/${filePath}`;
+          /* 상대 경로를 사용하여 GitHub Pages에서 안정적으로 이미지를 로드 */
+          const relativePath = `uploads/${blob.sha.substring(0, 12)}.${ext}`;
 
           treeEntries.push({ path: filePath, mode: '100644', type: 'blob', sha: blob.sha });
-          uploadCache.set(hashKey, rawUrl);
-          return rawUrl;
+          uploadCache.set(hashKey, relativePath);
+          return relativePath;
         }
 
         /* 객체 전체를 순회하며 base64 이미지 추출 */
