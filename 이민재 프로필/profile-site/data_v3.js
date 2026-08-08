@@ -244,6 +244,101 @@ const profileData = {
   ],
   "lectures": [
     {
+      "id": "l_mskiwlabhgr9u",
+      "title": "구글과 함께하는 K-16 연계 디지털 역량 강화 하계 교원 연수",
+      "org": "충청남도교육청",
+      "year": 2026,
+      "category": "Google/Gemini",
+      "link": "",
+      "previewDesc": "260804-05 선문대학교 아산캠퍼스에서 실시한 구글과 함께하는 K-16 연계 디지털 역량 강화 하계 교원 연수입니다. Google AI Educator Series의 내용을 중심으로 Gemini와 Gemini Notebook을 교수학습 및 행정업무에 활용하고, 교육자 인증 뱃지를 취득하는 과정을 담았습니다.",
+      "images": [
+        "uploads/08cb19169c64.png",
+        "uploads/4c2219a945f3.png",
+        "uploads/ff78a0b00648.png"
+      ],
+      "image": "uploads/08cb19169c64.png",
+      "highlight": true
+    },
+    {
+      "id": "l_mskirvwkn6cbr",
+      "title": "[경남 중등 1정연수] NotebookLM 마스터 클래스",
+      "org": "경상국립대학교",
+      "year": 2026,
+      "category": "Google/Gemini",
+      "link": "",
+      "previewDesc": "260803 경상국립대학교에서 실시한 경남 화학 1급 정교사 연수입니다.",
+      "images": [
+        "uploads/0e6f7c5e3654.png",
+        "uploads/45cd3b57995b.png",
+        "uploads/88a6ac588a7b.png",
+        "uploads/55bfb8a1e151.png"
+      ],
+      "image": "uploads/0e6f7c5e3654.png",
+      "highlight": true
+    },
+    {
+      "id": "l_mskip8tt41oij",
+      "title": "[대전 중등 1정연수] NotebookLM으로 수업 및 학급경영에 날개 달기",
+      "org": "충남대학교",
+      "year": 2026,
+      "category": "Google/Gemini",
+      "link": "",
+      "previewDesc": "260729 충남대학교에서 실시한 중등 전기 1급 정교사 연수입니다. AI 기반으로 반복되는 업무는 효율적으로 처리하고, 다양한 방향의 진로 지도가 필요한 학생들에게 맞춤형 수업 자료를 선생님의 의도와 철학에 맞게 제작하는 방법에 대한 강의입니다.",
+      "images": [
+        "uploads/39ce60365e92.png",
+        "uploads/9844a0254062.png",
+        "uploads/a75148956a74.png"
+      ],
+      "image": "uploads/39ce60365e92.png",
+      "highlight": true
+    },
+    {
+      "id": "l_mskiirk0nwcd7",
+      "title": "인공지능 활용 선도교사 연수",
+      "org": "한국교원대학교",
+      "year": 2026,
+      "category": "Google/Gemini",
+      "link": "",
+      "previewDesc": "260714-15 대전 호텔인터시티에서 실시한 인공지능 활용 선도교사 연수입니다.",
+      "images": [
+        "uploads/0c50843966d3.png"
+      ],
+      "image": "uploads/0c50843966d3.png",
+      "highlight": false
+    },
+    {
+      "id": "l_mskifjabnr1q2",
+      "title": "[인공지능 활용 진로특강] 생성AI로 내 삶을 스마트하게 운영하기",
+      "org": "김해수남고등학교",
+      "year": 2026,
+      "category": "Google/Gemini",
+      "link": "",
+      "previewDesc": "260714 김해수남고 인공지능 활용 진로특강 자료입니다. 인공지능을 내 삶에 어떻게 적용하고, 무엇을 주의해야 하는지에 대한 내용입니다.",
+      "images": [
+        "uploads/11e803f03cdf.png"
+      ],
+      "image": "uploads/11e803f03cdf.png",
+      "highlight": true
+    },
+    {
+      "id": "l_mr4yng6ro1z4u",
+      "title": "Gemini&NotebookLM으로 똑똑하게 해외 여행하기",
+      "org": "GEG대전 Edu 로켓배송",
+      "year": 2026,
+      "category": "Google/Gemini",
+      "link": "",
+      "previewDesc": "260702 GEG대전 Edu 로켓배송 연수에서 실시한 Gemini와 NotebookLM, 갤럭시 기기를 활용한 여행 준비 노하우 및 AI를 실생활에 유용하게 사용하는 방법에 대한 강의입니다.",
+      "images": [
+        "uploads/617b271cdcbe.png",
+        "uploads/0cc57ead38a4.png",
+        "uploads/1ec7c2ba82c0.png",
+        "uploads/8efda7990b37.png",
+        "uploads/c266eb27da01.png"
+      ],
+      "image": "uploads/617b271cdcbe.png",
+      "highlight": true
+    },
+    {
       "id": "l_mr29yai68xvad",
       "title": "AI 워크플로우로 실현하는 고품격 강의 설계",
       "org": "ADE 사업단 강사 역량 강화연수",
@@ -1286,6 +1381,24 @@ const profileData = {
     }
   ],
   "press": [
+    {
+      "id": "p_mskiz82ml7qvx",
+      "title": "[인터뷰 ②] “한 사람의 가능성을 발견하고, 자신의 힘으로 성장할 수 있도록 도울 수 있는 교육” — 대덕초 교사 이민재",
+      "source": "브랜드뉴스",
+      "date": "2026.08.08.",
+      "link": "https://www.ibrandnews.com/news/articleView.html?idxno=12705",
+      "previewDesc": "",
+      "images": []
+    },
+    {
+      "id": "p_mskixykoxmlf0",
+      "title": "[인터뷰①] “도구보다 맥락이 먼저입니다” 대전 GEG 리더 교사 이민재",
+      "source": "브랜드뉴스",
+      "date": "2026.08.03.",
+      "link": "https://www.ibrandnews.com/news/articleView.html?idxno=12700",
+      "previewDesc": "",
+      "images": []
+    },
     {
       "id": "p_mlrvuiw1jnj43",
       "title": "충남대학교 사범대학, AI·에듀테크 연수로 대전 교원 디지털 수업 역량 강화",
