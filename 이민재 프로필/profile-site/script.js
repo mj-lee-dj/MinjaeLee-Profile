@@ -23,12 +23,14 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   /* ═══ 히어로 ═══ */
   const badgesWrap = document.getElementById('heroBadges');
-  D.personal.credentials.forEach(c => {
-    const el = document.createElement('span');
-    el.className = 'hero-badge';
-    el.textContent = c;
-    badgesWrap.appendChild(el);
-  });
+  if (badgesWrap && D.personal && D.personal.credentials) {
+    D.personal.credentials.forEach(c => {
+      const el = document.createElement('span');
+      el.className = 'hero-badge';
+      el.textContent = c;
+      badgesWrap.appendChild(el);
+    });
+  }
 
   /* 통계 바 */
   const lecCount = D.lectures.length;

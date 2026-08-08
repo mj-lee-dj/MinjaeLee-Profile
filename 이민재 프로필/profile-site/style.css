@@ -1625,79 +1625,81 @@ footer {
 }
 @media (max-width: 768px) { .yt-nav { display: none; } .yt-carousel-wrapper { padding: 0; margin: 0 -20px; width: calc(100% + 40px); } .yt-carousel { padding: 0 20px 20px 20px; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; gap: 12px; } .yt-item { scroll-snap-align: center; flex: 0 0 280px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); } }
 
-/* ── 2026-08 개편: 릿틀리(Littly) 융합 가독성 & 인스타그램 메인 CTA & 모던 헤더 ── */
+/* ── 2026-08 6차 개편: 사이트 전 영역 폰트 대폭 확대 & 릿틀리형 가독성 & 모던 뱃지 시스템 ── */
 body {
   font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif !important;
   color: #f8fafc !important;
+  font-size: 1.125rem !important; /* 기본 18px */
+  line-height: 1.85 !important;
 }
 
-/* 상단 소셜 버튼 */
-.nav-social-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin: 0 8px;
+/* 1. 상단 네비게이션 메뉴 폰트 획기적 확대 */
+.nav-links a {
+  font-size: 1.1rem !important; /* 18px */
+  font-weight: 700 !important;
+  color: #ffffff !important;
+  letter-spacing: -0.01em !important;
+  margin: 0 8px !important;
+  transition: all 0.2s ease !important;
 }
 
-.nav-social-link {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.08);
-  color: #e2e8f0;
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+.nav-links a:hover {
+  color: var(--red) !important;
 }
 
-.nav-social-link:hover {
-  background: var(--red);
-  color: #ffffff;
-  border-color: var(--red);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 16px rgba(229, 9, 20, 0.45);
+.nav-cta {
+  font-size: 1.05rem !important;
+  font-weight: 800 !important;
+  padding: 10px 22px !important;
+  border-radius: 20px !important;
 }
 
-/* 히어로 릿틀리형 초대형 인스타그램 메인 바이오 CTA */
+/* 2. 히어로 영역 & 20px 초대형 인스타그램 메인 바이오 CTA */
+.hero-sub {
+  font-size: 1.35rem !important; /* 22px */
+  font-weight: 600 !important;
+  color: #f1f5f9 !important;
+  margin-bottom: 32px !important;
+  line-height: 1.6 !important;
+}
+
 .hero-social-bar {
   display: flex;
   align-items: center;
-  gap: 14px;
-  margin-top: 26px;
+  gap: 16px;
+  margin-top: 30px;
   flex-wrap: wrap;
 }
 
 @keyframes instaGlow {
   0% {
-    box-shadow: 0 6px 20px rgba(220, 39, 67, 0.35), 0 0 0 0 rgba(220, 39, 67, 0.4);
+    box-shadow: 0 6px 22px rgba(220, 39, 67, 0.4), 0 0 0 0 rgba(220, 39, 67, 0.45);
   }
   100% {
-    box-shadow: 0 10px 30px rgba(220, 39, 67, 0.65), 0 0 0 8px rgba(220, 39, 67, 0);
+    box-shadow: 0 12px 35px rgba(220, 39, 67, 0.7), 0 0 0 10px rgba(220, 39, 67, 0);
   }
 }
 
 .btn-insta-main {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
-  padding: 16px 30px;
-  border-radius: 40px;
+  gap: 14px;
+  padding: 18px 36px;
+  border-radius: 50px;
   background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
   color: #ffffff !important;
-  font-size: 1.05rem;
+  font-size: 1.15rem; /* 20px급 */
   font-weight: 800;
   letter-spacing: -0.01em;
   border: none;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   animation: instaGlow 2.5s infinite alternate;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
 }
 
 .btn-insta-main:hover {
   transform: translateY(-4px) scale(1.02);
-  box-shadow: 0 14px 35px rgba(204, 35, 102, 0.55);
+  box-shadow: 0 16px 40px rgba(204, 35, 102, 0.6);
   color: #ffffff !important;
 }
 
@@ -1705,12 +1707,12 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 14px 22px;
-  border-radius: 40px;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 16px 26px;
+  border-radius: 50px;
+  background: rgba(255, 255, 255, 0.09);
+  border: 1px solid rgba(255, 255, 255, 0.22);
   color: #e2e8f0 !important;
-  font-size: 0.95rem;
+  font-size: 1.05rem;
   font-weight: 700;
   backdrop-filter: blur(8px);
   transition: all 0.25s ease;
@@ -1721,46 +1723,59 @@ body {
   border-color: #1877f2;
   color: #ffffff !important;
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(24, 119, 242, 0.4);
+  box-shadow: 0 8px 24px rgba(24, 119, 242, 0.45);
 }
 
-/* ── 섹션 제목 헤더 & 뱃지 현대화 ── */
+/* 통계 오버레이 미세 글씨 확대 */
+.stat-label {
+  font-size: 1.05rem !important; /* 17px */
+  font-weight: 700 !important;
+  color: #f1f5f9 !important;
+}
+
+.stat-val {
+  font-size: 2.2rem !important;
+  font-weight: 800 !important;
+}
+
+/* 3. 섹션 제목 헤더 & 뱃지 현대화 */
 .tag-label {
   display: inline-flex !important;
   align-items: center !important;
-  gap: 6px !important;
-  padding: 6px 14px !important;
-  border-radius: 20px !important;
-  background: rgba(229, 9, 20, 0.12) !important;
+  gap: 8px !important;
+  padding: 8px 18px !important;
+  border-radius: 30px !important;
+  background: rgba(229, 9, 20, 0.14) !important;
   color: #ff4d5a !important;
-  font-size: 0.8rem !important;
+  font-size: 0.88rem !important;
   font-weight: 800 !important;
-  letter-spacing: 0.12em !important;
+  letter-spacing: 0.14em !important;
   text-transform: uppercase !important;
-  margin-bottom: 12px !important;
-  border: 1px solid rgba(229, 9, 20, 0.25) !important;
+  margin-bottom: 14px !important;
+  border: 1px solid rgba(229, 9, 20, 0.28) !important;
 }
 
 .big-heading {
-  font-size: clamp(2.2rem, 3.8vw, 3rem) !important;
+  font-size: clamp(2.4rem, 4vw, 3.2rem) !important;
   font-weight: 800 !important;
   color: #ffffff !important;
   letter-spacing: -0.02em !important;
   line-height: 1.25 !important;
   text-shadow: none !important;
-  margin-bottom: 16px !important;
+  margin-bottom: 20px !important;
 }
 
 .sub-heading, .col-head {
-  font-size: 1.4rem !important;
+  font-size: 1.5rem !important;
   font-weight: 800 !important;
   color: #ffffff !important;
   letter-spacing: -0.01em !important;
+  margin-bottom: 18px !important;
 }
 
-/* ── About Me 가독성 강화 ── */
+/* 4. About Me & 주요 자격 2x2 대형 비주얼 그리드 */
 #aboutTitle {
-  font-size: clamp(2rem, 3.5vw, 2.7rem) !important;
+  font-size: clamp(2.2rem, 3.8vw, 3rem) !important;
   font-weight: 800 !important;
   color: #ffffff !important;
   line-height: 1.35 !important;
@@ -1768,110 +1783,187 @@ body {
 }
 
 #aboutBio, .about-bio {
-  font-size: 1.125rem !important; /* 18px */
-  line-height: 1.85 !important;   /* 넓은 1.85 행간 */
-  color: #f1f5f9 !important;      /* 선명한 고대비 백색 */
+  font-size: 1.2rem !important; /* 19~20px */
+  line-height: 1.9 !important;   /* 시원시원한 1.9 행간 */
+  color: #f8fafc !important;     /* 선명한 고대비 백색 */
   font-weight: 400 !important;
   letter-spacing: -0.01em !important;
-  margin-bottom: 28px !important;
+  margin-bottom: 32px !important;
 }
 
-/* ── 릿틀리형 라운디드 블록 카드 (Credentials, Awards, Activities, Publications) ── */
+/* 주요 자격: 세로 나열 ➔ 2x2 대형 비주얼 그리드로 전면 개편 */
+.credential-list {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
+  gap: 16px !important;
+}
+
 .credential-item {
-  font-size: 1.1rem !important;
-  font-weight: 700 !important;
+  font-size: 1.2rem !important; /* 20px~21px ExtraBold */
+  font-weight: 800 !important;
   color: #ffffff !important;
-  padding: 18px 24px !important;
-  border-radius: 16px !important;
-  background: linear-gradient(135deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.02) 100%) !important;
-  border: 1px solid rgba(255, 255, 255, 0.16) !important;
-  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25) !important;
+  padding: 22px 28px !important;
+  border-radius: 18px !important;
+  background: linear-gradient(135deg, rgba(255,255,255,0.09) 0%, rgba(255,255,255,0.03) 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3) !important;
   letter-spacing: -0.01em !important;
 }
 
 .credential-item:hover {
   border-color: var(--red) !important;
-  transform: translateX(8px) !important;
-  box-shadow: 0 6px 25px rgba(229, 9, 20, 0.3) !important;
+  transform: translateY(-4px) !important;
+  box-shadow: 0 10px 30px rgba(229, 9, 20, 0.35) !important;
 }
 
 .credential-dot {
-  width: 10px !important;
-  height: 10px !important;
+  width: 12px !important;
+  height: 12px !important;
   background: var(--red) !important;
-  box-shadow: 0 0 12px var(--red) !important;
+  box-shadow: 0 0 14px var(--red) !important;
 }
 
+/* 5. 수상 내역 (Awards) ➔ 21px~22px 대형 프리미엄 성과 카드 */
 .award-item {
-  background: linear-gradient(135deg, rgba(30,35,45,0.85) 0%, rgba(20,24,32,0.9) 100%) !important;
-  border: 1px solid rgba(255, 255, 255, 0.14) !important;
-  border-radius: 16px !important;
-  padding: 22px 26px !important;
-  margin-bottom: 14px !important;
-  box-shadow: 0 4px 18px rgba(0,0,0,0.3) !important;
+  background: linear-gradient(135deg, rgba(30,35,48,0.9) 0%, rgba(18,22,30,0.95) 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  border-radius: 18px !important;
+  padding: 26px 32px !important;
+  margin-bottom: 18px !important;
+  box-shadow: 0 6px 22px rgba(0,0,0,0.35) !important;
 }
 
 .award-item:hover {
   border-color: var(--red) !important;
-  transform: translateX(6px) !important;
-  box-shadow: 0 6px 25px rgba(229, 9, 20, 0.25) !important;
+  transform: translateX(8px) !important;
+  box-shadow: 0 8px 30px rgba(229, 9, 20, 0.3) !important;
 }
 
 .award-year {
-  font-size: 0.88rem !important;
+  font-size: 0.95rem !important; /* 15px */
   font-weight: 800 !important;
-  color: var(--red) !important;
-  letter-spacing: 0.05em !important;
+  color: #ff4d5a !important;
+  letter-spacing: 0.06em !important;
 }
 
 .award-title {
-  font-size: 1.125rem !important; /* 18px */
+  font-size: 1.3rem !important; /* 21px ~ 22px ExtraBold */
+  font-weight: 800 !important;
+  color: #ffffff !important;
+  line-height: 1.5 !important;
+  letter-spacing: -0.01em !important;
+  margin: 6px 0 !important;
+}
+
+.award-org {
+  font-size: 1.05rem !important; /* 17px */
+  color: #f59e0b !important;    /* 네온 골드 */
+  font-weight: 700 !important;
+}
+
+/* 6. 주요 활동 (Activities) ➔ 2열 다이내믹 칩 카드 */
+.act-item {
+  background: linear-gradient(135deg, rgba(30,35,48,0.9) 0%, rgba(18,22,30,0.95) 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  border-radius: 18px !important;
+  padding: 22px 28px !important;
+  margin-bottom: 14px !important;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.3) !important;
+}
+
+.act-item:hover {
+  border-color: var(--cyan) !important;
+  transform: translateX(8px) !important;
+  box-shadow: 0 8px 25px rgba(0, 210, 255, 0.25) !important;
+}
+
+.act-period {
+  font-size: 0.95rem !important; /* 15px */
+  font-weight: 800 !important;
+  color: var(--cyan) !important;
+  letter-spacing: 0.04em !important;
+}
+
+.act-title {
+  font-size: 1.2rem !important; /* 19px~20px Bold 700 */
   font-weight: 700 !important;
   color: #ffffff !important;
   line-height: 1.5 !important;
   letter-spacing: -0.01em !important;
 }
 
-.award-org {
-  font-size: 0.95rem !important;
-  color: #cbd5e1 !important;
-  font-weight: 500 !important;
-}
-
-.act-item {
-  background: linear-gradient(135deg, rgba(30,35,45,0.85) 0%, rgba(20,24,32,0.9) 100%) !important;
-  border: 1px solid rgba(255, 255, 255, 0.14) !important;
-  border-radius: 16px !important;
-  padding: 20px 24px !important;
-  margin-bottom: 12px !important;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.25) !important;
-}
-
-.act-item:hover {
-  border-color: var(--cyan) !important;
-  transform: translateX(6px) !important;
-  box-shadow: 0 6px 22px rgba(0, 210, 255, 0.2) !important;
-}
-
-.act-period {
-  font-size: 0.85rem !important;
+/* 7. 저서 / 연수 / 강의 / 보도자료 구석구석 12~13px 작은 글씨 상향 */
+.pub-title {
+  font-size: 1.35rem !important; /* 22px Bold 800 */
   font-weight: 800 !important;
-  color: var(--cyan) !important;
+  color: #ffffff !important;
 }
 
-.act-title {
-  font-size: 1.1rem !important; /* 18px급 */
+.pub-desc {
+  font-size: 1.125rem !important; /* 18px */
+  line-height: 1.85 !important;
+  color: #f1f5f9 !important;
+}
+
+.pub-publisher {
+  font-size: 1rem !important; /* 16px */
+  color: #cbd5e1 !important;
+  font-weight: 600 !important;
+}
+
+.pub-year {
+  font-size: 0.95rem !important; /* 15px Red Badge */
+  font-weight: 800 !important;
+  color: var(--red) !important;
+}
+
+.pub-tag {
+  font-size: 0.95rem !important; /* 15px */
+  font-weight: 700 !important;
+  padding: 6px 14px !important;
+}
+
+/* 강의 필터 및 카드 */
+.filter-btn {
+  font-size: 1.05rem !important; /* 17px */
+  font-weight: 700 !important;
+  padding: 12px 24px !important;
+  border-radius: 25px !important;
+}
+
+.lec-title {
+  font-size: 1.25rem !important; /* 20px Bold 700 */
+  font-weight: 800 !important;
+  color: #ffffff !important;
+  line-height: 1.5 !important;
+}
+
+.lec-meta, .lec-org, .lec-year {
+  font-size: 1.05rem !important; /* 17px */
+  color: #e2e8f0 !important;
+  font-weight: 600 !important;
+}
+
+.press-title {
+  font-size: 1.2rem !important; /* 19px~20px Bold 700 */
   font-weight: 700 !important;
   color: #ffffff !important;
-  line-height: 1.45 !important;
-  letter-spacing: -0.01em !important;
+  line-height: 1.5 !important;
 }
 
-.pub-desc, .course-body, .press-title {
-  font-size: 1.05rem !important;
-  line-height: 1.75 !important;
-  color: #e2e8f0 !important;
+.press-meta, .press-source, .press-date {
+  font-size: 1rem !important; /* 16px */
+  color: #cbd5e1 !important;
+  font-weight: 600 !important;
 }
+
+/* 푸터 미세 글씨 상향 */
+footer {
+  font-size: 1.05rem !important; /* 17px */
+  color: #e2e8f0 !important;
+  padding: 60px 0 !important;
+}
+
 
 
 
