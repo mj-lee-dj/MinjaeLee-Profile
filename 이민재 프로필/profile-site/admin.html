@@ -996,8 +996,10 @@
             let indexText = new TextDecoder('utf-8').decode(Uint8Array.from(decoded, c => c.charCodeAt(0)));
             
             const timestamp = Date.now();
-            // data_v3.js(?v=...) 패턴을 찾아 현재 타임스탬프로 교체
-            indexText = indexText.replace(/data_v3\.js(\?v=\d+)?/g, `data_v3.js?v=${timestamp}`);
+            // data_v3.js, style.css, script.js(?v=...) 패턴을 찾아 현재 타임스탬프로 교체
+            indexText = indexText.replace(/data_v3\.js(\?v=[^"]+)?/g, `data_v3.js?v=${timestamp}`)
+                                 .replace(/style\.css(\?v=[^"]+)?/g, `style.css?v=${timestamp}`)
+                                 .replace(/script\.js(\?v=[^"]+)?/g, `script.js?v=${timestamp}`);
             
             const indexBlobRes = await fetch(`${API}/git/blobs`, {
               method: 'POST', headers,
