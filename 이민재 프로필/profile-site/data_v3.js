@@ -112,7 +112,7 @@ const profileData = {
     "photo": "assets/profile.jpg",
     "photo2": "assets/profile2.jpg",
     "tagline": "AI와 에듀테크로 교실의 내일을 만들어가는 교사",
-    "bio": "교육의 진정한 본질은 아이들과 눈을 맞추는 깊이 있는 시간에 있습니다. AI와 디지털 도구는 교사의 반복적인 업무를 자동화하여 잃어버린 시간을 되찾아주고, 학생들에게는 맞춤형 학습 경험을 제공하는 핵심 열쇠입니다.  부단한 연구와 강연, 저술 활동을 통해 누구나 쉽게 누릴 수 있는 따뜻하고 스마트한 교실의 청사진을 제시하고자 노력하고 있습니다.",
+    "bio": "교육의 진정한 본질은 기술 그 자체가 아닌 아이들과 눈을 맞추는 맥락과 호흡에 있습니다. AI와 에듀테크 도구는 교사의 소중한 시간을 되찾아주고, 학생들이 스스로의 가능성을 발견하여 주도적으로 성장하도록 돕는 핵심 열쇠입니다.",
     "credentials": [
       "GEG(Google Educator Group) Daejeon Leader",
       "Google Certified Innovator (#SEO24)",
@@ -123,9 +123,10 @@ const profileData = {
       "tel": "010-2627-5928",
       "email": "lang2kmj@gmail.com",
       "instagram": "https://joo.is/민재쌤인스타",
+      "facebook": "https://facebook.com",
       "youtube": "https://www.youtube.com/@LeePDesigner"
     },
-    "aboutTitle": "기술에 따뜻함을 더해, \n교실의 본질을 켜다"
+    "aboutTitle": "도구보다 맥락을,\n기술 너머 아이의 가능성을 켜다"
   },
   "expertise": [
     "Google Workspace for Education",

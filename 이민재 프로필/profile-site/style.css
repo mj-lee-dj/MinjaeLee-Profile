@@ -1625,4 +1625,157 @@ footer {
 }
 @media (max-width: 768px) { .yt-nav { display: none; } .yt-carousel-wrapper { padding: 0; margin: 0 -20px; width: calc(100% + 40px); } .yt-carousel { padding: 0 20px 20px 20px; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; gap: 12px; } .yt-item { scroll-snap-align: center; flex: 0 0 280px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); } }
 
+/* ── 2026-08 개편: 시안 B Editorial High Contrast & 소셜 링크 ── */
+.nav-social-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 6px;
+}
+
+.nav-social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  color: #cbd5e1;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  transition: all 0.25s ease;
+}
+
+.nav-social-link:hover {
+  background: var(--red);
+  color: #ffffff;
+  border-color: var(--red);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(229, 9, 20, 0.4);
+}
+
+.hero-social-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 22px;
+  flex-wrap: wrap;
+}
+
+.hero-social-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: all 0.25s ease;
+  backdrop-filter: blur(8px);
+}
+
+.hero-social-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+}
+
+.hero-social-btn.btn-insta:hover {
+  background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+  border-color: transparent;
+}
+
+.hero-social-btn.btn-fb:hover {
+  background: #1877f2;
+  border-color: transparent;
+}
+
+/* 고대비 가독성 강화 (Credentials, Awards & Activities) */
+.credential-item {
+  font-size: 1.05rem !important;
+  font-weight: 700 !important;
+  color: #ffffff !important;
+  padding: 16px 22px !important;
+  background: linear-gradient(135deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.02) 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25) !important;
+}
+
+.credential-item:hover {
+  border-color: var(--red) !important;
+  transform: translateX(8px) !important;
+  box-shadow: 0 6px 24px rgba(229, 9, 20, 0.3) !important;
+}
+
+.credential-dot {
+  width: 10px !important;
+  height: 10px !important;
+  background: var(--red) !important;
+  box-shadow: 0 0 10px var(--red) !important;
+}
+
+.award-item {
+  background: linear-gradient(135deg, rgba(30,35,45,0.85) 0%, rgba(20,24,32,0.9) 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  padding: 22px 26px !important;
+  margin-bottom: 14px !important;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.3) !important;
+}
+
+.award-item:hover {
+  border-color: var(--red) !important;
+  transform: translateX(6px) !important;
+  box-shadow: 0 6px 25px rgba(229, 9, 20, 0.25) !important;
+}
+
+.award-year {
+  font-size: 0.85rem !important;
+  font-weight: 800 !important;
+  color: var(--red) !important;
+  letter-spacing: 0.05em !important;
+}
+
+.award-title {
+  font-size: 1.1rem !important;
+  font-weight: 700 !important;
+  color: #ffffff !important;
+  line-height: 1.45 !important;
+}
+
+.award-org {
+  font-size: 0.9rem !important;
+  color: #94a3b8 !important;
+  font-weight: 600 !important;
+}
+
+.act-item {
+  background: linear-gradient(135deg, rgba(30,35,45,0.85) 0%, rgba(20,24,32,0.9) 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  padding: 18px 24px !important;
+  margin-bottom: 12px !important;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.25) !important;
+}
+
+.act-item:hover {
+  border-color: var(--cyan) !important;
+  transform: translateX(6px) !important;
+  box-shadow: 0 6px 22px rgba(0, 210, 255, 0.2) !important;
+}
+
+.act-period {
+  font-size: 0.82rem !important;
+  font-weight: 800 !important;
+  color: var(--cyan) !important;
+}
+
+.act-title {
+  font-size: 1.05rem !important;
+  font-weight: 700 !important;
+  color: #ffffff !important;
+  line-height: 1.4 !important;
+}
+
+
 
