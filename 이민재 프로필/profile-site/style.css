@@ -100,13 +100,25 @@ button {
 
 .nav-logo {
   font-family: var(--font-bold);
-  font-size: 1.6rem;
+  font-size: 1.5rem;
   font-weight: 800;
-  letter-spacing: .01em
+  letter-spacing: .01em;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: #ffffff;
 }
 
-.nav-logo .dot {
-  color: var(--red)
+.logo-tag {
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: #ff4d5a;
+  background: rgba(229, 9, 20, 0.14);
+  border: 1px solid rgba(229, 9, 20, 0.28);
+  padding: 4px 10px;
+  border-radius: 14px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 
 .nav-links {
@@ -173,11 +185,12 @@ button {
 /* ?? ?덉뼱濡?(?쒕꽕留덊떛) ?? */
 #hero {
   position: relative;
-  height: 100vh;
-  min-height: 640px;
+  min-height: 520px;
   display: flex;
-  align-items: flex-end;
-  overflow: hidden
+  align-items: center;
+  overflow: hidden;
+  padding-top: 100px;
+  padding-bottom: 40px;
 }
 
 .hero-img-wrap {
@@ -206,7 +219,7 @@ button {
   max-width: 1280px;
   width: 100%;
   margin: 0 auto;
-  padding: 0 40px 80px
+  padding: 20px 40px 40px;
 }
 
 .hero-badges {
