@@ -100,7 +100,12 @@ document.addEventListener('DOMContentLoaded', async () => {
       iconClass = 'cred-badge-gemini';
     }
     
-    el.innerHTML = `<img src="${iconSrc}" alt="${c}" class="cred-badge-img ${iconClass}" /><span class="cred-text">${c}</span>`;
+    el.innerHTML = `
+      <div class="cred-badge-box">
+        <img src="${iconSrc}" alt="${c}" class="cred-badge-img ${iconClass}" />
+      </div>
+      <span class="cred-text">${c}</span>
+    `;
     credList.appendChild(el);
   });
 

@@ -1,11 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
   <!-- 좌상 파란 아치 -->
-  <path d="M 25 60 A 38 38 0 0 1 52 23" fill="none" stroke="#4285F4" stroke-width="9" stroke-linecap="round"/>
+  <path d="M 22 60 A 40 40 0 0 1 50 20" fill="none" stroke="#4285F4" stroke-width="12" stroke-linecap="round"/>
   <!-- 우상 초록 아치 -->
-  <path d="M 68 23 A 38 38 0 0 1 95 60" fill="none" stroke="#34A853" stroke-width="9" stroke-linecap="round"/>
+  <path d="M 70 20 A 40 40 0 0 1 98 60" fill="none" stroke="#34A853" stroke-width="12" stroke-linecap="round"/>
   <!-- 하단 노란 아치 -->
-  <path d="M 92 68 A 38 38 0 0 1 28 68" fill="none" stroke="#FBBC04" stroke-width="9" stroke-linecap="round"/>
+  <path d="M 94 70 A 40 40 0 0 1 26 70" fill="none" stroke="#FBBC04" stroke-width="12" stroke-linecap="round"/>
   <!-- 중앙 빨간 T -->
-  <line x1="42" y1="44" x2="78" y2="44" stroke="#EA4335" stroke-width="9" stroke-linecap="round"/>
-  <line x1="60" y1="44" x2="60" y2="78" stroke="#EA4335" stroke-width="9" stroke-linecap="round"/>
+  <line x1="40" y1="44" x2="80" y2="44" stroke="#EA4335" stroke-width="12" stroke-linecap="round"/>
+  <line x1="60" y1="44" x2="60" y2="82" stroke="#EA4335" stroke-width="12" stroke-linecap="round"/>
 </svg>

@@ -7,6 +7,6 @@
       <stop offset="100%" stop-color="#34A853"/>
     </linearGradient>
   </defs>
-  <!-- Gemini 4색 그라데이션 다이아몬드 Star -->
-  <path d="M 50 10 Q 50 60 90 60 Q 50 60 50 110 Q 50 60 10 60 Q 50 60 50 10 Z" fill="url(#geminiGrad)"/>
+  <!-- Gemini 4색 다이내믹 스타 -->
+  <path d="M 50 5 Q 50 60 95 60 Q 50 60 50 115 Q 50 60 5 60 Q 50 60 50 5 Z" fill="url(#geminiGrad)"/>
 </svg>

@@ -1,15 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 150" width="100" height="150">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 130" width="100" height="130">
   <!-- 상단 노란 아치 -->
-  <path d="M 20 45 A 35 35 0 0 1 80 45" fill="none" stroke="#FBBC04" stroke-width="8" stroke-linecap="round"/>
+  <path d="M 18 42 A 36 36 0 0 1 82 42" fill="none" stroke="#FBBC04" stroke-width="11" stroke-linecap="round"/>
   <!-- 좌측 파란 전구 라인 -->
-  <path d="M 20 45 C 15 65 25 90 40 105" fill="none" stroke="#4285F4" stroke-width="8" stroke-linecap="round"/>
+  <path d="M 18 42 C 12 65 24 90 40 105" fill="none" stroke="#4285F4" stroke-width="11" stroke-linecap="round"/>
   <!-- 우측 초록 전구 라인 -->
-  <path d="M 80 45 C 85 65 75 90 60 105" fill="none" stroke="#34A853" stroke-width="8" stroke-linecap="round"/>
+  <path d="M 82 42 C 88 65 76 90 60 105" fill="none" stroke="#34A853" stroke-width="11" stroke-linecap="round"/>
   <!-- 중앙 빨간 i -->
-  <circle cx="50" cy="40" r="5.5" fill="#EA4335"/>
-  <line x1="50" y1="54" x2="50" y2="90" stroke="#EA4335" stroke-width="8" stroke-linecap="round"/>
+  <circle cx="50" cy="38" r="7" fill="#EA4335"/>
+  <line x1="50" y1="52" x2="50" y2="88" stroke="#EA4335" stroke-width="11" stroke-linecap="round"/>
   <!-- 하단 회색 베이스 -->
-  <line x1="38" y1="114" x2="62" y2="114" stroke="#757575" stroke-width="6" stroke-linecap="round"/>
-  <line x1="41" y1="124" x2="59" y2="124" stroke="#757575" stroke-width="6" stroke-linecap="round"/>
-  <line x1="44" y1="134" x2="56" y2="134" stroke="#757575" stroke-width="6" stroke-linecap="round"/>
+  <line x1="36" y1="114" x2="64" y2="114" stroke="#5F6368" stroke-width="8" stroke-linecap="round"/>
+  <line x1="40" y1="124" x2="60" y2="124" stroke="#5F6368" stroke-width="8" stroke-linecap="round"/>
 </svg>

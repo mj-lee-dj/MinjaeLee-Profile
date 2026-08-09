@@ -1829,48 +1829,64 @@ body {
 
 .credential-item {
   display: flex !important;
-  align-items: flex-start !important;
-  gap: 14px !important;
+  align-items: center !important;
+  gap: 18px !important;
   font-size: 1.15rem !important; /* 18px~20px ExtraBold */
   font-weight: 800 !important;
   color: #ffffff !important;
-  padding: 20px 24px !important;
-  border-radius: 18px !important;
+  padding: 18px 24px !important;
+  border-radius: 20px !important;
   background: linear-gradient(135deg, rgba(255,255,255,0.09) 0%, rgba(255,255,255,0.03) 100%) !important;
   border: 1px solid rgba(255, 255, 255, 0.18) !important;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3) !important;
   letter-spacing: -0.01em !important;
   word-break: keep-all !important; /* 예쁜 단어 단위 줄바꿈 */
-  line-height: 1.45 !important;
+  line-height: 1.4 !important;
 }
 
 .credential-item:hover {
-  border-color: var(--red) !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
   transform: translateY(-4px) !important;
-  box-shadow: 0 10px 30px rgba(229, 9, 20, 0.35) !important;
+  box-shadow: 0 12px 30px rgba(229, 9, 20, 0.35) !important;
 }
 
-/* 구글 공식 자격증 엠블럼 이미지 스타일 */
+/* 구글 공식 자격증 초대형 순백색 엠블럼 뱃지 스타일 */
+.cred-badge-box {
+  width: 58px !important;
+  height: 58px !important;
+  background: #ffffff !important;
+  border-radius: 16px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-shrink: 0 !important;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.5), 0 0 0 2px rgba(255, 255, 255, 0.8) !important;
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.35s ease !important;
+}
+
 .cred-badge-img {
-  width: 38px !important;
-  height: 38px !important;
+  width: 42px !important;
+  height: 42px !important;
   object-fit: contain !important;
   flex-shrink: 0 !important;
-  filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.4)) !important;
   transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
-  background: rgba(255, 255, 255, 0.06) !important;
-  padding: 5px !important;
-  border-radius: 12px !important;
-  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+}
+
+.credential-item:hover .cred-badge-box {
+  transform: scale(1.12) rotate(4deg) !important;
+  box-shadow: 0 12px 28px rgba(255, 255, 255, 0.5), 0 0 25px rgba(229, 9, 20, 0.6) !important;
 }
 
 .credential-item:hover .cred-badge-img {
-  transform: scale(1.18) rotate(4deg) !important;
+  transform: scale(1.08) !important;
 }
 
 .cred-text {
   flex: 1 !important;
   word-break: keep-all !important;
+  font-size: 1.15rem !important;
+  font-weight: 800 !important;
+  color: #ffffff !important;
 }
 
 /* 5. 수상 내역 (Awards) ➔ 21px~22px 대형 프리미엄 성과 카드 */
