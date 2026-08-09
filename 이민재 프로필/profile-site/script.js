@@ -82,24 +82,25 @@ document.addEventListener('DOMContentLoaded', async () => {
     const el = document.createElement('div');
     el.className = 'credential-item reveal';
     
-    let icon = '🔴';
-    let iconClass = 'cred-icon-dot';
-    if (c.includes('Leader') || c.includes('GEG')) {
-      icon = '👑';
-      iconClass = 'cred-icon-leader';
-    } else if (c.includes('Innovator')) {
-      icon = '💡';
-      iconClass = 'cred-icon-innovator';
+    let iconSrc = 'assets/badge_geg_leader.svg';
+    let iconClass = 'cred-badge-geg';
+    
+    if (c.includes('Innovator')) {
+      iconSrc = 'assets/badge_innovator.svg';
+      iconClass = 'cred-badge-innovator';
     } else if (c.includes('Certified Trainer')) {
-      icon = '🎓';
-      iconClass = 'cred-icon-trainer';
+      iconSrc = 'assets/badge_trainer.svg';
+      iconClass = 'cred-badge-trainer';
+    } else if (c.includes('Leader') || c.includes('GEG')) {
+      iconSrc = 'assets/badge_geg_leader.svg';
+      iconClass = 'cred-badge-geg';
     }
     if (c.includes('Gemini')) {
-      icon = '✨';
-      iconClass = 'cred-icon-gemini';
+      iconSrc = 'assets/badge_gemini.svg';
+      iconClass = 'cred-badge-gemini';
     }
     
-    el.innerHTML = `<span class="cred-icon ${iconClass}">${icon}</span><span class="cred-text">${c}</span>`;
+    el.innerHTML = `<img src="${iconSrc}" alt="${c}" class="cred-badge-img ${iconClass}" /><span class="cred-text">${c}</span>`;
     credList.appendChild(el);
   });
 

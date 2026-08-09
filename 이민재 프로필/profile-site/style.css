@@ -1850,37 +1850,22 @@ body {
   box-shadow: 0 10px 30px rgba(229, 9, 20, 0.35) !important;
 }
 
-/* 자격증별 전용 엠블럼 아이콘 뱃지 스타일 */
-.cred-icon {
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
+/* 구글 공식 자격증 엠블럼 이미지 스타일 */
+.cred-badge-img {
   width: 38px !important;
   height: 38px !important;
-  font-size: 1.25rem !important;
-  border-radius: 12px !important;
+  object-fit: contain !important;
   flex-shrink: 0 !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+  filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.4)) !important;
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+  padding: 5px !important;
+  border-radius: 12px !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
 }
 
-.cred-icon-leader {
-  background: rgba(245, 158, 11, 0.2) !important;
-  border: 1px solid rgba(245, 158, 11, 0.4) !important;
-}
-
-.cred-icon-innovator {
-  background: rgba(234, 179, 8, 0.2) !important;
-  border: 1px solid rgba(234, 179, 8, 0.4) !important;
-}
-
-.cred-icon-trainer {
-  background: rgba(59, 130, 246, 0.2) !important;
-  border: 1px solid rgba(59, 130, 246, 0.4) !important;
-}
-
-.cred-icon-gemini {
-  background: rgba(168, 85, 247, 0.2) !important;
-  border: 1px solid rgba(168, 85, 247, 0.4) !important;
+.credential-item:hover .cred-badge-img {
+  transform: scale(1.18) rotate(4deg) !important;
 }
 
 .cred-text {
