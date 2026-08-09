@@ -1850,23 +1850,24 @@ body {
   box-shadow: 0 12px 30px rgba(229, 9, 20, 0.35) !important;
 }
 
-/* 구글 공식 자격증 초대형 순백색 엠블럼 뱃지 스타일 */
+/* 구글 공식 자격증 초대형 순백색 엠블럼 뱃지 스타일 (원본 100% 비율/선명도) */
 .cred-badge-box {
-  width: 58px !important;
-  height: 58px !important;
+  width: 60px !important;
+  height: 60px !important;
   background: #ffffff !important;
   border-radius: 16px !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
   flex-shrink: 0 !important;
-  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.5), 0 0 0 2px rgba(255, 255, 255, 0.8) !important;
+  padding: 6px !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), 0 0 0 2px rgba(255, 255, 255, 0.85) !important;
   transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.35s ease !important;
 }
 
 .cred-badge-img {
-  width: 42px !important;
-  height: 42px !important;
+  width: 100% !important;
+  height: 100% !important;
   object-fit: contain !important;
   flex-shrink: 0 !important;
   transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;

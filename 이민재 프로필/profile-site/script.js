@@ -82,21 +82,21 @@ document.addEventListener('DOMContentLoaded', async () => {
     const el = document.createElement('div');
     el.className = 'credential-item reveal';
     
-    let iconSrc = 'assets/badge_geg_leader.svg';
+    let iconSrc = 'assets/official_geg_leader.png';
     let iconClass = 'cred-badge-geg';
     
     if (c.includes('Innovator')) {
-      iconSrc = 'assets/badge_innovator.svg';
+      iconSrc = 'assets/official_innovator.png';
       iconClass = 'cred-badge-innovator';
     } else if (c.includes('Certified Trainer')) {
-      iconSrc = 'assets/badge_trainer.svg';
+      iconSrc = 'assets/official_trainer.png';
       iconClass = 'cred-badge-trainer';
     } else if (c.includes('Leader') || c.includes('GEG')) {
-      iconSrc = 'assets/badge_geg_leader.svg';
+      iconSrc = 'assets/official_geg_leader.png';
       iconClass = 'cred-badge-geg';
     }
     if (c.includes('Gemini')) {
-      iconSrc = 'assets/badge_gemini.svg';
+      iconSrc = 'assets/official_gemini.png';
       iconClass = 'cred-badge-gemini';
     }
     
