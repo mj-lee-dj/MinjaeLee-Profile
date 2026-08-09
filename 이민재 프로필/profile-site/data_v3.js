@@ -1389,7 +1389,8 @@ const profileData = {
       "date": "2026.08.08.",
       "link": "https://www.ibrandnews.com/news/articleView.html?idxno=12705",
       "previewDesc": "",
-      "images": []
+      "images": ["uploads/press_brandnews_main.png"],
+      "image": "uploads/press_brandnews_main.png"
     },
     {
       "id": "p_mskixykoxmlf0",
@@ -1398,7 +1399,8 @@ const profileData = {
       "date": "2026.08.03.",
       "link": "https://www.ibrandnews.com/news/articleView.html?idxno=12700",
       "previewDesc": "",
-      "images": []
+      "images": ["uploads/press_brandnews_main.png"],
+      "image": "uploads/press_brandnews_main.png"
     },
     {
       "id": "p_mlrvuiw1jnj43",
