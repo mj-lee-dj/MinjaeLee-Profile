@@ -1697,18 +1697,32 @@ body {
 .btn-insta-main {
   display: inline-flex;
   align-items: center;
-  gap: 14px;
-  padding: 18px 36px;
+  justify-content: center;
+  gap: 12px;
+  padding: 16px 28px;
   border-radius: 50px;
   background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
   color: #ffffff !important;
-  font-size: 1.15rem; /* 20px급 */
+  font-size: clamp(0.98rem, 3.8vw, 1.15rem); /* 모바일 반응형 글자 크기 */
   font-weight: 800;
   letter-spacing: -0.01em;
   border: none;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   animation: instaGlow 2.5s infinite alternate;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+  word-break: keep-all !important;
+  text-align: center;
+  max-width: 100%;
+}
+
+.btn-insta-text {
+  word-break: keep-all !important;
+  display: inline-block;
+}
+
+.btn-insta-sub {
+  display: inline-block;
+  white-space: nowrap;
 }
 
 .btn-insta-main:hover {
@@ -1721,15 +1735,16 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 16px 26px;
+  padding: 14px 24px;
   border-radius: 50px;
   background: rgba(255, 255, 255, 0.09);
   border: 1px solid rgba(255, 255, 255, 0.22);
   color: #e2e8f0 !important;
-  font-size: 1.05rem;
+  font-size: 1.02rem;
   font-weight: 700;
   backdrop-filter: blur(8px);
   transition: all 0.25s ease;
+  word-break: keep-all;
 }
 
 .btn-fb-sub:hover {
@@ -1805,7 +1820,7 @@ body {
   margin-bottom: 32px !important;
 }
 
-/* 주요 자격: 세로 나열 ➔ 2x2 대형 비주얼 그리드로 전면 개편 */
+/* 주요 자격: 세로 나열 ➔ 2x2 대형 비주얼 그리드로 전면 개편 & 단어 단위 예쁜 줄바꿈 */
 .credential-list {
   display: grid !important;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
@@ -1813,15 +1828,20 @@ body {
 }
 
 .credential-item {
-  font-size: 1.2rem !important; /* 20px~21px ExtraBold */
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 14px !important;
+  font-size: 1.15rem !important; /* 18px~20px ExtraBold */
   font-weight: 800 !important;
   color: #ffffff !important;
-  padding: 22px 28px !important;
+  padding: 20px 24px !important;
   border-radius: 18px !important;
   background: linear-gradient(135deg, rgba(255,255,255,0.09) 0%, rgba(255,255,255,0.03) 100%) !important;
   border: 1px solid rgba(255, 255, 255, 0.18) !important;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3) !important;
   letter-spacing: -0.01em !important;
+  word-break: keep-all !important; /* 예쁜 단어 단위 줄바꿈 */
+  line-height: 1.45 !important;
 }
 
 .credential-item:hover {
@@ -1830,11 +1850,42 @@ body {
   box-shadow: 0 10px 30px rgba(229, 9, 20, 0.35) !important;
 }
 
-.credential-dot {
-  width: 12px !important;
-  height: 12px !important;
-  background: var(--red) !important;
-  box-shadow: 0 0 14px var(--red) !important;
+/* 자격증별 전용 엠블럼 아이콘 뱃지 스타일 */
+.cred-icon {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 38px !important;
+  height: 38px !important;
+  font-size: 1.25rem !important;
+  border-radius: 12px !important;
+  flex-shrink: 0 !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+}
+
+.cred-icon-leader {
+  background: rgba(245, 158, 11, 0.2) !important;
+  border: 1px solid rgba(245, 158, 11, 0.4) !important;
+}
+
+.cred-icon-innovator {
+  background: rgba(234, 179, 8, 0.2) !important;
+  border: 1px solid rgba(234, 179, 8, 0.4) !important;
+}
+
+.cred-icon-trainer {
+  background: rgba(59, 130, 246, 0.2) !important;
+  border: 1px solid rgba(59, 130, 246, 0.4) !important;
+}
+
+.cred-icon-gemini {
+  background: rgba(168, 85, 247, 0.2) !important;
+  border: 1px solid rgba(168, 85, 247, 0.4) !important;
+}
+
+.cred-text {
+  flex: 1 !important;
+  word-break: keep-all !important;
 }
 
 /* 5. 수상 내역 (Awards) ➔ 21px~22px 대형 프리미엄 성과 카드 */

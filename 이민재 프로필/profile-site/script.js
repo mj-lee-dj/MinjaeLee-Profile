@@ -81,7 +81,25 @@ document.addEventListener('DOMContentLoaded', async () => {
   D.personal.credentials.forEach(c => {
     const el = document.createElement('div');
     el.className = 'credential-item reveal';
-    el.innerHTML = `<span class="credential-dot"></span>${c}`;
+    
+    let icon = '🔴';
+    let iconClass = 'cred-icon-dot';
+    if (c.includes('Leader') || c.includes('GEG')) {
+      icon = '👑';
+      iconClass = 'cred-icon-leader';
+    } else if (c.includes('Innovator')) {
+      icon = '💡';
+      iconClass = 'cred-icon-innovator';
+    } else if (c.includes('Certified Trainer')) {
+      icon = '🎓';
+      iconClass = 'cred-icon-trainer';
+    }
+    if (c.includes('Gemini')) {
+      icon = '✨';
+      iconClass = 'cred-icon-gemini';
+    }
+    
+    el.innerHTML = `<span class="cred-icon ${iconClass}">${icon}</span><span class="cred-text">${c}</span>`;
     credList.appendChild(el);
   });
 
