@@ -2,7 +2,7 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const { Readable } = require('node:stream');
 
-const handler = require('../api/admin.js');
+const handler = require('../api/_handler.js');
 
 function request({ method = 'GET', action = 'session', headers = {}, body } = {}) {
   const req = Readable.from(body === undefined ? [] : [JSON.stringify(body)]);
