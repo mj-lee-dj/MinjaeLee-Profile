@@ -3,7 +3,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 
-const { deletionSummary, makeSession, validateData, verifySession } = require('../api/admin.js')._test;
+const { deletionSummary, makeSession, validateData, verifySession } = require('../api/_core.js');
 const currentData = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data_v3.json'), 'utf8'));
 
 test('current production data passes the admin schema gate', () => {
