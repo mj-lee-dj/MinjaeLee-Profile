@@ -1,0 +1,4 @@
+PROFILE_SITE_DEPLOYMENT_VERIFICATION
+token=codex-20260817-e2e-01
+purpose=Verify edit, commit, GitHub push, Vercel production deployment, and public asset delivery.
+safe_to_delete_after_verification=true

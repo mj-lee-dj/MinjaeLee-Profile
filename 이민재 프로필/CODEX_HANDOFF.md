@@ -1,308 +1,210 @@
-# 이민재 프로필 사이트 — Codex 인수인계 문서
+# 이민재 프로필 사이트 — Codex 상세 인수인계
 
-> 이 문서는 AI 코딩 에이전트(Codex 등)가 이 프로젝트를 이어받아 작업할 때 반드시 숙지해야 할
-> 배포 워크플로우, 파일 구조, 캐시 무효화 규칙, 데이터 동기화 방법을 정리한 인수인계 문서입니다.
+- 마지막 검증: 2026-08-17 KST
+- 상태: 기술 인수인계 완료, 관리자 페이지는 수정 전까지 HOLD
+- 이 문서는 2026-08-17 안티그래비티 종합 보고서와 Codex의 파일·Git·GitHub·Vercel·운영 사이트 감사를 합쳐 정정한 기준이다.
 
----
+## 1. 핵심 결론
 
-## 1. 프로젝트 개요
+공개 사이트는 정상 운영 중이며 실제 배포 파일과 정상 로컬 원본이 일치한다. 그러나 관리자 페이지는 Vercel이 배포하지 않는 오래된 복제 경로를 읽고 쓰므로 현재 사용하면 안 된다.
 
-| 항목 | 값 |
+| 구분 | 정확한 값 |
 |---|---|
-| **GitHub 저장소** | https://github.com/mj-lee-dj/MinjaeLee-Profile.git |
-| **브랜치** | `main` (단일 브랜치) |
-| **배포 플랫폼** | Vercel (GitHub 연동 자동 배포) |
-| **라이브 URL** | https://minjae-lee-profile.vercel.app/ |
-| **사이트 루트 폴더** | `profile-site/` |
-| **프레임워크** | 없음 — 순수 HTML/CSS/JS (빌드 과정 없음) |
+| Git 저장소 루트 | `G:\내 드라이브\0. 바이브코딩` |
+| 프로젝트 루트 | `G:\내 드라이브\0. 바이브코딩\이민재 프로필` |
+| Vercel Root Directory | `이민재 프로필/profile-site` |
+| 운영 데이터 원본 | `이민재 프로필/profile-site/data_v3.js` |
+| 오래된 복제본 | 저장소 루트 `profile-site/` |
+| 브랜치 | `main` |
+| 운영 URL | `https://minjae-lee-profile.vercel.app/` |
 
----
+## 2. 현재 Git·배포 상태
 
-## 2. 배포 워크플로우 (★ 가장 중요)
+- 현재 HEAD/원격 main: `3ee571b1f2f70b15c962145a92409523a8e0aa7a`
+- 커밋 시각: 2026-08-17 18:32:32 KST
+- 이 커밋은 `.agents/AGENTS.md`와 `CODEX_HANDOFF.md`만 추가했고 사이트 루트는 변경하지 않았다.
+- GitHub의 Vercel status는 success이며 대상 배포 ID는 `J2cX7EQv2e9b1iAVeD264GWVrbQD`다.
+- 실제 공개 콘텐츠의 마지막 변경 커밋은 `b4dd583`이다.
+- `main`은 보호 규칙이 없고, Deployment Check·Deploy Hook도 없다.
+- GitHub Release/Tag와 GitHub Pages는 사용하지 않는다.
 
-### 배포 원리
-`main` 브랜치에 `git push`가 발생하면 → Vercel이 자동으로 감지하여 재배포합니다.
-빌드 과정이 없는 정적 사이트이므로, 보통 **30초~90초** 이내에 반영됩니다.
+Vercel 설정:
 
-### AI 에이전트(Codex)의 배포 흐름
+- Framework Preset: Other
+- Build/Install/Output/Development 명령 재정의: 없음
+- Production branch: `main`
+- Root Directory: `이민재 프로필/profile-site`
+- 프로젝트 환경변수: 없음
+- Git LFS: 꺼짐
+- `main` push는 Production 배포를 만든다.
 
-```
-1. 파일 수정 (index.html, style.css, script.js, data_v3.js 등)
-2. 캐시 버스팅 파라미터 갱신 (★ 아래 섹션 참조)
-3. git add <수정된 파일들>
-4. git commit -m "영어로 작성한 커밋 메시지"
-5. git push origin main
-6. 약 30~90초 대기 후 https://minjae-lee-profile.vercel.app/ 에서 확인
-```
+## 3. 실제 파일과 데이터 구조
 
-### 반드시 지켜야 할 규칙
+사이트는 패키지 설치나 컴파일이 없는 정적 HTML/CSS/JavaScript다.
 
-1. **커밋 메시지는 반드시 영어로 작성** — Windows cmd/PowerShell의 한글 인코딩 이슈로 한글 커밋 메시지 사용 시 깨짐
-2. **Vercel CLI 사용 금지** — 한글 컴퓨터명으로 인해 CLI 로그인 불가. 반드시 `git push` 기반 배포만 사용
-3. **로컬 수정 전 반드시 `git pull origin main`** — 관리자 페이지(admin.html)에서 직접 GitHub에 커밋하는 경우가 있으므로, 로컬과 원격이 불일치할 수 있음
-
----
-
-## 3. 캐시 버스팅 (Cache Busting) — ★★★ 매우 중요
-
-### 왜 필요한가?
-이 사이트는 정적 파일로만 구성되어 있어, 브라우저가 이전 버전의 CSS/JS를 캐시에서 재사용하여
-**수정 사항이 사용자에게 보이지 않는 문제**가 반복적으로 발생했습니다.
-
-### 캐시 버스팅 방법
-`index.html` 내에서 `style.css`, `script.js`, `data_v3.js`를 로드할 때 `?v=` 쿼리 파라미터를 사용합니다.
-
-**파일을 수정할 때마다, 해당 파일의 `?v=` 파라미터 값을 반드시 변경해야 합니다.**
-
-#### 현재 구조 (index.html 내)
-
-```html
-<!-- head 태그 안 -->
-<link rel="stylesheet" href="style.css?v=20260809_v700" />
-
-<!-- body 닫기 직전 -->
-<script src="data_v3.js?v=20260809_v700"></script>
-<script src="script.js?v=20260809_v700"></script>
-```
-
-#### 갱신 규칙
-
-| 수정한 파일 | 갱신할 파라미터 |
-|---|---|
-| `style.css` 수정 | `style.css?v=` 파라미터 변경 |
-| `script.js` 수정 | `script.js?v=` 파라미터 변경 |
-| `data_v3.js` 수정 | `data_v3.js?v=` 파라미터 변경 |
-| 위 파일 중 2개 이상 수정 | 해당 파일들의 파라미터 모두 변경 |
-
-#### 파라미터 값 네이밍 컨벤션
-
-```
-YYYYMMDD_vNNN
-```
-
-- `YYYYMMDD` = 작업 날짜 (예: 20260817)
-- `vNNN` = 해당 날짜 내 버전 순번 (v100, v200, v300, ...)
-
-예시: `20260817_v100` → `20260817_v200` → `20260817_v300`
-
-#### ⚠️ 주의: admin.html 자동 갱신 로직
-
-관리자 페이지(`admin.html`)에서 "저장 & 배포" 시, index.html 내 `?v=` 파라미터를
-JavaScript `Date.now()` 타임스탬프로 자동 교체하는 로직이 포함되어 있습니다 (L998~L1002).
-이 로직은 `data_v3.js`, `style.css`, `script.js` 세 파일 모두를 커버합니다.
-
----
-
-## 4. 파일 구조
-
-```
+```text
 이민재 프로필/
-├── .agents/
-│   └── AGENTS.md              # 작업 규칙 (이 문서의 요약 버전)
-├── CODEX_HANDOFF.md           # 이 문서 (Codex 인수인계)
-└── profile-site/              # ★ 사이트 루트 (Vercel이 서빙하는 폴더)
-    ├── index.html             # 메인 HTML (캐시 파라미터 여기서 관리)
-    ├── style.css              # 전체 CSS (1줄 ~2030줄, !important 다수 포함)
-    ├── script.js              # 데이터 렌더링 JS (data_v3.js의 profileData를 DOM에 삽입)
-    ├── data_v3.js             # ★ 메인 데이터 파일 (const profileData = {...})
-    ├── data_v3.json           # ★ JSON 백업 (data_v3.js와 동일 내용, 반드시 동기화)
-    ├── admin.html             # 관리자 페이지 (GitHub API 직접 커밋 기능 포함)
-    ├── assets/                # 정적 에셋 (프로필 사진, 자격증 아이콘 등)
-    │   ├── profile.jpg        # 히어로 배경 프로필 사진
-    │   ├── profile2.jpg       # About Me 프로필 사진
-    │   ├── official_innovator.png    # Google Certified Innovator 공식 로고
-    │   ├── official_trainer.png      # Google Certified Trainer 공식 로고
-    │   ├── official_geg_leader.png   # GEG Leader 공식 로고
-    │   ├── official_gemini.png       # Gemini Teacher Trainer 공식 로고
-    │   └── badge_*.svg               # (구버전 SVG, 현재 미사용)
-    └── uploads/               # 동적 이미지 (보도자료 썸네일, 저서 표지 등)
-        └── *.png / *.jpg
+├─ .agents/AGENTS.md
+├─ HANDOFF.md
+├─ CODEX_HANDOFF.md
+└─ profile-site/
+   ├─ index.html
+   ├─ admin.html
+   ├─ data_v3.js       # 공개 런타임 원본
+   ├─ data_v3.json     # 현재는 보조/백업본, 런타임 미사용
+   ├─ script.js
+   ├─ style.css
+   ├─ assets/
+   └─ uploads/
 ```
 
----
+현재 정상 데이터:
 
-## 5. 데이터 구조 (data_v3.js)
+| 영역 | 개수 |
+|---|---:|
+| YouTube | 16 |
+| 전문 분야 | 8 |
+| 출판물 | 4 |
+| 온라인 강좌 | 3 |
+| 강의 | 60 |
+| 수상 | 5 |
+| 활동 | 11 |
+| 보도 | 12 |
 
-### 파일 형식
+공개 페이지의 실제 주요 DOM ID는 `pubRow`, `courseRow`, `awardsList`, `actList`, `pressList`, `youtubeVideosContainer` 등이다. 과거 문서의 `pubGrid`, `courseGrid`, `awardList`, `pressGrid`, `ytGrid` 표기는 틀렸다.
 
-```javascript
-const profileData = {
-  personal: { ... },      // 이름, 직함, 자격증, 연락처, aboutTitle, bio
-  expertise: [ ... ],     // 전문분야 목록
-  publications: [ ... ],  // 저서/출판물
-  onlineCourses: [ ... ], // 원격 연수
-  awards: [ ... ],        // 수상 내역
-  activities: [ ... ],    // 주요 활동
-  lectures: [ ... ],      // 강의/연수 이력 (60건+)
-  youtubeVideos: [ ... ], // 유튜브 영상
-  press: [ ... ]          // 보도자료 (12건)
-};
+## 4. Source of truth
 
-if (typeof window !== 'undefined') {
-  window.profileData = profileData;
-}
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = profileData;
-}
+- 콘텐츠: `profile-site/data_v3.js`
+- JSON 보조본: `profile-site/data_v3.json`
+- 고정 프로필 이미지: `profile-site/assets/profile.jpg`, `profile2.jpg`
+- 콘텐츠 이미지: `profile-site/uploads/`와 데이터의 상대경로
+- 코드·영구 이력: GitHub `main`
+- 실제 사용자 결과: Vercel Production alias
+
+`data_v3.json`은 공개 페이지나 현재 관리자 페이지가 읽지 않는다. 제거 여부가 결정되기 전까지는 JS에서 생성해 의미상 동일하게 유지한다.
+
+## 5. 관리자 페이지 — 사용 금지 원인
+
+현재 코드의 저장소 상대경로:
+
+```text
+FILE_PATH = profile-site/data_v3.js
+이미지 저장 = profile-site/uploads/...
+캐시 갱신 = profile-site/index.html
 ```
 
-### data_v3.js ↔ data_v3.json 동기화 방법
+Vercel이 실제 배포하는 경로:
 
-두 파일은 **항상 동일한 데이터**를 담고 있어야 합니다. data_v3.js 수정 후:
-
-```bash
-node -e "const d = require('./profile-site/data_v3.js'); const fs = require('fs'); fs.writeFileSync('profile-site/data_v3.json', JSON.stringify(d, null, 2), 'utf8'); console.log('synced');"
+```text
+이민재 프로필/profile-site/data_v3.js
+이민재 프로필/profile-site/uploads/...
+이민재 프로필/profile-site/index.html
 ```
 
-⚠️ data_v3.json 동기화를 빼먹으면, 관리자 페이지에서 불러온 데이터와 불일치가 생길 수 있습니다.
+관리자 초기화도 GitHub의 오래된 복제본을 다시 불러온다. 현재 복제본은 강의 54건·보도 10건이고 정상 원본은 60건·12건이다. 저장하면 Production 배포는 트리거되지만 실제 사이트 원본이 바뀌지 않으며, 이후 잘못 병합할 경우 정상 데이터가 과거 상태로 되돌아갈 수 있다.
 
----
+추가 문제:
 
-## 6. CSS 아키텍처 주의사항
+- 공개 HTML의 하드코딩된 비밀번호는 실질 인증이 아니다.
+- `admin_auth`, `gh_token`, Gemini API 키, Google Client ID가 localStorage에 저장된다.
+- 기존 안내는 광범위한 GitHub `repo` 권한을 요구한다.
+- 로그아웃은 인증 상태와 GitHub 토큰을 지우지 않는다.
+- JS만 저장하고 JSON은 갱신하지 않는다.
+- 편집·순서 변경이 많은 개별 커밋과 Production 배포를 만든다.
+- 사용자 콘텐츠가 `innerHTML`로 렌더링돼 입력 검증이 필요하다.
 
-### !important 사용
-`style.css` 후반부(약 1640행~)에 전면 개편 CSS가 `!important`를 사용합니다.
-이는 상단의 기존 CSS와의 충돌을 방지하기 위한 의도적인 설계입니다.
+## 6. 과거 경위
 
-### 구조
-```
-style.css 구조:
-├── L1~L80: CSS 변수 정의 (:root)
-├── L80~L1630: 원본 레이아웃 CSS
-└── L1640~L2030: 전면 개편 CSS (2026.08 리디자인, !important 다수)
-```
+| 시점 | 확인 내용 |
+|---|---|
+| 2026-02 | 사이트가 저장소 루트 `profile-site/`에서 시작했고 관리자 GitHub 직접 저장 경로도 여기에 맞춰 작성됨 |
+| 2026-06-21 | 데이터·이미지 복원 커밋 `167b375`, `b51bb35`, `a42682f` 존재. 정확한 최초 유실 원인은 확인 불가 |
+| 2026-06-22 | `1f545fd`에서 Vercel Root 불일치 대응, `af76fbb`에서 `이민재 프로필/profile-site`를 단일 원본으로 선언 |
+| 2026-07-02 | 관리자 상수를 고치지 않아 `profile-site/data_v3.js`에 다시 9회 저장 |
+| 2026-08-09 | 불완전한 관리자 데이터로 강의 6건·보도 2건이 누락됐고 `3d7f039`에서 복원 |
+| 2026-08-09 | `b4dd583`까지 디자인·이미지 변경 완료 |
+| 2026-08-17 | `3ee571b`이 오래된 경로를 전제로 한 문서를 추가. Vercel 배포는 성공했으나 사이트 파일은 미변경 |
 
-새로운 스타일을 추가할 때는 **파일 맨 아래(2030행 이후)에 추가**하되,
-기존 속성을 오버라이드해야 하는 경우 `!important`를 사용하세요.
+`af76fbb`에서 `/profile-site/`를 `.gitignore`에 넣었지만 이미 추적된 파일은 제거되지 않았다. 현재 HEAD에도 오래된 데이터 1개와 이미지 10개, 총 11개 파일이 남아 있다.
 
----
+안티그래비티 보고서의 “2026-08-09 복구 시 force push”는 현재 선형 Git 그래프와 reflog만으로 실행 여부를 입증할 수 없다. 향후 복구 절차에는 force push를 사용하지 않는다.
 
-## 7. script.js 핵심 로직
+## 7. 외부 서비스와 비밀정보
 
-`script.js`는 `data_v3.js`에서 `profileData` 객체를 읽어 DOM에 동적으로 삽입합니다.
+- GitHub: 원격 저장소, 자동 배포 트리거, 현재 관리자 저장 API
+- Vercel: Production 정적 호스팅
+- Google Drive/Picker/OAuth, Gemini: 관리자 보조 기능
+- Microlink/noembed/YouTube/Google Fonts/jsDelivr: 미디어·메타데이터·정적 자원
 
-### 주요 렌더링 영역
-| DOM ID | 데이터 소스 | 설명 |
-|---|---|---|
-| `heroStats` | lectures, publications, awards, press | 히어로 하단 통계 (100건+, 4권 등) |
-| `aboutBio` | personal.bio | About Me 본문 |
-| `aboutTitle` | personal.aboutTitle | About Me 제목 |
-| `credentialList` | personal.credentials | 주요 자격 (4종 구글 뱃지) |
-| `pubGrid` | publications | 저서 카드 |
-| `courseGrid` | onlineCourses | 원격 연수 카드 |
-| `awardList` | awards | 수상 내역 |
-| `activityList` | activities | 주요 활동 |
-| `lecGrid` | lectures | 강의/연수 카드 (필터 기능 포함) |
-| `pressGrid` | press | 보도자료 카드 |
-| `ytGrid` | youtubeVideos | 유튜브 캐러셀 |
+로컬 `.agent/mcp-google-workspace/credentials.json`과 `token.json`에 OAuth 비밀이 있다. Git에는 추적되지 않으며 사이트 런타임과 무관하다. 실제 값은 문서나 로그에 남기지 않는다.
 
-### 자격증 아이콘 매칭 로직 (L80~L110)
-`credentials` 문자열에 따라 아이콘 이미지를 자동 매칭합니다:
-- `"Innovator"` 포함 → `assets/official_innovator.png`
-- `"Certified Trainer"` 포함 → `assets/official_trainer.png`
-- `"Leader"` 또는 `"GEG"` 포함 → `assets/official_geg_leader.png`
-- `"Gemini"` 포함 → `assets/official_gemini.png`
+## 8. 표준 수정·배포 Runbook
 
----
+1. 프로젝트 `HANDOFF.md`를 읽는다.
+2. Git 루트가 `G:\내 드라이브\0. 바이브코딩`인지 확인한다.
+3. 브랜치, 원격 차이, 사용자 변경, 미추적 파일을 확인한다.
+4. 더러운 작업 트리에서 무조건 pull하지 않는다. fetch 후 안전한 fast-forward 가능 여부를 판단한다.
+5. `이민재 프로필/profile-site/`의 정확한 원본만 수정한다.
+6. 데이터 변경 시 JS 구문·ID·개수·이미지 참조를 검사하고 JSON을 동기화한다.
+7. CSS/JS/data 변경 시 `index.html`의 해당 `?v=` 값을 고유 값으로 갱신한다.
+8. 로컬 정적 서버에서 데스크톱·모바일·콘솔·깨진 이미지·주요 카드 수를 확인한다.
+9. Git 저장소 루트 기준 정확한 파일만 스테이징한다. `git add .`는 금지한다.
+10. staged diff에 비밀값, 오래된 `profile-site/`, 다른 프로젝트가 없는지 확인한다.
+11. 사용자가 배포를 요청한 경우에만 영어 관례의 커밋 메시지로 commit/push한다.
+12. GitHub Vercel status와 Production Ready를 확인한다.
+13. 운영 도메인에서 콘텐츠·이미지·콘솔·캐시를 다시 확인한다.
+14. 커밋·배포·검증 결과를 `HANDOFF.md`에 반영한다.
 
-## 8. 보도자료 (press) 이미지 처리
+Vercel CLI 54.14.5는 이 PC의 한글 컴퓨터명이 HTTP 헤더 값으로 처리되며 실패한 기록이 있다. 현재 운영 배포는 GitHub 연동을 표준으로 쓴다. CLI가 영구적으로 불가능하다는 뜻은 아니지만, 재검증 없이 운영 배포에 사용하지 않는다.
 
-보도자료 항목의 썸네일 이미지는 두 가지 필드로 관리됩니다:
+## 9. CSS와 캐시 규칙 정정
 
-```json
-{
-  "image": "uploads/some_image.png",
-  "images": ["uploads/some_image.png"]
-}
-```
+- 현재 `style.css`는 2038줄이다. 줄 번호는 변경 때마다 달라지므로 대략적인 구간을 운영 규칙으로 삼지 않는다.
+- 새 CSS를 무조건 파일 끝에 붙이지 않는다.
+- `!important`는 기존 우선순위를 이해한 뒤 불가피할 때만 좁게 사용한다.
+- 중복 규칙은 가능한 한 정리하고 컴포넌트 범위를 명확히 한다.
+- 변경한 CSS/JS/data 파일의 `?v=`만 갱신한다.
+- 현재 `20260809_v700`은 현 상태의 값일 뿐 다음 버전이 반드시 `v800`이어야 하는 것은 아니다.
+- 배포 후 실제 정적 파일과 화면을 확인해야 하며, 임의 대기 시간만으로 성공을 판단하지 않는다.
 
-- `image`: 단일 대표 이미지 경로
-- `images`: 이미지 배열 (첫 번째 항목이 썸네일로 사용)
-- 이미지가 없는 경우: 두 필드 모두 빈 값 (`""`, `[]`)
+## 10. 롤백
 
-새 이미지를 추가할 때는 `profile-site/uploads/` 폴더에 저장하고,
-상대 경로(`uploads/파일명.png`)로 참조합니다.
+긴급 복구:
 
----
+1. Vercel에서 직전 정상 Ready 배포를 찾는다.
+2. Promote 또는 Instant Rollback으로 Production alias를 임시 복구한다.
+3. 이 조치는 Git `main`을 고치지 않는다는 점을 기록한다.
 
-## 9. 자주 하는 작업 레시피
+영구 복구:
 
-### A. CSS/디자인 수정
-```bash
-# 1. 최신 코드 받기
-git pull origin main
+1. 문제 커밋과 직전 정상 커밋을 확인한다.
+2. 문제 커밋을 revert하거나 정상 파일을 복원한 새 커밋을 만든다.
+3. 정확한 파일만 검토·push한다.
+4. 새 Production 배포와 운영 도메인을 검증한다.
 
-# 2. style.css 수정
-# (파일 맨 아래에 새 스타일 추가)
+`git reset --hard`와 force push는 사용하지 않는다.
 
-# 3. index.html 캐시 파라미터 갱신
-# style.css?v=20260817_v100 → style.css?v=20260817_v200
+## 11. 현재 우선순위
 
-# 4. 커밋 & 배포
-git add profile-site/style.css profile-site/index.html
-git commit -m "style: description of changes"
-git push origin main
-```
+| 우선순위 | 작업 |
+|---|---|
+| P0 | 관리자 사용 중지 상태를 UI에서도 명확히 표시 또는 임시 차단 |
+| P0 | 오래된 루트 `profile-site/` 참조 제거와 실제 원본 단일화 |
+| P0 | 관리자 저장 경로·JS/JSON 동기화·저장 전후 검증·실패 복구 수정 |
+| P0 | 공개 비밀번호와 브라우저 PAT 장기 저장 구조 교체 |
+| P1 | 데이터·이미지·비밀·루트 경로 자동 검증 |
+| P1 | main 보호와 배포 체크 도입 검토 |
+| P2 | 고아 이미지 29개와 대용량 자산 정리 계획 |
+| P2 | 이미지 출처·사용 권리 확인 |
+| P3 | 플레이스홀더 저서 표지와 일부 누락 썸네일 확인 |
 
-### B. 데이터(강의/보도자료 등) 수정
-```bash
-# 1. 최신 코드 받기
-git pull origin main
+## 12. 금지 사항
 
-# 2. data_v3.js 수정
-
-# 3. data_v3.json 동기화
-node -e "const d = require('./profile-site/data_v3.js'); require('fs').writeFileSync('profile-site/data_v3.json', JSON.stringify(d, null, 2)); console.log('synced');"
-
-# 4. index.html 캐시 파라미터 갱신
-# data_v3.js?v= 값 변경
-
-# 5. 커밋 & 배포
-git add profile-site/data_v3.js profile-site/data_v3.json profile-site/index.html
-git commit -m "data: description of changes"
-git push origin main
-```
-
-### C. 이미지 추가/교체
-```bash
-# 1. 이미지 파일을 profile-site/uploads/ 또는 profile-site/assets/에 저장
-# 2. data_v3.js 또는 index.html에서 참조 경로 설정
-# 3. 캐시 파라미터 갱신
-# 4. git add/commit/push
-```
-
----
-
-## 10. 트러블슈팅 체크리스트
-
-| 증상 | 원인 | 해결 |
-|---|---|---|
-| 수정했는데 사이트에 반영 안 됨 | 캐시 버스팅 파라미터 미갱신 | `?v=` 파라미터 새 값으로 교체 후 재배포 |
-| `git push` 실패 | 원격과 로컬 불일치 | `git pull origin main` 후 재시도 |
-| 관리자 페이지 저장 후 데이터 유실 | admin.html 버그 (2026.08 발견) | 로컬 `data_v3.js`로 복구 후 push |
-| 보도자료 썸네일 안 보임 | `image`/`images` 필드 누락 | 두 필드 모두 경로 지정 |
-| 모바일에서 글자 잘림/줄바꿈 이상 | `word-break: keep-all` 미적용 | 해당 요소에 `word-break: keep-all !important` 추가 |
-| Vercel CLI 로그인 실패 | 한글 컴퓨터명 문제 | CLI 사용하지 말 것, `git push`만 사용 |
-
----
-
-## 11. 현재 마지막 캐시 버전 상태
-
-```
-style.css?v=20260809_v700
-data_v3.js?v=20260809_v700
-script.js?v=20260809_v700
-```
-
-다음 작업 시 `20260817_v100`부터 시작하면 됩니다 (작업 날짜에 맞게 조정).
-
----
-
-## 12. 모든 설명과 주석은 한글로
-
-사용자의 전역 규칙: **모든 설명과 주석은 한글로 작성해 주세요.**
-단, **커밋 메시지만 영어**로 작성합니다 (cmd 인코딩 이슈).
-
----
-
-*최종 업데이트: 2026-08-17*
+- 관리자 페이지에서 저장·배포
+- 저장소 루트의 오래된 `profile-site/` 수정·병합·복구 원본 사용
+- `git add .`, hard reset, force push
+- 오래된 `deploy.md`, `merge_data.js`, `download_images.js` 등 검증되지 않은 복구 자동화 실행
+- 비밀값을 코드·Git·문서·대화에 기록
+- CSS 맨 아래 무조건 추가 또는 습관적인 `!important`
+- Vercel 대시보드의 Ready 확인 없이 배포 완료 선언

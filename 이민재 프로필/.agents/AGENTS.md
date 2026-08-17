@@ -1,45 +1,58 @@
-# 이민재 프로필 사이트 - 작업 규칙
+# 이민재 프로필 사이트 — 작업 규칙
 
-## 배포 구조
-- **GitHub 저장소**: https://github.com/mj-lee-dj/MinjaeLee-Profile.git (브랜치: main)
-- **배포 플랫폼**: Vercel (자동 배포)
-- **배포 URL**: https://minjae-lee-profile.vercel.app/
-- **사이트 폴더**: `profile-site/`
+## 문서 우선순위
 
-## 배포 경로 (2가지)
+1. 이 파일의 안전 규칙
+2. 프로젝트 루트 `HANDOFF.md`의 현재 상태
+3. `CODEX_HANDOFF.md`의 상세 운영 절차와 이력
 
-### 경로 1: 관리자 페이지에서 수정 (사용자 직접)
-1. https://minjae-lee-profile.vercel.app/admin.html 접속
-2. 데이터 추가/수정
-3. **"저장 & 배포" 버튼** 클릭 → GitHub API로 직접 커밋·푸시
-4. Vercel 자동 재배포 (약 1~2분)
+세 문서가 충돌하면 실제 Git·Vercel 설정·운영 사이트를 다시 확인하고 작업을 중지한다.
 
-> ⚠️ 주의: 관리자 페이지 저장 시 데이터 손실 버그가 발생한 적 있음 (2026.08.09).
-> 저장 후 반드시 https://minjae-lee-profile.vercel.app/ 에서 전체 데이터가 정상인지 확인할 것.
-> 문제 발생 시 로컬 `data_v3.js`(정상 버전)로 복구 가능.
+## 실제 경로
 
-### 경로 2: 로컬 파일 직접 수정 (AI 또는 개발자)
-1. `profile-site/data_v3.js` 및 `profile-site/data_v3.json` 수정
-2. `git add` → `git commit` → `git push origin main`
-3. Vercel 자동 재배포 (약 1~2분)
-4. https://minjae-lee-profile.vercel.app/ 에서 반영 확인
+- Git 저장소 루트: `G:\내 드라이브\0. 바이브코딩`
+- 프로젝트 루트: `G:\내 드라이브\0. 바이브코딩\이민재 프로필`
+- Vercel Root Directory: `이민재 프로필/profile-site`
+- 운영 데이터 원본: `이민재 프로필/profile-site/data_v3.js`
+- 운영 URL: `https://minjae-lee-profile.vercel.app/`
+- 저장소 루트의 `profile-site/`는 오래된 복제본이며 수정·병합·복구에 사용하지 않는다.
 
-## 데이터 동기화 주의사항
-- 관리자 페이지 저장은 GitHub에 직접 커밋하므로, 로컬 파일과 GitHub이 불일치할 수 있음
-- 로컬에서 수정 전 반드시 `git pull origin main`으로 최신 상태 동기화
-- `data_v3.js`와 `data_v3.json` 두 파일을 항상 동기화할 것
-- 로컬 수정 후 반드시 `git push` 실행 (로컬 수정만으로는 사이트 미반영)
+## 관리자 페이지 HOLD
 
-## Git 커밋 규칙
-- 커밋 메시지는 **영어**로 작성 (cmd 인코딩 이슈)
-- Vercel CLI 로그인이 한글 컴퓨터명 때문에 안 되므로, Git push 기반 배포 사용
+- 현재 `admin.html`은 오래된 `profile-site/...` 경로를 읽고 쓴다.
+- 운영 원본은 강의 60건·보도 12건이지만 관리자 복제본은 강의 54건·보도 10건이다.
+- 경로·인증·토큰 저장·JS/JSON 동기화가 수정되고 회귀 검증되기 전까지 관리자 페이지를 사용하지 않는다.
+- 관리자 페이지에 GitHub PAT, Gemini API 키 또는 다른 비밀값을 입력하지 않는다.
 
-## 데이터 파일 구조
-- `profile-site/data_v3.js`: 브라우저에서 로드하는 메인 데이터 (const profileData = {...})
-- `profile-site/data_v3.json`: JSON 형식 백업 (data_v3.js와 동일 내용)
-- `profile-site/uploads/`: 이미지 파일 저장 폴더
-- `profile-site/admin.html`: 관리자 페이지 (GitHub API로 직접 커밋 기능 포함)
+## 수정 원칙
 
-## 상세 인수인계 문서
-- 캐시 버스팅, CSS 아키텍처, script.js 렌더링 로직, 작업 레시피, 트러블슈팅 등
-  상세 내용은 프로젝트 루트의 `CODEX_HANDOFF.md` 참조
+- 작업 시작 시 `HANDOFF.md`, Git 상태, 원격과의 차이를 먼저 확인한다.
+- 작업 트리가 더러우면 무조건 pull하지 않는다. 사용자 변경을 보존한 채 fetch/상태 확인 후 안전한 방법을 선택한다.
+- 사이트 파일은 프로젝트 루트 기준 `profile-site/` 아래만 수정한다.
+- Git 저장소 루트에서 경로를 지정할 때는 반드시 `이민재 프로필/profile-site/...`를 사용한다.
+- 콘텐츠 원본은 `data_v3.js`다. 현재는 `data_v3.json`도 의미상 동일하게 동기화한다.
+- 정확한 파일만 스테이징하고 `git add .`를 사용하지 않는다.
+- `git reset --hard`, force push, 오래된 복구 스크립트·deploy workflow를 사용하지 않는다.
+- 비밀번호·토큰·OAuth 비밀·개인정보를 코드, 문서, 로그, 커밋에 기록하지 않는다.
+
+## CSS·캐시
+
+- CSS를 무조건 파일 끝에 추가하거나 `!important`로 덮지 않는다. 기존 규칙을 찾아 가장 좁은 범위에서 수정한다.
+- `style.css`, `script.js`, `data_v3.js` 변경 시 `index.html`의 해당 `?v=` 값을 함께 갱신한다.
+- 버전 값은 작업 시각 또는 커밋과 연결되는 고유 값으로 사용하고, 배포 후 실제 응답을 검증한다.
+
+## 배포
+
+- 사용자가 배포를 요청한 범위에서만 commit/push한다.
+- 기본 배포 경로는 GitHub `main` push → Vercel Production 자동 배포다.
+- 현재 Windows 환경에서 Vercel CLI 54.14.5가 한글 컴퓨터명 때문에 실패한 기록이 있으므로 운영 배포에 사용하지 않는다.
+- 커밋 메시지는 기존 이력과의 일관성을 위해 영어로 작성한다. 이는 Git의 기술적 제약이 아니라 프로젝트 관례다.
+- push 전 스테이징 diff, 비밀값, 데이터 동기화, 이미지 참조, 무관한 프로젝트 포함 여부를 확인한다.
+- push 후 GitHub Vercel status, Production Ready, 운영 페이지·콘솔·이미지를 확인한다.
+- 완료 후 `HANDOFF.md`를 80줄 이내 최신 상태로 갱신한다.
+
+## 롤백
+
+- 긴급 복구는 Vercel의 이전 Ready 배포를 Promote/Instant Rollback할 수 있다.
+- 영구 복구는 문제 커밋을 revert하거나 정상 파일을 복원한 새 커밋으로 한다.
+- Git 이력을 되쓰는 hard reset/force push는 사용하지 않는다.
