@@ -942,16 +942,19 @@
       return imageEntries;
     }
 
-    async function verifyProduction(expectedData, commitSha) {
+    async function verifyProduction(expectedData, cacheKey) {
       const deadline = Date.now() + 120000;
       while (Date.now() < deadline) {
         await new Promise(resolve => setTimeout(resolve, 4000));
         try {
-          const response = await fetch(`/data_v3.json?verify=${encodeURIComponent(commitSha)}&t=${Date.now()}`, { cache: 'no-store' });
-          if (response.ok) {
-            const deployed = await response.json();
-            if (JSON.stringify(deployed) === JSON.stringify(expectedData)) return true;
-          }
+          const indexResponse = await fetch(`/?verify=${encodeURIComponent(cacheKey)}&t=${Date.now()}`, { cache: 'no-store' });
+          if (!indexResponse.ok) continue;
+          const indexHtml = await indexResponse.text();
+          if (!indexHtml.includes(`data_v3.js?v=${cacheKey}`)) continue;
+          const dataResponse = await fetch(`/data_v3.json?verify=${encodeURIComponent(cacheKey)}&t=${Date.now()}`, { cache: 'no-store' });
+          if (!dataResponse.ok) continue;
+          const deployed = await dataResponse.json();
+          if (JSON.stringify(deployed) === JSON.stringify(expectedData)) return true;
         } catch (_) {}
       }
       return false;
@@ -990,7 +993,7 @@
         baseCommitSha = result.commitSha;
         render();
         showToast('✅ GitHub 저장 완료 · 배포 확인 중...');
-        const deployed = await verifyProduction(dataClone, result.commitSha);
+        const deployed = await verifyProduction(dataClone, result.cacheKey);
         if (deployed) {
           showToast('✅ 운영 사이트 반영 완료');
         } else {

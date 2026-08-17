@@ -90,6 +90,28 @@ async function github(path, options = {}) {
   return response.json();
 }
 
+async function githubGraphql(query, variables) {
+  const response = await fetch('https://api.github.com/graphql', {
+    method: 'POST',
+    headers: {
+      Accept: 'application/vnd.github+json',
+      Authorization: `Bearer ${process.env.GITHUB_ADMIN_TOKEN}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ query, variables }),
+  });
+  const payload = await response.json().catch(() => ({}));
+  if (!response.ok || (Array.isArray(payload.errors) && payload.errors.length)) {
+    const detail = Array.isArray(payload.errors) ? payload.errors[0] : payload;
+    const error = new Error(detail?.message || `GitHub GraphQL API ${response.status}`);
+    if (response.ok && detail?.type === 'FORBIDDEN') error.status = 403;
+    else if (response.ok && detail?.type === 'UNPROCESSABLE') error.status = 409;
+    else error.status = response.status;
+    throw error;
+  }
+  return payload.data;
+}
+
 async function getCurrentData() {
   const ref = await github(`/git/ref/heads/${BRANCH}`);
   const commitSha = ref.object.sha;
@@ -139,22 +161,16 @@ async function handleSave(req, res, session) {
     return json(res, 409, { error: '\ud56d\ubaa9 \uc0ad\uc81c\uac00 \uac10\uc9c0\ub418\uc5c8\uc2b5\ub2c8\ub2e4.', requiresDeleteConfirmation: true, deletions });
   }
 
-  const commit = await github(`/git/commits/${latestCommitSha}`);
   const updatedAt = new Date().toISOString();
   const prettyJson = `${JSON.stringify(body.data, null, 2)}\n`;
   const jsContent = `/*\n  [Profile Data]\n  Updated at: ${updatedAt}\n*/\nconst profileData = ${JSON.stringify(body.data, null, 2)};\n`;
-  const [jsBlob, jsonBlob, indexFile] = await Promise.all([
-    makeBlob(jsContent),
-    makeBlob(prettyJson),
-    github(`/contents/${encodeURIComponent(INDEX_PATH).replace(/%2F/g, '/')}?ref=${latestCommitSha}`),
-  ]);
+  const indexFile = await github(`/contents/${encodeURIComponent(INDEX_PATH).replace(/%2F/g, '/')}?ref=${latestCommitSha}`);
   const indexText = Buffer.from(indexFile.content.replace(/\s/g, ''), 'base64').toString('utf8');
   const cacheKey = Date.now();
   const updatedIndex = indexText
     .replace(/data_v3\.js(\?v=[^"']+)?/g, `data_v3.js?v=${cacheKey}`)
     .replace(/style\.css(\?v=[^"']+)?/g, `style.css?v=${cacheKey}`)
     .replace(/script\.js(\?v=[^"']+)?/g, `script.js?v=${cacheKey}`);
-  const indexBlob = await makeBlob(updatedIndex);
 
   const imageEntries = Array.isArray(body.imageEntries) ? body.imageEntries : [];
   const validatedImages = imageEntries.map((entry) => {
@@ -163,37 +179,41 @@ async function handleSave(req, res, session) {
         !/^[0-9a-f]{40}$/.test(String(entry.sha || ''))) {
       throw Object.assign(new Error('\uc774\ubbf8\uc9c0 \uc800\uc7a5 \uc815\ubcf4\uac00 \uc798\ubabb\ub418\uc5c8\uc2b5\ub2c8\ub2e4.'), { status: 400 });
     }
-    return { path: entry.repoPath, mode: '100644', type: 'blob', sha: entry.sha };
+    return { path: entry.repoPath, sha: entry.sha };
   });
 
-  const tree = await github('/git/trees', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      base_tree: commit.tree.sha,
-      tree: [
-        ...validatedImages,
-        { path: DATA_JS_PATH, mode: '100644', type: 'blob', sha: jsBlob.sha },
-        { path: DATA_JSON_PATH, mode: '100644', type: 'blob', sha: jsonBlob.sha },
-        { path: INDEX_PATH, mode: '100644', type: 'blob', sha: indexBlob.sha },
-      ],
-    }),
+  const imageAdditions = await Promise.all(validatedImages.map(async (entry) => {
+    const blob = await github(`/git/blobs/${entry.sha}`);
+    if (!blob.content) throw Object.assign(new Error('\uc774\ubbf8\uc9c0 \ube14\ub86d\uc744 \uc77d\uc744 \uc218 \uc5c6\uc2b5\ub2c8\ub2e4.'), { status: 400 });
+    return { path: entry.path, contents: blob.content.replace(/\s/g, '') };
+  }));
+  const additions = [
+    ...imageAdditions,
+    { path: DATA_JS_PATH, contents: Buffer.from(jsContent).toString('base64') },
+    { path: DATA_JSON_PATH, contents: Buffer.from(prettyJson).toString('base64') },
+    { path: INDEX_PATH, contents: Buffer.from(updatedIndex).toString('base64') },
+  ];
+  const mutation = `
+    mutation CreateAdminCommit($input: CreateCommitOnBranchInput!) {
+      createCommitOnBranch(input: $input) {
+        commit { oid }
+      }
+    }
+  `;
+  const result = await githubGraphql(mutation, {
+    input: {
+      branch: {
+        repositoryNameWithOwner: `${REPO_OWNER}/${REPO_NAME}`,
+        refName: `refs/heads/${BRANCH}`,
+      },
+      expectedHeadOid: latestCommitSha,
+      message: { headline: `content: update profile via admin (${new Date().toISOString().slice(0, 10)})` },
+      fileChanges: { additions },
+    },
   });
-  const newCommit = await github('/git/commits', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      message: `content: update profile via admin (${new Date().toISOString().slice(0, 10)})`,
-      tree: tree.sha,
-      parents: [latestCommitSha],
-    }),
-  });
-  await github(`/git/refs/heads/${BRANCH}`, {
-    method: 'PATCH',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ sha: newCommit.sha, force: false }),
-  });
-  return json(res, 200, { ok: true, commitSha: newCommit.sha, updatedAt });
+  const newCommitSha = result?.createCommitOnBranch?.commit?.oid;
+  if (!newCommitSha) throw new Error('GitHub \ucee4\ubc0b \uc751\ub2f5\uc5d0 SHA\uac00 \uc5c6\uc2b5\ub2c8\ub2e4.');
+  return json(res, 200, { ok: true, commitSha: newCommitSha, updatedAt, cacheKey });
 }
 
 module.exports = async function handler(req, res) {
@@ -239,7 +259,9 @@ module.exports = async function handler(req, res) {
     return json(res, error.status && error.status < 500 ? error.status : 500, {
       error: error.status === 401 || error.status === 403
         ? 'GitHub \uc800\uc7a5 \uad8c\ud55c\uc744 \ud655\uc778\ud558\uc138\uc694.'
-        : '\uad00\ub9ac\uc790 \uc694\uccad \ucc98\ub9ac \uc911 \uc624\ub958\uac00 \ubc1c\uc0dd\ud588\uc2b5\ub2c8\ub2e4.',
+        : error.status === 409
+          ? '\ub2e4\ub978 \ubcc0\uacbd\uc774 \uba3c\uc800 \uc800\uc7a5\ub418\uc5c8\uc2b5\ub2c8\ub2e4. \ud604\uc7ac \ud398\uc774\uc9c0\ub97c \uc0c8\ub85c\uace0\uce68\ud55c \ub4a4 \ub2e4\uc2dc \uc218\uc815\ud558\uc138\uc694.'
+          : '\uad00\ub9ac\uc790 \uc694\uccad \ucc98\ub9ac \uc911 \uc624\ub958\uac00 \ubc1c\uc0dd\ud588\uc2b5\ub2c8\ub2e4.',
     });
   }
 };
