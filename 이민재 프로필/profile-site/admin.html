@@ -778,9 +778,9 @@
     <div style="text-align:center">
       <div style="font-size:3rem;margin-bottom:20px">🔒</div>
       <h2 style="margin-bottom:10px">관리자 접근 권한 확인</h2>
-      <p style="color:var(--text2);margin-bottom:24px">페이지에 접근하려면 비밀번호를 입력하세요.</p>
+      <p style="color:var(--text2);margin-bottom:24px">서버에 보관된 관리자 설정으로 인증합니다.</p>
       <input type="password" id="adminPw" class="form-input"
-        style="width:280px;text-align:center;font-size:1.2rem;letter-spacing:4px" placeholder="Password" />
+        style="width:280px;text-align:center;font-size:1.1rem" placeholder="관리자 비밀번호" autocomplete="current-password" />
       <button class="btn btn-red" style="width:100%;margin-top:12px;padding:12px" onclick="checkAdmin()">로그인</button>
       <div id="loginMsg" style="color:#ef4444;margin-top:12px;font-size:.9rem;min-height:20px"></div>
     </div>
@@ -788,26 +788,61 @@
 
   <script src="data_v3.js"></script>
   <script>
-    /* ── 간단한 비밀번호 보호 (클라이언트 사이드) ── */
-    (function () {
-      const isAuth = localStorage.getItem('admin_auth');
-      if (isAuth === 'true') {
-        document.getElementById('loginOverlay').style.display = 'none';
-      } else {
-        document.body.style.overflow = 'hidden'; // 스크롤 방지
-      }
-    })();
+    let adminCsrf = null;
+    let baseCommitSha = null;
+    let initialRemoteData = null;
 
-    function checkAdmin() {
+    function setLoginState(authenticated) {
+      document.getElementById('loginOverlay').style.display = authenticated ? 'none' : 'flex';
+      document.querySelector('.layout').style.visibility = authenticated ? 'visible' : 'hidden';
+      document.body.style.overflow = authenticated ? '' : 'hidden';
+    }
+
+    async function adminRequest(action, options = {}) {
+      const headers = { ...(options.headers || {}) };
+      if (options.body && !headers['Content-Type']) headers['Content-Type'] = 'application/json';
+      if (adminCsrf && options.method && options.method !== 'GET') headers['X-Admin-CSRF'] = adminCsrf;
+      const response = await fetch(`/api/admin?action=${encodeURIComponent(action)}`, {
+        credentials: 'same-origin',
+        ...options,
+        headers,
+      });
+      const payload = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        const error = new Error(payload.error || `요청 실패 (${response.status})`);
+        error.status = response.status;
+        error.payload = payload;
+        throw error;
+      }
+      return payload;
+    }
+
+    async function loadAdminData() {
+      const remote = await adminRequest('data', { method: 'GET' });
+      D = remote.data;
+      initialRemoteData = JSON.parse(JSON.stringify(remote.data));
+      baseCommitSha = remote.commitSha;
+      render();
+    }
+
+    async function checkAdmin() {
       const pw = document.getElementById('adminPw').value;
       const msg = document.getElementById('loginMsg');
-      if (pw === 'dhdpswnl2@') {
-        localStorage.setItem('admin_auth', 'true');
-        document.getElementById('loginOverlay').style.display = 'none';
-        document.body.style.overflow = '';
+      if (!pw) return;
+      msg.textContent = '인증 중...';
+      try {
+        const session = await adminRequest('login', {
+          method: 'POST',
+          body: JSON.stringify({ password: pw }),
+        });
+        adminCsrf = session.csrf;
+        document.getElementById('adminPw').value = '';
+        await loadAdminData();
+        setLoginState(true);
+        msg.textContent = '';
         showToast('🔓 로그인 성공');
-      } else {
-        msg.textContent = '비밀번호가 올바르지 않습니다.';
+      } catch (error) {
+        msg.textContent = error.message;
         document.getElementById('adminPw').classList.add('shake');
         setTimeout(() => document.getElementById('adminPw').classList.remove('shake'), 400);
       }
@@ -823,61 +858,16 @@
     const toast = document.getElementById('toast');
     let currentTab = 'dashboard';
 
-    const REPO_OWNER = 'mj-lee-dj';
-    const REPO_NAME = 'MinjaeLee-Profile';
-    const FILE_PATH = 'profile-site/data_v3.js';
-
-    /* [GitHub 연동] 초기 데이터 로드 (최신 데이터 동기화) */
     (async function initAdmin() {
-      let remoteText = null;
-      const token = localStorage.getItem('gh_token');
-
-      // 1. 토큰이 있다면 API로 가져오기 (캐시 회피, 최신본 보장)
-      if (token) {
-        try {
-          // commits/main -> sha -> blob 방식이 가장 확실하지만, contents API의 raw 헤더 사용
-          const res = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FILE_PATH}?ref=main`, {
-            headers: {
-              'Authorization': `token ${token}`,
-              'Accept': 'application/vnd.github.v3.raw'
-            }
-          });
-          if (res.ok) {
-            remoteText = await res.text();
-            console.log('📦 Admin: Data loaded from GitHub API (Fresh)');
-          } else {
-            if (res.status === 401) localStorage.removeItem('gh_token'); // 토큰 만료 시 삭제
-          }
-        } catch (e) {
-          console.warn('GitHub API Load failed:', e);
-        }
-      }
-
-      // 2. 토큰이 없거나 실패했다면 Raw URL 사용 (CDN 캐시 가능성 있음)
-      if (!remoteText) {
-        try {
-          const res = await fetch(`https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/main/${FILE_PATH}`);
-          if (res.ok) {
-            remoteText = await res.text();
-            console.log('📦 Admin: Data loaded from GitHub Raw (Cached)');
-          }
-        } catch (e) {
-          console.warn('GitHub Raw Load failed:', e);
-        }
-      }
-
-      // 3. 데이터 파싱 및 적용
-      if (remoteText) {
-        const match = remoteText.match(/const profileData = ({[\s\S]*?});/);
-        if (match && match[1]) {
-          try {
-            const remoteData = JSON.parse(match[1]);
-            D = remoteData;
-            if (currentTab === 'dashboard') renderDashboard();
-          } catch (jsonErr) {
-            console.warn('JSON Parse Error:', jsonErr);
-          }
-        }
+      ['admin_auth', 'gh_token', 'profileData'].forEach(key => localStorage.removeItem(key));
+      setLoginState(false);
+      try {
+        const session = await adminRequest('session', { method: 'GET' });
+        adminCsrf = session.csrf;
+        await loadAdminData();
+        setLoginState(true);
+      } catch (error) {
+        if (error.status === 503) document.getElementById('loginMsg').textContent = error.message;
       }
     })();
 
@@ -890,176 +880,133 @@
 
     let _saving = false; // 동시 저장 방지 잠금
 
-    async function save() {
-      if (_saving) { showToast('⏳ 저장이 진행 중입니다...'); return; }
-      _saving = true;
+    const DATA_ARRAY_KEYS = ['youtubeVideos', 'expertise', 'publications', 'onlineCourses', 'lectures', 'awards', 'activities', 'press'];
+    const DATA_ID_KEYS = DATA_ARRAY_KEYS.filter(key => key !== 'expertise');
 
-      let token = localStorage.getItem('gh_token');
-      if (!token) {
-        token = prompt('GitHub Personal Access Token을 입력하세요.\n(repo 권한 필요, 한 번 입력하면 저장됩니다.)');
-        if (!token) { _saving = false; return; }
-        localStorage.setItem('gh_token', token);
+    function validateClientData(data) {
+      const errors = [];
+      if (!data?.personal || typeof data.personal !== 'object') errors.push('개인 프로필 데이터가 없습니다.');
+      DATA_ARRAY_KEYS.forEach(key => {
+        if (!Array.isArray(data?.[key])) errors.push(`${key} 목록이 올바르지 않습니다.`);
+      });
+      DATA_ID_KEYS.forEach(key => {
+        if (!Array.isArray(data?.[key])) return;
+        const ids = new Set();
+        data[key].forEach((item, index) => {
+          if (!item?.id) errors.push(`${key}의 ${index + 1}번째 항목에 ID가 없습니다.`);
+          else if (ids.has(item.id)) errors.push(`${key}에 중복 ID(${item.id})가 있습니다.`);
+          else ids.add(item.id);
+        });
+      });
+      return errors;
+    }
+
+    function getDeletionSummary(before, after) {
+      if (!before) return [];
+      return DATA_ARRAY_KEYS
+        .filter(key => Array.isArray(before[key]) && Array.isArray(after[key]) && after[key].length < before[key].length)
+        .map(key => ({ key, before: before[key].length, after: after[key].length }));
+    }
+
+    async function uploadEmbeddedImages(data) {
+      const imageEntries = [];
+      const cache = new Map();
+
+      async function upload(value) {
+        if (typeof value !== 'string' || !value.startsWith('data:image/')) return value;
+        if (cache.has(value)) return cache.get(value);
+        showToast('📤 새 이미지 업로드 중...');
+        const uploaded = await adminRequest('upload-image', {
+          method: 'POST',
+          body: JSON.stringify({ dataUrl: value }),
+        });
+        imageEntries.push({ repoPath: uploaded.repoPath, sha: uploaded.sha });
+        cache.set(value, uploaded.path);
+        return uploaded.path;
       }
 
-      const API = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}`;
-      const headers = { 'Authorization': `token ${token}`, 'Content-Type': 'application/json' };
-
-      try {
-        /* ── 1단계: 최신 커밋 & 트리 SHA ── */
-        showToast('☁️ 저장 준비 중...');
-        const refRes = await fetch(`${API}/git/refs/heads/main`, { headers });
-        if (!refRes.ok) {
-          if (refRes.status === 401 || refRes.status === 403) {
-            localStorage.removeItem('gh_token');
-            throw new Error('토큰이 유효하지 않거나 권한이 없습니다.');
+      async function walk(value) {
+        if (Array.isArray(value)) {
+          for (let index = 0; index < value.length; index++) {
+            value[index] = typeof value[index] === 'string' ? await upload(value[index]) : await walk(value[index]);
           }
-          throw new Error('브랜치 정보 조회 실패');
-        }
-        const latestCommitSha = (await refRes.json()).object.sha;
-        const baseTreeSha = (await (await fetch(`${API}/git/commits/${latestCommitSha}`, { headers })).json()).tree.sha;
-
-        /* ── 2단계: base64 이미지를 개별 파일로 추출·업로드 ── */
-        const dataClone = JSON.parse(JSON.stringify(D));
-        const treeEntries = [];       // 트리에 추가할 파일 목록
-        const uploadCache = new Map(); // 중복 방지 캐시 (hashKey → url)
-        let imgCount = 0;
-
-        /* base64 이미지 URL이면 blob으로 업로드하고 GitHub raw URL 반환 */
-        async function uploadIfBase64(val) {
-          if (typeof val !== 'string' || !val.startsWith('data:image/')) return val;
-          const m = val.match(/^data:image\/([^;]+);base64,(.+)$/s);
-          if (!m) return val;
-          const ext = m[1].replace('+xml', '').replace('jpeg', 'jpg');
-          const b64 = m[2];
-
-          /* 중복 체크 (base64 앞부분+길이로 해시 생성) */
-          const hashKey = b64.substring(0, 64) + '_' + b64.length;
-          if (uploadCache.has(hashKey)) return uploadCache.get(hashKey);
-
-          imgCount++;
-          showToast(`📤 이미지 업로드 중... (${imgCount}장)`);
-
-          const blobRes = await fetch(`${API}/git/blobs`, {
-            method: 'POST', headers,
-            body: JSON.stringify({ content: b64, encoding: 'base64' })
-          });
-          if (!blobRes.ok) {
-            const err = await blobRes.json().catch(() => ({}));
-            throw new Error(`이미지 ${imgCount} 업로드 실패: ${err.message || blobRes.status}`);
-          }
-          const blob = await blobRes.json();
-          const filePath = `profile-site/uploads/${blob.sha.substring(0, 12)}.${ext}`;
-          /* 상대 경로를 사용하여 GitHub Pages에서 안정적으로 이미지를 로드 */
-          const relativePath = `uploads/${blob.sha.substring(0, 12)}.${ext}`;
-
-          treeEntries.push({ path: filePath, mode: '100644', type: 'blob', sha: blob.sha });
-          uploadCache.set(hashKey, relativePath);
-          return relativePath;
-        }
-
-        /* 객체 전체를 순회하며 base64 이미지 추출 */
-        async function processObj(obj) {
-          if (!obj || typeof obj !== 'object') return;
-          const keys = Object.keys(obj);
-          for (const k of keys) {
-            if (typeof obj[k] === 'string') {
-              obj[k] = await uploadIfBase64(obj[k]);
-            } else if (typeof obj[k] === 'object') {
-              await processObj(obj[k]);
-            }
+        } else if (value && typeof value === 'object') {
+          for (const key of Object.keys(value)) {
+            value[key] = typeof value[key] === 'string' ? await upload(value[key]) : await walk(value[key]);
           }
         }
+        return value;
+      }
 
-        await processObj(dataClone);
+      await walk(data);
+      return imageEntries;
+    }
 
-        /* ── 3단계: 축소된 data.js blob 생성 ── */
-        showToast('📄 데이터 파일 저장 중...');
-        const newContent = `/* \n  [Profile Data] \n  Updated at: ${new Date().toISOString()} \n*/\nconst profileData = ${JSON.stringify(dataClone)};\n`;
-
-        const dataBlobRes = await fetch(`${API}/git/blobs`, {
-          method: 'POST', headers,
-          body: JSON.stringify({ content: newContent, encoding: 'utf-8' })
-        });
-        if (!dataBlobRes.ok) {
-          const err = await dataBlobRes.json().catch(() => ({}));
-          throw new Error(`데이터 저장 실패: ${err.message || dataBlobRes.status}`);
-        }
-        treeEntries.push({ path: FILE_PATH, mode: '100644', type: 'blob', sha: (await dataBlobRes.json()).sha });
-        
-        /* ── 3.5단계: index.html 캐시 버스터 업데이트 ── */
+    async function verifyProduction(expectedData, commitSha) {
+      const deadline = Date.now() + 120000;
+      while (Date.now() < deadline) {
+        await new Promise(resolve => setTimeout(resolve, 4000));
         try {
-          const indexRes = await fetch(`${API}/contents/profile-site/index.html`, { headers });
-          if (indexRes.ok) {
-            const indexData = await indexRes.json();
-            // Base64 decode (UTF-8 대응)
-            const decoded = atob(indexData.content.replace(/\s/g, ''));
-            let indexText = new TextDecoder('utf-8').decode(Uint8Array.from(decoded, c => c.charCodeAt(0)));
-            
-            const timestamp = Date.now();
-            // data_v3.js, style.css, script.js(?v=...) 패턴을 찾아 현재 타임스탬프로 교체
-            indexText = indexText.replace(/data_v3\.js(\?v=[^"]+)?/g, `data_v3.js?v=${timestamp}`)
-                                 .replace(/style\.css(\?v=[^"]+)?/g, `style.css?v=${timestamp}`)
-                                 .replace(/script\.js(\?v=[^"]+)?/g, `script.js?v=${timestamp}`);
-            
-            const indexBlobRes = await fetch(`${API}/git/blobs`, {
-              method: 'POST', headers,
-              body: JSON.stringify({ content: indexText, encoding: 'utf-8' })
-            });
-            if (indexBlobRes.ok) {
-              const indexBlob = await indexBlobRes.json();
-              treeEntries.push({ path: 'profile-site/index.html', mode: '100644', type: 'blob', sha: indexBlob.sha });
-            }
+          const response = await fetch(`/data_v3.json?verify=${encodeURIComponent(commitSha)}&t=${Date.now()}`, { cache: 'no-store' });
+          if (response.ok) {
+            const deployed = await response.json();
+            if (JSON.stringify(deployed) === JSON.stringify(expectedData)) return true;
           }
-        } catch (err) {
-          console.warn('index.html 자동 갱신 실패 (데이터 저장은 계속 진행):', err);
-        }
+        } catch (_) {}
+      }
+      return false;
+    }
 
-        /* ── 4단계: 트리 생성 ── */
-        const treeRes = await fetch(`${API}/git/trees`, {
-          method: 'POST', headers,
-          body: JSON.stringify({ base_tree: baseTreeSha, tree: treeEntries })
-        });
-        if (!treeRes.ok) throw new Error('트리 생성 실패');
+    async function save() {
+      if (_saving) { showToast('⏳ 저장이 진행 중입니다...'); return; }
+      const errors = validateClientData(D);
+      if (errors.length) return alert('저장 전 데이터 검증에 실패했습니다.\n\n' + errors.slice(0, 10).join('\n'));
 
-        /* ── 5단계: 커밋 생성 ── */
-        const commitRes = await fetch(`${API}/git/commits`, {
-          method: 'POST', headers,
+      const deletions = getDeletionSummary(initialRemoteData, D);
+      let confirmDeletes = false;
+      if (deletions.length) {
+        const summary = deletions.map(item => `• ${item.key}: ${item.before} → ${item.after}`).join('\n');
+        confirmDeletes = confirm('다음 항목 수가 줄어듭니다. 의도한 삭제가 맞습니까?\n\n' + summary);
+        if (!confirmDeletes) return;
+      }
+
+      _saving = true;
+      try {
+        showToast('☁️ 저장 준비 중...');
+        const dataClone = JSON.parse(JSON.stringify(D));
+        const imageEntries = await uploadEmbeddedImages(dataClone);
+        const result = await adminRequest('save', {
+          method: 'POST',
           body: JSON.stringify({
-            message: `Update profile data via Admin (${new Date().toLocaleDateString()})`,
-            tree: (await treeRes.json()).sha,
-            parents: [latestCommitSha]
-          })
+            data: dataClone,
+            baseCommitSha,
+            confirmDeletes,
+            imageEntries,
+          }),
         });
-        if (!commitRes.ok) throw new Error('커밋 생성 실패');
 
-        /* ── 6단계: Ref 업데이트 (Push) ── */
-        const updateRes = await fetch(`${API}/git/refs/heads/main`, {
-          method: 'PATCH', headers,
-          body: JSON.stringify({ sha: (await commitRes.json()).sha })
-        });
-        if (!updateRes.ok) throw new Error('Push 실패');
-
-        showToast(`✅ 저장 완료! Vercel 배포가 자동으로 시작되었습니다. (약 1분 후 반영)`);
-        saveProfileData(D);
-
-      } catch (e) {
-        console.error(e);
-        alert('저장 중 오류 발생:\n' + e.message);
+        D = dataClone;
+        initialRemoteData = JSON.parse(JSON.stringify(dataClone));
+        baseCommitSha = result.commitSha;
+        render();
+        showToast('✅ GitHub 저장 완료 · 배포 확인 중...');
+        const deployed = await verifyProduction(dataClone, result.commitSha);
+        if (deployed) {
+          showToast('✅ 운영 사이트 반영 완료');
+        } else {
+          alert('GitHub 저장은 완료됐지만 2분 안에 운영 배포를 확인하지 못했습니다. 추가 저장하지 말고 배포 상태를 확인하세요.');
+          showToast('⚠️ 배포 확인 필요');
+        }
+      } catch (error) {
+        console.error(error);
+        if (error.status === 401) {
+          adminCsrf = null;
+          setLoginState(false);
+        }
+        alert('저장 중 오류 발생:\n' + error.message);
         showToast('❌ 저장 실패');
       } finally {
         _saving = false;
-      }
-    }
-    function saveProfileData(data) {
-      try {
-        localStorage.setItem('profileData', JSON.stringify(data));
-        console.log('📦 Local Backup Saved');
-      } catch (e) {
-        console.warn('⚠️ Local Storage Full (Backup skipped):', e);
-        // 저장 용량 초과 에러는 무시 (GitHub에는 이미 저장됨)
-        if (e.name === 'QuotaExceededError') {
-          console.log('Local Storage Quota Exceeded');
-        }
       }
     }
 
@@ -1490,7 +1437,8 @@ ${contentText ? contentText.slice(0, 15000) : '내용 없음 (제목 및 메타�
           <div class="page-title">📊 대시보드 <span style="font-size:0.8rem; font-weight:normal; color:var(--text2); margin-left:10px;">v1.5 (About Me 지원)</span></div>
           <div style="display:flex;gap:8px">
             <button class="btn btn-red" onclick="save()">☁️ 전체 저장 & 배포</button>
-            <button class="btn btn-outline" onclick="resetData()">🔄 초기화</button>
+            <button class="btn btn-outline" onclick="resetData()">↩️ 편집 취소</button>
+            <button class="btn btn-outline" onclick="logout()">🔒 로그아웃</button>
           </div>
         </div>
         <div class="stat-cards">
@@ -2123,15 +2071,26 @@ ${contentText ? contentText.slice(0, 15000) : '내용 없음 (제목 및 메타�
       save(); render();
     }
 
-    function resetData() {
-      if (!confirm('모든 데이터를 초기 상태로 되돌립니다.\n(이미지/링크 등 모든 편집 내용이 사라집니다)\n\n계속하시겠습니까?')) return;
-      localStorage.removeItem('profileData');
-      location.reload();
+    async function resetData() {
+      if (!confirm('저장하지 않은 편집 내용을 버리고 GitHub의 최신 운영 데이터를 다시 불러올까요?')) return;
+      try {
+        await loadAdminData();
+        showToast('✅ 최신 운영 데이터로 되돌렸습니다');
+      } catch (error) {
+        alert('최신 데이터 불러오기 실패:\n' + error.message);
+      }
     }
 
-    function logout() {
-      // localStorage.removeItem('adminToken'); // 토큰 삭제 안 함 (편의성)
-      location.reload();
+    async function logout() {
+      try { await adminRequest('logout', { method: 'POST' }); } catch (_) {}
+      adminCsrf = null;
+      baseCommitSha = null;
+      initialRemoteData = null;
+      ['admin_auth', 'gh_token', 'profileData', 'gemini_api_key', 'google_client_id'].forEach(key => localStorage.removeItem(key));
+      sessionStorage.removeItem('gemini_api_key');
+      sessionStorage.removeItem('google_client_id');
+      setLoginState(false);
+      showToast('🔒 로그아웃했습니다');
     }
 
     function downloadDataJs() {
@@ -2231,21 +2190,28 @@ ${contentText ? contentText.slice(0, 15000) : '내용 없음 (제목 및 메타�
        🤖 AI 자동 등록 (Gemini API & Google Drive)
        ══════════════════════════════════════════ */
     function showToast(msg) { const t = document.createElement('div'); t.textContent = msg; Object.assign(t.style, { position: 'fixed', bottom: '24px', left: '50%', transform: 'translateX(-50%)', background: '#22c55e', color: '#fff', padding: '10px 24px', borderRadius: '8px', fontSize: '.85rem', fontWeight: '600', zIndex: '9999', boxShadow: '0 4px 16px rgba(0,0,0,.3)' }); document.body.appendChild(t); setTimeout(() => t.remove(), 2000); }
-    function getApiKey() { return localStorage.getItem('gemini_api_key') || ''; }
-    function setApiKey(k) { localStorage.setItem('gemini_api_key', k); }
-    function getClientId() { return localStorage.getItem('google_client_id') || ''; }
-    function setClientId(k) { localStorage.setItem('google_client_id', k); }
+    function getApiKey() { return sessionStorage.getItem('gemini_api_key') || ''; }
+    function setApiKey(k) { k ? sessionStorage.setItem('gemini_api_key', k) : sessionStorage.removeItem('gemini_api_key'); }
+    function getClientId() { return sessionStorage.getItem('google_client_id') || ''; }
+    function setClientId(k) { k ? sessionStorage.setItem('google_client_id', k) : sessionStorage.removeItem('google_client_id'); }
 
     /* Google Drive API 관련 변수 */
     let tokenClient;
+    let tokenClientId = null;
     let accessToken = null;
     let pickerInited = false;
     let gisInited = false;
 
     function gapiLoaded() { gapi.load('client:picker', async () => { await gapi.client.load('drive', 'v3'); pickerInited = true; }); }
     function gisLoaded() {
+      gisInited = true;
+      const clientId = getClientId();
+      if (clientId) initGoogleTokenClient(clientId);
+    }
+
+    function initGoogleTokenClient(clientId) {
       tokenClient = google.accounts.oauth2.initTokenClient({
-        client_id: getClientId(),
+        client_id: clientId,
         scope: 'https://www.googleapis.com/auth/drive.readonly',
         callback: (resp) => {
           if (resp.error !== undefined) throw (resp);
@@ -2253,7 +2219,7 @@ ${contentText ? contentText.slice(0, 15000) : '내용 없음 (제목 및 메타�
           if (pendingPicker) createPicker();
         },
       });
-      gisInited = true;
+      tokenClientId = clientId;
     }
 
     let pendingPicker = false;
@@ -2261,18 +2227,8 @@ ${contentText ? contentText.slice(0, 15000) : '내용 없음 (제목 및 메타�
       const clientId = getClientId();
       if (!clientId) return alert('Google Client ID를 먼저 설정해주세요.');
 
-      /* Client ID가 변경되었을 수 있으므로 재초기화 시도 */
-      if (!tokenClient || tokenClient.client_id !== clientId) {
-        tokenClient = google.accounts.oauth2.initTokenClient({
-          client_id: clientId,
-          scope: 'https://www.googleapis.com/auth/drive.readonly',
-          callback: (resp) => {
-            if (resp.error !== undefined) throw (resp);
-            accessToken = resp.access_token;
-            if (pendingPicker) createPicker();
-          },
-        });
-      }
+      if (!gisInited) return alert('Google 로그인을 불러오는 중입니다. 잠시 후 다시 시도해주세요.');
+      if (!tokenClient || tokenClientId !== clientId) initGoogleTokenClient(clientId);
 
       pendingPicker = true;
       if (accessToken === null) {

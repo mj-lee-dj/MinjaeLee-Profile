@@ -1,70 +1,61 @@
 # HANDOFF — 이민재 프로필 사이트
 
 - 마지막 갱신: 2026-08-17 KST
-- 현재 목표: 프로필 사이트의 안전한 관리 주체를 Codex로 완전 이전
+- 현재 목표: 관리자 페이지 정상화와 안전한 운영 전환
 
-## 현재 상태
+## 기본 구조
 
 - Git 루트: `G:\내 드라이브\0. 바이브코딩`
 - 프로젝트: `이민재 프로필`
 - Vercel Root: `이민재 프로필/profile-site`
-- 운영 데이터 원본: `이민재 프로필/profile-site/data_v3.js`
 - 운영 URL: `https://minjae-lee-profile.vercel.app/`
-- E2E 검증 커밋: `20d72d1` (`chore: verify profile deployment pipeline`)
-- Vercel Production status: success (`9YFZFiEbtKahrxghTAfikZ2rnN5Y`)
-- 검증 표식 정리 커밋: `47baf1e`, Vercel success (`8CP6JbPYUmWFbm3y9pEJAwj3X81X`)
-- 운영 검증: 표식 200, 핵심 정적 파일 6개 일치, 공개 페이지 콘솔 오류 0
-- 실제 공개 콘텐츠 마지막 변경은 `b4dd583`
-- 정상 데이터: 강의 60, 보도 12
+- 운영 원본: `profile-site/data_v3.js`
+- JSON 동기 본: `profile-site/data_v3.json`
+- 정상 기준: 강의 60, 보도 12
 
-## 완료
+## 관리자 정상화 구현
 
-- 전체 파일·Git 이력·GitHub·Vercel 설정/로그·운영 페이지 감사
-- 안티그래비티 1차 핸드오프와 추가 종합 보고서 대조
-- 폴더 이동·유실/복원·캐시·CLI 실패 이력 반영
-- `.agents/AGENTS.md`와 `CODEX_HANDOFF.md`의 잘못된 경로·관리자·CSS 규칙 교정
-- 수정→커밋→main push→Vercel→운영 응답 전체 파이프라인 검증
-- 운영 데스크톱·모바일·필터·8개 섹션·이미지 277개·Core Web Vitals 확인
-- 상세 운영 기준: `CODEX_HANDOFF.md`
+- 공개 HTML의 하드코딩 비밀번호와 브라우저 GitHub PAT 직접 저장을 제거함
+- Vercel Function `profile-site/api/admin.js`가 로그인, 세션, GitHub 읽기/저장을 전담함
+- 세션: HttpOnly + Secure + SameSite=Strict, 4시간, HMAC 서명
+- 저장 경로: `이민재 프로필/profile-site/...`로 고정
+- `data_v3.js`, `data_v3.json`, `index.html`, 새 이미지를 하나의 non-force 커밋으로 저장
+- 동시 수정 SHA 충돌, 스키마/중복 ID, 의도하지 않은 항목 감소를 차단함
+- 저장 후 운영 JSON 일치를 최대 2분간 확인하며 실패 시 추가 저장 중단을 안내함
+- Gemini/Google Client ID는 탭 세션에만 보관하며 Client ID 미설정 초기화 오류를 제거함
+- Git 루트의 오래된 중복 `profile-site/` 11개 파일을 Git 삭제해 source of truth를 단일화함
 
-## HOLD — 관리자 페이지 사용 금지
+## 검증 상태
 
-- 관리자는 오래된 `profile-site/data_v3.js`를 읽고 쓰고, 실제 배포 원본은 `이민재 프로필/profile-site/data_v3.js`
-- 오래된 복제본은 강의 54/보도 10, 정상 원본은 60/12
-- 저장해도 운영 데이터가 바뀌지 않으며 과거 데이터 재유입 위험이 있음
-- 공개 비밀번호는 실질 인증이 아니고 GitHub PAT/Gemini 키를 localStorage에 저장함
-- 로그아웃은 인증 상태와 토큰을 지우지 않음
-- 로그인 화면에서도 Google `client_id` 누락 오류가 발생함
+- Node 테스트 10개 통과: 환경 누락 fail-closed, 교차 출처 차단, 로그인/세션, 위변조, 스키마, 중복 ID, 삭제 감지, 운영 경로 단일 커밋
+- `admin.html` 인라인 스크립트와 `api/admin.js` 문법 통과
+- 로컬 렌더: 로그인 화면만 표시, 대시보드 hidden, 오류 오버레이 0, Google client_id 콘솔 오류 0
+- 내장 Browser는 Windows sandbox `helper_unknown_error`로 연결 실패; 기존 `agent-browser` 경로로 대체 검증
+
+## HOLD — 운영 관리자 저장
+
+- 코드는 fail-closed 상태로 복구됨
+- Vercel Production에 `ADMIN_PASSWORD`, `ADMIN_SESSION_SECRET`, `GITHUB_ADMIN_TOKEN` 설정이 필요함
+- 설정 후 새 Production 배포와 실제 테스트 수정 저장→GitHub→Vercel→공개 사이트 E2E 검증 전까지 HOLD 유지
 
 ## 다음 작업
 
-1. 관리자 임시 차단/경고
-2. 오래된 루트 `profile-site/` 참조 제거 및 원본 단일화
-3. 관리자 경로·JS/JSON 동기화·검증·실패 복구 수정
-4. 공개 비밀번호/브라우저 PAT 구조 교체
-5. 데이터·이미지·비밀·경로 자동 검증
-6. main 보호/배포 체크 검토
-7. 전체 회귀 검증 후 관리자 HOLD 해제 여부 결정
+1. 관리자 정상화 커밋을 `main`에 push하고 Vercel 배포/fail-closed 확인
+2. 사용자가 Vercel Production 환경변수 3개를 설정하고 구 PAT는 폐기/교체
+3. 새 배포 후 로그인, 최신 데이터 60/12, 편집 취소, 로그아웃 검증
+4. 테스트용 무해 필드를 저장해 전체 E2E 검증 후 원복 커밋
+5. 데이터/JS/JSON/이미지/공개 페이지가 모두 일치할 때만 HOLD 해제
 
 ## 중요 파일
 
-- `.agents/AGENTS.md`
-- `CODEX_HANDOFF.md`
-- `profile-site/index.html`
-- `profile-site/admin.html`
-- `profile-site/data_v3.js`
-- `profile-site/data_v3.json`
-- `profile-site/script.js`
-- `profile-site/style.css`
-- `.agent/mcp-google-workspace/` — 로컬 비밀 포함, Git 미추적
+- `.agents/AGENTS.md`, `CODEX_HANDOFF.md`, `ADMIN_RUNBOOK.md`
+- `profile-site/admin.html`, `profile-site/api/admin.js`, `profile-site/vercel.json`
+- `profile-site/.env.example`, `profile-site/tests/*.test.js`
+- `profile-site/data_v3.js`, `profile-site/data_v3.json`
 
 ## 주의
 
-- 사이트 변경은 프로젝트 루트의 `profile-site/`에서 하되 Git 경로는 `이민재 프로필/profile-site/...`
-- 작업 트리가 더러우므로 무조건 pull하지 말고 사용자 변경을 보존
-- 정확한 파일만 스테이징; `git add .`, hard reset, force push 금지
-- `data_v3.js`가 원본이고 JSON은 현재 동기화 유지
-- CSS 맨 아래 무조건 추가/습관적 `!important` 금지
-- Vercel CLI는 이 PC에서 한글 컴퓨터명 관련 실패 기록이 있어 운영 배포에 사용하지 않음
-- 배포 검증 표식은 정리 커밋 `47baf1e`에서 제거 완료; 사용자에게 보이는 콘텐츠는 변경하지 않음
-- favicon 404는 기존의 낮은 우선순위 누락으로 별도 수정 필요
+- 비밀값은 커밋, 문서, 채팅, `HANDOFF.md`에 남기지 않는다.
+- 정확한 파일만 stage; `git add .`, hard reset, force push 금지.
+- Vercel CLI는 이 PC에서 한글 컴퓨터명 헤더 오류 이력이 있어 Git push 배포를 사용한다.
+- 롤백은 임시 Vercel Promote/Instant Rollback, 영구 Git revert 커밋을 사용한다.
