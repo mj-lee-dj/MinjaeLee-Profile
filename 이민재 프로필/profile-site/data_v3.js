@@ -1,3 +1,7 @@
+/*
+  [Profile Data]
+  Updated at: 2026-08-17T13:54:52.758Z
+*/
 const profileData = {
   "youtubeVideos": [
     {
@@ -1389,7 +1393,9 @@ const profileData = {
       "date": "2026.08.08.",
       "link": "https://www.ibrandnews.com/news/articleView.html?idxno=12705",
       "previewDesc": "",
-      "images": ["uploads/press_brandnews_main.png"],
+      "images": [
+        "uploads/press_brandnews_main.png"
+      ],
       "image": "uploads/press_brandnews_main.png"
     },
     {
@@ -1399,7 +1405,9 @@ const profileData = {
       "date": "2026.08.03.",
       "link": "https://www.ibrandnews.com/news/articleView.html?idxno=12700",
       "previewDesc": "",
-      "images": ["uploads/press_brandnews_main.png"],
+      "images": [
+        "uploads/press_brandnews_main.png"
+      ],
       "image": "uploads/press_brandnews_main.png"
     },
     {
@@ -1496,10 +1504,3 @@ const profileData = {
     }
   ]
 };
-
-if (typeof window !== 'undefined') {
-  window.profileData = profileData;
-}
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = profileData;
-}
