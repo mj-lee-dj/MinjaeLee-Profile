@@ -204,7 +204,7 @@ async function handleSave(req, res, session) {
     input: {
       branch: {
         repositoryNameWithOwner: `${REPO_OWNER}/${REPO_NAME}`,
-        refName: branchName: BRANCH,
+        branchName: BRANCH,
       },
       expectedHeadOid: latestCommitSha,
       message: { headline: `content: update profile via admin (${new Date().toISOString().slice(0, 10)})` },
