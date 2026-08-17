@@ -1,45 +1,49 @@
-# \uad00\ub9ac\uc790 \ud398\uc774\uc9c0 \uc6b4\uc601 \ub7f0\ubd81
+# 관리자 페이지 운영 런북
 
-## \uad6c\uc870
+## 현재 상태 — HOLD
 
-- \uad00\ub9ac\uc790 \uc8fc\uc18c: `https://minjae-lee-profile.vercel.app/admin.html`
-- \uc778\uc99d: Vercel \uc11c\ubc84\uc5d0 \uc124\uc815\ud55c \ube44\ubc00\ubc88\ud638\ub85c 4\uc2dc\uac04 \ubcf4\uc548 \uc138\uc158 \ubc1c\uae09
-- \uc800\uc7a5: \ube0c\ub77c\uc6b0\uc800\uac00 \ub370\uc774\ud130\ub9cc \uc11c\ubc84\ub85c \uc804\ub2ec\ud558\uba70 GitHub \ud1a0\ud070\uc740 \ube0c\ub77c\uc6b0\uc800\uc5d0 \ub178\ucd9c\ub418\uc9c0 \uc54a\uc74c
-- \uc6b4\uc601 \uc6d0\ubcf8: `\uc774\ubbfc\uc7ac \ud504\ub85c\ud544/profile-site/data_v3.js`
-- \ub3d9\uae30 \ubcf8: `\uc774\ubbfc\uc7ac \ud504\ub85c\ud544/profile-site/data_v3.json`
-- \ubc30\ud3ec: \uad00\ub9ac\uc790 \uc800\uc7a5 \u2192 GitHub `main` \ucee4\ubc0b \u2192 Vercel \uc790\ub3d9 \ubc30\ud3ec \u2192 \uad00\ub9ac\uc790 \ud654\uba74\uc774 \uc6b4\uc601 JSON \uc77c\uce58\ub97c \ucd5c\ub300 2\ubd84\uac04 \ud655\uc778
+관리자 화면은 안전한 로그인 화면으로 교체됐지만 Vercel 프로젝트에서 최소 Function도 빌드 실패하여 서버 진입점을 비활성화했다. 현재 `/api/admin`은 404이며 로그인·저장을 시도하지 않는다. 배포 `FjkT2NEG89Z2nHJa16cFgVVrP86o`의 Build Logs 원인을 해결하고 전체 E2E 검증을 마친 뒤에만 아래 절차를 사용한다.
 
-## \ud544\uc218 Vercel \ud658\uacbd\ubcc0\uc218
+## 구조
 
-\uc2e4\uc81c \uac12\uc740 Vercel Project Settings \u2192 Environment Variables\uc758 **Production**\uc5d0\ub9cc \uc124\uc815\ud55c\ub2e4.
+- 관리자 주소: `https://minjae-lee-profile.vercel.app/admin.html`
+- 인증: Vercel 서버에 설정한 비밀번호로 4시간 보안 세션 발급
+- 저장: 브라우저가 데이터만 서버로 전달하며 GitHub 토큰은 브라우저에 노출되지 않음
+- 운영 원본: `이민재 프로필/profile-site/data_v3.js`
+- 동기 본: `이민재 프로필/profile-site/data_v3.json`
+- 배포: 관리자 저장 → GitHub `main` 커밋 → Vercel 자동 배포 → 관리자 화면이 운영 JSON 일치를 최대 2분간 확인
 
-- `ADMIN_PASSWORD`: \uad00\ub9ac\uc790 \ub85c\uadf8\uc778 \ube44\ubc00\ubc88\ud638. \ucf54\ub4dc\ub098 Git\uc5d0 \uc800\uc7a5\ud558\uc9c0 \uc54a\ub294\ub2e4.
-- `ADMIN_SESSION_SECRET`: \uc138\uc158 \uc11c\uba85\uc6a9 \ubb34\uc791\uc704 \ube44\ubc00\uac12. \ucd5c\uc18c 32\ubc14\uc774\ud2b8\ub97c \uad8c\uc7a5\ud55c\ub2e4.
-- `GITHUB_ADMIN_TOKEN`: `mj-lee-dj/MinjaeLee-Profile` \ud558\ub098\uc758 Contents \uc77d\uae30/\uc4f0\uae30\ub9cc \ud5c8\uc6a9\ud55c fine-grained token\uc744 \uad8c\uc7a5\ud55c\ub2e4.
+## 필수 Vercel 환경변수
 
-\ud658\uacbd\ubcc0\uc218\ub97c \ucd94\uac00\ud558\uac70\ub098 \uad50\uccb4\ud558\uba74 \uc0c8 Production \ubc30\ud3ec\uac00 \ud544\uc694\ud558\ub2e4. \ud0a4 \uac12\uc740 `.env.example`, `HANDOFF.md`, \ucee4\ubc0b, \ucc44\ud305\uc5d0 \ub0a8\uae30\uc9c0 \uc54a\ub294\ub2e4.
+실제 값은 Vercel Project Settings → Environment Variables의 **Production**에만 설정한다.
 
-## \uc815\uc0c1 \uc218\uc815 \uc808\ucc28
+- `ADMIN_PASSWORD`: 관리자 로그인 비밀번호. 코드나 Git에 저장하지 않는다.
+- `ADMIN_SESSION_SECRET`: 세션 서명용 무작위 비밀값. 최소 32바이트를 권장한다.
+- `GITHUB_ADMIN_TOKEN`: `mj-lee-dj/MinjaeLee-Profile` 하나의 Contents 읽기/쓰기만 허용한 fine-grained token을 권장한다.
 
-1. \uad00\ub9ac\uc790 \ud398\uc774\uc9c0\uc5d0 \ub85c\uadf8\uc778\ud55c\ub2e4.
-2. \ucd5c\uc2e0 \ud56d\ubaa9 \uc218\uac00 \uac15\uc758 60, \ubcf4\ub3c4 12 \uc774\uc0c1\uc778\uc9c0 \ud655\uc778\ud55c\ub2e4.
-3. \ud55c \ubc88\uc5d0 \ud558\ub098\uc758 \ub17c\ub9ac\uc801 \ubcc0\uacbd\ub9cc \uc218\uc815\ud55c\ub2e4.
-4. `\uc804\uccb4 \uc800\uc7a5 & \ubc30\ud3ec`\ub97c \ub204\ub978\ub2e4. \ud56d\ubaa9 \uc218\uac00 \uc904\uba74 \uc0ad\uc81c \ud655\uc778\uc774 \ud55c \ubc88 \ub354 \ud45c\uc2dc\ub41c\ub2e4.
-5. `\uc6b4\uc601 \uc0ac\uc774\ud2b8 \ubc18\uc601 \uc644\ub8cc` \uc54c\ub9bc\uc744 \ubc1b\uc744 \ub54c\uae4c\uc9c0 \ud0ed\uc744 \ub2eb\uac70\ub098 \ucd94\uac00 \uc800\uc7a5\ud558\uc9c0 \uc54a\ub294\ub2e4.
-6. \uacf5\uac1c \uc0ac\uc774\ud2b8\uc5d0\uc11c \uc218\uc815\ud55c \ud56d\ubaa9\uacfc \uc774\ubbf8\uc9c0\ub97c \ud655\uc778\ud55c\ub2e4.
-7. \uacf5\uc6a9 PC\ub098 \uc791\uc5c5 \uc885\ub8cc \uc2dc `\ub85c\uadf8\uc544\uc6c3`\ud55c\ub2e4.
+환경변수를 추가하거나 교체하면 새 Production 배포가 필요하다. 키 값은 `.env.example`, `HANDOFF.md`, 커밋, 채팅에 남기지 않는다.
 
-## \uc800\uc7a5 \uc911\ub2e8 \uc870\uac74
+## 정상 수정 절차
 
-\uc544\ub798 \uba54\uc2dc\uc9c0\uac00 \ubcf4\uc774\uba74 \ucd94\uac00 \uc800\uc7a5\ud558\uc9c0 \ub9d0\uace0 Codex\uc5d0\uac8c \uc810\uac80\uc744 \uc694\uccad\ud55c\ub2e4.
+1. 관리자 페이지에 로그인한다.
+2. 최신 항목 수가 강의 60, 보도 12 이상인지 확인한다.
+3. 한 번에 하나의 논리적 변경만 수정한다.
+4. `전체 저장 & 배포`를 누른다. 항목 수가 줄면 삭제 확인이 한 번 더 표시된다.
+5. `운영 사이트 반영 완료` 알림을 받을 때까지 탭을 닫거나 추가 저장하지 않는다.
+6. 공개 사이트에서 수정한 항목과 이미지를 확인한다.
+7. 공용 PC나 작업 종료 시 `로그아웃`한다.
 
-- `\ub2e4\ub978 \ubcc0\uacbd\uc774 \uba3c\uc800 \uc800\uc7a5\ub418\uc5c8\uc2b5\ub2c8\ub2e4`
-- `GitHub \uc800\uc7a5\uc740 \uc644\ub8cc\ub410\uc9c0\ub9cc ... \ubc30\ud3ec\ub97c \ud655\uc778\ud558\uc9c0 \ubabb\ud588\uc2b5\ub2c8\ub2e4`
-- `\uad00\ub9ac\uc790 \ud658\uacbd \uc124\uc815\uc774 \uc644\ub8cc\ub418\uc9c0 \uc54a\uc558\uc2b5\ub2c8\ub2e4`
-- \ub370\uc774\ud130 \uac80\uc99d, \uc774\ubbf8\uc9c0 \uc5c5\ub85c\ub4dc, GitHub \uad8c\ud55c \uc624\ub958
+## 저장 중단 조건
 
-## \ub864\ubc31
+아래 메시지가 보이면 추가 저장하지 말고 Codex에게 점검을 요청한다.
 
-- \uc6b4\uc601 \ubcc0\uacbd\uc744 \uc989\uc2dc \ucde8\uc18c\ud560 \ub54c: Vercel\uc5d0\uc11c \uc9c1\uc804 \uc815\uc0c1 \ubc30\ud3ec\ub85c Instant Rollback/Promote.
-- \uc601\uad6c \ubcf5\uad6c: \ubb38\uc81c\uac00 \ub41c \uad00\ub9ac\uc790 \ucee4\ubc0b\uc744 Git \uc774\ub825\uc5d0\uc11c \ud655\uc778\ud55c \ub4a4 revert \ucee4\ubc0b\uc744 `main`\uc5d0 push.
-- `reset --hard`, force push\ub294 \uc0ac\uc6a9\ud558\uc9c0 \uc54a\ub294\ub2e4.
+- `다른 변경이 먼저 저장되었습니다`
+- `GitHub 저장은 완료됐지만 ... 배포를 확인하지 못했습니다`
+- `관리자 환경 설정이 완료되지 않았습니다`
+- 데이터 검증, 이미지 업로드, GitHub 권한 오류
+
+## 롤백
+
+- 운영 변경을 즉시 취소할 때: Vercel에서 직전 정상 배포로 Instant Rollback/Promote.
+- 영구 복구: 문제가 된 관리자 커밋을 Git 이력에서 확인한 뒤 revert 커밋을 `main`에 push.
+- `reset --hard`, force push는 사용하지 않는다.
