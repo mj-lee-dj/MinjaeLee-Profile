@@ -12,6 +12,7 @@
 - 운영 URL: `https://minjae-lee-profile.vercel.app/`
 - E2E 검증 커밋: `20d72d1` (`chore: verify profile deployment pipeline`)
 - Vercel Production status: success (`9YFZFiEbtKahrxghTAfikZ2rnN5Y`)
+- 검증 표식 정리 커밋: `47baf1e`, Vercel success (`8CP6JbPYUmWFbm3y9pEJAwj3X81X`)
 - 운영 검증: 표식 200, 핵심 정적 파일 6개 일치, 공개 페이지 콘솔 오류 0
 - 실제 공개 콘텐츠 마지막 변경은 `b4dd583`
 - 정상 데이터: 강의 60, 보도 12
@@ -65,5 +66,5 @@
 - `data_v3.js`가 원본이고 JSON은 현재 동기화 유지
 - CSS 맨 아래 무조건 추가/습관적 `!important` 금지
 - Vercel CLI는 이 PC에서 한글 컴퓨터명 관련 실패 기록이 있어 운영 배포에 사용하지 않음
-- 배포 검증 표식은 확인 후 정리 커밋에서 제거하며 사용자에게 보이는 콘텐츠는 변경하지 않음
+- 배포 검증 표식은 정리 커밋 `47baf1e`에서 제거 완료; 사용자에게 보이는 콘텐츠는 변경하지 않음
 - favicon 404는 기존의 낮은 우선순위 누락으로 별도 수정 필요
