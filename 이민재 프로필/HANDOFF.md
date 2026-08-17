@@ -10,9 +10,10 @@
 - Vercel Root: `이민재 프로필/profile-site`
 - 운영 데이터 원본: `이민재 프로필/profile-site/data_v3.js`
 - 운영 URL: `https://minjae-lee-profile.vercel.app/`
-- HEAD/origin main: `3ee571b1f2f70b15c962145a92409523a8e0aa7a`
-- `3ee571b`의 Vercel status: success (`J2cX7EQv2e9b1iAVeD264GWVrbQD`)
-- `3ee571b`은 문서만 추가했으며 실제 공개 콘텐츠 마지막 변경은 `b4dd583`
+- E2E 검증 커밋: `20d72d1` (`chore: verify profile deployment pipeline`)
+- Vercel Production status: success (`9YFZFiEbtKahrxghTAfikZ2rnN5Y`)
+- 운영 검증: 표식 200, 핵심 정적 파일 6개 일치, 공개 페이지 콘솔 오류 0
+- 실제 공개 콘텐츠 마지막 변경은 `b4dd583`
 - 정상 데이터: 강의 60, 보도 12
 
 ## 완료
@@ -20,7 +21,9 @@
 - 전체 파일·Git 이력·GitHub·Vercel 설정/로그·운영 페이지 감사
 - 안티그래비티 1차 핸드오프와 추가 종합 보고서 대조
 - 폴더 이동·유실/복원·캐시·CLI 실패 이력 반영
-- `.agents/AGENTS.md`와 `CODEX_HANDOFF.md`의 잘못된 경로·관리자·CSS 규칙을 로컬에서 교정
+- `.agents/AGENTS.md`와 `CODEX_HANDOFF.md`의 잘못된 경로·관리자·CSS 규칙 교정
+- 수정→커밋→main push→Vercel→운영 응답 전체 파이프라인 검증
+- 운영 데스크톱·모바일·필터·8개 섹션·이미지 277개·Core Web Vitals 확인
 - 상세 운영 기준: `CODEX_HANDOFF.md`
 
 ## HOLD — 관리자 페이지 사용 금지
@@ -30,6 +33,7 @@
 - 저장해도 운영 데이터가 바뀌지 않으며 과거 데이터 재유입 위험이 있음
 - 공개 비밀번호는 실질 인증이 아니고 GitHub PAT/Gemini 키를 localStorage에 저장함
 - 로그아웃은 인증 상태와 토큰을 지우지 않음
+- 로그인 화면에서도 Google `client_id` 누락 오류가 발생함
 
 ## 다음 작업
 
@@ -61,4 +65,5 @@
 - `data_v3.js`가 원본이고 JSON은 현재 동기화 유지
 - CSS 맨 아래 무조건 추가/습관적 `!important` 금지
 - Vercel CLI는 이 PC에서 한글 컴퓨터명 관련 실패 기록이 있어 운영 배포에 사용하지 않음
-- 이번 단계는 문서 교정만 했으며 commit/push/운영 배포는 하지 않음
+- 배포 검증 표식은 확인 후 정리 커밋에서 제거하며 사용자에게 보이는 콘텐츠는 변경하지 않음
+- favicon 404는 기존의 낮은 우선순위 누락으로 별도 수정 필요
