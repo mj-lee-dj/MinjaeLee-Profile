@@ -28,38 +28,33 @@
 
 ## 검증
 
-- Node 테스트 10개 통과: 환경 누락 fail-closed, 교차 출처 차단, 로그인/세션, 위변조, 스키마, 중복 ID, 삭제 감지, 실제 운영 경로 단일 커밋
+- Node 테스트 11개 통과: 환경 누락 fail-closed, 교차 출처 차단, 로그인/세션, 위변조, 스키마, 중복 ID, 삭제 감지, 실제 운영 경로 단일 커밋, Vercel Web 진입점
 - Vercel ncc: 전체 관리자 핸들러 CJS 번들 및 Web 진입점 ESM 번들 성공
 - 로컬/Production 브라우저: 로그인 화면만 표시, 대시보드 hidden, 오류 오버레이/콘솔 오류 0
-- Production `e5ea081`: Vercel success `DWHH19Y8r3GZ3ZJTUe6FQXmJ4pcb`
-- Production 확인: index 200, admin 200·로컬 exact, API 404, 강의 60·보도 12
+- Production `cea1e7d`: Vercel success `HKk94M5Kwq9MXC3etDq67kMGqZTg`
+- Production 확인: index 200, admin 200, API 503 fail-closed, 강의 60·보도 12
 - 내장 Browser는 Windows sandbox `helper_unknown_error`로 실패하여 기존 `agent-browser`로 대체 검증
 
-## 확인된 Vercel blocker
+## 해결된 Vercel blocker
 
-- 정적 파일만 있는 `d80a053`, `e5ea081`은 배포 성공
-- 전체 함수, 단일 export, 최신 Web export가 모두 빌드 실패
-- 외부 의존 없는 최소 `api/ping.mjs`도 `7f2e33e`에서 실패
-- 따라서 관리자 코드가 아니라 이 Vercel 프로젝트의 Functions 빌드 설정/계정 상태 문제로 확정
-- 최소 함수 실패 배포: `FjkT2NEG89Z2nHJa16cFgVVrP86o`
-- 로컬 Vercel CLI는 한글 컴퓨터명 HTTP 헤더 오류로 배포 로그 인증 불가
-- 현재 함수 진입점은 제거했고 내부 로직만 보존되어 `/api/admin`은 404 fail-closed
+- 실패 원문: 함수 이름에 공백이 포함된 `이민재 프로필/profile-site/api/...` 경로가 사용됨
+- Vercel Root Directory의 `Include files outside the root directory in the Build Step`을 Disabled로 변경
+- 검증된 `profile-site/api/admin.mjs`를 복원한 `cea1e7d` 배포 성공
+- 운영 `/api/admin?action=session`이 503과 누락된 키 이름 3개를 반환해 함수 실행 확인
+- 로컬 Vercel CLI는 한글 컴퓨터명 HTTP 헤더 오류가 있어 계속 사용하지 않음
 
-## HOLD — 관리자 저장 금지
+## HOLD — 환경변수·E2E 전 관리자 저장 금지
 
-- 관리자 화면과 공개 사이트는 안전하지만 로그인/저장은 아직 불가
-- Vercel Functions blocker 원인을 해결하고 함수 진입점을 복원해야 함
-- 그 다음 Production에 `ADMIN_PASSWORD`, `ADMIN_SESSION_SECRET`, `GITHUB_ADMIN_TOKEN` 설정
+- 관리자 화면과 공개 사이트, 서버 함수는 정상이나 로그인/저장은 아직 불가
+- Production에 `ADMIN_PASSWORD`, `ADMIN_SESSION_SECRET`, `GITHUB_ADMIN_TOKEN` 설정 필요
 - 실제 테스트 수정 저장→GitHub→Vercel→공개 사이트 E2E 검증 전까지 HOLD 유지
 
 ## 다음 작업
 
-1. Vercel Dashboard에서 배포 `FjkT2NEG89Z2nHJa16cFgVVrP86o`의 첫 Build Logs 오류 원문 확보
-2. Functions 프로젝트 설정/런타임 blocker 수정
-3. 검증된 Web 진입점 `e8c97b2`의 `profile-site/api/admin.mjs` 복원
-4. Production 환경변수 3개 설정, 구 브라우저 PAT 폐기/교체
-5. 로그인·60/12·편집 취소·로그아웃 검증
-6. 테스트용 무해 필드 저장/원복 E2E 후에만 HOLD 해제
+1. Production 환경변수 3개 설정 후 최신 배포 Redeploy
+2. 구 브라우저 PAT 폐기/교체
+3. 로그인·60/12·편집 취소·로그아웃 검증
+4. 테스트용 무해 필드 저장/원복 E2E 후에만 HOLD 해제
 
 ## 주의
 
