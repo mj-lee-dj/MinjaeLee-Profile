@@ -10,23 +10,33 @@
 
 ## 실제 경로
 
-- Git 저장소 루트: `G:\내 드라이브\0. 바이브코딩`
-- 프로젝트 루트: `G:\내 드라이브\0. 바이브코딩\이민재 프로필`
+- Git 저장소 루트: 기기별 clone에서 `git rev-parse --show-toplevel`로 확인한다. 현재 데스크탑은 `G:\내 드라이브\0. 바이브코딩`이다.
+- 프로젝트 루트: `<Git 저장소 루트>\이민재 프로필`
 - Vercel Root Directory: `이민재 프로필/profile-site`
 - 운영 데이터 원본: `이민재 프로필/profile-site/data_v3.js`
 - 운영 URL: `https://minjae-lee-profile.vercel.app/`
 - 저장소 루트의 `profile-site/`는 오래된 복제본이며 수정·병합·복구에 사용하지 않는다.
 
+## 기기 전환
+
+- 전체 절차는 `MULTI_DEVICE_WORKFLOW.md`를 따른다.
+- 각 기기는 클라우드 동기화 폴더 밖에 별도 clone을 사용하며 같은 `.git` 폴더를 동기화하지 않는다.
+- 최초 설정은 `tools/setup-device.cmd`, 작업 시작은 `tools/work-start.cmd`, 종료 검증은 `tools/work-finish.cmd`를 사용한다.
+- 진행 중 작업은 `codex/<작업명>` 브랜치를 사용하고 `main`은 Production 배포 준비가 끝난 변경에만 사용한다.
+- 시작 스크립트는 fetch만 하며 자동 pull하지 않는다. 종료 스크립트는 자동 stage·commit·push하지 않는다.
+- 한 번에 한 기기만 같은 브랜치를 수정한다.
+- 기기 전환 전 `HANDOFF.md`를 갱신하고, 사용자가 명시적으로 동기화를 요청한 경우에만 작업 브랜치에 commit·push한다.
+
 ## 관리자 페이지 HOLD
 
 - 관리자 페이지는 같은 출처의 `/api/admin` 서버 함수를 통해 인증·저장하며 브라우저에 GitHub PAT를 저장하지 않는다.
 - 운영 원본은 강의 60건·보도 12건이고 관리자와 공개 사이트가 같은 `profile-site/data_v3.js`를 사용한다.
-- Production 환경변수 3개 설정과 실제 저장→GitHub→Vercel→공개 사이트 E2E 검증 전까지 관리자 저장을 사용하지 않는다.
+- Production 환경변수 3개와 재배포는 완료됐지만 실제 저장→GitHub→Vercel→공개 사이트 E2E 검증 전까지 관리자 저장을 사용하지 않는다.
 - 관리자 페이지나 채팅에 GitHub PAT, Gemini API 키 또는 다른 비밀값을 입력하지 않는다.
 
 ## 수정 원칙
 
-- 작업 시작 시 `HANDOFF.md`, Git 상태, 원격과의 차이를 먼저 확인한다.
+- 작업 시작 시 `tools/work-start.cmd`를 실행하고 `HANDOFF.md`, Git 상태, 원격과의 차이를 확인한다.
 - 작업 트리가 더러우면 무조건 pull하지 않는다. 사용자 변경을 보존한 채 fetch/상태 확인 후 안전한 방법을 선택한다.
 - 사이트 파일은 프로젝트 루트 기준 `profile-site/` 아래만 수정한다.
 - Git 저장소 루트에서 경로를 지정할 때는 반드시 `이민재 프로필/profile-site/...`를 사용한다.

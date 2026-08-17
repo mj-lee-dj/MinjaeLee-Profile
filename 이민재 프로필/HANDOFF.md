@@ -1,12 +1,12 @@
 # HANDOFF — 이민재 프로필 사이트
 
 - 마지막 갱신: 2026-08-17 KST
-- 현재 목표: 관리자 페이지 정상화와 안전한 운영 전환
+- 현재 목표: 노트북·데스크탑 전환 환경 구성과 관리자 E2E 완료
 
 ## 기본 구조
 
-- Git 루트: `G:\내 드라이브\0. 바이브코딩`
-- 프로젝트: `이민재 프로필`
+- Git 루트: 기기별 clone에서 `git rev-parse --show-toplevel`로 확인
+- 프로젝트: `<Git 루트>/이민재 프로필`
 - Vercel Root: `이민재 프로필/profile-site`
 - 운영 URL: `https://minjae-lee-profile.vercel.app/`
 - 운영 원본: `profile-site/data_v3.js`
@@ -15,50 +15,52 @@
 
 ## 구현 완료
 
-- 공개 HTML의 하드코딩 비밀번호와 브라우저 GitHub PAT 직접 저장을 제거함
-- 서버용 관리자 로직: `profile-site/api/_handler.js`, `_core.js`
-- 세션: HttpOnly + Secure + SameSite=Strict, 4시간, HMAC 서명
-- 실제 Git 경로 `이민재 프로필/profile-site/...`로 고정
-- JS·JSON·index·새 이미지를 하나의 non-force 커밋으로 저장
-- 동시 수정 SHA 충돌, 스키마/중복 ID, 의도하지 않은 항목 감소를 차단
+- 공개 HTML의 하드코딩 비밀번호와 브라우저 GitHub PAT 직접 저장 제거
+- 서버 관리자 API, 4시간 서명 세션, 교차 출처 차단 구현
+- 실제 Git 경로 고정, JS·JSON·index·이미지 원자적 저장 구현
+- 동시 수정 SHA, 스키마·중복 ID, 의도하지 않은 삭제 방어
 - 저장 후 운영 JSON 일치를 최대 2분 확인
-- Gemini/Google Client ID는 탭 세션에만 보관하며 client_id 미설정 콘솔 오류 제거
-- Git 루트의 오래된 중복 `profile-site/` 11개 파일을 제거해 원본 단일화
-- 운영 절차: `ADMIN_RUNBOOK.md`
+- 오래된 루트 `profile-site/` 추적 복제본 제거
+- Production 환경변수 3개 설정 후 `67bb810` 재배포
+- 기기 전환 문서: `MULTI_DEVICE_WORKFLOW.md`
+- 기기별 자동 점검: `tools/setup-device.cmd`, `work-start.cmd`, `work-finish.cmd`
+- 전환 구성 브랜치: `codex/multi-device-workflow`
 
 ## 검증
 
-- Node 테스트 11개 통과: 환경 누락 fail-closed, 교차 출처 차단, 로그인/세션, 위변조, 스키마, 중복 ID, 삭제 감지, 실제 운영 경로 단일 커밋, Vercel Web 진입점
-- Vercel ncc: 전체 관리자 핸들러 CJS 번들 및 Web 진입점 ESM 번들 성공
-- 로컬/Production 브라우저: 로그인 화면만 표시, 대시보드 hidden, 오류 오버레이/콘솔 오류 0
-- Production `cea1e7d`: Vercel success `HKk94M5Kwq9MXC3etDq67kMGqZTg`
-- Production 확인: index 200, admin 200, API 503 fail-closed, 강의 60·보도 12
-- 내장 Browser는 Windows sandbox `helper_unknown_error`로 실패하여 기존 `agent-browser`로 대체 검증
+- Node 테스트 11개 통과
+- 공개·데이터·관리자 API JavaScript 구문 검사 통과
+- Vercel ncc CJS·ESM 번들 성공
+- Production index 200, admin 200
+- 동일 출처 비로그인 세션 API 401로 환경 설정과 인증 대기 상태 확인
+- 관리자 로그인 전 대시보드 hidden, 기존 브라우저 콘솔 오류 0
 
-## 해결된 Vercel blocker
+## 관리자 HOLD — 실제 저장 E2E 전
 
-- 실패 원문: 함수 이름에 공백이 포함된 `이민재 프로필/profile-site/api/...` 경로가 사용됨
-- Vercel Root Directory의 `Include files outside the root directory in the Build Step`을 Disabled로 변경
-- 검증된 `profile-site/api/admin.mjs`를 복원한 `cea1e7d` 배포 성공
-- 운영 `/api/admin?action=session`이 503과 누락된 키 이름 3개를 반환해 함수 실행 확인
-- 로컬 Vercel CLI는 한글 컴퓨터명 HTTP 헤더 오류가 있어 계속 사용하지 않음
+- Production 환경변수와 재배포는 완료됨
+- 실제 로그인·편집 취소·로그아웃 검증은 아직 필요
+- 무해한 필드 저장→GitHub→Vercel→공개 사이트 반영 및 원복 전까지 관리자 저장 HOLD
 
-## HOLD — 환경변수·E2E 전 관리자 저장 금지
+## 기기 전환 규칙
 
-- 관리자 화면과 공개 사이트, 서버 함수는 정상이나 로그인/저장은 아직 불가
-- Production에 `ADMIN_PASSWORD`, `ADMIN_SESSION_SECRET`, `GITHUB_ADMIN_TOKEN` 설정 필요
-- 실제 테스트 수정 저장→GitHub→Vercel→공개 사이트 E2E 검증 전까지 HOLD 유지
+- 각 기기는 Google Drive·OneDrive·Dropbox 밖에 별도 clone 사용
+- 같은 `.git` 폴더를 클라우드 드라이브로 동기화하지 않음
+- 작업 시작: `tools/work-start.cmd`
+- 기기 전환 전: `tools/work-finish.cmd`, HANDOFF 갱신, 작업 브랜치 동기화
+- 진행 중 작업은 `codex/<작업명>`, Production 배포만 `main`
+- 자동 pull·`git add .`·자동 commit/push·force push 금지
+- 동시에 두 기기에서 같은 브랜치를 수정하지 않음
 
 ## 다음 작업
 
-1. Production 환경변수 3개 설정 후 최신 배포 Redeploy
-2. 구 브라우저 PAT 폐기/교체
-3. 로그인·60/12·편집 취소·로그아웃 검증
-4. 테스트용 무해 필드 저장/원복 E2E 후에만 HOLD 해제
+1. 다른 기기에서 `codex/multi-device-workflow` 브랜치를 클라우드 밖에 clone 후 `tools/setup-device.cmd` 실행
+2. 관리자 로그인·60/12·편집 취소·로그아웃 검증
+3. 무해한 필드 저장·원복 E2E 후 HOLD 해제
 
 ## 주의
 
-- 비밀값은 커밋, 문서, 채팅, HANDOFF에 남기지 않는다.
-- 정확한 파일만 stage; `git add .`, hard reset, force push 금지.
-- unrelated `.agent/workflows/deploy.md` 삭제와 untracked 도구 파일은 보존한다.
-- 롤백은 임시 Vercel Promote/Instant Rollback, 영구 Git revert 커밋을 사용한다.
+- 비밀값은 Git, 문서, 채팅, HANDOFF, 클라우드 파일에 남기지 않는다.
+- unrelated `.agent/workflows/deploy.md` 삭제와 다른 프로젝트 변경은 보존한다.
+- 루트의 미추적 복구 스크립트는 실행·스테이징하지 않는다.
+- `main` push는 Vercel Production 배포다.
+- 롤백은 임시 Vercel Promote/Instant Rollback, 영구 Git revert를 사용한다.
