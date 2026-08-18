@@ -114,7 +114,7 @@ test('save creates one webhook-compatible atomic commit at the deployed source p
     assert.equal(input.expectedHeadOid, 'a'.repeat(40));
     assert.deepEqual(input.branch, {
       repositoryNameWithOwner: 'mj-lee-dj/MinjaeLee-Profile',
-      refName: 'refs/heads/main',
+      branchName: 'main',
     });
     assert.match(captured.graphql.query, /createCommitOnBranch/);
   } finally {
