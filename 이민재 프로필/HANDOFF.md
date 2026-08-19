@@ -1,58 +1,72 @@
 # HANDOFF — 이민재 프로필 사이트
 
-- 마지막 갱신: 2026-08-18 21:24 KST
-- 현재 상태: 관리자 저장→GitHub→Vercel→운영 반영 E2E 정상
+- 마지막 갱신: 2026-08-20 KST
+- 현재 목표: Editorial Noir V13 관리자 저장·배포 경계를 실제 배포 직전 상태로 검증
+- 배포 상태: 비배포. 이번 작업에서 commit·push·Vercel 운영 배포 없음
 
-## 기본 구조
+## 운영 기준선
 
-- Git 루트: `G:\내 드라이브\0. 바이브코딩`
-- 프로젝트: `이민재 프로필`
-- Vercel Root: `이민재 프로필/profile-site`
+- 프로젝트: `profile-site`; Vercel Root: `이민재 프로필/profile-site`
 - 운영 URL: `https://minjae-lee-profile.vercel.app/`
-- 데이터 원본: `profile-site/data_v3.js`; JSON 동기본: `profile-site/data_v3.json`
-- 관리자: `profile-site/admin.html`; 서버: `profile-site/api/admin.mjs` → `_handler.js`
-- 정상 기준: 강의 60, 저서 4, 수상 5, 보도자료 12, 링크 항목 18, 이미지 항목 63
+- 운영 데이터: `profile-site/data_v3.js`, `profile-site/data_v3.json`
+- 보호 운영 파일: `index.html`, `style.css`, `script.js`, `admin.html`, `data_v3.js`, `data_v3.json`
+- 위 6개 파일은 V13 작업에서 수정하지 않음
 
-## 구현·설정 완료
+## V13 초안 진입점
 
-- 공개 HTML 비밀번호와 브라우저 GitHub PAT 저장을 제거하고 서버 인증으로 전환
-- 세션: HttpOnly + Secure + SameSite=Strict, 4시간, HMAC 서명
-- Vercel Root Directory 외부 파일 포함을 Disabled로 설정
-- Production 환경변수 3종 설정 완료: `ADMIN_PASSWORD`, `ADMIN_SESSION_SECRET`, `GITHUB_ADMIN_TOKEN`
-- GitHub GraphQL `createCommitOnBranch`는 `repositoryNameWithOwner` + `branchName` 사용
-- 저장 응답이 `commitSha`, `updatedAt`, `cacheKey`를 반환
-- 관리자 UI는 운영 `index.html`의 동일 `cacheKey`와 JSON 일치 확인 후에만 완료 표시
-- JS·JSON·index·새 이미지를 non-force 커밋으로 저장하며 SHA 충돌·스키마·중복 ID·항목 감소 차단
-- Gemini/Google Client ID는 탭 세션에만 보관
+- 공개: `profile-site/draft-v2.html`
+- 통합 관리자: `profile-site/admin-profile-final.html`
+- 콘텐츠 원장: `draft-content-store.js`, `admin-content-schema.js`, `admin-content-local.js`
+- 이미지 붙여넣기: `admin-image-paste.js`
+- 전체 저장·배포 콘솔: `admin-publish.js`, `admin-content-v13.css`
+- 서버 경계: `api/admin.mjs`, `api/_handler.js`, `api/_core.js`
+- 디자인 계약: `profile-site/DESIGN.md`
 
-## 2026-08-18 최종 검증
+## 확정 동작
 
-- 수정 커밋: `1aa5bf6`(GraphQL branch 입력), `2bb7451`(회귀 테스트)
-- Node 관리자 테스트 11/11 통과; 변경 파일 `node --check` 통과
-- Vercel ncc 0.45.0 ESM 번들 성공
-- 실제 관리자 무변경 저장 1회 성공: 커밋 `aa0e78e810eea50f2307b39d5a5e319164aa922a`
-- 저장 API 200; 화면이 약 18초 후 `운영 사이트 반영 완료` 표시
-- 해당 커밋 Vercel 상태 `success`; 배포 ID `7YfFFovFHsby6xf59msx7Gug52p2`
-- 운영 index가 반환된 cacheKey `1787055829151`을 사용함을 확인
-- 운영 데이터 수량 60·4·5·12 및 관리자 대시보드 18·63 유지 확인
+- 공개 흐름: Hero → PROOF → Books → Online Courses → Watch → Lectures → Records → Instagram/Contact
+- 관리자 범위: 프로필, PROOF, 저서, 온라인 연수, Watch, 강의, 수상, 활동, 보도자료, 대표 강의 5개
+- 온라인 연수는 연수명·연수원·썸네일 필수, Watch는 제목·링크 필수, 강의는 제목·주제 필수
+- 온라인 연수 소개와 강의 설명은 입력하지 않음
+- 온라인 연수·Watch·강의 이미지는 `Ctrl+V` 또는 파일 선택 가능
+- 붙여넣은 이미지는 SVG 제외, 최대 1600px·900KB WebP로 축소; 강의는 최대 3장
+- 항목별 저장은 로컬 초안을 갱신하고 같은 브라우저 공개 초안에 즉시 반영
+- 상단 `운영 사이트 저장 및 배포`는 전체 초안을 한 번에 검증·업로드·저장·배포 확인
+- `file:`/localhost에서는 운영 API를 호출하지 않고 안전 안내만 표시
+- 배포된 HTTPS 관리자는 HttpOnly 세션·CSRF·동일 출처 검사를 통과해야 함
+- 이미지는 서버에서 형식·매직바이트를 검증하고 GitHub blob으로 만든 뒤 데이터와 한 커밋에 저장
+- 최신 운영 커밋·개인정보·컬렉션·PROOF·강의 큐레이션 충돌을 검사해 다른 기기 변경을 덮어쓰지 않음
+- 삭제가 있으면 명시적 확인을 요구하며, 운영 JSON 일치 전에는 완료로 표시하지 않음
 
-## 운영 절차
+## 서버 비밀값 이름
 
-1. 관리자 로그인 후 필요한 항목만 수정한다.
-2. `전체 저장 & 배포`는 한 번만 누르고 `운영 사이트 반영 완료`까지 기다린다.
-3. 실패 시 같은 버튼을 반복 클릭하지 말고 브라우저 메시지와 Vercel Function 로그를 확인한다.
-4. GitHub 최신 `content: update profile via admin` 커밋과 Vercel `Ready`를 교차확인한다.
-5. 운영 페이지 강의 60·보도 12 등 핵심 수량과 수정 항목을 확인한다.
+- `ADMIN_PASSWORD`: 관리자 로그인 비밀번호
+- `ADMIN_SESSION_SECRET`: 서명 세션·CSRF 비밀
+- `GITHUB_ADMIN_TOKEN`: 저장소 내용·커밋 갱신 토큰
+- 값 자체는 Git·브라우저·문서에 기록하지 않음
 
-## 다음 유지보수
+## 검증
 
-- GitHub 토큰 만료일 전 교체하고 Vercel Production/Preview 범위를 함께 확인
-- 더 이상 쓰지 않는 구 브라우저 PAT가 남아 있으면 폐기
-- 장애 시 Vercel Instant Rollback은 임시 복구, Git revert 커밋은 영구 복구에 사용
+- Node API/핸들러 테스트 15/15 통과, 변경 JS 문법 검사 통과
+- 브라우저 QA: 이미지 붙여넣기 WebP 변환, 강의 3장, 공개 미리보기 렌더링 통과
+- 로컬 배포 버튼 API 호출 0회 및 안전 안내 확인
+- 호스팅 모의 E2E: session → data → upload-image → save → 운영 JSON 확인 통과
+- 다중 기기 개인정보 변경은 session → data 뒤 저장 전에 차단
+- 375/768/1280 관리자 가로 넘침 0, 배포 버튼 52px, 모바일 dialog 행동 영역 노출
+- 콘솔 오류·경고 0
+- 증거: `.omo/evidence/profile-v13/`
+
+## 다음 작업
+
+1. 사용자가 로컬 V13 공개·관리자 초안을 최종 확인
+2. 사용자 승인 후 운영 진입 파일 통합·commit·push
+3. Vercel 환경변수 3개 확인 후 실제 관리자 로그인→저장→GitHub→Vercel→도메인 E2E
+4. 실패 시 Git revert 또는 Vercel Instant Rollback/Promote
 
 ## 주의
 
-- 비밀값은 커밋, 문서, 채팅, HANDOFF에 남기지 않는다.
-- 정확한 파일만 stage하며 `git add .`, hard reset, force push는 금지한다.
-- 공유 checkout의 unrelated 삭제·untracked 파일은 보존한다.
-- 로컬 Vercel CLI는 한글 컴퓨터명 HTTP 헤더 오류 이력이 있어 배포 확인에 사용하지 않는다.
+- 관리자 페이지 HOLD: 실제 운영 E2E 통과 전 운영 관리자 저장 사용 금지
+- 브라우저에 GitHub PAT 등 비밀값 입력 금지
+- main push는 Vercel Production 배포이므로 명시적 승인 전 금지
+- 기기 전환은 `MULTI_DEVICE_WORKFLOW.md`를 따르고 동시에 같은 브랜치를 수정하지 않음
+- unrelated dirty/untracked 파일은 건드리지 않음

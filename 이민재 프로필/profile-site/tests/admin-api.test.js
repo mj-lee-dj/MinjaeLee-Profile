@@ -30,6 +30,43 @@ test('deletions are summarized for explicit confirmation', () => {
   ]);
 });
 
+test('optional featured proofs reject duplicate ids and participate in delete confirmation', () => {
+  const before = structuredClone(currentData);
+  before.featuredProofs = [
+    { id: 'proof-1', title: '첫 번째 증거' },
+    { id: 'proof-2', title: '두 번째 증거' },
+  ];
+  const invalid = structuredClone(before);
+  invalid.featuredProofs[1].id = 'proof-1';
+  assert.match(validateData(invalid).join(' | '), /featuredProofs.*중복 id/);
+
+  const after = structuredClone(before);
+  after.featuredProofs.pop();
+  assert.deepEqual(deletionSummary(before, after), [
+    { key: 'featuredProofs', before: 2, after: 1 },
+  ]);
+});
+
+test('lecture curation accepts valid ids and rejects malformed payloads', () => {
+  const valid = structuredClone(currentData);
+  valid.lectureCuration = {
+    label: 'TITLE',
+    highlights: valid.lectures.slice(0, 5).map((lecture) => lecture.id),
+    hidden: [],
+  };
+  assert.deepEqual(validateData(valid), []);
+
+  const invalid = structuredClone(valid);
+  invalid.lectureCuration.highlights = ['missing-lecture'];
+  assert.match(validateData(invalid).join(' | '), /lectureCuration/);
+});
+
+test('embedded clipboard images must be uploaded before the save boundary', () => {
+  const invalid = structuredClone(currentData);
+  invalid.onlineCourses[0].images = ['data:image/png;base64,iVBORw0KGgo='];
+  assert.match(validateData(invalid).join(' | '), /이미지 업로드/);
+});
+
 test('signed session accepts the original cookie and rejects tampering', () => {
   const secret = 'test-session-secret-that-is-long-enough';
   const token = makeSession(secret);

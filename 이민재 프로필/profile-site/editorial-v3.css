@@ -1,0 +1,628 @@
+:root {
+  --font-statement: "Gowun Batang", "Batang", serif;
+  --type-proof-title: clamp(1.4rem, 1.9vw, 1.9rem);
+  --type-proof-title-mobile: clamp(1.45rem, 6vw, 1.7rem);
+  --type-proof-ledger-title: clamp(1.35rem, 2.4vw, 2rem);
+  --type-proof-index: clamp(2.75rem, 4vw, 4rem);
+  --type-contact-lead: clamp(1.25rem, 2vw, 1.75rem);
+  --type-hero-statement: clamp(1.75rem, 2.8vw, 2.85rem);
+  --type-video-title: clamp(1.05rem, 1.3vw, 1.25rem);
+  --type-lecture-title: clamp(1.05rem, 1.35vw, 1.3rem);
+  --type-showcase-title: clamp(1.2rem, 1.7vw, 1.55rem);
+  --type-contact-aside: clamp(1.05rem, 1.4vw, 1.3rem);
+  --type-card-meta: clamp(.9rem, 1vw, 1rem);
+  --type-book-meta: clamp(1rem, 1.15vw, 1.125rem);
+  --type-lecture-meta: clamp(.875rem, .95vw, .95rem);
+  --type-media-action: .76rem;
+  --type-proof-creator-mobile: clamp(1.15rem, 5.1vw, 1.25rem);
+  --ratio-presentation: 16 / 9;
+  --ratio-video: 16 / 9;
+  --carousel-gap: var(--space-6);
+  --surface-contact-card: var(--paper-bright);
+  --ink-contact-card: var(--ink);
+  --control-size: 48px;
+  --control-icon-size: 20px;
+  --carousel-control-overlap: -10px;
+  --carousel-control-y: clamp(118px, 14vw, 138px);
+  --proof-min-height: 284px;
+  --proof-ledger-row-min-height: 104px;
+  --proof-ledger-index-column: 72px;
+  --slide-caption-size: .68rem;
+  --hero-copy-inset: clamp(var(--space-16), 8vw, 120px);
+  --lecture-row-min-height: 124px;
+  --lecture-layout-showcase-min: 420px;
+  --lecture-ledger-index-column: 64px;
+  --lecture-sticky-offset: 92px;
+  --lecture-empty-min-height: 320px;
+  --contact-card-inset: clamp(28px, 4vw, 52px);
+  --contact-panel-card-min: 360px;
+  --type-hero-statement-mobile: clamp(1.65rem, 8vw, 2.2rem);
+  --proof-min-height-mobile: 240px;
+  --proof-ledger-row-min-height-mobile: 88px;
+  --proof-ledger-index-column-mobile: 52px;
+  --proof-hero-index-column-mobile: 56px;
+  --lecture-row-min-height-mobile: 112px;
+  --lecture-ledger-index-column-mobile: 48px;
+}
+
+.profile-hero__copy {
+  padding-top: var(--hero-copy-inset);
+}
+
+.profile-hero__name {
+  margin-top: 0;
+}
+
+.profile-hero__statement {
+  max-width: 17ch;
+  font-family: var(--font-statement);
+  font-size: var(--type-hero-statement);
+  font-weight: 400;
+  letter-spacing: -.035em;
+  line-height: 1.45;
+  text-wrap: balance;
+}
+
+.profile-hero__stats dd,
+.proof-card__index,
+.ledger__index,
+.record-list__index,
+.press-index__number,
+.course-card__index,
+.book-card__number {
+  font-weight: 600;
+  font-variant-numeric: lining-nums tabular-nums;
+}
+
+.proof-card {
+  display: grid;
+  min-height: var(--proof-min-height);
+  grid-template-rows: auto 1fr;
+}
+
+.proof-card__index {
+  margin-bottom: var(--space-6);
+  font-size: var(--type-proof-index);
+}
+
+.proof-card__title {
+  align-self: end;
+  margin: var(--space-8) 0 0;
+  font-size: var(--type-proof-title);
+  line-height: 1.35;
+  text-wrap: balance;
+  word-break: keep-all;
+}
+
+.book-card__cover-image img,
+.course-card .media-frame img {
+  object-fit: contain;
+}
+
+.book-card__link,
+.course-card .media-frame {
+  position: relative;
+}
+
+.book-card__meta,
+.course-card__meta {
+  color: var(--paper-muted-readable);
+  line-height: 1.55;
+}
+
+.book-card__meta {
+  font-size: var(--type-book-meta);
+}
+
+.course-card__meta {
+  font-size: var(--type-card-meta);
+}
+
+.media-action {
+  position: absolute;
+  z-index: 2;
+  right: var(--space-3);
+  bottom: var(--space-3);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--rule-bright);
+  background: var(--ink);
+  color: var(--paper-bright);
+  font-family: var(--font-meta);
+  font-size: var(--type-media-action);
+  font-weight: 700;
+  letter-spacing: .12em;
+  line-height: 1;
+  transition: background var(--timing-micro) ease, border-color var(--timing-micro) ease, transform var(--timing-micro) ease;
+}
+
+a:hover .media-action,
+a:focus-visible .media-action {
+  border-color: var(--red);
+  background: var(--red);
+  transform: translateY(-2px);
+}
+
+.proof-index .section-heading {
+  margin-bottom: var(--space-12);
+}
+
+.proof-index .ledger__row {
+  min-height: var(--proof-ledger-row-min-height);
+  grid-template-columns: var(--proof-ledger-index-column) minmax(0, 1fr);
+  gap: var(--space-6);
+}
+
+.proof-index .ledger__title {
+  font-size: var(--type-proof-ledger-title);
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.proof-index #proofLedger > li:nth-child(-n + 4) .ledger__title::after {
+  content: none;
+}
+
+.video-carousel {
+  position: relative;
+  border-top: 1px solid var(--rule);
+}
+
+.video-carousel__stage {
+  position: relative;
+  padding-top: var(--space-6);
+}
+
+.video-carousel__status {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.video-carousel__buttons {
+  position: absolute;
+  z-index: 3;
+  top: var(--carousel-control-y);
+  right: var(--carousel-control-overlap);
+  left: var(--carousel-control-overlap);
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none;
+  transform: translateY(-50%);
+}
+
+.carousel-button {
+  display: grid;
+  width: var(--control-size);
+  height: var(--control-size);
+  place-items: center;
+  border: 1px solid var(--rule-bright);
+  border-radius: 0;
+  background: var(--ink);
+  color: var(--paper-bright);
+  cursor: pointer;
+  pointer-events: auto;
+  transition: background var(--timing-micro) ease, color var(--timing-micro) ease, transform var(--timing-micro) ease;
+}
+
+.carousel-button:hover:not(:disabled) {
+  background: var(--paper-bright);
+  color: var(--ink);
+}
+
+.carousel-button:active:not(:disabled) {
+  transform: scale(.97);
+}
+
+.carousel-button:disabled {
+  cursor: not-allowed;
+  opacity: .35;
+}
+
+.carousel-button svg {
+  width: var(--control-icon-size);
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: square;
+  stroke-linejoin: miter;
+  stroke-width: 1.5;
+}
+
+.video-carousel__viewport {
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scroll-behavior: smooth;
+  scroll-snap-type: inline mandatory;
+  scrollbar-color: var(--rule-bright) transparent;
+  scrollbar-width: thin;
+}
+
+.video-carousel__track {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--carousel-gap);
+}
+
+.video-card {
+  min-width: 0;
+  flex: 0 0 calc((100% - (var(--carousel-gap) * 2)) / 3);
+  scroll-snap-align: start;
+}
+
+.video-card .media-frame {
+  aspect-ratio: var(--ratio-video);
+  border: 1px solid var(--rule);
+}
+
+.video-card .media-frame img {
+  object-fit: contain;
+}
+
+
+.video-card__title {
+  margin-top: var(--space-4);
+  font-size: var(--type-video-title);
+  font-weight: 700;
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+
+.lecture-layout {
+  grid-template-columns: minmax(0, 5fr) minmax(var(--lecture-layout-showcase-min), 7fr);
+}
+
+.lecture-ledger__item {
+  display: block;
+  min-height: 0;
+  padding: 0;
+}
+
+.lecture-ledger__button {
+  display: grid;
+  width: 100%;
+  min-height: var(--lecture-row-min-height);
+  align-items: center;
+  padding: var(--space-4);
+  border: 0;
+  border-bottom: 1px solid var(--rule);
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  grid-template-columns: var(--lecture-ledger-index-column) minmax(0, 1fr);
+  gap: var(--space-3) var(--space-4);
+  text-align: left;
+  transition: background var(--timing-standard) ease, box-shadow var(--timing-standard) ease;
+}
+
+.lecture-ledger__button:hover {
+  background: var(--ink-raised);
+}
+
+.lecture-ledger__button[aria-current='true'] {
+  background: var(--ink-raised);
+  box-shadow: inset 3px 0 var(--red);
+}
+
+.lecture-ledger__button .lecture-ledger__title {
+  font-size: var(--type-lecture-title);
+  font-weight: 700;
+  text-wrap: pretty;
+}
+
+.lecture-ledger__button .lecture-ledger__org {
+  grid-column: 2;
+  color: var(--paper-muted-readable);
+  font-size: var(--type-lecture-meta);
+  text-align: left;
+}
+
+.lecture-ledger__empty {
+  padding: var(--space-6);
+  color: var(--paper-muted-readable);
+}
+
+.lecture-showcase-wrap {
+  position: sticky;
+  top: var(--lecture-sticky-offset);
+  align-self: start;
+}
+
+.lecture-showcase__heading {
+  display: grid;
+  margin-bottom: var(--space-4);
+  grid-template-columns: 1fr;
+  gap: var(--space-2);
+}
+
+.lecture-showcase__heading h3 {
+  max-width: 34ch;
+  margin: 0;
+  color: var(--paper-bright);
+  font-size: var(--type-showcase-title);
+  line-height: 1.4;
+  text-wrap: balance;
+  word-break: keep-all;
+}
+
+.lecture-showcase {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+
+.lecture-showcase__slide {
+  position: relative;
+  aspect-ratio: var(--ratio-presentation);
+  overflow: hidden;
+  margin: 0;
+  border: 1px solid var(--rule);
+  background: var(--ink-raised);
+}
+
+.lecture-showcase__slide:first-child {
+  grid-column: 1 / -1;
+}
+
+.lecture-showcase[data-count='2'] .lecture-showcase__slide {
+  grid-column: auto;
+}
+
+.lecture-showcase__slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.lecture-showcase__slide figcaption {
+  position: absolute;
+  right: var(--space-3);
+  bottom: var(--space-3);
+  padding: var(--space-1) var(--space-2);
+  background: var(--ink);
+  color: var(--paper-muted-readable);
+  font-family: var(--font-meta);
+  font-size: var(--slide-caption-size);
+  letter-spacing: .08em;
+}
+
+.lecture-showcase__empty {
+  display: grid;
+  min-height: var(--lecture-empty-min-height);
+  place-items: center;
+  padding: var(--space-8);
+  border: 1px solid var(--rule);
+  color: var(--paper-muted-readable);
+  text-align: center;
+}
+
+.contact-panel__inner {
+  align-items: center;
+  grid-template-columns: minmax(0, 7fr) minmax(var(--contact-panel-card-min), 5fr);
+  gap: var(--space-16);
+}
+
+.contact-panel__aside {
+  max-width: 26ch;
+  margin: var(--space-8) 0 0;
+  color: var(--paper-bright);
+  font-size: var(--type-contact-aside);
+  line-height: 1.65;
+  word-break: keep-all;
+}
+
+.contact-panel__card {
+  padding: var(--contact-card-inset);
+  background: var(--surface-contact-card);
+  color: var(--ink-contact-card);
+}
+
+.contact-panel__card > p {
+  margin: 0 0 var(--space-8);
+  color: var(--ink-contact-card);
+  font-size: var(--type-contact-lead);
+  font-weight: 700;
+  line-height: 1.55;
+  text-wrap: pretty;
+  word-break: keep-all;
+}
+
+.contact-panel__card .instagram-cta--contact {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--paper-bright);
+}
+
+.contact-panel__card .instagram-cta--contact small {
+  color: var(--red);
+}
+
+.contact-panel__card .instagram-cta--contact:hover {
+  border-color: var(--red-deep);
+  background: var(--red-deep);
+}
+
+.contact-panel__card .instagram-cta--contact:hover small {
+  color: currentColor;
+}
+
+.contact-panel__card .contact-panel__link {
+  border-color: var(--ink);
+  color: var(--ink);
+  font-size: var(--type-body-readable);
+  text-transform: none;
+}
+
+@media (max-width: 1024px) {
+  .proof-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .proof-card:nth-child(2) {
+    border-right: 0;
+  }
+
+  .proof-card:nth-child(-n + 2) {
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .video-card {
+    flex-basis: calc((100% - var(--carousel-gap)) / 2);
+  }
+
+  .lecture-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .lecture-showcase-wrap {
+    position: relative;
+    top: auto;
+  }
+
+  .contact-panel__inner {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .profile-hero__statement {
+    max-width: 100%;
+    font-size: var(--type-hero-statement-mobile);
+  }
+
+  .proof-index .ledger__row {
+    min-height: var(--proof-ledger-row-min-height-mobile);
+    grid-template-columns: var(--proof-ledger-index-column-mobile) minmax(0, 1fr);
+    gap: var(--space-3);
+  }
+
+  .proof-index .ledger__title--creator {
+    font-size: var(--type-proof-creator-mobile);
+    letter-spacing: -.035em;
+    white-space: nowrap;
+  }
+
+  .proof-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .proof-card,
+  .proof-card:nth-child(2) {
+    min-height: 0;
+    align-items: center;
+    padding-block: var(--space-8);
+    border-right: 0;
+    border-bottom: 1px solid var(--rule);
+    grid-template-columns: var(--proof-hero-index-column-mobile) minmax(0, 1fr);
+    grid-template-rows: auto;
+    gap: var(--space-4);
+  }
+
+  .proof-card__index {
+    margin-bottom: 0;
+  }
+
+  .proof-card__title {
+    align-self: center;
+    margin: 0;
+    font-size: var(--type-proof-title-mobile);
+  }
+
+  .proof-card:last-child {
+    border-bottom: 0;
+  }
+
+  .video-card {
+    flex-basis: 100%;
+  }
+
+  .lecture-layout {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .lecture-showcase-wrap {
+    order: -1;
+  }
+
+  .lecture-showcase {
+    display: grid;
+    padding-bottom: var(--space-3);
+    overflow-x: auto;
+    grid-auto-columns: 88%;
+    grid-auto-flow: column;
+    grid-template-columns: none;
+    scroll-snap-type: inline mandatory;
+    scrollbar-width: thin;
+  }
+
+  .lecture-showcase__slide,
+  .lecture-showcase__slide:first-child,
+  .lecture-showcase[data-count='2'] .lecture-showcase__slide {
+    grid-column: auto;
+    scroll-snap-align: start;
+  }
+
+  .lecture-ledger__button {
+    min-height: var(--lecture-row-min-height-mobile);
+    padding-inline: var(--space-3);
+    grid-template-columns: var(--lecture-ledger-index-column-mobile) minmax(0, 1fr);
+  }
+
+  .contact-panel__inner {
+    gap: var(--space-10);
+  }
+
+  .contact-panel__card {
+    padding: var(--space-6);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .video-carousel__viewport {
+    scroll-behavior: auto;
+  }
+
+  .carousel-button,
+  .lecture-ledger__button {
+    transition: none;
+  }
+}
+
+.video-carousel__viewport,
+.topic-index,
+.lecture-showcase {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.video-carousel__viewport::-webkit-scrollbar,
+.topic-index::-webkit-scrollbar,
+.lecture-showcase::-webkit-scrollbar {
+  display: none;
+}
+
+.video-card .media-frame {
+  display: block;
+  overflow: hidden;
+}
+
+.video-card .media-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.profile-hero__name .profile-hero__initial {
+  padding-left: 0;
+}
+
+.lecture-ledger__button .lecture-ledger__year {
+  font-size: var(--type-lecture-meta);
+}

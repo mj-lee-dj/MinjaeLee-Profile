@@ -1,0 +1,22 @@
+:root {
+  --type-nav-mark: 1.25rem;
+  --type-nav-label: .72rem;
+  --type-hero-latin: clamp(5rem, 11.2vw, 10.5rem);
+  --type-hero-korean: clamp(2rem, 4vw, 4.2rem);
+  --tracking-nav-mark: -.03em;
+  --tracking-nav-label: .1em;
+  --tracking-hero-korean: -.06em;
+  --space-nav-gap: clamp(var(--space-4), 2.5vw, var(--space-10));
+  --motion-reveal-distance: 18px;
+}
+
+.editorial-nav__logo { font-size: var(--type-nav-mark); letter-spacing: var(--tracking-nav-mark); }
+.editorial-nav__links { gap: var(--space-nav-gap); }
+.editorial-nav__link { font-size: var(--type-nav-label); letter-spacing: var(--tracking-nav-label); }
+.profile-hero__name { font-size: var(--type-hero-latin); }
+.profile-hero__name-kr { font-size: var(--type-hero-korean); letter-spacing: var(--tracking-hero-korean); }
+.reveal-block { transform: translateY(var(--motion-reveal-distance)); }
+
+.proof-index #proofLedger > li:nth-child(n + 5) .ledger__title::after {
+  content: none;
+}

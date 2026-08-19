@@ -135,6 +135,13 @@ async function handleUpload(req, res) {
   const extension = match[1] === 'jpeg' ? 'jpg' : match[1];
   const bytes = Buffer.from(match[2], 'base64');
   if (!bytes.length || bytes.length > MAX_IMAGE_BYTES) return json(res, 413, { error: '\uc774\ubbf8\uc9c0\ub294 3MB \uc774\ud558\uc5ec\uc57c \ud569\ub2c8\ub2e4.' });
+  const signatures = {
+    png: (value) => value.subarray(0, 8).equals(Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a])),
+    jpeg: (value) => value.length > 3 && value[0] === 0xff && value[1] === 0xd8 && value[value.length - 2] === 0xff && value[value.length - 1] === 0xd9,
+    gif: (value) => ['GIF87a', 'GIF89a'].includes(value.subarray(0, 6).toString('ascii')),
+    webp: (value) => value.subarray(0, 4).toString('ascii') === 'RIFF' && value.subarray(8, 12).toString('ascii') === 'WEBP',
+  };
+  if (!signatures[match[1]](bytes)) return json(res, 400, { error: '이미지 내용과 파일 형식이 일치하지 않습니다.' });
   const blob = await makeBlob(match[2], 'base64');
   const filename = `${blob.sha.slice(0, 12)}.${extension}`;
   return json(res, 200, {

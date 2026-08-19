@@ -93,3 +93,30 @@ test('wrong password is rejected without a cookie', async () => {
   assert.equal(res.statusCode, 401);
   assert.equal(res.headers['set-cookie'], undefined);
 });
+
+
+test('image upload rejects a payload whose bytes do not match its declared format', async () => {
+  configure();
+  const loginRes = response();
+  await handler(request({
+    method: 'POST',
+    action: 'login',
+    headers: { host: 'example.test', origin: 'https://example.test' },
+    body: { password: process.env.ADMIN_PASSWORD },
+  }), loginRes);
+
+  const res = response();
+  await handler(request({
+    method: 'POST',
+    action: 'upload-image',
+    headers: {
+      host: 'example.test',
+      origin: 'https://example.test',
+      cookie: loginRes.headers['set-cookie'].split(';')[0],
+      'x-admin-csrf': loginRes.body.csrf,
+    },
+    body: { dataUrl: 'data:image/png;base64,' + Buffer.from('not a png').toString('base64') },
+  }), res);
+  assert.equal(res.statusCode, 400);
+  assert.match(res.body.error, /형식/);
+});

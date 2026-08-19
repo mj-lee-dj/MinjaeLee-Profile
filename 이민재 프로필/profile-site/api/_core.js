@@ -13,6 +13,7 @@ const ARRAY_KEYS = [
   'press',
 ];
 const ID_KEYS = ARRAY_KEYS.filter((key) => key !== 'expertise');
+const OPTIONAL_ID_KEYS = ['featuredProofs'];
 
 function parseCookies(req) {
   return Object.fromEntries(
@@ -73,7 +74,10 @@ function validateData(data) {
   for (const key of ARRAY_KEYS) {
     if (!Array.isArray(data[key])) errors.push(`${key}는 배열이어야 합니다.`);
   }
-  for (const key of ID_KEYS) {
+  if (data.featuredProofs !== undefined && !Array.isArray(data.featuredProofs)) {
+    errors.push('featuredProofs는 배열이어야 합니다.');
+  }
+  for (const key of [...ID_KEYS, ...OPTIONAL_ID_KEYS]) {
     if (!Array.isArray(data[key])) continue;
     const ids = new Set();
     data[key].forEach((item, index) => {
@@ -86,11 +90,25 @@ function validateData(data) {
       else ids.add(item.id);
     });
   }
+  if (data.lectureCuration !== undefined) {
+    const curation = data.lectureCuration;
+    const lectureIds = new Set(Array.isArray(data.lectures) ? data.lectures.map((item) => item?.id) : []);
+    const validList = (value) => Array.isArray(value) && value.every((id) => typeof id === "string" && lectureIds.has(id));
+    if (!curation || typeof curation !== "object" || Array.isArray(curation) ||
+        typeof curation.label !== "string" || !validList(curation.highlights) || !validList(curation.hidden) ||
+        new Set(curation.highlights).size !== curation.highlights.length ||
+        new Set(curation.hidden).size !== curation.hidden.length || curation.highlights.length > 5) {
+      errors.push("lectureCuration 데이터가 잘못되었습니다.");
+    }
+  }
+  if (JSON.stringify(data).includes("data:image/")) {
+    errors.push("붙여넣은 이미지는 저장 전에 이미지 업로드를 완료해야 합니다.");
+  }
   return errors.slice(0, 20);
 }
 
 function deletionSummary(before, after) {
-  return ARRAY_KEYS
+  return [...ARRAY_KEYS, ...OPTIONAL_ID_KEYS]
     .filter((key) => Array.isArray(before[key]) && Array.isArray(after[key]) && after[key].length < before[key].length)
     .map((key) => ({ key, before: before[key].length, after: after[key].length }));
 }

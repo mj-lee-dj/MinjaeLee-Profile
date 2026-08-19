@@ -1,0 +1,5 @@
+.proof-admin__dialog input:focus-visible,
+.proof-admin__dialog textarea:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 3px;
+}

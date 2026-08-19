@@ -8,6 +8,7 @@ const handler = require('../api/_handler.js');
 const data = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data_v3.json'), 'utf8'));
 const indexHtml = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
 const adminHtml = fs.readFileSync(path.join(__dirname, '..', 'admin.html'), 'utf8');
+const adminPublish = fs.readFileSync(path.join(__dirname, '..', 'admin-publish.js'), 'utf8');
 
 function request({ method = 'GET', action, headers = {}, body }) {
   const req = Readable.from(body === undefined ? [] : [JSON.stringify(body)]);
@@ -123,6 +124,7 @@ test('save creates one webhook-compatible atomic commit at the deployed source p
 });
 
 test('admin completion check waits for the new deployed cache key', () => {
-  assert.match(adminHtml, /indexHtml\.includes\(\`data_v3\.js\?v=\$\{cacheKey\}\`\)/);
-  assert.match(adminHtml, /verifyProduction\(dataClone, result\.cacheKey\)/);
+  assert.match(adminHtml, /<script src="admin-publish\.js"><\/script>/);
+  assert.match(adminPublish, /indexHtml\.includes\(\`data_v3\.js\?v=\$\{cacheKey\}\`\)/);
+  assert.match(adminPublish, /verifyDeployment\(next, saved\.cacheKey\)/);
 });

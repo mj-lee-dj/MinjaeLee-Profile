@@ -1,0 +1,24 @@
+@media (max-width: 900px) {
+  .ledger__row {
+    align-items: start;
+  }
+
+  .ledger__index {
+    grid-row: 1 / span 3;
+  }
+
+  .ledger__type {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .ledger__title {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  .ledger__meta {
+    grid-column: 2;
+    grid-row: 3;
+  }
+}
