@@ -68,8 +68,8 @@
 
 - 비밀값 이름: `ADMIN_PASSWORD`, `ADMIN_SESSION_SECRET`, `GITHUB_ADMIN_TOKEN`
 - 값 자체는 Git·브라우저·문서에 기록하지 않음
-- 안전 마감 브랜치: `codex/multi-device-security` (`main` 미반영·운영 미배포)
-- CodeQL 지적 3건 수정: DOM 문자열 렌더링 제거, 관리자 비밀 비교 고정 길이·상수시간 처리; 로컬 20/20 및 Chrome 1280/390 검증 통과
+- 안전 마감 브랜치: `codex/multi-device-security`, 코드 `63d5d4f`, 문서 `9d12455`, GitHub PR `#1` (`main` 미반영·운영 미배포)
+- CodeQL 지적 3건 수정; 로컬 20/20·Chrome 1280/390·PR CodeQL 통과, PR 기준 CodeQL·비밀·의존성 경고 0건
 - GitHub vulnerability alerts·Dependabot security updates·CodeQL default setup 활성화
 - 저장소는 PUBLIC이므로 Git에 저장한 콘텐츠와 이미지는 공개 자료로 취급
 - 즉시 복구: Vercel에서 직전 Ready 배포로 Instant Rollback
