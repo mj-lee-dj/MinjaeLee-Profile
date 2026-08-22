@@ -135,7 +135,7 @@ V5 component aliases:
 - **Layout**: intrinsic aspect-ratio; 모든 이미지에 width/height 또는 비율 지정.
 
 ### Topic Index
-- **Structure**: topic button list, 현재 선택 레드 밑줄, 필터 결과 ledger.
+- **Structure**: topic button list, 현재 선택 레드 활자, 필터 결과 ledger. 선택 상태에 별도 밑줄은 사용하지 않는다.
 - **Variants**: desktop wrap, mobile horizontal-scroll.
 - **States**: default, hover, selected, focus-visible, empty.
 - **Accessibility**: `aria-pressed`; 결과 변경은 별도 제목으로 식별.
@@ -449,12 +449,13 @@ V12 관리자는 기존 관리자 토큰 위에 `admin-content-v12.css` 한 층�
 
 - 첫 탭은 `HIGHLIGHTS`로 표시하며 관리자에서 고른 대표 강의 5개만 보여준다. 대표 목록은 전체 강의 수를 뜻하지 않는다.
 - 주제 탭은 가로로 스크롤되고 다음 탭의 일부가 화면에 남아 추가 선택지가 있음을 드러낸다.
-- 하단 CTA는 개수 없이 정확히 `전체 강의 보기`로 쓴다. 검정 목록에서 충분히 분리되는 상아색 면과 방향 표식으로 링크가 아니라 행동 버튼임을 알린다.
+- 하단 CTA는 개수 없이 정확히 `전체 강의 보기`로 쓴다. 데스크톱은 기존 편집 버튼 폭을 유지하고, 모바일은 전폭 면 대신 44px 이상 높이의 compact inline button과 방향 표식으로 행동임을 알린다.
 - CTA를 누르면 숨김 처리되지 않은 전체 강의를 같은 목록에서 펼친다. 데이터·대표 강의 큐레이션·관리자 저장 스키마는 변경하지 않는다.
 
 ### Mobile lecture row
 
 - 640px 이하에서 각 행은 `연도 / 제목·기관 / 대표 썸네일` 세 열로 구성한다. 대표 이미지는 항상 한 장만 16:9 전체 비율로 보여주며 `object-fit: contain`을 사용한다.
+- 선택 행은 배경색만으로 구분하고 왼쪽 적색 선을 두지 않는다. 긴 제목은 썸네일 열을 침범하지 않도록 가운데 열의 최소 폭과 줄바꿈을 보장한다.
 - 행 전체가 선택 버튼이다. 이미지가 두 장 이상이면 썸네일 위에 겹친 이미지 glyph와 개수를 담은 원형 gallery indicator를 표시한다. 단순 화살표는 페이지 이동으로 오해되므로 쓰지 않는다.
 - 원형 indicator의 보이는 지름은 32px, 전체 터치 영역은 44px 이상이다. 상아색 면, 검정 glyph, 얇은 적색 keyline을 공통 media control로 사용한다.
 - 데스크톱에서는 선택한 강의의 16:9 슬라이드를 오른쪽 한 열에 최대 3장 세로로 쌓아 원본 비율과 내용을 모두 보존한다.

@@ -23,7 +23,10 @@
 .topic-index { position:relative; gap:var(--space-3); margin-bottom:var(--space-6); padding-bottom:var(--space-3); }
 .topic-index__button { min-height:44px; padding-inline:var(--space-3); border-top:1px solid var(--rule); border-bottom:1px solid var(--rule); transition:color var(--timing-micro) ease,border-color var(--timing-micro) ease; }
 .topic-index__button::before { margin-right:var(--space-2); color:var(--red); content:'＋'; font-size:.85em; }
-.topic-index__button:hover,.topic-index__button[aria-pressed='true'] { border-color:var(--paper-muted-readable); }
+.topic-index__button:hover { border-color:var(--paper-muted-readable); }
+.topic-index__button::after { display:none; }
+.topic-index__button[aria-pressed='true'] { border-color:var(--rule); color:var(--red); }
+.lecture-ledger__button[aria-current='true'] { box-shadow:none; }
 .lecture-ledger__button { grid-template-columns:var(--lecture-ledger-index-column) minmax(0,1fr) var(--lecture-ledger-thumb-width); column-gap:var(--space-4); }
 .lecture-ledger__title { grid-column:2; }
 .lecture-ledger__button .lecture-ledger__org { grid-column:2; }
@@ -64,11 +67,13 @@
   .lecture-layout { display:block; }
   .lecture-showcase-wrap { display:none; }
   .lecture-ledger__button { min-height:108px; padding:var(--space-3) 0; grid-template-columns:46px minmax(0,1fr) var(--lecture-thumb-mobile); gap:var(--space-2) var(--space-3); }
-  .lecture-ledger__button .lecture-ledger__title { align-self:end; font-size:clamp(1rem,4.4vw,1.15rem); line-height:1.42; }
+  .lecture-ledger__button .lecture-ledger__title { min-width:0; align-self:end; overflow-wrap:anywhere; font-size:clamp(1rem,4.4vw,1.15rem); line-height:1.42; }
   .lecture-ledger__button .lecture-ledger__org { align-self:start; font-size:clamp(.78rem,3.3vw,.875rem); }
   .lecture-ledger__thumb { align-self:center; grid-row:1 / span 2; }
   .lecture-ledger__gallery-indicator { display:flex; }
-  .archive-more { width:100%; max-width:none; }
+  .archive-more { width:auto; max-width:max-content; min-height:48px; justify-content:flex-start; gap:var(--space-6); padding:var(--space-2) var(--space-4); border-color:var(--rule-bright); background:var(--ink-raised); color:var(--paper-bright); }
+  .archive-more:hover { background:var(--ink-raised); color:var(--paper-bright); }
+  .archive-more .text-link__arrow { color:var(--red); }
 }
 @media (min-width:641px) { .lecture-gallery { display:none !important; } }
 @media (prefers-reduced-motion:reduce) {
