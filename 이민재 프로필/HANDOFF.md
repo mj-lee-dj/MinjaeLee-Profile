@@ -1,12 +1,12 @@
 # HANDOFF — 이민재 프로필 사이트
 
 - 마지막 갱신: 2026-08-22 KST
-- 현재 목표: 승인된 모바일 Lectures·Watch 개선을 `main`에 병합하고 Vercel Production에서 검증
+- 현재 목표: 모바일 Lectures·Watch 개선 운영 반영 완료
 - 시안 브랜치: `codex/mobile-lecture-preview`
 - 시안 구현 커밋: `9c2ff62`; 모바일 세부 보정 커밋: `39d3d10`; 원격 브랜치 push 및 Vercel Preview Ready 확인
 - Preview 기준 URL: `https://minjae-lee-profile-git-cod-aebc40-minjae-lees-projects-af61ee98.vercel.app/`
 - Preview 접근: Vercel Standard Protection 유지, Shareable Link 사용; 공유 토큰은 문서·Git에 기록하지 않음
-- 운영 상태: 사용자가 운영 배포를 승인함; 병합 전 최종 회귀 검증 완료
+- 운영 상태: PR #3 병합 커밋 `78b401e`가 Vercel Production Ready이며 운영 QA 완료
 
 ## 운영 기준선
 
@@ -45,13 +45,14 @@
 - `39d3d10` Vercel 상태 success; 배포 Preview 375/768/1280 재검증
 - 375px 문서 가로 넘침 0, 긴 제목·썸네일 겹침 0, 선택 행 box-shadow 없음, 모바일 CTA 198×48px 확인
 - 768/1280 선택 탭 레드 활자·밑줄 없음, 데스크톱 CTA 420×58px 보존
+- 운영 `78b401e`: Vercel Production success, 공개·관리자 페이지 200, 외부 직접 API 호출 403 확인
+- 운영 375/768/1280: 전체 강의 60개, 긴 제목·썸네일 겹침 0, 가로 넘침 0, CTA 반응형 크기 확인
 - 디자인 QA 캡처는 로컬 임시 폴더에만 두고 Git에는 포함하지 않음
 
 ## 다음 작업
 
-- 시안 브랜치를 PR로 `main`에 병합하고 Vercel Production Ready 확인
-- 운영 공개 페이지를 375/768/1280에서 재검증하고 관리자 페이지·API 경계를 읽기 전용으로 확인
-- 최종 운영 SHA와 검증 결과를 이 문서에 기록
+- 다음 수정은 최신 `origin/main`에서 새 `codex/` 브랜치를 만들어 진행
+- 관리자 저장 전 공개 데이터와 최신 운영 SHA를 확인하고 한 번에 하나의 논리적 변경만 배포
 
 ## 기기 전환과 운영 주의
 
