@@ -3,7 +3,9 @@
 - 마지막 갱신: 2026-08-22 KST
 - 현재 목표: 모바일 Lectures·Watch 시안을 비운영 Vercel Preview로 제공
 - 시안 브랜치: `codex/mobile-lecture-preview`
-- 시안 커밋: `9c2ff62` (로컬, 원격 푸시 승인 대기)
+- 시안 구현 커밋: `9c2ff62`; 원격 브랜치 push 및 Vercel Preview Ready 확인
+- Preview 기준 URL: `https://minjae-lee-profile-git-cod-aebc40-minjae-lees-projects-af61ee98.vercel.app/`
+- Preview 접근: Vercel Standard Protection 유지, Shareable Link 사용; 공유 토큰은 문서·Git에 기록하지 않음
 - 운영 상태: `main`과 Production은 변경하지 않음
 
 ## 운영 기준선
@@ -36,12 +38,12 @@
 - 375px: 대표 5개·전체 60개 전환, Google 22개, 강의 썸네일 5개 확인
 - 갤러리 1/3→2/3→3/3, 닫기 후 focus 복귀, body scroll lock 확인
 - Watch 17개, 01/17→02/17, 다음 카드 peek, control 44×44 확인
+- 배포 Preview 375px 재검증: 로그인 없는 Shareable Link 접근, 갤러리 2/3 전환, 전체 60개, Watch 02/17, 깨진 이미지 0, 콘솔 오류 0
 - 디자인 QA 캡처는 로컬 임시 폴더에만 두고 Git에는 포함하지 않음
 
 ## 다음 작업
 
-- 사용자가 공개 GitHub 저장소로 시안 브랜치 전송을 명시 승인하면 push
-- GitHub 연동 Vercel Preview가 Ready인지 확인하고 휴대폰용 URL 제공
+- 휴대폰 시안 검토 후 사용자의 명시적 디자인 승인 여부 확인
 - 사용자 디자인 승인 전에는 merge·Production promote 금지
 - 승인 후 운영 반영 전 관리자 저장·배포 회귀와 최종 3폭 QA 재실행
 
