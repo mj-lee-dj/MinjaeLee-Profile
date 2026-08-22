@@ -1691,6 +1691,6 @@ const profileData = {
       "l_mls8mo9epkzye"
     ],
     "hidden": [],
-    "label": "TITLE"
+    "label": "HIGHLIGHTS"
   }
 };

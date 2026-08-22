@@ -441,3 +441,43 @@ V12 관리자는 기존 관리자 토큰 위에 `admin-content-v12.css` 한 층�
 |---|---|
 | `--admin-profile-preview-max` | 관리자 프로필 사진 미리보기 최대 폭 |
 | `--ratio-profile-photo` | 현재 Hero 프로필 사진 비율 |
+
+
+## 14. Mobile Lecture Discovery & Media Preview
+
+### Archive semantics
+
+- 첫 탭은 `HIGHLIGHTS`로 표시하며 관리자에서 고른 대표 강의 5개만 보여준다. 대표 목록은 전체 강의 수를 뜻하지 않는다.
+- 주제 탭은 가로로 스크롤되고 다음 탭의 일부가 화면에 남아 추가 선택지가 있음을 드러낸다.
+- 하단 CTA는 개수 없이 정확히 `전체 강의 보기`로 쓴다. 검정 목록에서 충분히 분리되는 상아색 면과 방향 표식으로 링크가 아니라 행동 버튼임을 알린다.
+- CTA를 누르면 숨김 처리되지 않은 전체 강의를 같은 목록에서 펼친다. 데이터·대표 강의 큐레이션·관리자 저장 스키마는 변경하지 않는다.
+
+### Mobile lecture row
+
+- 640px 이하에서 각 행은 `연도 / 제목·기관 / 대표 썸네일` 세 열로 구성한다. 대표 이미지는 항상 한 장만 16:9 전체 비율로 보여주며 `object-fit: contain`을 사용한다.
+- 행 전체가 선택 버튼이다. 이미지가 두 장 이상이면 썸네일 위에 겹친 이미지 glyph와 개수를 담은 원형 gallery indicator를 표시한다. 단순 화살표는 페이지 이동으로 오해되므로 쓰지 않는다.
+- 원형 indicator의 보이는 지름은 32px, 전체 터치 영역은 44px 이상이다. 상아색 면, 검정 glyph, 얇은 적색 keyline을 공통 media control로 사용한다.
+- 데스크톱에서는 선택한 강의의 16:9 슬라이드를 오른쪽 한 열에 최대 3장 세로로 쌓아 원본 비율과 내용을 모두 보존한다.
+
+### Lecture gallery dialog
+
+- 모바일에서 이미지가 있는 강의 행을 누르면 새 경로가 아니라 전체 화면 dialog를 연다. 헤더는 닫기, `강의 자료`, 현재 위치를 제공한다.
+- 본문은 큰 16:9 이미지 한 장, 이전·다음 원형 control, 하단 thumbnail strip, 강의명·기관 순서다. 썸네일 선택과 좌우 swipe를 지원한다.
+- dialog는 `role="dialog"`, `aria-modal="true"`, Escape 닫기, focus trap, 닫은 뒤 원래 행으로 focus 복귀, body scroll 잠금을 제공한다.
+- motion은 opacity와 transform만 사용한다. `prefers-reduced-motion`에서는 이동 없이 즉시 전환한다.
+
+### Watch discoverability
+
+- 모바일 Watch 카드는 viewport의 84%를 차지하고 다음 카드 16%가 보이도록 한다. 이 peek는 실제 다음 콘텐츠이며 장식용 복제물이 아니다.
+- 이전·다음 control은 lecture gallery와 동일한 원형 media control을 사용하되 썸네일 가장자리에 살짝 겹친다.
+- `01 / 17` 형식의 진행상태와 얇은 적색 progress line을 시각적으로 노출한다. 스크린리더용 live status도 유지한다.
+
+### V15 public media tokens
+
+| Token | Value | Usage |
+|---|---:|---|
+| `--media-control-visible` | `32px` | 원형 media control의 보이는 크기 |
+| `--media-control-target` | `44px` | 원형 control의 최소 터치 영역 |
+| `--video-card-mobile-basis` | `84%` | 다음 Watch 카드가 보이는 모바일 카드 폭 |
+| `--lecture-thumb-mobile` | `clamp(104px, 31vw, 132px)` | 모바일 강의 대표 썸네일 폭 |
+| `--lecture-gallery-z` | `80` | 모바일 전체 화면 gallery layer |
