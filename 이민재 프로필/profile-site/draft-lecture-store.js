@@ -7,7 +7,7 @@
     'l6',
     'l_mls8mo9epkzye',
   ];
-  const defaultLabel = 'TITLE';
+  const defaultLabel = 'HIGHLIGHTS';
   const sourceCuration = profileData.lectureCuration && typeof profileData.lectureCuration === 'object' ? profileData.lectureCuration : null;
 
   function normalize(candidate, fill = true) {
