@@ -1,9 +1,10 @@
 # HANDOFF — 이민재 프로필 사이트
 
 - 마지막 갱신: 2026-08-22 KST
-- 현재 목표: 관리자 보안 보강과 다중 기기 Git 운영 기준을 Production에 반영
-- 앱 배포 커밋: `cb4c446` (PR `#2` 이미지 URL 인코딩 hotfix 병합)
-- 배포 상태: GitHub `main` 반영·Vercel Production 완료
+- 현재 목표: 모바일 Lectures·Watch 시안을 비운영 Vercel Preview로 제공
+- 시안 브랜치: `codex/mobile-lecture-preview`
+- 시안 커밋: `9c2ff62` (로컬, 원격 푸시 승인 대기)
+- 운영 상태: `main`과 Production은 변경하지 않음
 
 ## 운영 기준선
 
@@ -16,62 +17,38 @@
 - 서버 경계: `profile-site/api/admin.mjs`, `api/_handler.js`, `api/_core.js`
 - 디자인 계약: `profile-site/DESIGN.md`
 
-## 이번 배포의 정확한 범위
+## 모바일 미디어 시안
 
-- 프로필 사진 경로 텍스트 입력을 PNG/JPEG/WebP/GIF 파일 선택 UI로 교체
-- 선택 이미지는 기존 이미지 도구로 최대 1600px·900KB 이하 WebP로 최적화
-- 미리보기와 `현재 사진으로 복원` 제공
-- 새 파일을 선택하고 핵심 프로필을 저장했을 때만 `photoDirty=true`
-- 오래된 브라우저 초안의 `assets/profile.jpg`는 배포 사진을 덮어쓰지 못함
-- 운영 저장 성공 뒤 새 업로드 경로로 동기화하고 `photoDirty=false`
-- 관리자 이미지 미리보기는 문자열 HTML 없이 DOM 노드로 생성하고 URL 문맥 인코딩 적용
-- 다중 기기 Git·보안 문서 추가; 공개 초안·PROOF·대표 강의·최신 강의 데이터 보존
+- 대표 강의 탭 기본 라벨을 `HIGHLIGHTS`로 변경; 관리자 큐레이션 5개 유지
+- 하단 CTA는 개수 없이 `전체 강의 보기`; 클릭 시 공개 전체 강의 60개 표시
+- 모바일 강의 행은 연도·제목/기관·16:9 대표 썸네일 1장 구조
+- 복수 슬라이드는 원형 gallery indicator와 개수를 표시
+- 모바일 행 클릭 시 전체 화면 dialog: 큰 이미지, 썸네일 strip, 이전·다음, swipe, Escape, focus 복귀
+- 데스크톱 선택 강의는 16:9 슬라이드 최대 3장을 오른쪽 한 열에 세로 배치
+- Watch 모바일 카드는 84% 폭으로 다음 카드가 보이며 32px 원형 control·44px 터치 영역·진행선을 사용
+- 관리자 데이터, CRUD, 저장·배포 API 스키마는 변경하지 않음
 
-## 배포 및 검증 결과
+## 검증 결과
 
-- GitHub `main`: `6e6d6db..cb4c446` PR `#1`, `#2` 병합 완료
-- GitHub Vercel 상태: `success`, `Deployment has completed`
-- 배포 완료 시각: 2026-08-22 16:41 KST
-- Node 전체 테스트: 20/20 통과
-- 변경 JavaScript 문법 검사 및 diff 검사 통과
-- 운영 Chrome 375/768/1280 공개 화면: `assets/profile-2026.png` 유지
-- 오래된 `assets/profile.jpg` localStorage 초안을 넣은 뒤에도 2026 사진 유지
-- 운영 PROOF 6개, 대표 강의 5개, 최신 Gemini & NotebookLM 강의 확인
-- 운영 관리자: 사진 경로 텍스트 입력 0, 파일 선택→54KB WebP 변환 확인
-- 준비 상태·미리보기·현재 사진 복원·공격성 경로 무실행 확인
-- 세 화면 폭 모두 가로 넘침 0, page error 0
-- 독립 기능·디자인 검수 PASS, 독립 시각·CJK 검수 PASS, 차단 문제 없음
-- Vercel 런타임 오류 API는 연결 계정 권한 403으로 조회 불가; 실제 브라우저 오류는 0
+- Node 전체 테스트 20/20 통과
+- 변경 JavaScript 문법 검사와 `git diff --check` 통과
+- Chrome 375/768/1280: 가로 넘침 0, page error 0
+- 375px: 대표 5개·전체 60개 전환, Google 22개, 강의 썸네일 5개 확인
+- 갤러리 1/3→2/3→3/3, 닫기 후 focus 복귀, body scroll lock 확인
+- Watch 17개, 01/17→02/17, 다음 카드 peek, control 44×44 확인
+- 디자인 QA 캡처는 로컬 임시 폴더에만 두고 Git에는 포함하지 않음
 
-## 기존 V13 운영 동작
+## 다음 작업
 
-- 공개 흐름: Hero → PROOF → Books → Online Courses → Watch → Lectures → Records → Instagram/Contact
-- 관리자 범위: 프로필, PROOF, 저서, 온라인 연수, Watch, 강의, 수상, 활동, 보도자료, 대표 강의 5개
-- 항목별 저장은 로컬 초안을 갱신하고 같은 브라우저 공개 초안에 반영
-- 상단 `운영 사이트 저장 및 배포`는 전체 초안을 검증·업로드·저장·배포 확인
-- 배포 HTTPS 관리자는 HttpOnly 세션·CSRF·동일 출처 검사를 통과해야 함
-- 이미지와 데이터는 서버 검증 뒤 한 Git 커밋으로 저장
-- 최신 운영 커밋 충돌과 삭제를 확인해 다른 기기 변경 덮어쓰기를 방지
+- 사용자가 공개 GitHub 저장소로 시안 브랜치 전송을 명시 승인하면 push
+- GitHub 연동 Vercel Preview가 Ready인지 확인하고 휴대폰용 URL 제공
+- 사용자 디자인 승인 전에는 merge·Production promote 금지
+- 승인 후 운영 반영 전 관리자 저장·배포 회귀와 최종 3폭 QA 재실행
 
-## 기기 전환과 로컬 상태
+## 기기 전환과 운영 주의
 
-- 다중 기기 운영 기준은 `MULTI_DEVICE_WORKFLOW.md`에 정리함
-- 매 프롬프트가 아니라 새 작업·앱 재실행·기기 전환 후 첫 파일 변경과 commit/push/배포 직전에만 원격 확인
-- 날짜 변경만으로는 새 세션으로 보지 않으며, 단순 질문·기획에는 fetch하지 않음
-- 다른 컴퓨터에서는 독립된 로컬 clone을 사용하고 GitHub 브랜치로 작업을 전달
-- dirty tree에서 바로 pull/merge하지 말고 `AGENTS.md`, 이 파일, `MULTI_DEVICE_WORKFLOW.md`를 먼저 읽기
-- 현재 이 컴퓨터의 원래 작업 브랜치는 `codex/profile-v13-production`; 사진 수정 원본 커밋은 `f3d0ac5`
-- 원래 작업 폴더의 unrelated dirty/untracked 파일은 보존했으며 배포에 포함하지 않음
-- 이후 작업은 최신 `main`에서 새 `codex/` 브랜치를 만들어 시작
-
-## 운영 비밀과 롤백
-
-- 비밀값 이름: `ADMIN_PASSWORD`, `ADMIN_SESSION_SECRET`, `GITHUB_ADMIN_TOKEN`
-- 값 자체는 Git·브라우저·문서에 기록하지 않음
-- 운영 보안 병합: PR `#1`=`59b887f`, URL hotfix PR `#2`=`cb4c446`
-- main CodeQL·비밀 스캔·Dependabot 공개 경고 0건; 로컬 20/20·운영 Chrome 검증 통과
-- GitHub vulnerability alerts·Dependabot security updates·CodeQL default setup 활성화
-- 저장소는 PUBLIC이므로 Git에 저장한 콘텐츠와 이미지는 공개 자료로 취급
-- 즉시 복구: Vercel에서 직전 Ready 배포 `59b887f`로 Instant Rollback
-- Git 복구: hotfix만 되돌릴 때 `cb4c446`; 보안 병합 전체는 이어서 `59b887f`를 revert
-- 배포 전 앱 기준선: `6e6d6db`
+- 다중 기기 기준은 `MULTI_DEVICE_WORKFLOW.md`; 새 작업·기기 전환 후 첫 변경과 push/배포 직전에 원격 확인
+- 다른 컴퓨터에서는 독립 clone과 `codex/` 브랜치를 사용하고 dirty tree에서 바로 pull/merge하지 않음
+- 운영 비밀 이름: `ADMIN_PASSWORD`, `ADMIN_SESSION_SECRET`, `GITHUB_ADMIN_TOKEN`; 값은 Git·문서에 기록하지 않음
+- 저장소는 PUBLIC이므로 Git 콘텐츠와 이미지는 공개 자료로 취급
+- 운영 즉시 복구는 Vercel의 직전 Ready 배포 Instant Rollback 사용
