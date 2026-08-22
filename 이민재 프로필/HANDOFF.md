@@ -1,9 +1,9 @@
 # HANDOFF — 이민재 프로필 사이트
 
 - 마지막 갱신: 2026-08-22 KST
-- 현재 목표: 모바일 Lectures·Watch 시안을 비운영 Vercel Preview로 제공
+- 현재 목표: 모바일 Lectures 선택 위계·긴 제목·CTA 보정을 비운영 Vercel Preview에서 검증
 - 시안 브랜치: `codex/mobile-lecture-preview`
-- 시안 구현 커밋: `9c2ff62`; 원격 브랜치 push 및 Vercel Preview Ready 확인
+- 시안 구현 커밋: `9c2ff62`; 모바일 세부 보정 커밋: `39d3d10`; 원격 브랜치 push 및 Vercel Preview Ready 확인
 - Preview 기준 URL: `https://minjae-lee-profile-git-cod-aebc40-minjae-lees-projects-af61ee98.vercel.app/`
 - Preview 접근: Vercel Standard Protection 유지, Shareable Link 사용; 공유 토큰은 문서·Git에 기록하지 않음
 - 운영 상태: `main`과 Production은 변경하지 않음
@@ -29,6 +29,9 @@
 - 데스크톱 선택 강의는 16:9 슬라이드 최대 3장을 오른쪽 한 열에 세로 배치
 - Watch 모바일 카드는 84% 폭으로 다음 카드가 보이며 32px 원형 control·44px 터치 영역·진행선을 사용
 - 관리자 데이터, CRUD, 저장·배포 API 스키마는 변경하지 않음
+- 선택 강의 왼쪽 적색 선과 선택 탭 밑줄 제거; 선택 탭은 레드 활자로만 구분
+- 375px 긴 `Gemini&NotebookLM...` 제목은 가운데 열 안에서 줄바꿈하고 썸네일과 12px 간격 유지
+- 모바일 `전체 강의 보기`는 198×48px compact outline button; 768px 이상은 기존 420×58px 유지
 
 ## 검증 결과
 
@@ -39,11 +42,14 @@
 - 갤러리 1/3→2/3→3/3, 닫기 후 focus 복귀, body scroll lock 확인
 - Watch 17개, 01/17→02/17, 다음 카드 peek, control 44×44 확인
 - 배포 Preview 375px 재검증: 로그인 없는 Shareable Link 접근, 갤러리 2/3 전환, 전체 60개, Watch 02/17, 깨진 이미지 0, 콘솔 오류 0
+- `39d3d10` Vercel 상태 success; 배포 Preview 375/768/1280 재검증
+- 375px 문서 가로 넘침 0, 긴 제목·썸네일 겹침 0, 선택 행 box-shadow 없음, 모바일 CTA 198×48px 확인
+- 768/1280 선택 탭 레드 활자·밑줄 없음, 데스크톱 CTA 420×58px 보존
 - 디자인 QA 캡처는 로컬 임시 폴더에만 두고 Git에는 포함하지 않음
 
 ## 다음 작업
 
-- 휴대폰 시안 검토 후 사용자의 명시적 디자인 승인 여부 확인
+- 휴대폰에서 갱신된 시안을 검토한 뒤 사용자의 명시적 디자인 승인 여부 확인
 - 사용자 디자인 승인 전에는 merge·Production promote 금지
 - 승인 후 운영 반영 전 관리자 저장·배포 회귀와 최종 3폭 QA 재실행
 
