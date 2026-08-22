@@ -339,7 +339,7 @@ Admin V3 uses the documented `--type-admin-*`, `--admin-*-min-height`, `--admin-
 
 | Section | Required | Optional |
 |---|---|---|
-| Profile | 이름, 영문 이름, 선언문, 이메일, Instagram | 사진 경로, 강의·연수 수치 |
+| Profile | 이름, 영문 이름, 선언문, 이메일, Instagram | 프로필 사진 파일, 강의·연수 수치 |
 | Books | 제목 | 출판사, 연도, 구입 링크, 표지 경로, 소개 |
 | Online courses | 제목, 연수원, 썸네일 | 학점, 링크 |
 | Watch | 제목, 영상 링크 | 썸네일 |
@@ -412,3 +412,32 @@ V12 관리자는 기존 관리자 토큰 위에 `admin-content-v12.css` 한 층�
 | `--admin-paste-min-height` | 이미지 붙여넣기 영역 최소 높이 |
 | `--admin-publish-min-height` | 전역 배포 콘솔 최소 높이 |
 | `--admin-dialog-action-height` | 스크롤 편집기의 sticky 저장 영역 |
+
+## 13. Profile Photo Upload & Photo-only Guard
+
+### Existing public flow preservation
+
+- V12의 공개 초안, PROOF, 대표 강의 큐레이션, `storage` 갱신 흐름은 변경하지 않는다.
+- 보호 범위는 프로필 사진 하나뿐이다. 기존 브라우저 초안의 `personal.photo`는 `photoDirty`가 명시된 경우에만 공개 미리보기와 운영 저장의 `personal.draftPhoto`를 변경한다.
+- 오래된 초안에 `assets/profile.jpg`가 남아 있어도 배포 데이터의 `personal.draftPhoto`를 유지한다. 새 파일을 선택하고 핵심 프로필을 저장한 경우에만 사진 변경을 허용한다.
+
+### Profile Photo Upload
+
+- 핵심 프로필의 사진 경로 텍스트 입력은 노출하지 않는다. PNG, JPEG, WebP, GIF 파일 선택과 현재 사진 미리보기만 제공한다.
+- 기존 Image Paste primitive의 파일 검증, 최대 1600px 축소, 900KB 이하 WebP 변환, 상태 문구, 44px 파일 선택 버튼을 재사용한다.
+- 새 파일은 로컬 초안에서 미리보기를 제공하고, 전역 운영 저장 시 기존 인증된 이미지 업로드 경로를 통해 고유한 `uploads/` 경로로 치환한다.
+- 업로드 또는 운영 저장이 실패하면 기존 `personal.draftPhoto`를 유지한다. 다른 콘텐츠만 수정한 배포는 프로필 사진 필드를 변경하지 않는다.
+
+### Profile Photo states
+
+- **Current**: 현재 배포 사진을 세로 비율 미리보기로 표시한다.
+- **Prepared**: 선택한 파일을 최적화한 뒤 운영 저장 시 자동 업로드된다는 상태 문구를 표시한다.
+- **Error**: 지원하지 않는 형식이나 크기 실패를 색과 한국어 문구로 함께 알리고 기존 사진을 보존한다.
+- **Accessibility**: 파일 입력은 명시적 라벨을 가지며, 상태는 `role="status"`, 미리보기 삭제는 현재 배포 사진으로 복원하는 명확한 버튼 문구를 사용한다.
+
+### V14 admin tokens
+
+| Token | Usage |
+|---|---|
+| `--admin-profile-preview-max` | 관리자 프로필 사진 미리보기 최대 폭 |
+| `--ratio-profile-photo` | 현재 Hero 프로필 사진 비율 |

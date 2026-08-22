@@ -48,10 +48,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const control = field.querySelector('[data-image-paste-input]');
     const preview = field.querySelector('[data-image-preview]');
     const items = values(control);
+    const modifier = field.dataset.previewVariant === 'profile' ? ' image-paste__preview--profile' : '';
+    const removeLabel = field.dataset.restoreOnRemove === 'true' ? '현재 사진으로 복원' : '삭제';
     preview.innerHTML = items.map((source, index) => `
-      <figure class="image-paste__preview">
-        <img src="${source.replaceAll('&', '&amp;').replaceAll('"', '&quot;')}" alt="붙여넣은 이미지 ${index + 1}">
-        <button type="button" data-remove-image="${index}" aria-label="이미지 ${index + 1} 삭제">삭제</button>
+      <figure class="image-paste__preview${modifier}">
+        <img src="${source.replaceAll('&', '&amp;').replaceAll('"', '&quot;')}" alt="${field.dataset.previewVariant === 'profile' ? '프로필 사진 미리보기' : `붙여넣은 이미지 ${index + 1}`}">
+        <button type="button" data-remove-image="${index}" aria-label="${removeLabel}">${removeLabel}</button>
       </figure>`).join('');
     field.dataset.hasImages = String(items.length > 0);
   }
@@ -86,7 +88,33 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  function enhance() {
+  function bindField(field, tools) {
+    if (!field || !tools || tools.dataset.imagePasteBound === 'true') return;
+    const control = field.querySelector('[data-image-paste-input]');
+    const input = tools.querySelector('input[type="file"]');
+    if (!control || !input) return;
+    tools.dataset.imagePasteBound = 'true';
+    input.addEventListener('change', (event) => {
+      addFiles(field, [...event.target.files]);
+      event.target.value = '';
+    });
+    tools.addEventListener('click', (event) => {
+      const remove = event.target.closest('[data-remove-image]');
+      if (!remove) return;
+      const next = values(control);
+      next.splice(Number(remove.dataset.removeImage), 1);
+      if (field.dataset.restoreOnRemove === 'true' && next.length === 0 && field.dataset.initialValue) {
+        next.push(field.dataset.initialValue);
+      }
+      setValues(field, next);
+      setStatus(field, field.dataset.restoreOnRemove === 'true'
+        ? '현재 배포 사진으로 복원했습니다.'
+        : next.length ? `${next.length}장 준비됨` : '이미지를 삭제했습니다.');
+    });
+    render(field);
+  }
+
+  function enhanceEditor() {
     const section = document.getElementById('contentSection').value;
     if (!supportedSections.has(section)) return;
     const control = form.querySelector('[data-image-paste-input]');
@@ -105,19 +133,24 @@ document.addEventListener('DOMContentLoaded', () => {
       <p class="image-paste__status" data-image-status role="status">경로 입력 또는 이미지 붙여넣기를 사용할 수 있습니다.</p>
       <div class="image-paste__previews" data-image-preview></div>`;
     control.before(tools);
-    tools.querySelector('input[type="file"]').addEventListener('change', (event) => {
-      addFiles(field, [...event.target.files]);
-      event.target.value = '';
+    bindField(field, tools);
+  }
+
+  function enhanceProfile() {
+    const field = document.querySelector('[data-profile-image-field]');
+    const control = field?.querySelector('[data-image-paste-input]');
+    if (!field || !control) return;
+    field.dataset.initialValue = control.value;
+    bindField(field, field.querySelector('.image-paste'));
+    setStatus(field, '현재 사진을 유지하거나 새 파일을 선택하세요.');
+    window.addEventListener('profileDraft:published', (event) => {
+      const publishedPhoto = event.detail?.personal?.photo;
+      if (!publishedPhoto) return;
+      control.value = publishedPhoto;
+      field.dataset.initialValue = publishedPhoto;
+      render(field);
+      setStatus(field, '운영에 저장된 사진입니다.');
     });
-    tools.addEventListener('click', (event) => {
-      const remove = event.target.closest('[data-remove-image]');
-      if (!remove) return;
-      const next = values(control);
-      next.splice(Number(remove.dataset.removeImage), 1);
-      setValues(field, next);
-      setStatus(field, next.length ? `${next.length}장 준비됨` : '이미지를 삭제했습니다.');
-    });
-    render(field);
   }
 
   dialog.addEventListener('paste', (event) => {
@@ -129,5 +162,6 @@ document.addEventListener('DOMContentLoaded', () => {
     event.preventDefault();
     addFiles(field, files);
   });
-  window.addEventListener('profileAdmin:editorOpened', enhance);
+  window.addEventListener('profileAdmin:editorOpened', enhanceEditor);
+  enhanceProfile();
 });

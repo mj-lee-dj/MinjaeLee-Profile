@@ -112,12 +112,12 @@
       name: text(sourcePersonal.name, 100) || '이민재',
       nameEn: text(sourcePersonal.nameEn, 100) || 'Minjae Lee',
       statement: '기술을 고르는 기준은\n언제나 교실입니다.',
-      photo: 'assets/profile-2026.png',
+      photo: asset(sourcePersonal.draftPhoto) || 'assets/profile-2026.png',
       lectureCount: '150+',
       email: text(contact.email, 320),
       instagram: url(contact.instagram),
     };
-    const state = { version: 1, personal };
+    const state = { version: 1, photoDirty: false, personal };
     collectionKeys.forEach((section) => {
       const source = clone(sourceCollections[section]);
       const ordered = section === 'publications'
@@ -132,16 +132,18 @@
     const fallback = defaultState();
     if (!candidate || typeof candidate !== 'object') return fallback;
     const candidatePersonal = candidate.personal && typeof candidate.personal === 'object' ? candidate.personal : {};
+    const publishedPhoto = !Object.hasOwn(candidate, 'version') ? asset(candidatePersonal.draftPhoto) : '';
+    const photoDirty = candidate.photoDirty === true && !publishedPhoto;
     const personal = {
       name: text(candidatePersonal.name, 100) || fallback.personal.name,
       nameEn: text(candidatePersonal.nameEn, 100) || fallback.personal.nameEn,
       statement: text(candidatePersonal.statement, 500) || fallback.personal.statement,
-      photo: asset(candidatePersonal.photo) || fallback.personal.photo,
+      photo: publishedPhoto || (photoDirty ? asset(candidatePersonal.photo) : '') || fallback.personal.photo,
       lectureCount: text(candidatePersonal.lectureCount, 20) || fallback.personal.lectureCount,
       email: text(candidatePersonal.email, 320) || fallback.personal.email,
       instagram: url(candidatePersonal.instagram) || fallback.personal.instagram,
     };
-    const state = { version: 1, personal };
+    const state = { version: 1, photoDirty, personal };
     collectionKeys.forEach((section) => {
       const source = Array.isArray(candidate[section]) ? candidate[section] : fallback[section];
       state[section] = source.map((item, index) => normalizeItem(section, item, index)).filter(Boolean);
@@ -157,7 +159,6 @@
       name: state.personal.name,
       nameEn: state.personal.nameEn,
       statement: state.personal.statement,
-      draftPhoto: state.personal.photo,
       lectureCount: state.personal.lectureCount,
       contact: {
         ...(merged.personal?.contact || {}),
@@ -165,6 +166,7 @@
         instagram: state.personal.instagram,
       },
     };
+    if (state.photoDirty) merged.personal.draftPhoto = state.personal.photo;
     collectionKeys.forEach((section) => {
       merged[section] = clone(state[section]);
     });
@@ -172,12 +174,13 @@
   }
 
   function apply(state) {
+    const currentPhoto = profileData.personal?.draftPhoto;
     profileData.personal = {
       ...(profileData.personal || {}),
       name: state.personal.name,
       nameEn: state.personal.nameEn,
       statement: state.personal.statement,
-      draftPhoto: state.personal.photo,
+      draftPhoto: state.photoDirty ? state.personal.photo : currentPhoto,
       lectureCount: state.personal.lectureCount,
       contact: {
         ...(profileData.personal?.contact || {}),

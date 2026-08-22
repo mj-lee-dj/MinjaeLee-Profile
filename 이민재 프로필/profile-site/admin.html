@@ -51,7 +51,17 @@
         <label>한글 이름<input name="name" type="text" required></label>
         <label>영문 이름<input name="nameEn" type="text" required></label>
         <label class="profile-settings__wide">첫 화면 선언문<textarea name="statement" rows="3" required></textarea><small>원하는 위치에서 Enter를 누르면 공개면에도 줄바꿈됩니다.</small></label>
-        <label>프로필 사진 경로<input name="photo" type="text" required><small>assets/ 또는 uploads/ 경로</small></label>
+        <div class="profile-photo-field profile-settings__wide" data-image-paste-field data-profile-image-field data-maximum-images="1" data-preview-variant="profile" data-restore-on-remove="true">
+          <span class="profile-photo-field__label" id="profilePhotoLabel">프로필 사진</span>
+          <div class="image-paste" tabindex="0" role="group" aria-labelledby="profilePhotoLabel">
+            <div class="image-paste__copy"><strong>사진 파일 업로드</strong><span>PNG, JPEG, WebP, GIF · 최대 1600px</span></div>
+            <label class="image-paste__file">파일 선택<input id="profilePhotoFile" type="file" accept="image/png,image/jpeg,image/webp,image/gif"></label>
+            <p class="image-paste__status" data-image-status role="status">현재 사진을 유지하거나 새 파일을 선택하세요.</p>
+            <div class="image-paste__previews" data-image-preview></div>
+          </div>
+          <input name="photo" type="hidden" data-image-paste-input>
+          <small>선택한 사진은 최적화되며 운영 저장 시 자동 업로드됩니다.</small>
+        </div>
         <label>강의·연수 누적 수치<input name="lectureCount" type="text" required placeholder="150+"></label>
         <label>이메일<input name="email" type="email" required></label>
         <label>Instagram 링크<input name="instagram" type="url" required></label>

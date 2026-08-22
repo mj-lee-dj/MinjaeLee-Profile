@@ -167,7 +167,8 @@ document.addEventListener('DOMContentLoaded', () => {
           imageEntries,
         }),
       });
-      ProfileContentStore.save(next);
+      const publishedState = ProfileContentStore.save(next);
+      if (publishedState) window.dispatchEvent(new CustomEvent('profileDraft:published', { detail: publishedState }));
       try { localStorage.setItem('profileDraft.featuredProofs', JSON.stringify(next.featuredProofs)); } catch {}
       ProfileLectureStore.save(next.lectureCuration);
       setState('verifying', 'GitHub 저장 완료. Vercel 운영 반영을 확인하고 있습니다.');

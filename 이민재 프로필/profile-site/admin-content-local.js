@@ -212,9 +212,19 @@ document.addEventListener('DOMContentLoaded', () => {
     event.preventDefault();
     if (!profileForm.reportValidity()) return;
     const formData = new FormData(profileForm);
-    state.personal = Object.fromEntries(['name', 'nameEn', 'statement', 'photo', 'lectureCount', 'email', 'instagram']
+    const nextPersonal = Object.fromEntries(['name', 'nameEn', 'statement', 'photo', 'lectureCount', 'email', 'instagram']
       .map((name) => [name, String(formData.get(name) || '').trim()]));
+    state.photoDirty = state.photoDirty === true || nextPersonal.photo !== state.personal.photo;
+    state.personal = nextPersonal;
     if (persist('핵심 프로필을 로컬 초안으로 저장했습니다.')) fillProfile();
+  });
+
+  window.addEventListener('profileDraft:published', (event) => {
+    if (!event.detail) return;
+    state = structuredClone(event.detail);
+    fillProfile();
+    renderSummary();
+    renderCollection('');
   });
 
   document.getElementById('resetContent').addEventListener('click', () => {
