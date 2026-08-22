@@ -472,6 +472,14 @@ V12 관리자는 기존 관리자 토큰 위에 `admin-content-v12.css` 한 층�
 - 모바일 Watch 카드는 viewport의 84%를 차지하고 다음 카드 16%가 보이도록 한다. 이 peek는 실제 다음 콘텐츠이며 장식용 복제물이 아니다.
 - 이전·다음 control은 lecture gallery와 동일한 원형 media control을 사용하되 썸네일 가장자리에 살짝 겹친다.
 - `01 / 17` 형식의 진행상태와 얇은 적색 progress line을 시각적으로 노출한다. 스크린리더용 live status도 유지한다.
+- 데스크톱은 완전한 카드 3장 뒤에 다음 카드의 약 4%를 남기고, 태블릿은 2장 뒤에 다음 카드를 남겨 수평 탐색을 드러낸다.
+- 데스크톱 이전·다음 control은 40px 원형, 52px 조작 영역으로 키우고 썸네일 세로 중앙에 맞춘다. 모바일은 기존 32px 원형과 44px 조작 영역을 유지한다.
+
+### Desktop lecture composition
+
+- 641px 이상에서 선택 강의의 최대 3장 자료는 16:9 비율을 유지한 `큰 1장 + 작은 2장` 편집 그리드로 구성한다.
+- 이미지가 1장이면 전폭, 2장이면 같은 폭 2장, 3장이면 첫 장 전폭 아래에 나머지 두 장을 나란히 둔다.
+- 640px 이하에서는 목록의 대표 썸네일 한 장과 전체 화면 gallery 흐름을 유지하며 데스크톱 그리드를 노출하지 않는다.
 
 ### V15 public media tokens
 
@@ -480,5 +488,10 @@ V12 관리자는 기존 관리자 토큰 위에 `admin-content-v12.css` 한 층�
 | `--media-control-visible` | `32px` | 원형 media control의 보이는 크기 |
 | `--media-control-target` | `44px` | 원형 control의 최소 터치 영역 |
 | `--video-card-mobile-basis` | `84%` | 다음 Watch 카드가 보이는 모바일 카드 폭 |
+| `--video-card-desktop-basis` | `30.5%` | 데스크톱 3장 뒤 다음 카드 peek |
+| `--video-card-tablet-basis` | `44%` | 태블릿 2장 뒤 다음 카드 peek |
+| `--media-control-visible-desktop` | `40px` | 웹 Watch control의 보이는 크기 |
+| `--media-control-target-desktop` | `52px` | 웹 Watch control 조작 영역 |
+| `--carousel-control-y-desktop` | `clamp(148px, 12vw, 160px)` | 웹 Watch 썸네일 세로 중앙 |
 | `--lecture-thumb-mobile` | `clamp(104px, 31vw, 132px)` | 모바일 강의 대표 썸네일 폭 |
 | `--lecture-gallery-z` | `80` | 모바일 전체 화면 gallery layer |
