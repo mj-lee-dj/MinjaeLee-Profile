@@ -48,13 +48,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const control = field.querySelector('[data-image-paste-input]');
     const preview = field.querySelector('[data-image-preview]');
     const items = values(control);
-    const modifier = field.dataset.previewVariant === 'profile' ? ' image-paste__preview--profile' : '';
+    const isProfile = field.dataset.previewVariant === 'profile';
     const removeLabel = field.dataset.restoreOnRemove === 'true' ? '현재 사진으로 복원' : '삭제';
-    preview.innerHTML = items.map((source, index) => `
-      <figure class="image-paste__preview${modifier}">
-        <img src="${source.replaceAll('&', '&amp;').replaceAll('"', '&quot;')}" alt="${field.dataset.previewVariant === 'profile' ? '프로필 사진 미리보기' : `붙여넣은 이미지 ${index + 1}`}">
-        <button type="button" data-remove-image="${index}" aria-label="${removeLabel}">${removeLabel}</button>
-      </figure>`).join('');
+    const fragments = items.map((source, index) => {
+      const figure = document.createElement('figure');
+      figure.className = `image-paste__preview${isProfile ? ' image-paste__preview--profile' : ''}`;
+      const image = document.createElement('img');
+      image.src = source;
+      image.alt = isProfile ? '프로필 사진 미리보기' : `붙여넣은 이미지 ${index + 1}`;
+      const remove = document.createElement('button');
+      remove.type = 'button';
+      remove.dataset.removeImage = String(index);
+      remove.setAttribute('aria-label', removeLabel);
+      remove.textContent = removeLabel;
+      figure.append(image, remove);
+      return figure;
+    });
+    preview.replaceChildren(...fragments);
     field.dataset.hasImages = String(items.length > 0);
   }
 

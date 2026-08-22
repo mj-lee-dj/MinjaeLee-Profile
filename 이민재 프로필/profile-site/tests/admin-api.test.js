@@ -3,7 +3,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 
-const { deletionSummary, makeSession, validateData, verifySession } = require('../api/_core.js');
+const { deletionSummary, makeSession, safeEqual, validateData, verifySession } = require('../api/_core.js');
 const currentData = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data_v3.json'), 'utf8'));
 
 test('current production data passes the admin schema gate', () => {
@@ -76,4 +76,11 @@ test('signed session accepts the original cookie and rejects tampering', () => {
   const tampered = `${token.slice(0, -1)}${token.endsWith('a') ? 'b' : 'a'}`;
   const badReq = { headers: { cookie: `__Host-profile_admin=${encodeURIComponent(tampered)}` } };
   assert.equal(verifySession(badReq, secret), null);
+});
+
+test('admin secret comparison handles equal, unequal, and oversized values safely', () => {
+  assert.equal(safeEqual('correct horse battery staple', 'correct horse battery staple'), true);
+  assert.equal(safeEqual('correct horse battery staple', 'correct horse battery staplf'), false);
+  assert.equal(safeEqual('short', 'longer'), false);
+  assert.equal(safeEqual('x'.repeat(1025), 'x'.repeat(1025)), false);
 });
