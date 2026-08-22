@@ -1,108 +1,148 @@
 {
   "youtubeVideos": [
     {
+      "id": "youtubeVideos_mt3md3pm",
+      "visible": true,
+      "title": "[Edu 로켓배송] Gemini & NotebookLM으로 똑똑하게 해외여행 준비하기",
+      "link": "https://youtu.be/ygJuXIJY2B4?si=4KEvXqpPod0H5vW9",
+      "images": [],
+      "image": ""
+    },
+    {
       "id": "yt_mo02cn2u4zwwl",
+      "visible": true,
       "title": "2026 제1회 Canva Day",
       "link": "https://youtu.be/Rtx8xLv6vMQ?si=-urVyFUq3_6afamd&t=211",
       "images": [
         "uploads/5c6cccccc50f.png",
         "uploads/90546f9995aa.png",
         "uploads/86c58f837954.png"
-      ]
+      ],
+      "image": "uploads/5c6cccccc50f.png"
     },
     {
       "id": "yt_sample",
+      "visible": true,
       "title": "제167회 KERIS 디지털교육 포럼(학교 디지털 교육과 과제)",
       "link": "https://www.youtube.com/live/CPX7oqKIF8U?si=569tTCGEg5SfJPxL&t=5615",
       "images": [
         "uploads/8b074a5aef2c.png"
-      ]
-    },
-    {
-      "id": "yt_mlte9bjg4niyv",
-      "title": "[Edu 로켓배송] 구글 도구를 활용하는 가장 중요한 포인트! 1년이 편해지는 구글 기반 학급 루틴 세우기",
-      "link": "https://www.youtube.com/watch?v=JesUZK8vHR4",
-      "images": []
-    },
-    {
-      "id": "yt_mluvaatexdb2c",
-      "title": "[LIVE] 일본, 학교에서 뭐했게? 👀 : 흙바닥 유치원부터 코딩하는 중학교까지 찐 탐방 썰전!",
-      "link": "https://www.youtube.com/watch?v=yfouTetvn7I",
-      "images": []
+      ],
+      "image": "uploads/8b074a5aef2c.png"
     },
     {
       "id": "yt_mlte5to1hm6o0",
+      "visible": true,
       "title": "Google Classroom - 구글 클래스룸 처음 사용하시는 분들 필수영상! 기초부터 알려드립니다.",
       "link": "https://www.youtube.com/watch?v=wGgF2MSds5E",
-      "images": []
+      "images": [],
+      "image": ""
+    },
+    {
+      "id": "yt_mlte9bjg4niyv",
+      "visible": true,
+      "title": "[Edu 로켓배송] 구글 도구를 활용하는 가장 중요한 포인트! 1년이 편해지는 구글 기반 학급 루틴 세우기",
+      "link": "https://www.youtube.com/watch?v=JesUZK8vHR4",
+      "images": [],
+      "image": ""
+    },
+    {
+      "id": "yt_mluvaatexdb2c",
+      "visible": true,
+      "title": "[LIVE] 일본, 학교에서 뭐했게? 👀 : 흙바닥 유치원부터 코딩하는 중학교까지 찐 탐방 썰전!",
+      "link": "https://www.youtube.com/watch?v=yfouTetvn7I",
+      "images": [],
+      "image": ""
     },
     {
       "id": "yt_mltg540ha0j9b",
+      "visible": true,
       "title": "2025 G-Creator 해외교류사업 with Taiwan",
       "link": "https://www.youtube.com/watch?v=u5jIxJis5K0",
       "images": [
         "uploads/d21a7a0cff44.png"
-      ]
+      ],
+      "image": "uploads/d21a7a0cff44.png"
     },
     {
       "id": "yt_mltg8xlc2glru",
+      "visible": true,
       "title": "[그리와 로미의 구글탐험대 수록영상] 8-(4) 꿈의 여행, 지도로 그리기: 구글 어스 프로젝트로 세계여행 계획하기",
       "link": "https://www.youtube.com/watch?v=ubx6BKEonvg&list=PL3gfqtNqgd2JrgJ-Tm3bVCXnNF26mKleX&index=33",
-      "images": []
+      "images": [],
+      "image": ""
     },
     {
       "id": "yt_mltgfee80dj74",
+      "visible": true,
       "title": "[그리와 로미의 제미나이탐험대 수록영상] 2-(4) 실시간 탐험 카메라! – Gemini Live 카메라로 세상과 대화하기",
       "link": "https://www.youtube.com/watch?v=B2OirMjRMYs&list=PL3gfqtNqgd2JKlLIblZn-rf5lEoW97KyG&index=8",
-      "images": []
+      "images": [],
+      "image": ""
     },
     {
       "id": "yt_mltgg6yyo5na8",
+      "visible": true,
       "title": "Google Classroom - 구글 클래스룸 설정하는 법 알려드립니다",
       "link": "https://www.youtube.com/watch?v=QUCWhFfy9ls&list=PL3gfqtNqgd2J73g1Ex9dNKd1xre9ay1G0&index=5",
-      "images": []
+      "images": [],
+      "image": ""
     },
     {
       "id": "yt_mltgge80zsgaf",
+      "visible": true,
       "title": "Google Classroom  - 학습지 복사가 필요없는 구글 클래스룸 과제 배포하기!",
       "link": "https://www.youtube.com/watch?v=m1Y3d83yUOM&list=PL3gfqtNqgd2J73g1Ex9dNKd1xre9ay1G0&index=8",
-      "images": []
+      "images": [],
+      "image": ""
     },
     {
       "id": "yt_mltghbd5y6xcr",
+      "visible": true,
       "title": "[GCE LV2] Chrome - 크롬 확장프로그램 활용하기",
       "link": "https://www.youtube.com/watch?v=HbRl7sDTUpg",
-      "images": []
+      "images": [],
+      "image": ""
     },
     {
       "id": "yt_mltghl9mji3e6",
+      "visible": true,
       "title": "[GCE LV2] Chrome - 강력한 구글 이미지검색 활용법",
       "link": "https://www.youtube.com/watch?v=_ZjoP-Z9__U",
-      "images": []
+      "images": [],
+      "image": ""
     },
     {
       "id": "yt_mltghunqnlnbq",
+      "visible": true,
       "title": "[GCE LV2] Chrome - 탭 고정 및 그룹화하기",
       "link": "https://www.youtube.com/watch?v=nDnkjyw9mfE",
-      "images": []
+      "images": [],
+      "image": ""
     },
     {
       "id": "yt_mltgifjl6z856",
+      "visible": true,
       "title": "[GCE LV2] Chrome - 크롬 주소창 100% 활용하기",
       "link": "https://www.youtube.com/watch?v=XRzX4S58a4k",
-      "images": []
+      "images": [],
+      "image": ""
     },
     {
       "id": "yt_mltgiould864e",
+      "visible": true,
       "title": "[GCE Lv1] Chrome - 구글 트렌드(Google Trends) 활용하기",
       "link": "https://www.youtube.com/watch?v=eVcZvGnsDKA",
-      "images": []
+      "images": [],
+      "image": ""
     },
     {
       "id": "yt_mltgj0ryfrzrs",
+      "visible": true,
       "title": "[GCE LV1] Chrome - 북마크 활용하기",
       "link": "https://www.youtube.com/watch?v=NM5N8EnRKVo",
-      "images": []
+      "images": [],
+      "image": ""
     }
   ],
   "personal": {
@@ -126,7 +166,10 @@
       "facebook": "https://facebook.com",
       "youtube": "https://www.youtube.com/@LeePDesigner"
     },
-    "aboutTitle": "도구보다 맥락을,\n기술 너머 아이의 가능성을 켜다"
+    "aboutTitle": "도구보다 맥락을,\n기술 너머 아이의 가능성을 켜다",
+    "statement": "기술을 고르는 기준은\n언제나 교실입니다.",
+    "draftPhoto": "assets/profile-2026.png",
+    "lectureCount": "150+"
   },
   "expertise": [
     "Google Workspace for Education",
@@ -140,78 +183,82 @@
   ],
   "publications": [
     {
-      "id": "pub_mr29b0grgnumy",
-      "title": "코딩 미술 융합 프로젝트를 위한 코드위즈 AI 메이커 스케치북",
-      "publisher": "상상충전소",
-      "year": 2024,
-      "description": "7가지 만들기 프로젝트로 완성하는 AI 메이킹 프로젝트! 교육 현장 10명의 선생님들의 경험과 노하우를 담은 코딩·미술·체육·음악 융합 AI 메이킹 프로젝트로, 교수학습지도안·수업 PPT·교재·도안·키트를 모두 담았습니다.",
-      "tags": [
-        "코드위즈",
-        "엔트리",
-        "AI교육"
-      ],
-      "link": "https://www.yes24.com/product/goods/125581310",
-      "previewDesc": "7가지 만들기 프로젝트로 완성하는 AI 메이킹 프로젝트! 교육 현장 10명의 선생님들의 경험과 노하우를 담은 코딩·미술·체육·음악 융합 AI 메이킹 프로젝트로, 교수학습지도안·수업 PPT·교재·도안·키트를 모두 담았습니다.",
-      "images": [],
-      "image": ""
-    },
-    {
-      "id": "pub_mlrv9tugxeozh",
-      "title": "그리와 로미의 제미나이 탐험대",
-      "publisher": "앤써북",
-      "year": 2026,
-      "description": "초등학생도, 선생님도, 학부모도! 모두의 눈높이 맞춰 누구나 쉽게 배울 수 있도록 특별히 기획된 구글 생성형 AI 학습서입니다.책을 통해 구글의 최신 AI, Gemini를 활용해 상상을 현실로 만드는 24가지 AI 프로젝트를 만들어봅니다. 교사크리에이터협회 G…",
-      "tags": [
-        "Gemini",
-        "생성AI",
-        "어린이"
-      ],
-      "link": "https://www.yes24.com/product/goods/178064014",
-      "previewDesc": "초등학생도, 선생님도, 학부모도! 모두의 눈높이 맞춰 누구나 쉽게 배울 수 있도록 특별히 기획된 구글 생성형 AI 학습서입니다.책을 통해 구글의 최신 AI, Gemini를 활용해 상상을 현실로 만드는 24가지 AI 프로젝트를 만들어봅니다. 교사크리에이터협회 G…",
-      "images": [],
-      "image": ""
-    },
-    {
       "id": "pub_1",
+      "visible": true,
       "title": "Google로 칼퇴하는 교사들의 시크릿",
       "publisher": "교사크리에이터협회",
-      "year": 2025,
+      "year": "2025",
       "description": "Google Workspace를 활용해 교사의 업무 효율을 극대화하는 실전 가이드북",
+      "previewDesc": "★2025년 세종도서 교양부분 선정★학교 업무를 자동화하고, 퇴근 시간을 앞당기는 비밀.Google로 칼퇴하는 교사들의 시크릿을 낱낱이 파헤쳐 본다.구글 전문가이자 현직 교사 6인이 공개하는 구글과의 첫 만남부터 지금까지.선생님의 시간을 되찾아주는 구글의 마법…",
+      "link": "https://www.yes24.com/product/goods/144246572",
+      "images": [],
+      "image": "",
       "tags": [
         "Google",
         "업무혁신",
         "에듀테크"
-      ],
-      "link": "https://www.yes24.com/product/goods/144246572",
-      "previewDesc": "★2025년 세종도서 교양부분 선정★학교 업무를 자동화하고, 퇴근 시간을 앞당기는 비밀.Google로 칼퇴하는 교사들의 시크릿을 낱낱이 파헤쳐 본다.구글 전문가이자 현직 교사 6인이 공개하는 구글과의 첫 만남부터 지금까지.선생님의 시간을 되찾아주는 구글의 마법…",
+      ]
+    },
+    {
+      "id": "pub_mlrv9tugxeozh",
+      "visible": true,
+      "title": "그리와 로미의 제미나이 탐험대",
+      "publisher": "앤써북",
+      "year": "2026",
+      "description": "초등학생도, 선생님도, 학부모도! 모두의 눈높이 맞춰 누구나 쉽게 배울 수 있도록 특별히 기획된 구글 생성형 AI 학습서입니다.책을 통해 구글의 최신 AI, Gemini를 활용해 상상을 현실로 만드는 24가지 AI 프로젝트를 만들어봅니다. 교사크리에이터협회 G…",
+      "previewDesc": "초등학생도, 선생님도, 학부모도! 모두의 눈높이 맞춰 누구나 쉽게 배울 수 있도록 특별히 기획된 구글 생성형 AI 학습서입니다.책을 통해 구글의 최신 AI, Gemini를 활용해 상상을 현실로 만드는 24가지 AI 프로젝트를 만들어봅니다. 교사크리에이터협회 G…",
+      "link": "https://www.yes24.com/product/goods/178064014",
       "images": [],
-      "image": ""
+      "image": "",
+      "tags": [
+        "Gemini",
+        "생성AI",
+        "어린이"
+      ]
     },
     {
       "id": "pub_2",
+      "visible": true,
       "title": "그리와 로미의 구글 탐험대",
       "publisher": "앤써북",
-      "year": 2025,
+      "year": "2025",
       "description": "어린이를 위한 Google 도구 탐험 이야기 — 재미있게 배우는 디지털 리터러시",
+      "previewDesc": "『그리와 로미의 구글탐험대』는 학생들을 위해 특별히 기획된 구글 Google, AI, 디지털·스마트교육 학습서입니다.『그리와 로미의 구글탐험대』는 구글 크롬, 구글 맵, 구글 랜즈, 구글 지메일, 구글 폼, 구글 드라이브, 구글 Docs, 구글 캘린더, 구글…",
+      "link": "https://www.yes24.com/product/goods/155119009",
+      "images": [],
+      "image": "",
       "tags": [
         "Google",
         "디지털리터러시",
         "어린이"
-      ],
-      "link": "https://www.yes24.com/product/goods/155119009",
-      "previewDesc": "『그리와 로미의 구글탐험대』는 학생들을 위해 특별히 기획된 구글 Google, AI, 디지털·스마트교육 학습서입니다.『그리와 로미의 구글탐험대』는 구글 크롬, 구글 맵, 구글 랜즈, 구글 지메일, 구글 폼, 구글 드라이브, 구글 Docs, 구글 캘린더, 구글…",
+      ]
+    },
+    {
+      "id": "pub_mr29b0grgnumy",
+      "visible": true,
+      "title": "코딩 미술 융합 프로젝트를 위한 코드위즈 AI 메이커 스케치북",
+      "publisher": "상상충전소",
+      "year": "2024",
+      "description": "7가지 만들기 프로젝트로 완성하는 AI 메이킹 프로젝트! 교육 현장 10명의 선생님들의 경험과 노하우를 담은 코딩·미술·체육·음악 융합 AI 메이킹 프로젝트로, 교수학습지도안·수업 PPT·교재·도안·키트를 모두 담았습니다.",
+      "previewDesc": "7가지 만들기 프로젝트로 완성하는 AI 메이킹 프로젝트! 교육 현장 10명의 선생님들의 경험과 노하우를 담은 코딩·미술·체육·음악 융합 AI 메이킹 프로젝트로, 교수학습지도안·수업 PPT·교재·도안·키트를 모두 담았습니다.",
+      "link": "https://www.yes24.com/product/goods/125581310",
       "images": [],
-      "image": ""
+      "image": "",
+      "tags": [
+        "코드위즈",
+        "엔트리",
+        "AI교육"
+      ]
     }
   ],
   "onlineCourses": [
     {
       "id": "oc_3",
+      "visible": true,
       "title": "Gemini x Google AI - AI 콜라보로 완성하는 수업 혁신",
       "platform": "한국교원연수원",
       "credit": "1학점",
       "link": "https://www.hstudy.co.kr/newmain/subject_view.asp?inx=1&jnx=1&gcode=s1905",
-      "previewDesc": "",
       "images": [
         "uploads/0a7f878c8f3b.png",
         "uploads/b51a3fa17ffa.png"
@@ -220,11 +267,11 @@
     },
     {
       "id": "oc_1",
+      "visible": true,
       "title": "Google 협업 도구, Gemini로 교사 업무 혁신하기",
       "platform": "티처빌",
       "credit": "1학점",
       "link": "https://www.teacherville.co.kr/trainapply/courseDetail.edu?division=T&courseSeq=O1005493&t=G002",
-      "previewDesc": "본 연수는 도서 『Google로 칼퇴근하는 교사들의 시크릿』을 바탕으로 Google Workspace 기반의 핵심 도구(Google Drive, Sheets, Docs, Forms, Classroom, Gemini AI 등)를 수업과 업무에 효과적으로 활용할 수 있는 방안을 제시합니다. 실제 교사들이 자주 겪는 상황을 사례 형태로 제시하여 연수의 몰입도를 높이고, 연수 내용을 수업과 업무에 바로 적용할 수 있도록 구성되었습니다.",
       "images": [
         "uploads/3c3d5f94efb5.png"
       ],
@@ -232,11 +279,11 @@
     },
     {
       "id": "oc_2",
+      "visible": true,
       "title": "ChatGPT, 수업에 날개를 달다",
       "platform": "교육사랑연수원",
       "credit": "1학점",
       "link": "https://www.edulove.co.kr/main/subject_view.asp?gcode=s0818&inx=1",
-      "previewDesc": "본 연수는 생성형 인공지능을 활용한 디지털 리터러시 개념 및 수업 사례 이해를 통해 인공지능 활용 교육 역량을 강화하기 위해 기획되었습니다.\n세계적으로 큰 반향을 일으키고 있는 생성형 인공지능(ChatGPT)을 교육현장에 적용하는 방법을 알아보고 교사들의 인공지능 활용 역량을 성장시켜,\n4차산업 혁명시대를 이끄는 인재육성지도의 비전을 가지도록 기획되었습니다.",
       "images": [
         "uploads/5597b32125de.png"
       ],
@@ -246,12 +293,13 @@
   "lectures": [
     {
       "id": "l_mskiwlabhgr9u",
+      "visible": true,
       "title": "구글과 함께하는 K-16 연계 디지털 역량 강화 하계 교원 연수",
       "org": "충청남도교육청",
-      "year": 2026,
+      "year": "2026",
       "category": "Google/Gemini",
+      "topic": "Google",
       "link": "",
-      "previewDesc": "260804-05 선문대학교 아산캠퍼스에서 실시한 구글과 함께하는 K-16 연계 디지털 역량 강화 하계 교원 연수입니다. Google AI Educator Series의 내용을 중심으로 Gemini와 Gemini Notebook을 교수학습 및 행정업무에 활용하고, 교육자 인증 뱃지를 취득하는 과정을 담았습니다.",
       "images": [
         "uploads/08cb19169c64.png",
         "uploads/4c2219a945f3.png",
@@ -262,12 +310,13 @@
     },
     {
       "id": "l_mskirvwkn6cbr",
+      "visible": true,
       "title": "[경남 중등 1정연수] NotebookLM 마스터 클래스",
       "org": "경상국립대학교",
-      "year": 2026,
+      "year": "2026",
       "category": "Google/Gemini",
+      "topic": "Google",
       "link": "",
-      "previewDesc": "260803 경상국립대학교에서 실시한 경남 화학 1급 정교사 연수입니다.",
       "images": [
         "uploads/0e6f7c5e3654.png",
         "uploads/45cd3b57995b.png",
@@ -279,12 +328,13 @@
     },
     {
       "id": "l_mskip8tt41oij",
+      "visible": true,
       "title": "[대전 중등 1정연수] NotebookLM으로 수업 및 학급경영에 날개 달기",
       "org": "충남대학교",
-      "year": 2026,
+      "year": "2026",
       "category": "Google/Gemini",
+      "topic": "교사 업무·학급경영",
       "link": "",
-      "previewDesc": "260729 충남대학교에서 실시한 중등 전기 1급 정교사 연수입니다. AI 기반으로 반복되는 업무는 효율적으로 처리하고, 다양한 방향의 진로 지도가 필요한 학생들에게 맞춤형 수업 자료를 선생님의 의도와 철학에 맞게 제작하는 방법에 대한 강의입니다.",
       "images": [
         "uploads/39ce60365e92.png",
         "uploads/9844a0254062.png",
@@ -295,12 +345,13 @@
     },
     {
       "id": "l_mskiirk0nwcd7",
+      "visible": true,
       "title": "인공지능 활용 선도교사 연수",
       "org": "한국교원대학교",
-      "year": 2026,
+      "year": "2026",
       "category": "Google/Gemini",
+      "topic": "교사 업무·학급경영",
       "link": "",
-      "previewDesc": "260714-15 대전 호텔인터시티에서 실시한 인공지능 활용 선도교사 연수입니다.",
       "images": [
         "uploads/0c50843966d3.png"
       ],
@@ -309,12 +360,13 @@
     },
     {
       "id": "l_mskifjabnr1q2",
+      "visible": true,
       "title": "[인공지능 활용 진로특강] 생성AI로 내 삶을 스마트하게 운영하기",
       "org": "김해수남고등학교",
-      "year": 2026,
+      "year": "2026",
       "category": "Google/Gemini",
+      "topic": "Google",
       "link": "",
-      "previewDesc": "260714 김해수남고 인공지능 활용 진로특강 자료입니다. 인공지능을 내 삶에 어떻게 적용하고, 무엇을 주의해야 하는지에 대한 내용입니다.",
       "images": [
         "uploads/11e803f03cdf.png"
       ],
@@ -323,12 +375,13 @@
     },
     {
       "id": "l_mr4yng6ro1z4u",
+      "visible": true,
       "title": "Gemini&NotebookLM으로 똑똑하게 해외 여행하기",
       "org": "GEG대전 Edu 로켓배송",
-      "year": 2026,
+      "year": "2026",
       "category": "Google/Gemini",
+      "topic": "Google",
       "link": "",
-      "previewDesc": "260702 GEG대전 Edu 로켓배송 연수에서 실시한 Gemini와 NotebookLM, 갤럭시 기기를 활용한 여행 준비 노하우 및 AI를 실생활에 유용하게 사용하는 방법에 대한 강의입니다.",
       "images": [
         "uploads/617b271cdcbe.png",
         "uploads/0cc57ead38a4.png",
@@ -341,12 +394,13 @@
     },
     {
       "id": "l_mr29yai68xvad",
+      "visible": true,
       "title": "AI 워크플로우로 실현하는 고품격 강의 설계",
       "org": "ADE 사업단 강사 역량 강화연수",
-      "year": 2026,
+      "year": "2026",
       "category": "기조강연/발표",
+      "topic": "AI",
       "link": "",
-      "previewDesc": "효과적인 강의를 하기 위한 조건, 디자인적으로 잘 설계된 프레젠테이션 작성하기, 내 철학이 담긴 강의 설계하기 등으로 구성된 강의법 및 강사 코칭 연수입니다.",
       "images": [
         "uploads/a3fb4cf1237d.png",
         "uploads/6ca674bb0d12.png",
@@ -357,12 +411,13 @@
     },
     {
       "id": "l_mr29fqzwolflm",
+      "visible": true,
       "title": "Gemini & Chrome Academy",
       "org": "GEG충남",
-      "year": 2026,
+      "year": "2026",
       "category": "Google/Gemini",
+      "topic": "Google",
       "link": "",
-      "previewDesc": "충남GEG회원 200명을 대상으로  Chromebook활용 / Gemini 최신 모델 소개 / Gemini 활용 방법 / 세계에서 3개 나라에만 런칭한 Google AI Educator Series 소개 및 시험 대비 등의 내용으로 실시한 연수입니다.",
       "images": [
         "uploads/78090a1a1df5.png",
         "uploads/31fece3586d1.png",
@@ -376,12 +431,13 @@
     },
     {
       "id": "l_mqdcutzp4kuad",
+      "visible": true,
       "title": "갤럭시탭 SMART하게 100% 활용하기",
       "org": "경기벌원초",
-      "year": 2024,
+      "year": "2024",
       "category": "Google/Gemini",
+      "topic": "Google",
       "link": "",
-      "previewDesc": "경기벌원초를에서 실시한 갤럭시탭 활용사례 온라인 연수입니다.",
       "images": [
         "uploads/3111d8a1122d.png"
       ],
@@ -390,12 +446,13 @@
     },
     {
       "id": "l_mqdcq680gbx2i",
+      "visible": true,
       "title": "2024 GTC in KOREA",
       "org": "Google Korea, 교사크리에이터협회",
-      "year": 2024,
+      "year": "2024",
       "category": "Google/Gemini",
+      "topic": "Google",
       "link": "",
-      "previewDesc": "Google Korea에서 실시한 2024년 신규 구글 트레이너를 위한 교육 자료입니다.",
       "images": [
         "uploads/91042f4985df.png",
         "uploads/4a2aaa5d3399.png",
@@ -412,12 +469,13 @@
     },
     {
       "id": "l_mqcuqz7aplqgo",
+      "visible": true,
       "title": "Canva 완전정복 - 교사를 위한 캔바 핵심 기능 익히기",
       "org": "대전괴정고등학교",
-      "year": 2026,
+      "year": "2026",
       "category": "에듀테크",
+      "topic": "교사 업무·학급경영",
       "link": "",
-      "previewDesc": "Canva 2.0을 기반으로, Canva의 핵심 기능을 교사의 업무 흐름에 맞춰 체계적인 단계별 실습으로 정리한 연수입니다.",
       "images": [
         "uploads/a28a564b5176.png",
         "uploads/0b665ca4f803.png",
@@ -431,12 +489,13 @@
     },
     {
       "id": "l_mqcuft10ar67s",
+      "visible": true,
       "title": "공문의 늪에서 교육의 본질로 - 모든 교사를 위한 NotebookLM 활용",
       "org": "대전가오중학교",
-      "year": 2026,
+      "year": "2026",
       "category": "Google/Gemini",
+      "topic": "교사 업무·학급경영",
       "link": "",
-      "previewDesc": "NotebookLM을 활용해 교직원 업무자료 지식 아카이브 생성 및 챗봇 활용하기, 수업 자료를 효육적으로 제작해서 수업의 질 높이기에 관한 심화 세션입니다.",
       "images": [
         "uploads/421763f315ac.png",
         "uploads/860cc8737afb.png",
@@ -450,12 +509,13 @@
     },
     {
       "id": "l_mqcu97usa7rhx",
+      "visible": true,
       "title": "디지털 협업 도구를 활용한 학생 평가 - 구글 도구를 중심으로",
       "org": "대전교육연수원",
-      "year": 2026,
+      "year": "2026",
       "category": "Google/Gemini",
+      "topic": "학부모·학생 강의",
       "link": "",
-      "previewDesc": "Gemini 사이드 패널을 기반으로 한 평가 설계 - 수행 - 결과 분석 워크플로우 효율화 및 서논술형 평가의 효과적인 운영에 관한 연수입니다.",
       "images": [
         "uploads/b28b860e7bdc.png",
         "uploads/d9c0a15b2216.png",
@@ -470,12 +530,13 @@
     },
     {
       "id": "l_mqcu55t77snr4",
+      "visible": true,
       "title": "Google Certified Educator Lv1 / Lv2 인증과정",
       "org": "대전신일중학교",
-      "year": 2026,
+      "year": "2026",
       "category": "Google/Gemini",
+      "topic": "Google",
       "link": "",
-      "previewDesc": "2026년 리뉴얼된 Google Certified Educator Lv1 / Lv2 과정 연수입니다.",
       "images": [
         "uploads/c8858f696542.png",
         "uploads/bf9cd122964e.png",
@@ -487,12 +548,13 @@
     },
     {
       "id": "l_mqcu08y2dsitn",
+      "visible": true,
       "title": "특수 선생님들을 위한 NotebookLM",
       "org": "대전혜광학교",
-      "year": 2026,
+      "year": "2026",
       "category": "Google/Gemini",
+      "topic": "Google",
       "link": "",
-      "previewDesc": "NotebookLM을 활용해 특수학교 선생님들의 업무 효율화 및 수업자료 제작 능력 향상에 관한 4시간 분량의 심화 세션입니다.",
       "images": [
         "uploads/41f5b3761279.png"
       ],
@@ -501,12 +563,13 @@
     },
     {
       "id": "l_mo02gfjnypkr7",
+      "visible": true,
       "title": "다양한 생성형 AI 플랫폼 활용해 수업하기",
       "org": "대전교육정보원",
-      "year": 2026,
+      "year": "2026",
       "category": "Google/Gemini",
+      "topic": "Google",
       "link": "",
-      "previewDesc": "",
       "images": [
         "uploads/37ee9c27e252.png",
         "uploads/4ad0bf1a90bb.png",
@@ -518,12 +581,13 @@
     },
     {
       "id": "l_mo028qjm3sbsu",
+      "visible": true,
       "title": "2026 제 1회 Canva Day",
       "org": "GEG Daejeon",
-      "year": 2026,
+      "year": "2026",
       "category": "에듀테크",
+      "topic": "Canva·에듀테크",
       "link": "",
-      "previewDesc": "Canva 전문가 5인의 시각으로 바라본 Canva 활용 꿀팁에 관한 라이브 연수입니다.",
       "images": [
         "uploads/945c0e40db2f.png",
         "uploads/b5618614bd10.png",
@@ -534,12 +598,13 @@
     },
     {
       "id": "l_mo021nmm3fiho",
+      "visible": true,
       "title": "GEG Flix - Gemini Side Panel로 스마트 학급 운영하기",
       "org": "교사크리에이터협회",
-      "year": 2026,
+      "year": "2026",
       "category": "Google/Gemini",
+      "topic": "교사 업무·학급경영",
       "link": "",
-      "previewDesc": "",
       "images": [
         "uploads/47e06b4bed4e.png",
         "uploads/196a22bdfb7e.png",
@@ -553,12 +618,13 @@
     },
     {
       "id": "l_mo01yljucrwyx",
+      "visible": true,
       "title": "[관리자 연수] AI 리더십 - 행정의 여유가 교육의 가치로",
       "org": "대전동부교육지원청",
-      "year": 2026,
+      "year": "2026",
       "category": "Google/Gemini",
+      "topic": "교사 업무·학급경영",
       "link": "",
-      "previewDesc": "",
       "images": [
         "uploads/aa7158647e52.png",
         "uploads/d0e5b119be49.png",
@@ -573,12 +639,13 @@
     },
     {
       "id": "l_mo01ps8wyscuc",
+      "visible": true,
       "title": "Notebook LM 업무와 수업에 활용하기",
       "org": "대전교육정보원",
-      "year": 2026,
+      "year": "2026",
       "category": "Google/Gemini",
+      "topic": "교사 업무·학급경영",
       "link": "",
-      "previewDesc": "",
       "images": [
         "uploads/4c2316149b69.png",
         "uploads/a516307277a5.png",
@@ -589,12 +656,13 @@
     },
     {
       "id": "l_mls8mo9epkzye",
+      "visible": true,
       "title": "[학부모연수] 우리 아이 학급의 디지털 도구 체험하기",
       "org": "대전복용초등학교",
-      "year": 2025,
+      "year": "2025",
       "category": "Google/Gemini",
+      "topic": "학부모·학생 강의",
       "link": "",
-      "previewDesc": "대전복용초등학교에서 실시한 학부모연수입니다. 디지털 리터러시 및 올바른 디지털 교육 방법에 관한 내용입니다.",
       "images": [
         "uploads/0cac06c95dbd.png",
         "uploads/f8e24b3d5a26.png",
@@ -607,12 +675,13 @@
     },
     {
       "id": "l_mls3my9gjubqf",
+      "visible": true,
       "title": "지금당장 Gemini를 사용해야 하는 이유",
       "org": "영동산업과학고등학교",
-      "year": 2026,
+      "year": "2026",
       "category": "Google/Gemini",
+      "topic": "Google",
       "link": "",
-      "previewDesc": "영동산업과학고등학교 및 충북 중등 선생님들을 대상으로 한 Gemini 활용 방법 연수입니다.",
       "images": [
         "uploads/8dee38e20f73.png",
         "uploads/bba521fa6252.png",
@@ -628,12 +697,13 @@
     },
     {
       "id": "l_mls4j31d7cxnj",
+      "visible": true,
       "title": "[경남 중등 1정연수] 교사가 편해지는 디지털 기반 수업 및 학급경영 루틴",
       "org": "경상국립대학교",
-      "year": 2025,
+      "year": "2025",
       "category": "Google/Gemini",
+      "topic": "교사 업무·학급경영",
       "link": "",
-      "previewDesc": "2025학년도 경상남도 중등 1급 정교사연수 전체 연수생 공통강의입니다.",
       "images": [
         "uploads/035fa74de34d.png",
         "uploads/88e76167edba.png",
@@ -649,12 +719,13 @@
     },
     {
       "id": "l_mls3hdapp4mf0",
+      "visible": true,
       "title": "당신의 삶을 새롭게 디자인하라 - Gemini와 NotebookLM으로 업무와 일상생활을 스마트하게 운영하기",
       "org": "충남대학교",
-      "year": 2026,
+      "year": "2026",
       "category": "Google/Gemini",
+      "topic": "교사 업무·학급경영",
       "link": "",
-      "previewDesc": "충남대학교에서 실시한 Gemini와 NotebookLM 기반 업무와 일상을 스마트하게 운영하기 연수입니다.",
       "images": [
         "uploads/6f796a287809.png",
         "uploads/aa8292f5330a.png",
@@ -667,12 +738,13 @@
     },
     {
       "id": "l_mls4eoalbpf6i",
+      "visible": true,
       "title": "저자의 권위를 무대 위 카리스마로",
       "org": "전국교사작가협회 책쓰샘",
-      "year": 2025,
+      "year": "2025",
       "category": "기조강연/발표",
+      "topic": "AI",
       "link": "",
-      "previewDesc": "전국교사작가협회 책쓰샘 워크숍에서 실시한 스피치 / 강의법 강의입니다.",
       "images": [
         "uploads/3ea116497b4b.png",
         "uploads/bc842f320b68.png",
@@ -685,12 +757,13 @@
     },
     {
       "id": "l_mls39ctglsbfr",
+      "visible": true,
       "title": "Education Plus 효과적으로 활용하기",
       "org": "대전신일중학교",
-      "year": 2026,
+      "year": "2026",
       "category": "Google/Gemini",
+      "topic": "Google",
       "link": "",
-      "previewDesc": "Education Plus를 효과적으로 활용하는 방법과 사례에 관한 연수입니다.",
       "images": [
         "uploads/6c0bb1699816.png",
         "uploads/34ddce3593d3.png",
@@ -704,12 +777,13 @@
     },
     {
       "id": "l_mls35x2biau7q",
+      "visible": true,
       "title": "[학생 정보통신윤리 연수] 생성AI 안전하고 효과적으로 활용하기",
       "org": "충남고등학교",
-      "year": 2026,
+      "year": "2026",
       "category": "Google/Gemini",
+      "topic": "학부모·학생 강의",
       "link": "",
-      "previewDesc": "충남고등학교 학생들을 대상으로 실시한 정보통신윤리교육 및 생성AI 바르게 사용하기에 대한 연수입니다.",
       "images": [
         "uploads/7a7b07b19a89.png",
         "uploads/e952736289b4.png",
@@ -724,12 +798,13 @@
     },
     {
       "id": "l_mls1wjjs2ogzp",
+      "visible": true,
       "title": "Education Plus with AIEP 알아보기",
       "org": "교사크리에이터협회",
-      "year": 2026,
+      "year": "2026",
       "category": "Google/Gemini",
+      "topic": "Google",
       "link": "",
-      "previewDesc": "11개 시도교육청이 연합으로 구축한 AIEP 플랫폼에서 Google Workspace for Education 유료 버전인 Education Plus를 효과적으로 사용하는 방법에 관한 연수입니다.",
       "images": [
         "uploads/a2b1db07615a.png",
         "uploads/b82075cadff3.png",
@@ -744,12 +819,13 @@
     },
     {
       "id": "l_mls1qk3ta08bu",
+      "visible": true,
       "title": "NotebookLM으로 수업과 업무에 날개 달기",
       "org": "충남대학교",
-      "year": 2026,
+      "year": "2026",
       "category": "Google/Gemini",
+      "topic": "교사 업무·학급경영",
       "link": "",
-      "previewDesc": "NotebookLM 기반 안전하고 효율적인 워크플로우를 구축하는 방법에 관한 연수입니다.",
       "images": [
         "uploads/a63a17e5b50a.png",
         "uploads/0168c586312f.png",
@@ -762,12 +838,13 @@
     },
     {
       "id": "l1",
+      "visible": true,
       "title": "Gemini Academy — 청년 AI 역량 강화",
       "org": "고용노동부 · Google Korea 주관, 배재대학교",
-      "year": 2025,
+      "year": "2025",
       "category": "Google/Gemini",
+      "topic": "Google",
       "link": "",
-      "previewDesc": "배재대학교에서 실시하고, 고용노동부와 Google Kroea가 공동 주관한 Gemini Academy - 청년 AI 역량 강화 연수입니다.",
       "images": [
         "uploads/2db4046159d2.png"
       ],
@@ -776,12 +853,13 @@
     },
     {
       "id": "l2",
+      "visible": true,
       "title": "[2025 교장자격연수] 생성AI 활용과정",
       "org": "한국교원대학교 종합교육연수원",
-      "year": 2025,
+      "year": "2025",
       "category": "ChatGPT/AI",
+      "topic": "AI",
       "link": "",
-      "previewDesc": "한국교원대학교 종합교육연수원에서 실시한 2025학년도 교장자격연수 생성AI 활용과정 연수입니다.",
       "images": [
         "uploads/026add15ae95.png",
         "uploads/2c7975164f8b.png",
@@ -793,12 +871,13 @@
     },
     {
       "id": "l3",
+      "visible": true,
       "title": "Chrome OS 및 안드로이드 비교 소개(충청남도교육청 스마트기기 사용자교육)",
       "org": "충청남도교육청",
-      "year": 2025,
+      "year": "2025",
       "category": "에듀테크",
+      "topic": "Canva·에듀테크",
       "link": "",
-      "previewDesc": "충청남도교육청 스마트기기 사용자교육 중 Chrome OS와 Android파트 강의입니다.",
       "images": [
         "uploads/435e8bd21d8f.png",
         "uploads/3779f7ba00e1.png",
@@ -811,12 +890,13 @@
     },
     {
       "id": "l4",
+      "visible": true,
       "title": "2025 교장 자격 연수 — AI 기반 멀티미디어 제작 · ChatGPT의 교육적 활용",
       "org": "한국교원대학교 종합교육연수원",
-      "year": 2025,
+      "year": "2025",
       "category": "ChatGPT/AI",
+      "topic": "AI",
       "link": "https://youtu.be/7N_kX1DkyCg",
-      "previewDesc": "",
       "images": [
         "uploads/d6e71d5e9617.png",
         "uploads/d22518d8dbe1.png",
@@ -829,12 +909,13 @@
     },
     {
       "id": "l5",
+      "visible": true,
       "title": "Gemini 활용연수 기초·심화과정",
       "org": "교사크리에이터협회",
-      "year": 2025,
+      "year": "2025",
       "category": "Google/Gemini",
+      "topic": "Google",
       "link": "",
-      "previewDesc": "2025년 5월~6월에 걸쳐 실시한 Gemini 기초연수 및 심화연수입니다.",
       "images": [
         "uploads/8e2799224b66.png",
         "uploads/69f265c8f761.png",
@@ -847,12 +928,13 @@
     },
     {
       "id": "l6",
+      "visible": true,
       "title": "제167회 KERIS 디지털교육 포럼 교사 대표 발표",
       "org": "KERIS",
-      "year": 2025,
+      "year": "2025",
       "category": "기조강연/발표",
+      "topic": "교사 업무·학급경영",
       "link": "https://www.youtube.com/live/CPX7oqKIF8U?si=yFti_2zY5Xxuqnv3&t=5615",
-      "previewDesc": "경북대학교에서 실시한 제167회 KERIS 디지털교육 포럼 교사 대표 발표 사례입니다.",
       "images": [
         "uploads/e50541e3a18a.png",
         "uploads/de46ff0e33ed.png",
@@ -868,12 +950,13 @@
     },
     {
       "id": "l7",
+      "visible": true,
       "title": "교사가 편해지는 디지털 기반 학급경영 및 수업 루틴",
       "org": "경상남도 중등 1급 정교사연수(경상국립대학교)",
-      "year": 2024,
+      "year": "2024",
       "category": "학급경영",
+      "topic": "교사 업무·학급경영",
       "link": "",
-      "previewDesc": "2024년 경상남도 중등 1급 정교사연수 내용입니다. 디지털 기반 학급 루틴을 세우고, 수업 자료 및 학생 산출물을 구글 기반으로 아카이빙해서 수업 효율은 높이고 행정 부담을 줄이며, 학생의 참여도는 증가시키는 사례에 관한 연수입니다.",
       "images": [
         "uploads/6d6422416b84.png",
         "uploads/448fd64f71ee.png",
@@ -884,12 +967,13 @@
     },
     {
       "id": "l8",
+      "visible": true,
       "title": "Google Education Plus로 수업에 날개 달고 비상하기",
       "org": "대한민국 글로컬 미래교육 박람회 Google 인사이트 세션 발표",
-      "year": 2024,
+      "year": "2024",
       "category": "기조강연/발표",
+      "topic": "Google",
       "link": "",
-      "previewDesc": "",
       "images": [
         "uploads/45bcb2bbd38c.png"
       ],
@@ -898,12 +982,13 @@
     },
     {
       "id": "l9",
+      "visible": true,
       "title": "Google EDU+ with AI",
       "org": "대전미래교육박람회 Google 인사이트 세션 발표",
-      "year": 2024,
+      "year": "2024",
       "category": "기조강연/발표",
+      "topic": "Google",
       "link": "",
-      "previewDesc": "",
       "images": [
         "uploads/ff24491f3afd.png"
       ],
@@ -912,12 +997,13 @@
     },
     {
       "id": "l10",
+      "visible": true,
       "title": "대한민국 교육박람회 Google GEG 리더 발표 및 장터세션 운영",
       "org": "Google Workspace Education Plus 기반 수업사례",
-      "year": 2024,
+      "year": "2024",
       "category": "기조강연/발표",
+      "topic": "Google",
       "link": "",
-      "previewDesc": "",
       "images": [
         "uploads/6cfd605c0fc2.png",
         "uploads/fc48be11c1d1.png",
@@ -928,12 +1014,13 @@
     },
     {
       "id": "l11",
+      "visible": true,
       "title": "Google EDU+ with AI",
       "org": "Google Education Festival 강연(광주, 여수, 목포)",
-      "year": 2025,
+      "year": "2025",
       "category": "기조강연/발표",
+      "topic": "Google",
       "link": "",
-      "previewDesc": "",
       "images": [
         "uploads/1ec0d589230d.png",
         "uploads/d717ed4a3295.png",
@@ -947,12 +1034,13 @@
     },
     {
       "id": "l12",
+      "visible": true,
       "title": "세종시교육청 스마트기기 사용자교육 강사",
       "org": "크롬북, 갤럭시탭",
-      "year": 2024,
+      "year": "2024",
       "category": "에듀테크",
+      "topic": "강사코칭",
       "link": "",
-      "previewDesc": "세종시 교육청 소속 교사들을 대상으로 한 갤럭시탭 기본 세팅법 및 교실 활용 루틴과 수업 사례 강의입니다.",
       "images": [
         "uploads/18c8557993a7.png",
         "uploads/26f4e1b2836b.png",
@@ -964,12 +1052,13 @@
     },
     {
       "id": "l13",
+      "visible": true,
       "title": "스마트 앱 / 기기 활용 연수",
       "org": "대전교육정보원",
-      "year": 2024,
+      "year": "2024",
       "category": "에듀테크",
+      "topic": "Canva·에듀테크",
       "link": "",
-      "previewDesc": "",
       "images": [
         "uploads/45d2bb67d227.png",
         "uploads/809d80d919a8.png"
@@ -979,12 +1068,13 @@
     },
     {
       "id": "l14",
+      "visible": true,
       "title": "생성AI 및 ChatGPT 활용 연수",
       "org": "대전교육정보원",
-      "year": 2024,
+      "year": "2024",
       "category": "ChatGPT/AI",
+      "topic": "AI",
       "link": "",
-      "previewDesc": "대전 관내 교장/교감, 고경력 교원, 저경력 교원을 대상으로 각각 실시한 생성AI 및 ChatGPT 활용 연수입니다.",
       "images": [
         "uploads/4333a41c8642.png",
         "uploads/f879a88853e1.png",
@@ -995,12 +1085,13 @@
     },
     {
       "id": "l15",
+      "visible": true,
       "title": "구글 도구 활용 연수",
       "org": "대전교육정보원",
-      "year": 2024,
+      "year": "2024",
       "category": "Google/Gemini",
+      "topic": "Google",
       "link": "",
-      "previewDesc": "",
       "images": [
         "uploads/dfc307fb7eab.png",
         "uploads/f86b37e09087.png",
@@ -1012,12 +1103,13 @@
     },
     {
       "id": "l17",
+      "visible": true,
       "title": "[강의법 특강] 가장 강력한 콘텐츠는 바로 교사입니다",
       "org": "교사크리에이터협회 크리에이터캠프 특강",
-      "year": 2025,
+      "year": "2025",
       "category": "기조강연/발표",
+      "topic": "교사 업무·학급경영",
       "link": "",
-      "previewDesc": "",
       "images": [
         "uploads/1b48644ace98.png",
         "uploads/8898c3258e15.png",
@@ -1030,12 +1122,13 @@
     },
     {
       "id": "l19",
+      "visible": true,
       "title": "교사가 편해지는 디지털 기반 학급경영 및 수업 루틴",
       "org": "대전과학고, 명석고, 보문고, 대전글꽃초, 세종 늘봄초 등",
-      "year": 2024,
+      "year": "2024",
       "category": "학급경영",
+      "topic": "교사 업무·학급경영",
       "link": "",
-      "previewDesc": "",
       "images": [
         "uploads/f6891f609eb6.png"
       ],
@@ -1044,12 +1137,13 @@
     },
     {
       "id": "l20",
+      "visible": true,
       "title": "지금 당장 Gemini를 사용해야 하는 이유",
       "org": "교사크리에이터협회, GEG Daejeon, 영동산업과학고, 충남대 등",
-      "year": 2024,
+      "year": "2024",
       "category": "Google/Gemini",
+      "topic": "Google",
       "link": "",
-      "previewDesc": "Gemini Academy 강사로서 실시한 Gemini 기초과정 및 심화과정 연수입니다.",
       "images": [
         "uploads/0134c79fdacb.png"
       ],
@@ -1058,12 +1152,13 @@
     },
     {
       "id": "l22",
+      "visible": true,
       "title": "아이스크림 띵커벨 & 클래스툴 효과적으로 활용하기",
       "org": "대전복용초등학교",
-      "year": 2024,
+      "year": "2024",
       "category": "에듀테크",
+      "topic": "Canva·에듀테크",
       "link": "",
-      "previewDesc": "",
       "images": [
         "uploads/c3fb48cd3747.png",
         "uploads/8c01be28f323.png",
@@ -1074,12 +1169,13 @@
     },
     {
       "id": "l24",
+      "visible": true,
       "title": "Chrome book 활용 사용자교육",
       "org": "세종특별자치시 교육청, 충청남도교육청",
-      "year": 2024,
+      "year": "2024",
       "category": "에듀테크",
+      "topic": "Canva·에듀테크",
       "link": "",
-      "previewDesc": "세종특별자치시 및 충청남도 소속 교원들을 대상으로 한 Chromebook 활용사례 연수입니다.",
       "images": [
         "uploads/3b608b1ac6a4.png",
         "uploads/43678244f62b.png",
@@ -1091,12 +1187,13 @@
     },
     {
       "id": "l25",
+      "visible": true,
       "title": "갤럭시 생태계 100% 활용하기",
       "org": "GEG Daejeon, 지식샘터, 서울 중동고, 명석고, 경기 벌원초 등",
-      "year": 2024,
+      "year": "2024",
       "category": "에듀테크",
+      "topic": "Canva·에듀테크",
       "link": "",
-      "previewDesc": "",
       "images": [
         "uploads/8fe1206653da.png",
         "uploads/8d31b084d96f.png",
@@ -1109,12 +1206,13 @@
     },
     {
       "id": "l28",
+      "visible": true,
       "title": "교사가 편해지는 ChatGPT 100% 활용하기",
       "org": "지식샘터, 대전월평중, 대덕초",
-      "year": 2024,
+      "year": "2024",
       "category": "ChatGPT/AI",
+      "topic": "교사 업무·학급경영",
       "link": "",
-      "previewDesc": "",
       "images": [
         "uploads/1d2d2ae1ce53.png",
         "uploads/b89d37932689.png",
@@ -1127,12 +1225,13 @@
     },
     {
       "id": "l29",
+      "visible": true,
       "title": "ChatGPT, 쉽고 편하게 활용하기",
       "org": "전라북도교육청 기관특별연수",
-      "year": 2024,
+      "year": "2024",
       "category": "ChatGPT/AI",
+      "topic": "AI",
       "link": "",
-      "previewDesc": "전라북도교육청 기관특별연수 강의입니다.",
       "images": [
         "uploads/b5be23901eb9.png"
       ],
@@ -1141,12 +1240,13 @@
     },
     {
       "id": "l30",
+      "visible": true,
       "title": "선생님을 위한 ChatGPT 및 스마트 앱 활용",
       "org": "대전교육정보원",
-      "year": 2024,
+      "year": "2024",
       "category": "ChatGPT/AI",
+      "topic": "AI",
       "link": "",
-      "previewDesc": "",
       "images": [
         "uploads/412fe94c933e.png"
       ],
@@ -1155,12 +1255,13 @@
     },
     {
       "id": "l31",
+      "visible": true,
       "title": "ChatGPT로 경험하는 새 시대의 혁신",
       "org": "대전 서부 5지구 자율장학 연수",
-      "year": 2024,
+      "year": "2024",
       "category": "ChatGPT/AI",
+      "topic": "AI",
       "link": "",
-      "previewDesc": "",
       "images": [
         "uploads/c1d72131d63a.png"
       ],
@@ -1169,12 +1270,13 @@
     },
     {
       "id": "l32",
+      "visible": true,
       "title": "ChatGPT 활용 수업 설계 및 적용",
       "org": "대전관평초",
-      "year": 2024,
+      "year": "2024",
       "category": "ChatGPT/AI",
+      "topic": "AI",
       "link": "",
-      "previewDesc": "",
       "images": [
         "uploads/d4e6aa10a70b.png"
       ],
@@ -1183,12 +1285,13 @@
     },
     {
       "id": "l33",
+      "visible": true,
       "title": "AI·메타버스 Core과정 — 생성형 AI로 음성 자료 제작하기",
       "org": "경인교대 특강",
-      "year": 2024,
+      "year": "2024",
       "category": "메타버스/VR",
+      "topic": "Canva·에듀테크",
       "link": "",
-      "previewDesc": "경인교대 재학생 대상 AI 메타버스 Core과정 특강 자료입니다.",
       "images": [
         "uploads/165a3aba290d.png",
         "uploads/6e7b7c355932.png",
@@ -1199,12 +1302,13 @@
     },
     {
       "id": "l34",
+      "visible": true,
       "title": "꿈나무 크리에이터 되기",
       "org": "진잠초",
-      "year": 2024,
+      "year": "2024",
       "category": "에듀테크",
+      "topic": "Canva·에듀테크",
       "link": "",
-      "previewDesc": "진잠초등학교 유튜브 동아리 학생들을 대상으로 실시한 크리에이터 되기 강의 자료입니다.",
       "images": [
         "uploads/fa29db8b3225.png",
         "uploads/7bdb160f55ee.png",
@@ -1215,12 +1319,13 @@
     },
     {
       "id": "l35",
+      "visible": true,
       "title": "구글 공인 교육자 인증 과정 Boot Camp Lv1/Lv2/Trainer",
       "org": "GEG Daejeon / 교사크리에이터협회 / 쌤동네 등",
-      "year": 2024,
+      "year": "2024",
       "category": "Google/Gemini",
+      "topic": "Google",
       "link": "",
-      "previewDesc": "",
       "images": [
         "uploads/47293ef58ac8.png",
         "uploads/5fbb01d94d0c.png"
@@ -1230,12 +1335,13 @@
     },
     {
       "id": "l36",
+      "visible": true,
       "title": "하계 메타버스 활용연수",
       "org": "대전교육정보원",
-      "year": 2023,
+      "year": "2023",
       "category": "메타버스/VR",
+      "topic": "Canva·에듀테크",
       "link": "",
-      "previewDesc": "",
       "images": [
         "uploads/568baa149099.png",
         "uploads/a9cdad308dd8.png",
@@ -1246,12 +1352,13 @@
     },
     {
       "id": "l38",
+      "visible": true,
       "title": "동계 메타버스 활용연수",
       "org": "대전교육정보원",
-      "year": 2022,
+      "year": "2022",
       "category": "메타버스/VR",
+      "topic": "Canva·에듀테크",
       "link": "",
-      "previewDesc": "",
       "images": [
         "uploads/70d0bcb94725.png",
         "uploads/952cd905033c.png"
@@ -1263,132 +1370,133 @@
   "awards": [
     {
       "id": "a_mlsacnmmlhxez",
+      "visible": true,
       "title": "2025년 정보(SW·AI)교육 유공 교육부장관 표창",
       "org": "교육부",
-      "year": 2025,
-      "highlight": true,
-      "link": "",
-      "previewDesc": "",
-      "images": [],
-      "image": ""
+      "year": "2025",
+      "link": ""
     },
     {
       "id": "a1",
+      "visible": true,
       "title": "학생언어문화개선 공모전 교수학습자료부문 대상",
       "org": "교육부장관상",
-      "year": 2022,
-      "highlight": true
+      "year": "2022",
+      "link": ""
     },
     {
       "id": "a2",
+      "visible": true,
       "title": "온라인 교과서 아이디어 공모전 전국 은상",
       "org": "교육부 주관",
-      "year": 2020,
-      "highlight": false
+      "year": "2020",
+      "link": ""
     },
     {
       "id": "a3",
+      "visible": true,
       "title": "천재교육 T셀파 수업혁신 연구대회 최우수상",
       "org": "천재교육",
-      "year": 2023,
-      "highlight": false
+      "year": "2023",
+      "link": ""
     },
     {
       "id": "a4",
+      "visible": true,
       "title": "인터넷윤리 창작콘텐츠 공모전 장려상",
       "org": "",
-      "year": 2021,
-      "highlight": false
+      "year": "2021",
+      "link": ""
     }
   ],
   "activities": [
     {
       "id": "act_mlsa3qmjc4q3y",
+      "visible": true,
       "title": "2026 G-Creator 국제교류 with Japan(G-MaGic)",
       "period": "2026",
-      "link": "",
-      "previewDesc": "",
-      "images": [
-        "uploads/a1fc75720c47.png"
-      ],
-      "image": "uploads/a1fc75720c47.png"
+      "link": ""
     },
     {
       "id": "act_mls31d5rdaota",
+      "visible": true,
       "title": "2025 G-Creator 국제교류 with Taiwan",
       "period": "2025",
-      "link": "https://www.youtube.com/watch?v=u5jIxJis5K0",
-      "previewDesc": "2025년에 실시한 G-Creator팀과 GEG Taiwan의 국제교류 사업입니다. 대만의 구글 오피스 2곳을 방문하고, Google Reference School을 방문하여 현지 교사들과 교육 사례 및 아이디어를 나누었습니다.",
-      "images": [
-        "uploads/5417d2316696.png",
-        "uploads/9b0742928e92.png",
-        "uploads/c5a697e5bf69.png",
-        "uploads/1dbdfa44df16.png"
-      ],
-      "image": "uploads/5417d2316696.png"
+      "link": "https://www.youtube.com/watch?v=u5jIxJis5K0"
     },
     {
       "id": "act_mlsa2ne7ua3xe",
+      "visible": true,
       "title": "AIEDAP 마스터교원",
       "period": "",
-      "link": "",
-      "previewDesc": "",
-      "images": [],
-      "image": ""
+      "link": ""
     },
     {
       "id": "act_mlsa2ydv1o69z",
+      "visible": true,
       "title": "T.O.U.C.H. 교사단",
       "period": "",
-      "link": "",
-      "previewDesc": "",
-      "images": [],
-      "image": ""
+      "link": ""
     },
     {
       "id": "act1",
+      "visible": true,
       "title": "아이스크림 클래스툴 마스터교사 1기",
-      "period": ""
+      "period": "",
+      "link": ""
     },
     {
       "id": "act2",
+      "visible": true,
       "title": "천재교육 T셀파 T멘토, YBM 콘텐츠 자문위원",
-      "period": ""
+      "period": "",
+      "link": ""
     },
     {
       "id": "act3",
+      "visible": true,
       "title": "EBS 메타캠퍼스(Wecanverse) 교사자문단 및 개발위원",
-      "period": ""
+      "period": "",
+      "link": ""
     },
     {
       "id": "act4",
+      "visible": true,
       "title": "전국 온라인 콘텐츠 활용 교과서 선도학교 교사지원단 및 ITDA 플랫폼 온라인 콘텐츠 개발",
-      "period": "2020~2022"
+      "period": "2020~2022",
+      "link": ""
     },
     {
       "id": "act5",
+      "visible": true,
       "title": "대전광역시 스마트온 교사지원단",
-      "period": "2022~2024"
+      "period": "2022~2024",
+      "link": ""
     },
     {
       "id": "act6",
+      "visible": true,
       "title": "한국교육과정평가원 컴퓨터기반 학업성취도평가 수학과 출제위원 및 대전광역시 팀장",
-      "period": "2022~2023"
+      "period": "2022~2023",
+      "link": ""
     },
     {
       "id": "act7",
+      "visible": true,
       "title": "충남대 사범대학 에듀테크 컨설턴트",
-      "period": "2023~2024"
+      "period": "2023~2024",
+      "link": ""
     }
   ],
   "press": [
     {
       "id": "p_mskiz82ml7qvx",
+      "visible": true,
       "title": "[인터뷰 ②] “한 사람의 가능성을 발견하고, 자신의 힘으로 성장할 수 있도록 도울 수 있는 교육” — 대덕초 교사 이민재",
       "source": "브랜드뉴스",
       "date": "2026.08.08.",
-      "link": "https://www.ibrandnews.com/news/articleView.html?idxno=12705",
       "previewDesc": "",
+      "link": "https://www.ibrandnews.com/news/articleView.html?idxno=12705",
       "images": [
         "uploads/press_brandnews_main.png"
       ],
@@ -1396,11 +1504,12 @@
     },
     {
       "id": "p_mskixykoxmlf0",
+      "visible": true,
       "title": "[인터뷰①] “도구보다 맥락이 먼저입니다” 대전 GEG 리더 교사 이민재",
       "source": "브랜드뉴스",
       "date": "2026.08.03.",
-      "link": "https://www.ibrandnews.com/news/articleView.html?idxno=12700",
       "previewDesc": "",
+      "link": "https://www.ibrandnews.com/news/articleView.html?idxno=12700",
       "images": [
         "uploads/press_brandnews_main.png"
       ],
@@ -1408,95 +1517,176 @@
     },
     {
       "id": "p_mlrvuiw1jnj43",
+      "visible": true,
       "title": "충남대학교 사범대학, AI·에듀테크 연수로 대전 교원 디지털 수업 역량 강화",
       "source": "한국강사신문",
       "date": "2026.01.17",
-      "link": "https://www.lecturernews.com/news/articleView.html?idxno=194981",
       "previewDesc": "[한국강사신문 장한별 기자] 충남대학교(총장 김정겸)는 사범대학이 주최한 ‘AI·에듀테크 기반 디지털 수업 역량 강화 연수’가 1월 3일과 10일(토) 두 차례에 걸쳐 성황리에 마무리됐다고 밝혔다.이번 연수는 대전 Google Educator Group과 ㈜오늘배움, 테바소프트㈜가 공동 주관했으며, 대전 지역 초·중등 교원들이 참여해 Canva, NotebookLM, Gemini, 바이브코딩, Redmenta 등 최신 AI 기반 도구의 수업 활용 방법을 익혔다.1월 3일(1회차)에는 강서현 교사가 Canva를 활용해 학습지·발표자료",
-      "images": []
+      "link": "https://www.lecturernews.com/news/articleView.html?idxno=194981",
+      "images": [],
+      "image": ""
     },
     {
       "id": "p1",
+      "visible": true,
       "title": "비상교육, 구글과 미래교실 디지털 수업 모델 선보여",
       "source": "디지틀조선일보",
       "date": "2024.06.05",
-      "link": "https://digitalchosun.dizzo.com/site/data/html_dir/2024/06/05/2024060580262.html",
       "previewDesc": "비상교육, 구글과 미래 교실 디지털 수업 모델 선보여",
-      "images": []
+      "link": "https://digitalchosun.dizzo.com/site/data/html_dir/2024/06/05/2024060580262.html",
+      "images": [],
+      "image": ""
     },
     {
       "id": "p2",
+      "visible": true,
       "title": "비상교육, 구글과 미래 교실 디지털 수업 모델 선봬",
       "source": "newstheAI",
       "date": "2024.06.05",
-      "link": "https://www.newstheai.com/news/articleView.html?idxno=5624",
       "previewDesc": "에듀테크 기업 비상교육이 최근 2일 ‘2024 대한민국 글로컬 미래교육박람회’에 참여해 구글과 협업한 교원 연수 프로그램을 선보였다고 5일 밝혔다.비상교육은 미래",
-      "images": []
+      "link": "https://www.newstheai.com/news/articleView.html?idxno=5624",
+      "images": [],
+      "image": ""
     },
     {
       "id": "p3",
+      "visible": true,
       "title": "[INTERVIEW] 2023 연구대회 초등 최우수상 — '허이차'팀",
       "source": "티셀파 쌤채널",
       "date": "2023.12.22",
-      "link": "https://sschannel.tsherpa.co.kr/community/E-community-view.html?content_id=1937366",
       "previewDesc": "같은 학교에서 동학년을 3년간 함께 맡았던 세 선생님. 끈끈한(?) 관계였던 세 사람은 함께했던 알찬 경험을 차곡차곡 모아 다른 선생님들께 선보이고 싶었습니다. 대덕초등학교 차수미 선생님, 대덕초등학교 이민재 선생님, 대전원앙초등학교 허광수 선생님이 그 주인공인데요. 그저 ‘좋았던 활동’을 다른 선생님들께 소개하고 싶었던 대회 참가에서 최우수상을 거머쥔, 세 사람의 성을 따 만든 팀명처럼 유쾌하고도 열정 넘치던 ‘허이차’ 팀의 이야기를 들어 보았습니다.",
+      "link": "https://sschannel.tsherpa.co.kr/community/E-community-view.html?content_id=1937366",
       "images": [
         "uploads/054b8ac31890.png"
-      ]
+      ],
+      "image": "uploads/054b8ac31890.png"
     },
     {
       "id": "p4",
+      "visible": true,
       "title": "바른 언어 사용, 다 같이 노력해야죠",
       "source": "한국교육신문",
       "date": "2022.09.22",
-      "link": "https://www.hangyo.com/mobile/article.html?no=97179",
       "previewDesc": "“아이들을 보면 상대의 말을 오해해서 주먹다짐까지 이어지기도 해요. 말하는 사람의 의도를 듣는 사람이 전혀 다르게 해석한 거죠. 말을 전달하는 과정에서 한 번 더 생각하면 사소한 오해나 다툼이 없지 않을까요?” ‘2022 학생 언어문화개선 공모전’에서 캘리그래피 부문 대상을 받은 임종민 충남 서정초 교사는 바른 언어 사용의 중요성을 누구보다 절감한다고 했다. 학교에서 은어나 지나치게 줄인 말을 사용하는 학생들이 적지 않아서 그 뜻을 이해하기 어려운 적이 잦았다. 시대를 따라가지 못한다는 느낌도 받았다. 임 교사는 “아이들을 가르치는 나부터 바르게 써야겠다고 마음먹었다”고 했다. “선생님이 친근감을 표현하려고 유머를 입힌 언어를 사용했는데, 학생은 기분이 상하는 경우를 봤어요. 오랜 시간을 함께 보내는 사이인 만큼 학생도, 선생님도 함께 노력해야겠구나, 생각했어요. 집에서도 마찬가지예요. 어느 한쪽만 변화해서는 언어 문제를 개선할 수 없어요. 다 같이 해야죠. 학교에서 가정에서 모두 다 같이 노력해야 극복할 수 있어요.” 임 교사는 ‘우리 함께 높여볼까요? 언어의 품격’을 캘리그래피로 표현했다. 전문가의 작품 못지않게 완성도가 높아 눈길을 끌었다. 그는 “교육자료를 검색하다가 우연히 발견한 공모전 공고를 보고 처음 참가했다”고 귀띔했다. 임 교사는 10여 년 전, 취미로 캘리그래피에 입문했고, 그 매력에 빠져 전문가 과정까지 밟았다. 차근하게 쌓은 실력은 교직생활에도 도움이 됐다. 각종 행사가 열릴 때는 재능기부를 하고, 캘리그래피를 배우고 싶어 하는 동료를 대상으로 연수도 진행했다. 창의적 체험활동 시간에는 학생들과 부채 만들기, 캠페인 피켓 만들기 등을 지도했다. 그는 “앞으로 미술 시간이나 국어 시간에 캘리그래피를 활용한 수업도 해보고 싶다”고 전했다. 이모티콘 부문 대상은 경북 구미인덕초 5학년 정세은 양이 차지했다. ‘귀여운 요정’ 이모티콘은 감사해요, 괜찮아요, 사랑해요, 힘내요 등 우리가 일상에서 사용하는 말과 함께 요정 캐릭터의 표정과 행동을 접목했다. 애니메이션 효과를 더해 움직이는 이모티콘으로 완성했다. 세은 학생의 꿈은 이모티콘 작가다. 어려서부터 그림 그리기에 재미를 붙였고, 유튜브에서 이모티콘 만드는 과정을 접한 후 꿈을 정했다. 어머니 이정인 씨는 “아이의 장래희망을 알고 있던 선생님이 공모전 소식을 알려주셔서 친구들과 함께 참가했다”고 했다. 세은 학생은 태블릿 PC로 작업했다. 평소 스케치 해뒀던 캐릭터 가운데 주변에서 가장 반응이 좋았던 요정 캐릭터를 출품하기로 마음먹었다. 움직이는 이모티콘을 만들기 위해서 그림 한 컷, 한 컷을 그리고 이어붙였다. 세은 학생은 “이모티콘의 움직임이 딱딱해서 여러 번 다시 그렸다”며 웃었다. “대상을 받아서 신기했어요. 가족들한테 국민 투표에 참여해달라고 부탁했는데, 고마웠어요. 지금부터 여러 가지 이모티콘을 만들어보려고요. 카카오톡에 이모티콘 등록을 목표로 도전해보려고 해요.” 교수·학습자료 부문 대상은 ‘On(溫)기 넘치는 우리의 온라인 언어 세우기’를 출품한 허광수·이민재·차수미 대전원앙초 교사에게 돌아갔다. 온라인 채팅과 메타버스의 상황으로 구분해 2차시 수업으로 구성했다. 이들은 “학생들의 온라인 언어생활 실태를 알아보고 올바르지 못한 부분이 있다면 학생들 스스로 어떻게 하면 올바른 언어 습관을 형성할 수 있을지 생각해볼 수 있게 기획했다”면서 “특히 익명성이 보장된 사이버 공간에서 존중을 바탕으로 의사소통하고 갈등을 해결할 방법을 실천하는 데 초점을 맞췄다”고 전했다. 공모전 수상작은 학생 언어문화개선 홈페이지(goodword.kr)에서 확인할 수 있다.",
-      "images": []
+      "link": "https://www.hangyo.com/mobile/article.html?no=97179",
+      "images": [],
+      "image": ""
     },
     {
       "id": "p5",
+      "visible": true,
       "title": "대전교육청, 올해 학생언어문화개선 교육주간 운영",
       "source": "데일리한국",
       "date": "2022.09.26",
-      "link": "https://daily.hankooki.com/news/articleView.html?idxno=875211",
       "previewDesc": "[대전=데일리한국 이병수 기자] 대전시교육청은 제576돌 한글날을 기념하고 학교폭력을 예방하기 위해 교육부, 한국교원단체총연합회와 함께 ‘올해 학생언어문화개선 교육주간’을 내달 9일까지 운영한다고 26일 밝혔다.이번 교육주간에는 초・중・고 모든 학교에서 학생 언어문화 개선 수업을 할 수 있도록 학생언어문화개선 홈페이지(goodword.kr)에 풍성한 수업자료를 제공한다.또한 학년군별 언어습관 자가진단도구 앱을 활용해 학생 스스로 언어습관에 대한 진단을 할 수 있도록 했다.또한 학생언어문화개선 교육주간을 맞아 ’2022 학생언어문화개",
-      "images": []
+      "link": "https://daily.hankooki.com/news/articleView.html?idxno=875211",
+      "images": [],
+      "image": ""
     },
     {
       "id": "p6",
+      "visible": true,
       "title": "대전교육청, 학생언어문화개선 교육주간 운영",
       "source": "에이티엔뉴스",
       "date": "2022.09.26",
-      "link": "https://www.atnnews.co.kr/news/articleView.html?idxno=66554",
       "previewDesc": "대전시교육청(교육감 설동호)은 제576돌 한글날을 기념하고 학교폭력을 예방하기 위해 교육부, 한국교원단체총연합회와 함께 ‘2022 학생언어문화개선 교육주간’을 지",
-      "images": []
+      "link": "https://www.atnnews.co.kr/news/articleView.html?idxno=66554",
+      "images": [],
+      "image": ""
     },
     {
       "id": "p7",
+      "visible": true,
       "title": "대전교육청, '2022 학생언어문화개선 교육주간' 운영",
       "source": "굿모닝충청",
       "date": "2022.09.26",
-      "link": "https://www.goodmorningcc.com/news/articleView.html?idxno=276859",
       "previewDesc": "[굿모닝충청 김지현 기자] 대전시교육청은 제576돌 한글날을 기념하고 학교폭력을 예방하기 위해 교육부 및 한국교원단체총연합회와 함께 ‘2022 학생언어문화개선 교육주간’을 이달 19일부터 다음 달 9일까지 운영한다.이번 교육주간에는 초‧중‧고 모든 학교에서 학생 언어문화 개선 수업을",
-      "images": []
+      "link": "https://www.goodmorningcc.com/news/articleView.html?idxno=276859",
+      "images": [],
+      "image": ""
     },
     {
       "id": "p8",
+      "visible": true,
       "title": "대전교육청, 2020년 온라인 교과서 아이디어 공모전 전국 입상",
       "source": "충청매일",
       "date": "2020.12.27",
-      "link": "https://www.ccdn.co.kr/news/articleView.html?idxno=680802",
       "previewDesc": "[충청매일 양병훈 기자] 대전광역시교육청(교육감 설동호)은 교육부가 주최한 「2020년 온라인 교과서 아이디어 공모전」에서 초등학교 부문에서 한국교과서연구재단이사장상(은상 1팀)과 중학교 부문에서 한국교육학술정보원장상(금상 1팀)을 입상하는 실적을 거뒀다.이번 공모전은 교육과정 자율화",
-      "images": []
+      "link": "https://www.ccdn.co.kr/news/articleView.html?idxno=680802",
+      "images": [],
+      "image": ""
     },
     {
       "id": "p9",
+      "visible": true,
       "title": "대전교육청, 2020년 온라인 교과서 아이디어 공모전 전국 입상",
       "source": "아시아뉴스통신",
       "date": "2020.12.27",
-      "link": "https://m.anewsa.com/article_sub3.php?number=2314529",
       "previewDesc": "대전시교육청 전경./아시아뉴스통신 DB [아시아뉴스통신=이병수 기자] 대전시교육청은 교육부가 주최한 &#39;2020년 온라인 교과서 아이디어 공모전&#39; 중학교 부문에서 금상(한국교육학술정보원장상) 1팀과 초등 부문에서 은상(한국교과서연구재단이사장상) 1팀이 입상하는 실적을 거뒀다.이번…",
-      "images": []
+      "link": "https://m.anewsa.com/article_sub3.php?number=2314529",
+      "images": [],
+      "image": ""
     }
-  ]
+  ],
+  "featuredProofs": [
+    {
+      "id": "proof_geg_daejeon",
+      "type": "Community leadership",
+      "title": "Google Educator Group 대전 리더",
+      "meta": "Google for Education community",
+      "link": "",
+      "visible": true
+    },
+    {
+      "id": "proof_google_certified",
+      "type": "Global certification",
+      "title": "Google Certified Innovator & Trainer",
+      "meta": "Innovator #SEO24",
+      "link": "",
+      "visible": true
+    },
+    {
+      "id": "proof_minister_award_2025",
+      "type": "National recognition",
+      "title": "2025 정보(SW·AI)교육 유공 교육부장관 표창",
+      "meta": "교육부 · 2025",
+      "link": "",
+      "visible": true
+    },
+    {
+      "id": "proof_g_creator",
+      "type": "Creator network",
+      "title": "교사크리에이터협회\nG-Creator",
+      "meta": "교육 콘텐츠·국제교류",
+      "link": "",
+      "visible": true
+    },
+    {
+      "id": "proof_aiedap",
+      "type": "Teacher development",
+      "title": "AIEDAP 마스터 교원",
+      "meta": "AI·디지털 교육",
+      "link": "",
+      "visible": true
+    },
+    {
+      "id": "proof_touch",
+      "type": "Teacher network",
+      "title": "T.O.U.C.H. 교사단",
+      "meta": "교육 실천 공동체",
+      "link": "",
+      "visible": true
+    }
+  ],
+  "lectureCuration": {
+    "highlights": [
+      "l_mskiwlabhgr9u",
+      "l_mr29yai68xvad",
+      "l_mqcuqz7aplqgo",
+      "l6",
+      "l_mls8mo9epkzye"
+    ],
+    "hidden": [],
+    "label": "TITLE"
+  }
 }
