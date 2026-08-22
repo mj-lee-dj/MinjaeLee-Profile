@@ -77,6 +77,7 @@ test('profile editor accepts an image file without exposing a path text field', 
   assert.doesNotMatch(adminHtml, /프로필 사진 경로/);
   assert.match(imageScript, /enhanceProfile/);
   assert.match(imageScript, /preview\.replaceChildren/);
+  assert.match(imageScript, /image\.src = encodeURI\(source\)/);
   assert.doesNotMatch(imageScript, /preview\.innerHTML/);
   assert.match(publishScript, /profileDraft:published/);
   assert.match(localScript, /state\.photoDirty/);
