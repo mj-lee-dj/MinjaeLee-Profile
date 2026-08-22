@@ -1,12 +1,12 @@
 # HANDOFF — 이민재 프로필 사이트
 
 - 마지막 갱신: 2026-08-22 KST
-- 현재 목표: 모바일 Lectures 선택 위계·긴 제목·CTA 보정을 비운영 Vercel Preview에서 검증
+- 현재 목표: 승인된 모바일 Lectures·Watch 개선을 `main`에 병합하고 Vercel Production에서 검증
 - 시안 브랜치: `codex/mobile-lecture-preview`
 - 시안 구현 커밋: `9c2ff62`; 모바일 세부 보정 커밋: `39d3d10`; 원격 브랜치 push 및 Vercel Preview Ready 확인
 - Preview 기준 URL: `https://minjae-lee-profile-git-cod-aebc40-minjae-lees-projects-af61ee98.vercel.app/`
 - Preview 접근: Vercel Standard Protection 유지, Shareable Link 사용; 공유 토큰은 문서·Git에 기록하지 않음
-- 운영 상태: `main`과 Production은 변경하지 않음
+- 운영 상태: 사용자가 운영 배포를 승인함; 병합 전 최종 회귀 검증 완료
 
 ## 운영 기준선
 
@@ -49,9 +49,9 @@
 
 ## 다음 작업
 
-- 휴대폰에서 갱신된 시안을 검토한 뒤 사용자의 명시적 디자인 승인 여부 확인
-- 사용자 디자인 승인 전에는 merge·Production promote 금지
-- 승인 후 운영 반영 전 관리자 저장·배포 회귀와 최종 3폭 QA 재실행
+- 시안 브랜치를 PR로 `main`에 병합하고 Vercel Production Ready 확인
+- 운영 공개 페이지를 375/768/1280에서 재검증하고 관리자 페이지·API 경계를 읽기 전용으로 확인
+- 최종 운영 SHA와 검증 결과를 이 문서에 기록
 
 ## 기기 전환과 운영 주의
 
