@@ -1,6 +1,6 @@
 /*
   [Profile Data]
-  Updated at: 2026-08-22T00:12:37.473Z
+  Updated at: 2026-08-22T13:56:55.895Z
 */
 const profileData = {
   "youtubeVideos": [
@@ -25,6 +25,14 @@ const profileData = {
       "image": "uploads/5c6cccccc50f.png"
     },
     {
+      "id": "yt_mlte5to1hm6o0",
+      "visible": true,
+      "title": "Google Classroom - 구글 클래스룸 처음 사용하시는 분들 필수영상! 기초부터 알려드립니다.",
+      "link": "https://www.youtube.com/watch?v=wGgF2MSds5E",
+      "images": [],
+      "image": ""
+    },
+    {
       "id": "yt_sample",
       "visible": true,
       "title": "제167회 KERIS 디지털교육 포럼(학교 디지털 교육과 과제)",
@@ -33,14 +41,6 @@ const profileData = {
         "uploads/8b074a5aef2c.png"
       ],
       "image": "uploads/8b074a5aef2c.png"
-    },
-    {
-      "id": "yt_mlte5to1hm6o0",
-      "visible": true,
-      "title": "Google Classroom - 구글 클래스룸 처음 사용하시는 분들 필수영상! 기초부터 알려드립니다.",
-      "link": "https://www.youtube.com/watch?v=wGgF2MSds5E",
-      "images": [],
-      "image": ""
     },
     {
       "id": "yt_mlte9bjg4niyv",
@@ -478,7 +478,7 @@ const profileData = {
       "org": "대전괴정고등학교",
       "year": "2026",
       "category": "에듀테크",
-      "topic": "교사 업무·학급경영",
+      "topic": "Canva·에듀테크",
       "link": "",
       "images": [
         "uploads/a28a564b5176.png",
