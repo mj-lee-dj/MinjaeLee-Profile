@@ -1,8 +1,8 @@
 # HANDOFF — 이민재 프로필 사이트
 
 - 마지막 갱신: 2026-08-22 KST
-- 현재 목표: 다중 기기 Git 운영과 관리자 보안 보강을 비배포 브랜치에서 검증
-- 앱 배포 커밋: `5d37a84` (`fix: protect profile photo uploads`)
+- 현재 목표: 관리자 보안 보강과 다중 기기 Git 운영 기준을 Production에 반영
+- 앱 배포 커밋: `cb4c446` (PR `#2` 이미지 URL 인코딩 hotfix 병합)
 - 배포 상태: GitHub `main` 반영·Vercel Production 완료
 
 ## 운영 기준선
@@ -24,21 +24,21 @@
 - 새 파일을 선택하고 핵심 프로필을 저장했을 때만 `photoDirty=true`
 - 오래된 브라우저 초안의 `assets/profile.jpg`는 배포 사진을 덮어쓰지 못함
 - 운영 저장 성공 뒤 새 업로드 경로로 동기화하고 `photoDirty=false`
-- 공개 초안·PROOF·대표 강의·storage 갱신 로직은 변경하지 않음
-- 최신 2026-08-22 강의·큐레이션 데이터 커밋 `a9cd3ca`, `9954f93` 보존
+- 관리자 이미지 미리보기는 문자열 HTML 없이 DOM 노드로 생성하고 URL 문맥 인코딩 적용
+- 다중 기기 Git·보안 문서 추가; 공개 초안·PROOF·대표 강의·최신 강의 데이터 보존
 
 ## 배포 및 검증 결과
 
-- GitHub `main`: `9954f93..5d37a84` 비강제 push 완료
+- GitHub `main`: `6e6d6db..cb4c446` PR `#1`, `#2` 병합 완료
 - GitHub Vercel 상태: `success`, `Deployment has completed`
-- 배포 완료 시각: 2026-08-22 12:59 KST
-- Node 전체 테스트: 19/19 통과
+- 배포 완료 시각: 2026-08-22 16:41 KST
+- Node 전체 테스트: 20/20 통과
 - 변경 JavaScript 문법 검사 및 diff 검사 통과
 - 운영 Chrome 375/768/1280 공개 화면: `assets/profile-2026.png` 유지
 - 오래된 `assets/profile.jpg` localStorage 초안을 넣은 뒤에도 2026 사진 유지
 - 운영 PROOF 6개, 대표 강의 5개, 최신 Gemini & NotebookLM 강의 확인
 - 운영 관리자: 사진 경로 텍스트 입력 0, 파일 선택→54KB WebP 변환 확인
-- 준비 상태·미리보기·현재 사진 복원 확인
+- 준비 상태·미리보기·현재 사진 복원·공격성 경로 무실행 확인
 - 세 화면 폭 모두 가로 넘침 0, page error 0
 - 독립 기능·디자인 검수 PASS, 독립 시각·CJK 검수 PASS, 차단 문제 없음
 - Vercel 런타임 오류 API는 연결 계정 권한 403으로 조회 불가; 실제 브라우저 오류는 0
@@ -68,10 +68,10 @@
 
 - 비밀값 이름: `ADMIN_PASSWORD`, `ADMIN_SESSION_SECRET`, `GITHUB_ADMIN_TOKEN`
 - 값 자체는 Git·브라우저·문서에 기록하지 않음
-- 안전 마감 브랜치: `codex/multi-device-security`, 코드 `63d5d4f`, 문서 `9d12455`, GitHub PR `#1` (`main` 미반영·운영 미배포)
-- CodeQL 지적 3건 수정; 로컬 20/20·Chrome 1280/390·PR CodeQL 통과, PR 기준 CodeQL·비밀·의존성 경고 0건
+- 운영 보안 병합: PR `#1`=`59b887f`, URL hotfix PR `#2`=`cb4c446`
+- main CodeQL·비밀 스캔·Dependabot 공개 경고 0건; 로컬 20/20·운영 Chrome 검증 통과
 - GitHub vulnerability alerts·Dependabot security updates·CodeQL default setup 활성화
 - 저장소는 PUBLIC이므로 Git에 저장한 콘텐츠와 이미지는 공개 자료로 취급
-- 즉시 복구: Vercel에서 직전 Ready 배포로 Instant Rollback
-- Git 복구: `5d37a84`를 revert하여 `main`에 push
-- 배포 전 앱 기준선: `9954f93`
+- 즉시 복구: Vercel에서 직전 Ready 배포 `59b887f`로 Instant Rollback
+- Git 복구: hotfix만 되돌릴 때 `cb4c446`; 보안 병합 전체는 이어서 `59b887f`를 revert
+- 배포 전 앱 기준선: `6e6d6db`
