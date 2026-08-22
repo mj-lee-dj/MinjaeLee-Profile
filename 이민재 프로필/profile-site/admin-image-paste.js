@@ -54,7 +54,11 @@ document.addEventListener('DOMContentLoaded', () => {
       const figure = document.createElement('figure');
       figure.className = `image-paste__preview${isProfile ? ' image-paste__preview--profile' : ''}`;
       const image = document.createElement('img');
-      image.src = source;
+      try {
+        image.src = encodeURI(source);
+      } catch {
+        image.removeAttribute('src');
+      }
       image.alt = isProfile ? '프로필 사진 미리보기' : `붙여넣은 이미지 ${index + 1}`;
       const remove = document.createElement('button');
       remove.type = 'button';
