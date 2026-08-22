@@ -2,6 +2,7 @@ const crypto = require('crypto');
 
 const SESSION_COOKIE = '__Host-profile_admin';
 const SESSION_TTL_SECONDS = 4 * 60 * 60;
+const MAX_SECRET_BYTES = 1024;
 const ARRAY_KEYS = [
   'youtubeVideos',
   'expertise',
@@ -62,9 +63,14 @@ function verifySession(req, secret) {
 }
 
 function safeEqual(a, b) {
-  const left = crypto.createHash('sha256').update(String(a)).digest();
-  const right = crypto.createHash('sha256').update(String(b)).digest();
-  return crypto.timingSafeEqual(left, right);
+  const leftValue = Buffer.from(String(a));
+  const rightValue = Buffer.from(String(b));
+  if (leftValue.length > MAX_SECRET_BYTES || rightValue.length > MAX_SECRET_BYTES) return false;
+  const left = Buffer.alloc(MAX_SECRET_BYTES);
+  const right = Buffer.alloc(MAX_SECRET_BYTES);
+  leftValue.copy(left);
+  rightValue.copy(right);
+  return crypto.timingSafeEqual(left, right) && leftValue.length === rightValue.length;
 }
 
 function validateData(data) {

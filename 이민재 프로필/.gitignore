@@ -2,3 +2,15 @@
 node_modules/
 .DS_Store
 *.log
+.env
+.env.*
+!.env.example
+.vercel/
+.codex-remote-attachments/
+.codegraph/
+.omo/
+.playwright-mcp/
+*.pem
+*.key
+id_rsa*
+id_ed25519*

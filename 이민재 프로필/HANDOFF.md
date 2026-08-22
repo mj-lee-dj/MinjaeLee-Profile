@@ -1,7 +1,7 @@
 # HANDOFF — 이민재 프로필 사이트
 
 - 마지막 갱신: 2026-08-22 KST
-- 현재 목표: 기존 V13 전체 로직을 보존하고 프로필 사진 관리만 파일 업로드로 운영
+- 현재 목표: 다중 기기 Git 운영과 관리자 보안 보강을 비배포 브랜치에서 검증
 - 앱 배포 커밋: `5d37a84` (`fix: protect profile photo uploads`)
 - 배포 상태: GitHub `main` 반영·Vercel Production 완료
 
@@ -55,7 +55,10 @@
 
 ## 기기 전환과 로컬 상태
 
-- 집 데스크톱 등 다른 컴퓨터에서는 먼저 `git fetch origin` 후 `origin/main`의 `5d37a84` 이상 확인
+- 다중 기기 운영 기준은 `MULTI_DEVICE_WORKFLOW.md`에 정리함
+- 매 프롬프트가 아니라 새 작업·앱 재실행·기기 전환 후 첫 파일 변경과 commit/push/배포 직전에만 원격 확인
+- 날짜 변경만으로는 새 세션으로 보지 않으며, 단순 질문·기획에는 fetch하지 않음
+- 다른 컴퓨터에서는 독립된 로컬 clone을 사용하고 GitHub 브랜치로 작업을 전달
 - dirty tree에서 바로 pull/merge하지 말고 `AGENTS.md`, 이 파일, `MULTI_DEVICE_WORKFLOW.md`를 먼저 읽기
 - 현재 이 컴퓨터의 원래 작업 브랜치는 `codex/profile-v13-production`; 사진 수정 원본 커밋은 `f3d0ac5`
 - 원래 작업 폴더의 unrelated dirty/untracked 파일은 보존했으며 배포에 포함하지 않음
@@ -65,6 +68,10 @@
 
 - 비밀값 이름: `ADMIN_PASSWORD`, `ADMIN_SESSION_SECRET`, `GITHUB_ADMIN_TOKEN`
 - 값 자체는 Git·브라우저·문서에 기록하지 않음
+- 안전 마감 브랜치: `codex/multi-device-security`, 코드 `63d5d4f`, 문서 `9d12455`, GitHub PR `#1` (`main` 미반영·운영 미배포)
+- CodeQL 지적 3건 수정; 로컬 20/20·Chrome 1280/390·PR CodeQL 통과, PR 기준 CodeQL·비밀·의존성 경고 0건
+- GitHub vulnerability alerts·Dependabot security updates·CodeQL default setup 활성화
+- 저장소는 PUBLIC이므로 Git에 저장한 콘텐츠와 이미지는 공개 자료로 취급
 - 즉시 복구: Vercel에서 직전 Ready 배포로 Instant Rollback
 - Git 복구: `5d37a84`를 revert하여 `main`에 push
 - 배포 전 앱 기준선: `9954f93`
