@@ -1,12 +1,8 @@
-/*
-  [Profile Data]
-  Updated at: 2026-08-22T13:56:55.895Z
-*/
 const profileData = {
   "youtubeVideos": [
     {
       "id": "youtubeVideos_mt3md3pm",
-      "visible": true,
+      "visible": false,
       "title": "[Edu 로켓배송] Gemini & NotebookLM으로 똑똑하게 해외여행 준비하기",
       "link": "https://youtu.be/ygJuXIJY2B4?si=4KEvXqpPod0H5vW9",
       "images": [],
@@ -295,6 +291,23 @@ const profileData = {
     }
   ],
   "lectures": [
+    {
+      "id": "lectures_mt5sy7fr",
+      "visible": true,
+      "title": "Google Educator Series 한국판 로컬라이징 소개 세션",
+      "org": "Google Korea",
+      "year": "2026",
+      "category": "Google",
+      "topic": "Google",
+      "link": "",
+      "images": [
+        "uploads/92fe7108a5b0.webp",
+        "uploads/53b7720bec34.webp",
+        "uploads/4c7a63b12dfa.webp"
+      ],
+      "image": "uploads/92fe7108a5b0.webp",
+      "highlight": false
+    },
     {
       "id": "l_mskiwlabhgr9u",
       "visible": true,
