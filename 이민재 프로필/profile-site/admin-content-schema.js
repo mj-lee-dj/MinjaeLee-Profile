@@ -27,11 +27,12 @@ window.ProfileAdminCollections = Object.freeze([
   },
   {
     key: 'lectures', label: '강의 이력', singular: '강의',
-    description: '주제·기관·연도와 대표 슬라이드를 관리합니다. 대표 5개 선정은 아래 큐레이션에서 따로 관리합니다.',
+    description: '주제·기관·연도와 대표 슬라이드를 관리합니다. 각 강의의 HIGHLIGHTS 반영 여부도 추가·수정 창에서 바로 선택할 수 있습니다.',
     fields: [
       ['title', '강의명', 'text', true], ['org', '연수기관·주최', 'text'],
       ['year', '연도', 'text'], ['topic', '주제', 'topic', true],
       ['link', '관련 링크', 'url'], ['images', '대표 슬라이드 (최대 3장)', 'images'],
+      ['highlight', 'HIGHLIGHTS에 노출', 'checkbox'],
     ],
   },
   {

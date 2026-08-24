@@ -48,6 +48,22 @@ document.addEventListener('DOMContentLoaded', () => {
     return true;
   }
 
+  function saveLectureHighlight(id, enabled) {
+    const curation = structuredClone(ProfileLectureStore.load());
+    const selected = curation.highlights.includes(id);
+    if (enabled && !selected) {
+      curation.highlights = curation.highlights.length < 5
+        ? [...curation.highlights, id]
+        : [...curation.highlights.slice(0, 4), id];
+    } else if (!enabled && selected) {
+      const remaining = curation.highlights.filter((lectureId) => lectureId !== id);
+      const replacement = state.lectures.find((lecture) =>
+        lecture.visible !== false && lecture.id !== id && !remaining.includes(lecture.id));
+      curation.highlights = replacement ? [...remaining, replacement.id] : remaining;
+    }
+    return ProfileLectureStore.save(curation);
+  }
+
   function renderSummary() {
     const cards = configs.map((config) => {
       const items = state[config.key];
@@ -133,12 +149,21 @@ document.addEventListener('DOMContentLoaded', () => {
         return `<label>${labelText}<select name="${name}"${requiredAttr}>${ProfileContentStore.lectureTopics.map((topic) =>
           `<option value="${escapeHtml(topic)}">${escapeHtml(topic)}</option>`).join('')}</select></label>`;
       }
+      if (type === 'checkbox') {
+        return `<label class="proof-admin__check content-editor__check"><input name="${name}" type="checkbox"> <span>${escapeHtml(label)}</span><small>대표 5개 중 한 항목으로 반영합니다. 노출 순서는 아래 강의 큐레이션에서 조정할 수 있습니다.</small></label>`;
+      }
       return `<label>${labelText}<input name="${name}" type="${type}"${requiredAttr}></label>`;
     }).join('');
     config.fields.forEach(([name, , type]) => {
       const control = fieldsRoot.elements?.[name] || fieldsRoot.querySelector('[name="' + name + '"]');
       if (!control) return;
-      control.value = type === 'images' ? (item?.images || []).join('\n') : (item?.[name] ?? '');
+      if (type === 'checkbox') {
+        control.checked = section === 'lectures'
+          ? ProfileLectureStore.load().highlights.includes(item?.id)
+          : item?.[name] === true;
+      } else {
+        control.value = type === 'images' ? (item?.images || []).join('\n') : (item?.[name] ?? '');
+      }
     });
     dialog.showModal();
     window.dispatchEvent(new CustomEvent('profileAdmin:editorOpened', { detail: { section } }));
@@ -200,12 +225,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const formData = new FormData(form);
     config.fields.forEach(([name, , type]) => {
       const value = String(formData.get(name) || '').trim();
-      item[name] = type === 'images' ? value.split(/\r?\n/).map((line) => line.trim()).filter(Boolean) : value;
+      if (type === 'checkbox') item[name] = formData.has(name);
+      else item[name] = type === 'images' ? value.split(/\r?\n/).map((line) => line.trim()).filter(Boolean) : value;
     });
     item.visible = document.getElementById('contentVisible').checked;
     if (existingIndex >= 0) state[section][existingIndex] = item;
-    else state[section].push(item);
-    if (persist('로컬 초안으로 저장했습니다. 공개 초안을 새로고침하면 확인할 수 있습니다.', section)) dialog.close();
+    else state[section] = ProfileContentStore.insert(section, state[section], item);
+    if (!persist('로컬 초안으로 저장했습니다. 공개 초안을 새로고침하면 확인할 수 있습니다.', section)) return;
+    if (section === 'lectures' && !saveLectureHighlight(item.id, item.visible && item.highlight)) {
+      showNotice('강의는 저장했지만 HIGHLIGHTS 설정을 저장하지 못했습니다. 일반 브라우저에서 다시 시도하세요.', section, true);
+      return;
+    }
+    dialog.close();
   });
 
   profileForm.addEventListener('submit', (event) => {

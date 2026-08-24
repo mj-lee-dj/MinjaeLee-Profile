@@ -262,3 +262,20 @@
 @media (prefers-reduced-motion: reduce) {
   .publish-console, .image-paste { scroll-behavior: auto; }
 }
+
+.content-editor .content-editor__check {
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.content-editor__check > span {
+  flex: 0 0 auto;
+  white-space: nowrap;
+  color: var(--paper-bright);
+}
+
+.content-editor__check > small {
+  min-width: 0;
+  margin-left: 30px;
+  flex: 1 1 100%;
+}

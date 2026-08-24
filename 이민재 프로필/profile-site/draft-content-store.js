@@ -106,6 +106,13 @@
     return next;
   }
 
+  function insert(section, items, item) {
+    const next = [...items];
+    if (section === 'lectures') next.unshift(item);
+    else next.push(item);
+    return next;
+  }
+
   function defaultState() {
     const contact = sourcePersonal.contact || {};
     const personal = {
@@ -245,6 +252,7 @@
     collectionKeys,
     lectureTopics,
     inferLectureTopic,
+    insert,
     load,
     save,
     reset,
