@@ -1,6 +1,6 @@
 /*
   [Profile Data]
-  Updated at: 2026-08-24T15:48:33.428Z
+  Updated at: 2026-08-24T15:53:48.869Z
 */
 const profileData = {
   "youtubeVideos": [
@@ -401,7 +401,7 @@ const profileData = {
       "org": "ADE 사업단 강사 역량 강화연수",
       "year": "2026",
       "category": "기조강연/발표",
-      "topic": "AI",
+      "topic": "강사코칭",
       "link": "",
       "images": [
         "uploads/a3fb4cf1237d.png",
@@ -726,7 +726,7 @@ const profileData = {
         "uploads/c89e16cdfb73.png"
       ],
       "image": "uploads/0cac06c95dbd.png",
-      "highlight": true
+      "highlight": false
     },
     {
       "id": "l_mls35x2biau7q",
@@ -819,7 +819,7 @@ const profileData = {
       "org": "전국교사작가협회 책쓰샘",
       "year": "2025",
       "category": "기조강연/발표",
-      "topic": "AI",
+      "topic": "강사코칭",
       "link": "",
       "images": [
         "uploads/3ea116497b4b.png",
@@ -916,7 +916,7 @@ const profileData = {
       "org": "충청남도교육청",
       "year": "2025",
       "category": "에듀테크",
-      "topic": "Canva·에듀테크",
+      "topic": "강사코칭",
       "link": "",
       "images": [
         "uploads/435e8bd21d8f.png",
@@ -993,7 +993,7 @@ const profileData = {
       "org": "크롬북, 갤럭시탭",
       "year": "2024",
       "category": "에듀테크",
-      "topic": "Canva·에듀테크",
+      "topic": "강사코칭",
       "link": "",
       "images": [
         "uploads/18c8557993a7.png",
@@ -1011,7 +1011,7 @@ const profileData = {
       "org": "세종특별자치시 교육청, 충청남도교육청",
       "year": "2024",
       "category": "에듀테크",
-      "topic": "Canva·에듀테크",
+      "topic": "강사코칭",
       "link": "",
       "images": [
         "uploads/3b608b1ac6a4.png",
@@ -1020,7 +1020,7 @@ const profileData = {
         "uploads/3f17ab4a200a.png"
       ],
       "image": "uploads/3b608b1ac6a4.png",
-      "highlight": true
+      "highlight": false
     },
     {
       "id": "l8",
