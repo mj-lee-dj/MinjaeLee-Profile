@@ -1,3 +1,7 @@
+/*
+  [Profile Data]
+  Updated at: 2026-08-24T15:48:33.428Z
+*/
 const profileData = {
   "youtubeVideos": [
     {
@@ -306,7 +310,7 @@ const profileData = {
         "uploads/4c7a63b12dfa.webp"
       ],
       "image": "uploads/92fe7108a5b0.webp",
-      "highlight": false
+      "highlight": true
     },
     {
       "id": "l_mskiwlabhgr9u",
@@ -391,6 +395,42 @@ const profileData = {
       "highlight": true
     },
     {
+      "id": "l_mr29yai68xvad",
+      "visible": true,
+      "title": "AI 워크플로우로 실현하는 고품격 강의 설계",
+      "org": "ADE 사업단 강사 역량 강화연수",
+      "year": "2026",
+      "category": "기조강연/발표",
+      "topic": "AI",
+      "link": "",
+      "images": [
+        "uploads/a3fb4cf1237d.png",
+        "uploads/6ca674bb0d12.png",
+        "uploads/4253b64bd32b.png"
+      ],
+      "image": "uploads/a3fb4cf1237d.png",
+      "highlight": true
+    },
+    {
+      "id": "l4",
+      "visible": true,
+      "title": "2025 교장 자격 연수 — AI 기반 멀티미디어 제작 · ChatGPT의 교육적 활용",
+      "org": "한국교원대학교 종합교육연수원",
+      "year": "2025",
+      "category": "ChatGPT/AI",
+      "topic": "AI",
+      "link": "https://youtu.be/7N_kX1DkyCg",
+      "images": [
+        "uploads/d6e71d5e9617.png",
+        "uploads/d22518d8dbe1.png",
+        "uploads/739db191220a.png",
+        "uploads/201b342f6dc9.png",
+        "uploads/ce6f076f61fa.png"
+      ],
+      "image": "uploads/d6e71d5e9617.png",
+      "highlight": false
+    },
+    {
       "id": "l_mr4yng6ro1z4u",
       "visible": true,
       "title": "Gemini&NotebookLM으로 똑똑하게 해외 여행하기",
@@ -410,40 +450,80 @@ const profileData = {
       "highlight": true
     },
     {
-      "id": "l_mr29yai68xvad",
+      "id": "l_mqcuqz7aplqgo",
       "visible": true,
-      "title": "AI 워크플로우로 실현하는 고품격 강의 설계",
-      "org": "ADE 사업단 강사 역량 강화연수",
+      "title": "Canva 완전정복 - 교사를 위한 캔바 핵심 기능 익히기",
+      "org": "대전괴정고등학교",
       "year": "2026",
-      "category": "기조강연/발표",
-      "topic": "AI",
+      "category": "에듀테크",
+      "topic": "Canva·에듀테크",
       "link": "",
       "images": [
-        "uploads/a3fb4cf1237d.png",
-        "uploads/6ca674bb0d12.png",
-        "uploads/4253b64bd32b.png"
+        "uploads/a28a564b5176.png",
+        "uploads/0b665ca4f803.png",
+        "uploads/e6148de4a574.png",
+        "uploads/db7b88450c99.png",
+        "uploads/9bb3dc50a47a.png",
+        "uploads/bc4b15ed775b.png"
       ],
-      "image": "uploads/a3fb4cf1237d.png",
+      "image": "uploads/a28a564b5176.png",
       "highlight": true
     },
     {
-      "id": "l_mr29fqzwolflm",
+      "id": "l_mo01yljucrwyx",
       "visible": true,
-      "title": "Gemini & Chrome Academy",
-      "org": "GEG충남",
+      "title": "[관리자 연수] AI 리더십 - 행정의 여유가 교육의 가치로",
+      "org": "대전동부교육지원청",
       "year": "2026",
+      "category": "Google/Gemini",
+      "topic": "교사 업무·학급경영",
+      "link": "",
+      "images": [
+        "uploads/aa7158647e52.png",
+        "uploads/d0e5b119be49.png",
+        "uploads/887471b5553c.png",
+        "uploads/e4cb78a321e7.png",
+        "uploads/a4a5487a80d7.png",
+        "uploads/abe4d5eb96a5.png",
+        "uploads/e720538cfe42.png"
+      ],
+      "image": "uploads/aa7158647e52.png",
+      "highlight": true
+    },
+    {
+      "id": "l1",
+      "visible": true,
+      "title": "Gemini Academy — 청년 AI 역량 강화",
+      "org": "고용노동부 · Google Korea 주관, 배재대학교",
+      "year": "2025",
       "category": "Google/Gemini",
       "topic": "Google",
       "link": "",
       "images": [
-        "uploads/78090a1a1df5.png",
-        "uploads/31fece3586d1.png",
-        "uploads/92e3b7746ad7.png",
-        "uploads/141db896c506.png",
-        "uploads/9be3402fa34c.png",
-        "uploads/0d84a60f0532.png"
+        "uploads/2db4046159d2.png"
       ],
-      "image": "uploads/78090a1a1df5.png",
+      "image": "uploads/2db4046159d2.png",
+      "highlight": true
+    },
+    {
+      "id": "l_mqcu97usa7rhx",
+      "visible": true,
+      "title": "디지털 협업 도구를 활용한 학생 평가 - 구글 도구를 중심으로",
+      "org": "대전교육연수원",
+      "year": "2026",
+      "category": "Google/Gemini",
+      "topic": "학부모·학생 강의",
+      "link": "",
+      "images": [
+        "uploads/b28b860e7bdc.png",
+        "uploads/d9c0a15b2216.png",
+        "uploads/54038890db47.png",
+        "uploads/7c1c24b3cc83.png",
+        "uploads/7a6e63d24a77.png",
+        "uploads/8bfb40faa7a3.png",
+        "uploads/b7406d995fed.png"
+      ],
+      "image": "uploads/b28b860e7bdc.png",
       "highlight": true
     },
     {
@@ -485,26 +565,6 @@ const profileData = {
       "highlight": false
     },
     {
-      "id": "l_mqcuqz7aplqgo",
-      "visible": true,
-      "title": "Canva 완전정복 - 교사를 위한 캔바 핵심 기능 익히기",
-      "org": "대전괴정고등학교",
-      "year": "2026",
-      "category": "에듀테크",
-      "topic": "Canva·에듀테크",
-      "link": "",
-      "images": [
-        "uploads/a28a564b5176.png",
-        "uploads/0b665ca4f803.png",
-        "uploads/e6148de4a574.png",
-        "uploads/db7b88450c99.png",
-        "uploads/9bb3dc50a47a.png",
-        "uploads/bc4b15ed775b.png"
-      ],
-      "image": "uploads/a28a564b5176.png",
-      "highlight": true
-    },
-    {
       "id": "l_mqcuft10ar67s",
       "visible": true,
       "title": "공문의 늪에서 교육의 본질로 - 모든 교사를 위한 NotebookLM 활용",
@@ -525,24 +585,23 @@ const profileData = {
       "highlight": true
     },
     {
-      "id": "l_mqcu97usa7rhx",
+      "id": "l_mr29fqzwolflm",
       "visible": true,
-      "title": "디지털 협업 도구를 활용한 학생 평가 - 구글 도구를 중심으로",
-      "org": "대전교육연수원",
+      "title": "Gemini & Chrome Academy",
+      "org": "GEG충남",
       "year": "2026",
       "category": "Google/Gemini",
-      "topic": "학부모·학생 강의",
+      "topic": "Google",
       "link": "",
       "images": [
-        "uploads/b28b860e7bdc.png",
-        "uploads/d9c0a15b2216.png",
-        "uploads/54038890db47.png",
-        "uploads/7c1c24b3cc83.png",
-        "uploads/7a6e63d24a77.png",
-        "uploads/8bfb40faa7a3.png",
-        "uploads/b7406d995fed.png"
+        "uploads/78090a1a1df5.png",
+        "uploads/31fece3586d1.png",
+        "uploads/92e3b7746ad7.png",
+        "uploads/141db896c506.png",
+        "uploads/9be3402fa34c.png",
+        "uploads/0d84a60f0532.png"
       ],
-      "image": "uploads/b28b860e7bdc.png",
+      "image": "uploads/78090a1a1df5.png",
       "highlight": true
     },
     {
@@ -634,27 +693,6 @@ const profileData = {
       "highlight": true
     },
     {
-      "id": "l_mo01yljucrwyx",
-      "visible": true,
-      "title": "[관리자 연수] AI 리더십 - 행정의 여유가 교육의 가치로",
-      "org": "대전동부교육지원청",
-      "year": "2026",
-      "category": "Google/Gemini",
-      "topic": "교사 업무·학급경영",
-      "link": "",
-      "images": [
-        "uploads/aa7158647e52.png",
-        "uploads/d0e5b119be49.png",
-        "uploads/887471b5553c.png",
-        "uploads/e4cb78a321e7.png",
-        "uploads/a4a5487a80d7.png",
-        "uploads/abe4d5eb96a5.png",
-        "uploads/e720538cfe42.png"
-      ],
-      "image": "uploads/aa7158647e52.png",
-      "highlight": true
-    },
-    {
       "id": "l_mo01ps8wyscuc",
       "visible": true,
       "title": "Notebook LM 업무와 수업에 활용하기",
@@ -688,6 +726,27 @@ const profileData = {
         "uploads/c89e16cdfb73.png"
       ],
       "image": "uploads/0cac06c95dbd.png",
+      "highlight": true
+    },
+    {
+      "id": "l_mls35x2biau7q",
+      "visible": true,
+      "title": "[학생 정보통신윤리 연수] 생성AI 안전하고 효과적으로 활용하기",
+      "org": "충남고등학교",
+      "year": "2026",
+      "category": "Google/Gemini",
+      "topic": "학부모·학생 강의",
+      "link": "",
+      "images": [
+        "uploads/7a7b07b19a89.png",
+        "uploads/e952736289b4.png",
+        "uploads/5479659ed92a.png",
+        "uploads/fe209bdd942e.png",
+        "uploads/964a854e243a.png",
+        "uploads/ec7e216c14b1.png",
+        "uploads/b58122000792.png"
+      ],
+      "image": "uploads/7a7b07b19a89.png",
       "highlight": true
     },
     {
@@ -793,27 +852,6 @@ const profileData = {
       "highlight": false
     },
     {
-      "id": "l_mls35x2biau7q",
-      "visible": true,
-      "title": "[학생 정보통신윤리 연수] 생성AI 안전하고 효과적으로 활용하기",
-      "org": "충남고등학교",
-      "year": "2026",
-      "category": "Google/Gemini",
-      "topic": "학부모·학생 강의",
-      "link": "",
-      "images": [
-        "uploads/7a7b07b19a89.png",
-        "uploads/e952736289b4.png",
-        "uploads/5479659ed92a.png",
-        "uploads/fe209bdd942e.png",
-        "uploads/964a854e243a.png",
-        "uploads/ec7e216c14b1.png",
-        "uploads/b58122000792.png"
-      ],
-      "image": "uploads/7a7b07b19a89.png",
-      "highlight": true
-    },
-    {
       "id": "l_mls1wjjs2ogzp",
       "visible": true,
       "title": "Education Plus with AIEP 알아보기",
@@ -854,21 +892,6 @@ const profileData = {
       "highlight": true
     },
     {
-      "id": "l1",
-      "visible": true,
-      "title": "Gemini Academy — 청년 AI 역량 강화",
-      "org": "고용노동부 · Google Korea 주관, 배재대학교",
-      "year": "2025",
-      "category": "Google/Gemini",
-      "topic": "Google",
-      "link": "",
-      "images": [
-        "uploads/2db4046159d2.png"
-      ],
-      "image": "uploads/2db4046159d2.png",
-      "highlight": true
-    },
-    {
       "id": "l2",
       "visible": true,
       "title": "[2025 교장자격연수] 생성AI 활용과정",
@@ -903,25 +926,6 @@ const profileData = {
         "uploads/4b7c9e97db51.png"
       ],
       "image": "uploads/435e8bd21d8f.png",
-      "highlight": false
-    },
-    {
-      "id": "l4",
-      "visible": true,
-      "title": "2025 교장 자격 연수 — AI 기반 멀티미디어 제작 · ChatGPT의 교육적 활용",
-      "org": "한국교원대학교 종합교육연수원",
-      "year": "2025",
-      "category": "ChatGPT/AI",
-      "topic": "AI",
-      "link": "https://youtu.be/7N_kX1DkyCg",
-      "images": [
-        "uploads/d6e71d5e9617.png",
-        "uploads/d22518d8dbe1.png",
-        "uploads/739db191220a.png",
-        "uploads/201b342f6dc9.png",
-        "uploads/ce6f076f61fa.png"
-      ],
-      "image": "uploads/d6e71d5e9617.png",
       "highlight": false
     },
     {
@@ -981,6 +985,42 @@ const profileData = {
       ],
       "image": "uploads/6d6422416b84.png",
       "highlight": false
+    },
+    {
+      "id": "l12",
+      "visible": true,
+      "title": "세종시교육청 스마트기기 사용자교육 강사",
+      "org": "크롬북, 갤럭시탭",
+      "year": "2024",
+      "category": "에듀테크",
+      "topic": "Canva·에듀테크",
+      "link": "",
+      "images": [
+        "uploads/18c8557993a7.png",
+        "uploads/26f4e1b2836b.png",
+        "uploads/fba20a5c5d4d.png",
+        "uploads/94ea6816d75d.png"
+      ],
+      "image": "uploads/18c8557993a7.png",
+      "highlight": false
+    },
+    {
+      "id": "l24",
+      "visible": true,
+      "title": "Chrome book 활용 사용자교육",
+      "org": "세종특별자치시 교육청, 충청남도교육청",
+      "year": "2024",
+      "category": "에듀테크",
+      "topic": "Canva·에듀테크",
+      "link": "",
+      "images": [
+        "uploads/3b608b1ac6a4.png",
+        "uploads/43678244f62b.png",
+        "uploads/153665623fdb.png",
+        "uploads/3f17ab4a200a.png"
+      ],
+      "image": "uploads/3b608b1ac6a4.png",
+      "highlight": true
     },
     {
       "id": "l8",
@@ -1047,24 +1087,6 @@ const profileData = {
         "uploads/9edb011305af.png"
       ],
       "image": "uploads/1ec0d589230d.png",
-      "highlight": false
-    },
-    {
-      "id": "l12",
-      "visible": true,
-      "title": "세종시교육청 스마트기기 사용자교육 강사",
-      "org": "크롬북, 갤럭시탭",
-      "year": "2024",
-      "category": "에듀테크",
-      "topic": "강사코칭",
-      "link": "",
-      "images": [
-        "uploads/18c8557993a7.png",
-        "uploads/26f4e1b2836b.png",
-        "uploads/fba20a5c5d4d.png",
-        "uploads/94ea6816d75d.png"
-      ],
-      "image": "uploads/18c8557993a7.png",
       "highlight": false
     },
     {
@@ -1183,24 +1205,6 @@ const profileData = {
       ],
       "image": "uploads/c3fb48cd3747.png",
       "highlight": false
-    },
-    {
-      "id": "l24",
-      "visible": true,
-      "title": "Chrome book 활용 사용자교육",
-      "org": "세종특별자치시 교육청, 충청남도교육청",
-      "year": "2024",
-      "category": "에듀테크",
-      "topic": "Canva·에듀테크",
-      "link": "",
-      "images": [
-        "uploads/3b608b1ac6a4.png",
-        "uploads/43678244f62b.png",
-        "uploads/153665623fdb.png",
-        "uploads/3f17ab4a200a.png"
-      ],
-      "image": "uploads/3b608b1ac6a4.png",
-      "highlight": true
     },
     {
       "id": "l25",
@@ -1701,7 +1705,7 @@ const profileData = {
       "l_mr29yai68xvad",
       "l_mqcuqz7aplqgo",
       "l6",
-      "l_mls8mo9epkzye"
+      "lectures_mt5sy7fr"
     ],
     "hidden": [],
     "label": "HIGHLIGHTS"
