@@ -1,11 +1,10 @@
 # HANDOFF — 이민재 프로필 사이트
 
-- 마지막 갱신: 2026-08-24 KST
-- 현재 목표: Lectures 관리자·레이아웃 수정 Preview 배포 완료, 사용자 확인 대기
+- 마지막 갱신: 2026-08-25 KST
+- 현재 목표: Lectures 카테고리 갤러리·전체 강의 CTA·최신 Watch 공개 수정 완료, 로컬 검증 중
 - 작업 브랜치: `codex/web-media-layout` 격리 worktree
-- 배포 상태: `650468a`, `8a26b01` 커밋 푸시 및 Vercel Preview Ready; Production 미반영
-- Preview URL: `https://minjae-lee-profile-git-cod-2a4a4c-minjae-lees-projects-af61ee98.vercel.app/`
-- Preview 접근: Vercel Standard Protection 유지; 운영 도메인은 변경하지 않음
+- 배포 상태: 이번 수정은 미커밋·미배포; Production 미반영
+- 이전 Preview: `https://minjae-lee-profile-git-cod-2a4a4c-minjae-lees-projects-af61ee98.vercel.app/`
 
 ## 운영 기준선
 
@@ -19,31 +18,36 @@
 
 ## 이번 수정
 
-- `origin/main@e9f7da3`의 최신 관리자 데이터와 신규 슬라이드 3장을 격리 worktree에 동기화
-- 기존 저장 강의 `lectures_mt5sy7fr`을 강의 배열 첫 항목으로 이동해 Google 목록 최상단에 반영
-- 새 강의는 다른 컬렉션과 달리 배열 앞에 삽입되어 카테고리 목록에서도 최신 항목이 먼저 표시됨
-- 강의 추가·수정 창에 `HIGHLIGHTS에 노출` 체크박스를 추가하고 큐레이션 저장소와 연결
-- HIGHLIGHTS는 최대 5개를 유지하며 세부 순서는 기존 큐레이션 UI에서 조정
-- 데스크톱 5행 강의 목록이 프레임 높이를 결정하고 오른쪽 3장 갤러리가 같은 높이 안에 1+2 구조로 맞춰짐
-- `전체 강의 보기` CTA에 box sizing, clipping, no-wrap을 적용해 글자·화살표 이탈 방지
-- 관리자 체크박스 도움말은 별도 행에 배치해 한국어 한 글자 고립 방지
-- 관련 디자인 계약과 회귀 테스트 추가
+- HIGHLIGHTS와 개별 주제의 데스크톱 gallery layout을 분리
+- HIGHLIGHTS는 5개 ledger 전체 높이와 오른쪽 1+2 gallery 높이를 동일하게 유지
+- AI·Google 등 개별 주제는 선택 행과 같은 Y축에 최대 3장의 16:9 썸네일을 가로로 배치
+- 개별 주제 오른쪽에서 중복되던 제목을 숨겨 선택 행과 썸네일이 한 줄의 시각 단위가 되도록 조정
+- 1024px 이하는 오른쪽 고정 gallery를 숨기고 행 썸네일 클릭 시 기존 상세 gallery 사용
+- 1024px 이하 상세 gallery의 이전·다음 원형 컨트롤을 화면 안쪽에 배치해 내부 가로 넘침 제거
+- `전체 강의 보기`를 넓은 상아색 박스에서 compact editorial text CTA로 변경
+- 2026-08-23 관리자 저장에서 비공개로 전환됐던 최신 Watch 항목을 다시 공개
+- 최신 Google 강의는 기존대로 Google 목록 최상단에 유지
+- Watch 외부 링크 검증식을 수정해 17개 카드가 실제 YouTube 주소를 유지하도록 복구
+- 관련 디자인 계약과 회귀 테스트 갱신
 
 ## 검증
 
-- JavaScript 문법 검사 통과
-- 전체 Node 테스트 24/24 통과
-- `git diff --check` 통과
-- 실제 관리자 UI 저장: 신규 Google 강의가 첫 항목이며 HIGHLIGHTS 포함 확인
-- 1280px: 가로 넘침 0, 목록·갤러리 높이 646.453px 동일, 갤러리 하단 오차 0
-- 1280px: CTA 420×58px, 라벨·화살표 내부 포함
-- 375px·768px: 가로 넘침 0, 기존 반응형 동작 유지
-- 시각 QA 임시 캡처는 검수 완료 후 삭제했으며 Git에 포함하지 않음
-- 최종 독립 시각 QA 2개 lane 모두 PASS, blocker 없음
+- 전체 Node 테스트 27/27 통과
+- JavaScript 문법 검사와 `git diff --check` 통과
+- 1280px HIGHLIGHTS: 목록·gallery 높이 646.45px 동일
+- 1280px Google: 선택 행 Y=273.36px, gallery Y=273.36px; 3장 각각 212.98×119.80px
+- 375px·768px·1280px 가로 넘침 0
+- 모바일·태블릿 오른쪽 고정 gallery 숨김 및 기존 상세 gallery 경로 유지
+- 375px 상세 gallery client/scroll 너비 375px 동일, 이전·다음 컨트롤 x=21–354px 내 포함
+- 768px 상세 gallery·panel·stage 내부 가로 넘침 0, 원형 컨트롤 x=45–723px 내 포함
+- CTA 143.97×48px, 투명 배경, 글자·화살표 이탈 없음
+- Watch 17개 렌더링, 최신 `Gemini & NotebookLM으로 똑똑하게 해외여행 준비하기` 첫 항목 확인
+- Watch 17개 링크 모두 절대 `https://` 주소이며 첫 항목의 실제 YouTube 목적지 확인
+- 독립 시각 QA 2회 PASS: 1280/768/375 레이아웃·CJK·modal 내부 폭·Watch 링크 실동작 확인
 
 ## 다음 작업
 
-- 사용자가 승인 후 명시적으로 요청할 때만 운영 병합·배포
+- 사용자가 명시적으로 요청할 때만 commit·Preview/Production 배포
 - 공개 저장 전 최신 원격 SHA와 관리자 데이터 충돌 여부 재확인
 
 ## 보안·기기 전환
