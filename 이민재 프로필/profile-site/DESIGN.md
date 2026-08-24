@@ -247,7 +247,8 @@ Admin V3 uses the documented `--type-admin-*`, `--admin-*-min-height`, `--admin-
 - **Variants**: 1장 full, 2장 equal, 3장 hero-plus-two.
 - **Media**: `object-fit: contain`; 원본 비율을 보존하며 남는 면적만 `--ink-raised`로 채운다.
 - **States**: default, selected, hover, focus-visible, empty.
-- **Responsive**: desktop은 왼쪽 대표 5개 ledger가 전체 프레임 높이를 결정하고, 오른쪽은 그 높이 안에서 큰 슬라이드 1장과 작은 슬라이드 2장을 2:1 행 비율로 담는다. mobile은 한 열 scroll-snap gallery.
+- **Responsive**: desktop `HIGHLIGHTS`는 왼쪽 대표 5개 ledger가 전체 프레임 높이를 결정하고, 오른쪽은 그 높이 안에서 큰 슬라이드 1장과 작은 슬라이드 2장을 2:1 행 비율로 담는다. AI·Google 등 개별 주제는 선택 행과 같은 Y축에 최대 3장의 16:9 썸네일을 가로로 배치하며 제목은 왼쪽 ledger를 재사용한다. 1024px 이하는 오른쪽 고정 gallery를 숨기고 행 썸네일을 누르면 기존 상세 gallery를 연다.
+- **Archive CTA**: `전체 강의 보기`는 채운 사각형이 아니라 상아색 본문, 적색 화살표와 하단 rule로 구성한 48px 높이의 compact editorial text control이다.
 - **Motion**: 선택 변경은 220ms opacity만 사용하며 reduced-motion에서는 즉시 교체한다.
 
 ### Video Carousel

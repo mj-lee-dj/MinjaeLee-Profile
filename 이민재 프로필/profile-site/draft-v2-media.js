@@ -9,10 +9,10 @@ document.addEventListener('DOMContentLoaded', () => {
     { id: '강사코칭', label: '강사코칭' },
   ];
   const state = { topic: 'selected', activeLectureId: '', videoIndex: 0, galleryLecture: null, galleryIndex: 0, galleryTrigger: null };
-  const mobileQuery = matchMedia('(max-width: 640px)');
+  const compactQuery = matchMedia('(max-width: 1024px)');
   const escapeHtml = (value) => String(value ?? '').replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#039;');
   const assetUrl = (value) => { const candidate = String(value ?? ''); return candidate.startsWith('uploads/') || candidate.startsWith('assets/') || candidate.startsWith('https://') || candidate.startsWith('http://') || ['data:image/png;base64,', 'data:image/jpeg;base64,', 'data:image/webp;base64,', 'data:image/gif;base64,'].some((prefix) => candidate.startsWith(prefix)) ? candidate : ''; };
-  const externalUrl = (value) => /^https?:///i.test(String(value ?? '')) ? String(value) : '';
+  const externalUrl = (value) => /^https?:\/\//i.test(String(value ?? '')) ? String(value) : '';
   const pad = (value) => String(value).padStart(2, '0');
 
   function lectureTopic(item) {
@@ -52,9 +52,13 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   function renderLectures() {
     const shown = visibleLectures();
+    const layout = document.querySelector('.lecture-layout');
+    layout.dataset.view = state.topic === 'selected' ? 'highlights' : 'topic';
     if (!shown.some((lecture) => lecture.id === state.activeLectureId)) state.activeLectureId = shown[0]?.id || '';
     document.getElementById('lectureLedger').innerHTML = shown.map((lecture) => `<li class="lecture-ledger__item"><button class="lecture-ledger__button" type="button" data-lecture-id="${escapeHtml(lecture.id)}" ${lecture.id === state.activeLectureId ? 'aria-current="true"' : ''} aria-label="${escapeHtml(lecture.title)}${lectureImages(lecture).length ? ' 강의 자료 보기' : ''}"><span class="lecture-ledger__year">${escapeHtml(lecture.year)}</span><span class="lecture-ledger__title">${escapeHtml(lecture.title)}</span><span class="lecture-ledger__org">${escapeHtml(lecture.org)}</span>${rowThumbnail(lecture)}</button></li>`).join('') || '<li class="lecture-ledger__item"><p class="lecture-ledger__empty">이 주제의 기록을 준비하고 있습니다.</p></li>';
     renderShowcase(shown.find((lecture) => lecture.id === state.activeLectureId));
+    const activeRow = document.querySelector('[data-lecture-id][aria-current="true"]')?.closest('.lecture-ledger__item');
+    layout.style.setProperty('--lecture-showcase-offset', (activeRow?.offsetTop || 0) + 'px');
     document.getElementById('lectureMore').firstChild.textContent = state.topic === 'all' ? '대표 강의만 보기 ' : '전체 강의 보기 ';
   }
   function ensureGallery() {
@@ -75,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function moveGallery(delta) { state.galleryIndex += delta; renderGallery(); document.querySelector(`[data-gallery-index="${state.galleryIndex}"]`)?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' }); }
   function openGallery(lecture, trigger) {
-    const images = lectureImages(lecture); if (!mobileQuery.matches || !images.length) return false;
+    const images = lectureImages(lecture); if (!compactQuery.matches || !images.length) return false;
     ensureGallery(); state.galleryLecture = lecture; state.galleryIndex = 0; state.galleryTrigger = trigger;
     const gallery = document.getElementById('lectureGallery'); gallery.hidden = false; document.body.classList.add('lecture-gallery-open'); renderGallery(); requestAnimationFrame(() => gallery.querySelector('[data-gallery-close]')?.focus()); return true;
   }

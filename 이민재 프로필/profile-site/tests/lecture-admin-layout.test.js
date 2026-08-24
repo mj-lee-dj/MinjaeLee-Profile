@@ -46,8 +46,40 @@ test('lecture add and edit modal exposes a Highlights checkbox tied to the curat
   assert.match(editor, /ProfileLectureStore\.save/);
 });
 
-test('desktop lecture gallery and archive CTA use contained layout rules', () => {
+test('desktop lecture gallery separates Highlights framing from row-aligned topic galleries', () => {
   const css = read('editorial-v4.css');
-  assert.match(css, /@media \(min-width:1025px\)[\s\S]+\.lecture-showcase-wrap[\s\S]+position:absolute/);
-  assert.match(css, /\.archive-more[\s\S]+box-sizing:border-box[\s\S]+overflow:hidden/);
+  const media = read('draft-v2-media.js');
+  assert.match(media, /layout\.dataset\.view = state\.topic === 'selected' \? 'highlights' : 'topic'/);
+  assert.match(media, /--lecture-showcase-offset/);
+  assert.match(css, /\[data-view='highlights'\][\s\S]+height:100%/);
+  assert.match(css, /\[data-view='topic'\][\s\S]+top:var\(--lecture-showcase-offset\)/);
+  assert.match(css, /\[data-view='topic'\][\s\S]+grid-template-columns:repeat\(3/);
+});
+
+test('archive CTA is a compact editorial text control, not a full paper block', () => {
+  const css = read('editorial-v4.css');
+  assert.match(css, /\.archive-more[\s\S]+width:max-content[\s\S]+background:transparent/);
+  assert.doesNotMatch(css, /\.archive-more \{[^}]+background:var\(--paper-bright\)/);
+});
+
+test('latest Watch item saved with the Google lecture is publicly visible', () => {
+  const data = JSON.parse(read('data_v3.json'));
+  const latest = data.youtubeVideos.find((item) => item.id === 'youtubeVideos_mt3md3pm');
+  assert.ok(latest);
+  assert.equal(latest.visible, true);
+});
+
+
+test('tablet uses the compact lecture gallery instead of a full-list showcase', () => {
+  const css = read('editorial-v4.css');
+  const media = read('draft-v2-media.js');
+  assert.match(media, /matchMedia\('\(max-width: 1024px\)'\)/);
+  assert.match(css, /@media \(max-width:1024px\)[\s\S]+\.lecture-showcase-wrap \{ display:none; \}/);
+  assert.match(css, /@media \(min-width:1025px\) \{ \.lecture-gallery \{ display:none !important; \} \}/);
+});
+
+
+test('Watch media links preserve absolute YouTube URLs', () => {
+  const media = read('draft-v2-media.js');
+  assert.ok(media.includes("const externalUrl = (value) => /^https?:\\/\\//i.test"));
 });

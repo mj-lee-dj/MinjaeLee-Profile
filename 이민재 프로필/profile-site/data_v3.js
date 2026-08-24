@@ -2,7 +2,7 @@ const profileData = {
   "youtubeVideos": [
     {
       "id": "youtubeVideos_mt3md3pm",
-      "visible": false,
+      "visible": true,
       "title": "[Edu 로켓배송] Gemini & NotebookLM으로 똑똑하게 해외여행 준비하기",
       "link": "https://youtu.be/ygJuXIJY2B4?si=4KEvXqpPod0H5vW9",
       "images": [],
