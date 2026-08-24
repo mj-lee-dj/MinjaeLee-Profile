@@ -1,9 +1,9 @@
 # HANDOFF — 이민재 프로필 사이트
 
 - 마지막 갱신: 2026-08-25 KST
-- 현재 목표: Lectures 카테고리 갤러리·전체 강의 CTA·최신 Watch 공개 수정 완료, 로컬 검증 중
-- 작업 브랜치: `codex/web-media-layout` 격리 worktree
-- 배포 상태: 이번 수정은 미커밋·미배포; Production 미반영
+- 현재 목표: Lectures 카테고리 갤러리·전체 강의 CTA·최신 Watch 공개 수정 운영 반영 완료
+- 작업 브랜치: `codex/web-media-layout` 격리 worktree, `main` 병합 완료
+- 배포 상태: Production Ready; 릴리스 기준 `8f6e020`
 - 이전 Preview: `https://minjae-lee-profile-git-cod-2a4a4c-minjae-lees-projects-af61ee98.vercel.app/`
 
 ## 운영 기준선
@@ -44,11 +44,14 @@
 - Watch 17개 렌더링, 최신 `Gemini & NotebookLM으로 똑똑하게 해외여행 준비하기` 첫 항목 확인
 - Watch 17개 링크 모두 절대 `https://` 주소이며 첫 항목의 실제 YouTube 목적지 확인
 - 독립 시각 QA 2회 PASS: 1280/768/375 레이아웃·CJK·modal 내부 폭·Watch 링크 실동작 확인
+- 운영 URL HTTP 200 및 Vercel 배포 성공 상태 확인
+- 운영 데이터: 최신 Google 강의 1건(중복 없음), 공개 Watch 17건, 최신 Watch 첫 항목 확인
+- 운영 화면 1280px·375px 수동 QA 통과, 콘솔 오류·경고 없음
 
 ## 다음 작업
 
-- 사용자가 명시적으로 요청할 때만 commit·Preview/Production 배포
-- 공개 저장 전 최신 원격 SHA와 관리자 데이터 충돌 여부 재확인
+- 다음 콘텐츠 수정 전 `git fetch` 후 `origin/main`과 동기화
+- 관리자 저장과 코드 작업이 겹칠 경우 ID 중복·공개 상태를 병합 후 schema test로 검증
 
 ## 보안·기기 전환
 
