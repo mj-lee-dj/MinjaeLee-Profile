@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
   ];
   const state = { topic: 'selected', activeLectureId: '', videoIndex: 0, galleryLecture: null, galleryIndex: 0, galleryTrigger: null };
   const compactQuery = matchMedia('(max-width: 1024px)');
+  const accordionMode = Boolean(document.getElementById('lectureAccordion'));
   const escapeHtml = (value) => String(value ?? '').replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#039;');
   const assetUrl = (value) => { const candidate = String(value ?? ''); return candidate.startsWith('uploads/') || candidate.startsWith('assets/') || candidate.startsWith('https://') || candidate.startsWith('http://') || ['data:image/png;base64,', 'data:image/jpeg;base64,', 'data:image/webp;base64,', 'data:image/gif;base64,'].some((prefix) => candidate.startsWith(prefix)) ? candidate : ''; };
   const externalUrl = (value) => /^https?:\/\//i.test(String(value ?? '')) ? String(value) : '';
@@ -25,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (/google|구글|gemini|제미나이|notebooklm/.test(source)) return 'Google';
     return 'AI';
   }
-  function lectureImages(lecture) { return [...new Set([...(lecture?.images || []), lecture?.image].map(assetUrl).filter(Boolean))].slice(0, 3); }
+  function lectureImages(lecture) { return [...new Set([...(lecture?.images || []), lecture?.image].map(assetUrl).filter(Boolean))].slice(0, accordionMode ? 12 : 3); }
   function allLectures() { const hidden = new Set(ProfileLectureStore.load().hidden); return (data.lectures || []).filter((lecture) => lecture.visible !== false && !hidden.has(lecture.id)); }
   function visibleLectures() {
     if (state.topic === 'all') return allLectures();
@@ -66,7 +67,12 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.insertAdjacentHTML('beforeend', `<div class="lecture-gallery" id="lectureGallery" hidden><div class="lecture-gallery__panel" role="dialog" aria-modal="true" aria-labelledby="lectureGalleryTitle" tabindex="-1"><header class="lecture-gallery__header"><button class="lecture-gallery__close" type="button" aria-label="강의 자료 닫기" data-gallery-close><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"></path></svg></button><strong id="lectureGalleryTitle">강의 자료</strong><span class="lecture-gallery__count" id="lectureGalleryCount"></span></header><div class="lecture-gallery__stage" id="lectureGalleryStage"><button class="lecture-gallery__control lecture-gallery__control--prev" type="button" data-gallery-prev aria-label="이전 이미지"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg></button><img id="lectureGalleryImage" width="1280" height="720" alt=""><button class="lecture-gallery__control lecture-gallery__control--next" type="button" data-gallery-next aria-label="다음 이미지"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg></button></div><div class="lecture-gallery__thumbs" id="lectureGalleryThumbs" aria-label="강의 자료 이미지 선택"></div><div class="lecture-gallery__meta"><h3 id="lectureGalleryLectureTitle"></h3><p id="lectureGalleryOrg"></p></div></div></div>`);
   }
   function renderGallery() {
-    const lecture = state.galleryLecture; const images = lectureImages(lecture); if (!lecture || !images.length) return;
+    const lecture = state.galleryLecture; const images = lectureImages(lecture); if (!lecture) return;
+    document.getElementById('lectureGalleryLectureTitle').textContent = lecture.title;
+    document.getElementById('lectureGalleryOrg').textContent = [lecture.org, lecture.year].filter(Boolean).join(' · ');
+    document.getElementById('lectureGalleryStage').hidden = !images.length;
+    document.getElementById('lectureGalleryThumbs').hidden = !images.length;
+    if (!images.length) { document.getElementById('lectureGalleryCount').textContent = ''; return; }
     state.galleryIndex = Math.max(0, Math.min(state.galleryIndex, images.length - 1));
     const image = document.getElementById('lectureGalleryImage'); image.src = images[state.galleryIndex]; image.alt = `${lecture.title} 강의 자료 ${state.galleryIndex + 1}`;
     document.getElementById('lectureGalleryCount').textContent = `${state.galleryIndex + 1} / ${images.length}`;
@@ -79,13 +85,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function moveGallery(delta) { state.galleryIndex += delta; renderGallery(); document.querySelector(`[data-gallery-index="${state.galleryIndex}"]`)?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' }); }
   function openGallery(lecture, trigger) {
-    const images = lectureImages(lecture); if (!compactQuery.matches || !images.length) return false;
+    const images = lectureImages(lecture); if (!lecture || (!accordionMode && (!compactQuery.matches || !images.length))) return false;
     ensureGallery(); state.galleryLecture = lecture; state.galleryIndex = 0; state.galleryTrigger = trigger;
     const gallery = document.getElementById('lectureGallery'); gallery.hidden = false; document.body.classList.add('lecture-gallery-open'); renderGallery(); requestAnimationFrame(() => gallery.querySelector('[data-gallery-close]')?.focus()); return true;
   }
   function closeGallery() {
     const gallery = document.getElementById('lectureGallery'); if (!gallery || gallery.hidden) return;
-    gallery.hidden = true; document.body.classList.remove('lecture-gallery-open'); state.galleryLecture = null; state.galleryTrigger?.focus(); state.galleryTrigger = null;
+    gallery.hidden = true; document.body.classList.remove('lecture-gallery-open'); state.galleryLecture = null;
+    if (state.galleryTrigger?.isConnected) state.galleryTrigger.focus();
+    else document.querySelector('.lecture-accordion__trigger[aria-expanded="true"]')?.focus();
+    state.galleryTrigger = null;
   }
   function bindGallery() {
     ensureGallery(); const gallery = document.getElementById('lectureGallery'); const stage = document.getElementById('lectureGalleryStage'); let startX = 0;
@@ -135,6 +144,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let frame = 0; viewport.addEventListener('scroll', () => { cancelAnimationFrame(frame); frame = requestAnimationFrame(() => { const candidates = slides.slice(0, lastStart() + 1); const nearest = candidates.reduce((best, slide, index) => Math.abs(slide.offsetLeft - viewport.scrollLeft) < Math.abs(candidates[best].offsetLeft - viewport.scrollLeft) ? index : best, 0); update(nearest, false); }); }, { passive: true });
     if ('ResizeObserver' in window) new ResizeObserver(() => requestAnimationFrame(() => update(state.videoIndex, false))).observe(viewport); update(0, false);
   }
+  if (!accordionMode) {
   document.getElementById('lectureTopics').addEventListener('click', (event) => {
     const button = event.target.closest('button[data-topic]'); if (!button) return;
     state.topic = button.dataset.topic; state.activeLectureId = ''; renderTopics(state.topic); renderLectures();
@@ -147,5 +157,8 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('lectureMore').addEventListener('click', () => { state.topic = state.topic === 'all' ? 'selected' : 'all'; state.activeLectureId = ''; renderTopics(); renderLectures(); document.getElementById('lectureLedger').scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' }); });
   window.addEventListener('storage', (event) => { if (event.key !== ProfileLectureStore.key) return; state.activeLectureId = ''; renderTopics(); renderLectures(); });
   window.addEventListener('profileDraft:lectureCuration', () => { state.activeLectureId = ''; renderTopics(); renderLectures(); });
-  renderTopics(); renderLectures(); renderVideos(); bindCarousel(); bindGallery();
+  renderTopics(); renderLectures();
+  }
+  renderVideos(); bindCarousel(); bindGallery();
+  window.ProfileLectureGallery = Object.freeze({ open: openGallery, close: closeGallery });
 });
