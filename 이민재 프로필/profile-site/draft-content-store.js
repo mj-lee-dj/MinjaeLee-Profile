@@ -21,6 +21,16 @@
   const sourcePersonal = clone(profileData.personal || {});
   const sourceCollections = Object.fromEntries(collectionKeys.map((section) => [section, clone(profileData[section] || [])]));
   const source = Object.freeze({ personal: clone(sourcePersonal), ...clone(sourceCollections) });
+  const mediaCorrection = Object.freeze({
+    id: '2026-10-live-and-lecture-images',
+    lectureId: 'lectures_20261013_gemini_notebook_live_1',
+    videoId: 'youtubeVideos_20261013_gemini_notebook_live_1',
+    imageIds: [
+      'lectures_20261007_canva_korea',
+      'lectures_20260930_cheongsu_ai_design',
+      'lectures_20260929_panam_chromebook',
+    ],
+  });
   const text = (value, max = 4000) => String(value ?? '').trim().slice(0, max);
   const url = (value) => {
     const candidate = text(value, 2000);
@@ -113,6 +123,31 @@
     return next;
   }
 
+  function reconcileMediaCorrection(state) {
+    if (state.contentMigrationIds.includes(mediaCorrection.id)) return state;
+    const video = sourceCollections.youtubeVideos.find((item) => item.id === mediaCorrection.videoId);
+    const sourceImagesReady = mediaCorrection.imageIds.every((id) => normalizedImages(sourceCollections.lectures.find((item) => item.id === id)).length === 3);
+    if (!video || !sourceImagesReady) return state;
+    const youtubeId = (link) => String(link || '').match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?(?:[^#]*&)?v=|embed\/|live\/|shorts\/))([\w-]{11})/)?.[1];
+    const publishedVideoId = youtubeId(video.link);
+    // Relocate only the miscategorized Live record. Keep every other draft edit.
+    state.lectures = state.lectures.filter((item) => item.id !== mediaCorrection.lectureId);
+    if (!state.youtubeVideos.some((item) => item.id === video.id || (publishedVideoId && youtubeId(item.link) === publishedVideoId))) {
+      state.youtubeVideos.unshift(normalizeItem('youtubeVideos', video, 0));
+    }
+    state.lectures.forEach((item) => {
+      if (!mediaCorrection.imageIds.includes(item.id) || item.images.length) return;
+      const published = sourceCollections.lectures.find((entry) => entry.id === item.id);
+      const images = normalizedImages(published);
+      if (images.length) {
+        item.images = images;
+        item.image = images[0];
+      }
+    });
+    state.contentMigrationIds.push(mediaCorrection.id);
+    return state;
+  }
+
   function defaultState() {
     const contact = sourcePersonal.contact || {};
     const personal = {
@@ -124,7 +159,7 @@
       email: text(contact.email, 320),
       instagram: url(contact.instagram),
     };
-    const state = { version: 1, photoDirty: false, personal, sourceLectureIds: sourceCollections.lectures.map((item) => item.id) };
+    const state = { version: 1, photoDirty: false, personal, sourceLectureIds: sourceCollections.lectures.map((item) => item.id), contentMigrationIds: [] };
     collectionKeys.forEach((section) => {
       const source = clone(sourceCollections[section]);
       const ordered = section === 'publications'
@@ -132,7 +167,7 @@
         : section === 'youtubeVideos' ? orderDefaultVideos(source) : source;
       state[section] = ordered.map((item, index) => normalizeItem(section, item, index)).filter(Boolean);
     });
-    return state;
+    return reconcileMediaCorrection(state);
   }
 
   function normalize(candidate) {
@@ -150,12 +185,12 @@
       email: text(candidatePersonal.email, 320) || fallback.personal.email,
       instagram: url(candidatePersonal.instagram) || fallback.personal.instagram,
     };
-    const state = { version: 1, photoDirty, personal, sourceLectureIds: sourceCollections.lectures.map((item) => item.id) };
+    const state = { version: 1, photoDirty, personal, sourceLectureIds: sourceCollections.lectures.map((item) => item.id), contentMigrationIds: Array.isArray(candidate.contentMigrationIds) ? candidate.contentMigrationIds.filter((id) => typeof id === 'string') : [] };
     collectionKeys.forEach((section) => {
       const source = Array.isArray(candidate[section]) ? candidate[section] : fallback[section];
       state[section] = source.map((item, index) => normalizeItem(section, item, index)).filter(Boolean);
     });
-    return state;
+    return reconcileMediaCorrection(state);
   }
 
   function merge(base, candidate) {

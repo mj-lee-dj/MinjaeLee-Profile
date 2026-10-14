@@ -1,6 +1,14 @@
 {
   "youtubeVideos": [
     {
+      "id": "youtubeVideos_20261013_gemini_notebook_live_1",
+      "visible": true,
+      "title": "[LIVE] 교사에게 AI 딱 하나만 추천한다면｜민재쌤의 Gemini Notebook [1강]",
+      "link": "https://youtube.com/live/2Dqpsaqa0Jw",
+      "images": [],
+      "image": ""
+    },
+    {
       "id": "youtubeVideos_mt3md3pm",
       "visible": true,
       "title": "[Edu 로켓배송] Gemini & NotebookLM으로 똑똑하게 해외여행 준비하기",
@@ -292,19 +300,6 @@
   ],
   "lectures": [
     {
-      "id": "lectures_20261013_gemini_notebook_live_1",
-      "visible": true,
-      "title": "교사에게 AI 딱 하나만 추천한다면",
-      "org": "민재쌤의 Gemini Notebook Live 1강",
-      "year": "2026",
-      "category": "Google/Gemini",
-      "topic": "Google",
-      "link": "",
-      "images": [],
-      "image": "",
-      "highlight": false
-    },
-    {
       "id": "lectures_20261007_canva_korea",
       "visible": true,
       "title": "기초부터 교실 활용까지 Canva의 정석",
@@ -313,8 +308,12 @@
       "category": "Canva",
       "topic": "Canva·에듀테크",
       "link": "",
-      "images": [],
-      "image": "",
+      "images": [
+        "uploads/20261007-canva-cover.webp",
+        "uploads/20261007-canva-scene-1.webp",
+        "uploads/20261007-canva-scene-2.webp"
+      ],
+      "image": "uploads/20261007-canva-cover.webp",
       "highlight": false
     },
     {
@@ -326,8 +325,12 @@
       "category": "AI",
       "topic": "AI",
       "link": "",
-      "images": [],
-      "image": "",
+      "images": [
+        "uploads/20260930-cheongsu-cover.webp",
+        "uploads/20260930-cheongsu-scene-1.webp",
+        "uploads/20260930-cheongsu-scene-2.webp"
+      ],
+      "image": "uploads/20260930-cheongsu-cover.webp",
       "highlight": false
     },
     {
@@ -339,8 +342,12 @@
       "category": "Google/Chromebook",
       "topic": "Google",
       "link": "",
-      "images": [],
-      "image": "",
+      "images": [
+        "uploads/20260929-panam-cover.webp",
+        "uploads/20260929-panam-scene-1.webp",
+        "uploads/20260929-panam-scene-2.webp"
+      ],
+      "image": "uploads/20260929-panam-cover.webp",
       "highlight": false
     },
     {
