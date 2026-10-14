@@ -292,6 +292,58 @@
   ],
   "lectures": [
     {
+      "id": "lectures_20261013_gemini_notebook_live_1",
+      "visible": true,
+      "title": "교사에게 AI 딱 하나만 추천한다면",
+      "org": "민재쌤의 Gemini Notebook Live 1강",
+      "year": "2026",
+      "category": "Google/Gemini",
+      "topic": "Google",
+      "link": "",
+      "images": [],
+      "image": "",
+      "highlight": false
+    },
+    {
+      "id": "lectures_20261007_canva_korea",
+      "visible": true,
+      "title": "기초부터 교실 활용까지 Canva의 정석",
+      "org": "Canva Korea 전국 공식연수",
+      "year": "2026",
+      "category": "Canva",
+      "topic": "Canva·에듀테크",
+      "link": "",
+      "images": [],
+      "image": "",
+      "highlight": false
+    },
+    {
+      "id": "lectures_20260930_cheongsu_ai_design",
+      "visible": true,
+      "title": "교사의 안목에 AI를 더하는 수업과 강의 설계하기",
+      "org": "천안청수고등학교 찾아가는 학교 컨설팅",
+      "year": "2026",
+      "category": "AI",
+      "topic": "AI",
+      "link": "",
+      "images": [],
+      "image": "",
+      "highlight": false
+    },
+    {
+      "id": "lectures_20260929_panam_chromebook",
+      "visible": true,
+      "title": "크롬북, 수업에서 제대로 써보기",
+      "org": "대전판암초등학교 크롬북 활용 연수",
+      "year": "2026",
+      "category": "Google/Chromebook",
+      "topic": "Google",
+      "link": "",
+      "images": [],
+      "image": "",
+      "highlight": false
+    },
+    {
       "id": "lectures_mt5sy7fr",
       "visible": true,
       "title": "Google Educator Series 한국판 로컬라이징 소개 세션",

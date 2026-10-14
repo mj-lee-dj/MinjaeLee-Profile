@@ -32,10 +32,23 @@ test('new lectures are inserted before older records while other collections kee
   assert.deepEqual(Array.from(bookIds), ['old', 'new']);
 });
 
-test('current saved Google lecture is first in the deployed content order', () => {
+test('four autumn lectures precede the existing saved lecture records', () => {
   const data = JSON.parse(read('data_v3.json'));
-  assert.equal(data.lectures[0].id, 'lectures_mt5sy7fr');
-  assert.equal(data.lectures[0].category, 'Google');
+  assert.deepEqual(data.lectures.slice(0, 5).map((item) => item.id), [
+    'lectures_20261013_gemini_notebook_live_1',
+    'lectures_20261007_canva_korea',
+    'lectures_20260930_cheongsu_ai_design',
+    'lectures_20260929_panam_chromebook',
+    'lectures_mt5sy7fr',
+  ]);
+  assert.equal(data.lectures.length, 65);
+  data.lectures.slice(0, 4).forEach((item) => {
+    assert.equal(item.visible, true);
+    assert.equal(item.year, '2026');
+    assert.equal(item.link, '');
+    assert.deepEqual(item.images, []);
+    assert.equal(item.highlight, false);
+  });
 });
 
 test('lecture add and edit modal exposes a Highlights checkbox tied to the curation store', () => {
