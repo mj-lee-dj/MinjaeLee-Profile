@@ -124,7 +124,7 @@
       email: text(contact.email, 320),
       instagram: url(contact.instagram),
     };
-    const state = { version: 1, photoDirty: false, personal };
+    const state = { version: 1, photoDirty: false, personal, sourceLectureIds: sourceCollections.lectures.map((item) => item.id) };
     collectionKeys.forEach((section) => {
       const source = clone(sourceCollections[section]);
       const ordered = section === 'publications'
@@ -150,7 +150,7 @@
       email: text(candidatePersonal.email, 320) || fallback.personal.email,
       instagram: url(candidatePersonal.instagram) || fallback.personal.instagram,
     };
-    const state = { version: 1, photoDirty, personal };
+    const state = { version: 1, photoDirty, personal, sourceLectureIds: sourceCollections.lectures.map((item) => item.id) };
     collectionKeys.forEach((section) => {
       const source = Array.isArray(candidate[section]) ? candidate[section] : fallback[section];
       state[section] = source.map((item, index) => normalizeItem(section, item, index)).filter(Boolean);
@@ -211,7 +211,18 @@
     }
     if (!stored) return defaultState();
     try {
-      return normalize(JSON.parse(stored));
+      const candidate = JSON.parse(stored);
+      const value = normalize(candidate);
+      const draftIds = new Set(value.lectures.map((item) => item.id));
+      // Legacy drafts predate baseline tracking. Preserve their edits and add
+      // published records they have never seen, without changing stored bytes.
+      const baselineIds = new Set(Array.isArray(candidate?.sourceLectureIds)
+        ? candidate.sourceLectureIds : draftIds);
+      const additions = sourceCollections.lectures
+        .filter((item) => !baselineIds.has(item.id) && !draftIds.has(item.id))
+        .map((item, index) => normalizeItem('lectures', item, index)).filter(Boolean);
+      value.lectures = [...additions, ...value.lectures];
+      return value;
     } catch (error) {
       console.warn('손상된 통합 콘텐츠 초안을 기본값으로 복구했습니다.', error);
       return defaultState();
