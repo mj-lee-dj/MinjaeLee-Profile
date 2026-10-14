@@ -1,0 +1,48 @@
+const test = require('node:test');
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const path = require('node:path');
+const vm = require('node:vm');
+const root = path.join(__dirname, '..');
+const read = (name) => fs.readFileSync(path.join(root, name), 'utf8');
+const data = JSON.parse(read('data_v3.json'));
+const context = { window: {}, document: { addEventListener() {} }, console };
+vm.runInNewContext(read('lecture-accordion.js'), context);
+const model = context.window.ProfileLectureArchiveModel;
+const ids = (items) => Array.from(items, item => item.id);
+
+test('highlights use exactly the existing five selected records in saved order', () => {
+  const selected = model.selectedHighlights(data, data.lectureCuration);
+  assert.deepEqual(ids(selected), data.lectureCuration.highlights);
+  assert.equal(selected.length, 5);
+  assert.deepEqual(ids(selected), ['l_mskiwlabhgr9u', 'l_mr29yai68xvad', 'l_mqcuqz7aplqgo', 'l6', 'lectures_mt5sy7fr']);
+  selected.forEach(item => assert.ok(item.images.length > 0));
+});
+
+test('highlights honor local selections, visibility and hidden choices without replacement records', () => {
+  const first = data.lectureCuration.highlights[0];
+  const second = data.lectureCuration.highlights[1];
+  assert.deepEqual(ids(model.selectedHighlights(data, { highlights: [second, first, second, 'missing'], hidden: [first] })), [second]);
+  const copy = structuredClone(data);
+  copy.lectures.find(item => item.id === second).visible = false;
+  assert.deepEqual(ids(model.selectedHighlights(copy, { highlights: [second] })), []);
+  assert.deepEqual(ids(model.selectedHighlights(data, { highlights: [] })), []);
+});
+
+test('highlight selection leaves the archive total and all existing media untouched', () => {
+  const before = JSON.stringify(data);
+  model.selectedHighlights(data, data.lectureCuration);
+  assert.equal(JSON.stringify(data), before);
+  assert.equal(model.summary(data).total, 64);
+});
+
+test('highlights precede the full category archive and expose distinct accessible controls', () => {
+  const html = read('index.html');
+  assert.ok(html.indexOf('id="lectureHighlights"') < html.indexOf('id="lectureArchiveCount"'));
+  assert.ok(html.indexOf('id="lectureArchiveCount"') < html.indexOf('id="lectureAccordion"'));
+  assert.match(html, /aria-label="이전 대표 강의"/);
+  assert.match(html, /aria-label="다음 대표 강의"/);
+  assert.match(html, /id="lectureHighlightsPosition" aria-live="polite"/);
+  assert.match(read('lecture-accordion.css'), /\.lecture-highlights__image img \{[^}]*object-fit:contain/);
+  assert.doesNotMatch(read('lecture-accordion.js'), /setInterval\s*\(/);
+});

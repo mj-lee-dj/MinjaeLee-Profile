@@ -444,8 +444,8 @@ const profileData = {
       "title": "[인공지능 활용 진로특강] 생성AI로 내 삶을 스마트하게 운영하기",
       "org": "김해수남고등학교",
       "year": "2026",
-      "category": "Google/Gemini",
-      "topic": "Google",
+      "category": "학부모·학생 강의",
+      "topic": "학부모·학생 강의",
       "link": "",
       "images": [
         "uploads/11e803f03cdf.png"

@@ -145,3 +145,133 @@ test('stale lecture curation drops Live references while preserving other choice
   assert.equal(result.label, '내 선택');
   assert.equal(storage.get('profileDraft.lectureCuration'), curated);
 });
+
+const sunamLectureId = 'l_mskifjabnr1q2';
+const sunamMigrationId = '2026-10-sunam-lecture-audience';
+const audienceTopic = '학부모·학생 강의';
+const plain = (value) => JSON.parse(JSON.stringify(value));
+const sunam = (state) => state.lectures.find((item) => item.id === sunamLectureId);
+function preAudienceCorrectionDraft() {
+  const candidate = structuredClone(start(published).store.state);
+  candidate.contentMigrationIds = candidate.contentMigrationIds.filter((id) => id !== sunamMigrationId);
+  Object.assign(sunam(candidate), { topic: 'Google', category: 'Google/Gemini' });
+  return candidate;
+}
+
+test('the exact 2026 Sunam lecture is published under the audience category in byte-consistent feeds', () => {
+  const lecture = sunam(published);
+  assert.equal(published.lectures.filter((item) => item.id === sunamLectureId).length, 1);
+  assert.equal(lecture.title, '[인공지능 활용 진로특강] 생성AI로 내 삶을 스마트하게 운영하기');
+  assert.equal(lecture.org, '김해수남고등학교');
+  assert.equal(lecture.year, '2026');
+  assert.equal(lecture.topic, audienceTopic);
+  assert.equal(lecture.category, audienceTopic);
+  assert.equal(lecture.highlight, true);
+  assert.deepEqual(lecture.images, ['uploads/11e803f03cdf.png']);
+  const scriptData = fs.readFileSync(path.join(root, 'data_v3.js'), 'utf8').split('const profileData = ')[1];
+  const jsonData = fs.readFileSync(path.join(root, 'data_v3.json'), 'utf8');
+  assert.equal(scriptData.replace(/;\s*$/, '\n'), jsonData);
+});
+
+test('a stale Sunam draft changes only its legacy classification without writing stored bytes', () => {
+  const candidate = preAudienceCorrectionDraft();
+  const item = sunam(candidate);
+  Object.assign(item, {
+    title: '보존할 로컬 제목', org: '보존할 기관', year: '2027',
+    link: 'https://example.com/local', images: ['uploads/custom-slide.png'],
+    image: 'uploads/custom-slide.png', visible: false, highlight: false,
+  });
+  candidate.personal.statement = '보존할 선언문';
+  candidate.lectures.unshift({ ...item, id: 'local-sunam-copy', title: '별도로 추가한 강의' });
+  const serialized = JSON.stringify(candidate);
+  const expected = structuredClone(candidate);
+  Object.assign(sunam(expected), { topic: audienceTopic, category: audienceTopic });
+  expected.contentMigrationIds.push(sunamMigrationId);
+  const { store, storage } = start(published, new Map([['profileDraft.contentV1', serialized]]));
+  assert.deepEqual(plain(store.state), plain(expected));
+  assert.equal(storage.get('profileDraft.contentV1'), serialized);
+  assert.deepEqual(plain(store.merge(published, candidate).lectures), plain(expected.lectures));
+});
+
+test('audience correction preserves a custom topic and independently preserves custom category metadata', () => {
+  for (const classification of [
+    { topic: 'AI', category: '로컬 분류' },
+    { topic: 'Canva·에듀테크', category: 'Google/Gemini' },
+    { topic: 'Google', category: '보존할 상세 분류' },
+    { topic: audienceTopic, category: '보존할 상세 분류' },
+  ]) {
+    const candidate = preAudienceCorrectionDraft();
+    Object.assign(sunam(candidate), classification);
+    const { store } = start(published, new Map([['profileDraft.contentV1', JSON.stringify(candidate)]]));
+    const corrected = sunam(store.state);
+    assert.equal(corrected.topic, classification.topic === 'Google' ? audienceTopic : classification.topic);
+    assert.equal(corrected.category, classification.category);
+    assert.equal(store.state.contentMigrationIds.filter((id) => id === sunamMigrationId).length, 1);
+  }
+});
+
+test('an already audience-classified stale record receives only its remaining legacy metadata correction', () => {
+  const candidate = preAudienceCorrectionDraft();
+  sunam(candidate).topic = audienceTopic;
+  const { data } = start(published, new Map([['profileDraft.contentV1', JSON.stringify(candidate)]]));
+  assert.equal(sunam(data).topic, audienceTopic);
+  assert.equal(sunam(data).category, audienceTopic);
+});
+
+test('later explicit Sunam classification saves remain intact through reload and merge', () => {
+  const first = start(published, new Map([['profileDraft.contentV1', JSON.stringify(preAudienceCorrectionDraft())]]));
+  const corrected = first.store.save(first.store.state);
+  assert.equal(sunam(corrected).topic, audienceTopic);
+  const edited = structuredClone(corrected);
+  Object.assign(sunam(edited), { topic: 'Google', category: 'Google/Gemini', title: '이후 명시적 수정' });
+  first.store.save(edited);
+  const reloaded = start(published, first.storage);
+  assert.deepEqual(plain(sunam(reloaded.data)), plain(sunam(edited)));
+  assert.deepEqual(plain(sunam(reloaded.store.merge(published, reloaded.store.state))), plain(sunam(edited)));
+  assert.equal(reloaded.store.state.contentMigrationIds.filter((id) => id === sunamMigrationId).length, 1);
+});
+
+test('Sunam removals before or after migration remain removed across explicit saves', () => {
+  const before = preAudienceCorrectionDraft();
+  before.lectures = before.lectures.filter((item) => item.id !== sunamLectureId);
+  const first = start(published, new Map([['profileDraft.contentV1', JSON.stringify(before)]]));
+  assert.equal(sunam(first.data), undefined);
+  first.store.save(first.store.state);
+  assert.equal(sunam(start(published, first.storage).data), undefined);
+
+  const second = start(published, new Map([['profileDraft.contentV1', JSON.stringify(preAudienceCorrectionDraft())]]));
+  const corrected = second.store.save(second.store.state);
+  corrected.lectures = corrected.lectures.filter((item) => item.id !== sunamLectureId);
+  second.store.save(corrected);
+  assert.equal(sunam(start(published, second.storage).data), undefined);
+});
+
+test('audience correction waits for matching published data instead of changing legacy or later source choices', () => {
+  for (const classification of [
+    { topic: 'Google', category: 'Google/Gemini' },
+    { topic: 'AI', category: 'AI' },
+    { topic: audienceTopic, category: '로컬 분류' },
+  ]) {
+    const source = structuredClone(published);
+    Object.assign(sunam(source), classification);
+    const candidate = preAudienceCorrectionDraft();
+    const { store } = start(source, new Map([['profileDraft.contentV1', JSON.stringify(candidate)]]));
+    assert.equal(sunam(store.state).topic, 'Google');
+    assert.equal(sunam(store.state).category, 'Google/Gemini');
+    assert.ok(!store.state.contentMigrationIds.includes(sunamMigrationId));
+  }
+});
+
+test('audience correction coexists with the Live relocation and image migrations', () => {
+  const candidate = preCorrectionDraft();
+  Object.assign(sunam(candidate), { topic: 'Google', category: 'Google/Gemini' });
+  const { data, store } = start(published, new Map([['profileDraft.contentV1', JSON.stringify(candidate)]]));
+  assert.equal(data.lectures.length, 64);
+  assert.equal(sunam(data).topic, audienceTopic);
+  assert.equal(sunam(data).category, audienceTopic);
+  assert.ok(!data.lectures.some((item) => item.id === 'lectures_20261013_gemini_notebook_live_1'));
+  assert.equal(data.youtubeVideos.filter((item) => item.id === 'youtubeVideos_20261013_gemini_notebook_live_1').length, 1);
+  data.lectures.slice(0, 3).forEach((item, index) => assert.deepEqual(item.images, published.lectures[index].images));
+  assert.ok(store.state.contentMigrationIds.includes('2026-10-live-and-lecture-images'));
+  assert.ok(store.state.contentMigrationIds.includes(sunamMigrationId));
+});

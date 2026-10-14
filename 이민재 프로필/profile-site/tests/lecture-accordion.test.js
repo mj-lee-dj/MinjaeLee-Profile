@@ -8,7 +8,7 @@ const root = path.join(__dirname, '..');
 const read = (name) => fs.readFileSync(path.join(root, name), 'utf8');
 const published = JSON.parse(read('data_v3.json'));
 const topics = ['AI', 'Google', 'Canva·에듀테크', '교사 업무·학급경영', '학부모·학생 강의', '강사코칭'];
-const counts = [8, 24, 10, 14, 3, 5];
+const counts = [8, 23, 10, 14, 4, 5];
 const oldLiveId = 'lectures_20261013_gemini_notebook_live_1';
 const plain = (value) => JSON.parse(JSON.stringify(value));
 const ids = (items) => Array.from(items, (item) => item.id);
@@ -114,8 +114,8 @@ test('out-of-range category pages clamp to the first or last page', () => {
   assert.equal(last.page, 5);
   assert.equal(last.pages, 6);
   assert.equal(last.start, 21);
-  assert.equal(last.end, 24);
-  assert.deepEqual(ids(last.items), ids(expected.slice(-4)));
+  assert.equal(last.end, 23);
+  assert.deepEqual(ids(last.items), ids(expected.slice(20)));
 });
 
 test('a short final page reports its actual end and does not borrow from another category', () => {
@@ -135,7 +135,7 @@ test('hidden IDs and visible=false are excluded before counts and paging', () =>
   assert.deepEqual(ids(archive.visibleLectures(data, hidden)), ids(expected));
   assert.equal(archive.summary(data, hidden).total, 62);
   const result = archive.categoryPage(data, 'Google', 0, 4, hidden);
-  assert.equal(result.total, 22);
+  assert.equal(result.total, 21);
   assert.equal(result.pages, 6);
   assert.deepEqual(ids(result.items), ids(google.slice(2, 6)));
 });

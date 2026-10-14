@@ -31,6 +31,13 @@
       'lectures_20260929_panam_chromebook',
     ],
   });
+  const lectureCategoryCorrection = Object.freeze({
+    id: '2026-10-sunam-lecture-audience',
+    lectureId: 'l_mskifjabnr1q2',
+    topic: '학부모·학생 강의',
+    previousTopic: 'Google',
+    previousCategory: 'Google/Gemini',
+  });
   const text = (value, max = 4000) => String(value ?? '').trim().slice(0, max);
   const url = (value) => {
     const candidate = text(value, 2000);
@@ -148,6 +155,21 @@
     return state;
   }
 
+  function reconcileLectureCategoryCorrection(state) {
+    if (state.contentMigrationIds.includes(lectureCategoryCorrection.id)) return state;
+    const published = sourceCollections.lectures.find((item) => item.id === lectureCategoryCorrection.lectureId);
+    if (published?.topic !== lectureCategoryCorrection.topic || published?.category !== lectureCategoryCorrection.topic) return state;
+    const item = state.lectures.find((entry) => entry.id === lectureCategoryCorrection.lectureId);
+    // Correct only the old published classification. Never restore a removed
+    // record or replace local field edits, including later saved topic choices.
+    if (item && [lectureCategoryCorrection.previousTopic, lectureCategoryCorrection.topic].includes(item.topic)) {
+      if (item.topic === lectureCategoryCorrection.previousTopic) item.topic = published.topic;
+      if (item.category === lectureCategoryCorrection.previousCategory) item.category = published.category;
+    }
+    state.contentMigrationIds.push(lectureCategoryCorrection.id);
+    return state;
+  }
+
   function defaultState() {
     const contact = sourcePersonal.contact || {};
     const personal = {
@@ -167,7 +189,7 @@
         : section === 'youtubeVideos' ? orderDefaultVideos(source) : source;
       state[section] = ordered.map((item, index) => normalizeItem(section, item, index)).filter(Boolean);
     });
-    return reconcileMediaCorrection(state);
+    return reconcileLectureCategoryCorrection(reconcileMediaCorrection(state));
   }
 
   function normalize(candidate) {
@@ -190,7 +212,7 @@
       const source = Array.isArray(candidate[section]) ? candidate[section] : fallback[section];
       state[section] = source.map((item, index) => normalizeItem(section, item, index)).filter(Boolean);
     });
-    return reconcileMediaCorrection(state);
+    return reconcileLectureCategoryCorrection(reconcileMediaCorrection(state));
   }
 
   function merge(base, candidate) {
