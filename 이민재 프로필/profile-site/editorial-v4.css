@@ -111,7 +111,7 @@
   .archive-more:hover { background:transparent; color:var(--red); }
   .archive-more .text-link__arrow { color:var(--red); }
 }
-@media (min-width:1025px) { .lecture-gallery { display:none !important; } }
+@media (min-width:1025px) { body:not(.lecture-accordion-enabled) .lecture-gallery { display:none; } }
 @media (prefers-reduced-motion:reduce) {
   .video-carousel__progress > span,.carousel-button::before,.topic-index__button,.archive-more,.lecture-gallery { transition:none; }
 }

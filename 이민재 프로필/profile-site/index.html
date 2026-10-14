@@ -12,9 +12,10 @@
   <link rel="stylesheet" href="editorial-final.css">
   <link rel="stylesheet" href="editorial-v2.css">
   <link rel="stylesheet" href="editorial-v3.css">
-  <link rel="stylesheet" href="editorial-v4.css">
+  <link rel="stylesheet" href="editorial-v4.css?v=1792020000000">
+  <link rel="stylesheet" href="lecture-accordion.css?v=1792020000000">
 </head>
-<body class="editorial-site">
+<body class="editorial-site lecture-accordion-enabled">
   <a class="skip-link" href="#main">본문으로 바로가기</a>
   <nav class="editorial-nav" id="siteNav" aria-label="주요 메뉴">
     <div class="editorial-nav__inner">
@@ -81,13 +82,10 @@
     </section>
     <section class="lecture-archive editorial-section" id="lectures" aria-labelledby="lectureHeading">
       <div class="editorial-shell">
-        <div class="section-heading reveal-block"><p class="eyebrow">Selected lectures</p><h2 class="section-title" id="lectureHeading">LECTURES</h2><p class="section-heading__desc">대표 기록만 먼저 읽고, 주제를 고르면 같은 관심사의 강의를 이어서 볼 수 있습니다.</p></div>
-        <div class="topic-index" id="lectureTopics" aria-label="강의 주제 선택"></div>
-        <div class="lecture-layout">
-          <ol class="lecture-ledger" id="lectureLedger"></ol>
-          <div class="lecture-showcase-wrap" id="lectureShowcase" aria-live="polite"></div>
-        </div>
-        <button class="archive-more text-link" id="lectureMore" type="button">전체 강의 보기 <span class="text-link__arrow" aria-hidden="true">→</span></button>
+        <div class="lecture-archive__heading"><p class="eyebrow">LECTURE ARCHIVE · 강의 기록</p><h2 class="section-title" id="lectureHeading">LECTURES</h2><div class="lecture-archive__scale"><div><strong id="lectureArchiveCount">64</strong><span>공개 강의 기록</span></div><div class="lecture-archive__period"><span id="lectureArchiveFields">6개 분야</span><span id="lectureArchiveYears">2022–2026</span></div></div></div>
+        <p class="lecture-archive__hint" id="lectureArchiveHint">관심 있는 분야를 펼쳐보세요.</p>
+        <div class="lecture-accordion" id="lectureAccordion" aria-label="분야별 강의 기록"></div>
+        <div class="lecture-archive__footer" id="lectureArchiveFooter"><p id="lectureArchiveGuide">여섯 가지 분야, 64개의 기록.</p><p>제목을 누르면 실제 강의 자료를 확인할 수 있습니다.</p></div>
       </div>
     </section>
     <section class="records editorial-section" id="records" aria-labelledby="recordsHeading">
@@ -115,6 +113,7 @@
   <script src="draft-content-store.js?v=1792016520000"></script>
   <script src="draft-lecture-store.js"></script>
   <script src="draft-v2.js"></script>
-  <script src="draft-v2-media.js"></script>
+  <script src="draft-v2-media.js?v=1792020000000"></script>
+  <script src="lecture-accordion.js?v=1792020000000"></script>
 </body>
 </html>

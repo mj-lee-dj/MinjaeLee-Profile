@@ -1,0 +1,89 @@
+/* Category accordion: the approved compact lecture archive. */
+.lecture-archive__heading { margin-bottom:24px; }
+.lecture-archive__heading .section-title { margin:12px 0 22px; font-size:clamp(48px,6vw,80px); line-height:1; letter-spacing:-.05em; }
+.lecture-archive__scale { display:flex; align-items:center; justify-content:space-between; gap:20px; padding-bottom:20px; border-bottom:1px solid var(--rule); }
+.lecture-archive__scale > div:first-child { display:flex; align-items:baseline; gap:14px; }
+.lecture-archive__scale strong { color:var(--red); font-family:var(--font-display); font-size:56px; font-weight:600; line-height:1; }
+.lecture-archive__scale span { font-size:16px; }
+.lecture-archive__period { display:grid; color:var(--paper-muted); text-align:right; line-height:1.65; }
+.lecture-archive__period span { font-size:13px; }
+.lecture-archive__hint { margin:0 0 16px; color:var(--paper-muted); font-size:15px; line-height:1.7; }
+.lecture-accordion { width:100%; }
+.lecture-accordion__category { min-width:0; border-bottom:1px solid var(--rule); }
+.lecture-accordion__category > h3 { margin:0; font:inherit; }
+.lecture-accordion__trigger { display:flex; align-items:center; gap:20px; width:100%; min-height:88px; margin:0; padding:16px 0; border:0; background:transparent; text-align:left; cursor:pointer; font-family:var(--font-editorial); scroll-margin-top:84px; }
+.lecture-accordion__category-text { flex:1; min-width:0; }
+.lecture-accordion__category-title { display:block; font-size:22px; font-weight:700; line-height:1.4; word-break:keep-all; overflow-wrap:break-word; }
+.lecture-accordion__description { display:block; margin-top:4px; color:var(--paper-muted); font-size:13px; font-weight:400; line-height:1.6; }
+.lecture-accordion__count { color:var(--paper); font-family:var(--font-display); font-size:36px; font-weight:600; font-variant-numeric:tabular-nums; line-height:1; }
+.lecture-accordion__toggle { width:24px; height:24px; flex:0 0 24px; fill:none; stroke:var(--red); stroke-width:1.4; }
+.lecture-accordion__trigger:hover .lecture-accordion__category-title { color:var(--red); }
+.lecture-accordion__category.is-open { margin-inline:-16px; padding-inline:16px; border-block:1px solid var(--rule-bright); background:#14120f; }
+.lecture-accordion__category.is-open .lecture-accordion__category-title,
+.lecture-accordion__category.is-open .lecture-accordion__count { color:var(--red); }
+.has-open-category .lecture-accordion__trigger { min-height:72px; padding-block:14px; }
+.has-open-category .lecture-accordion__category-title { font-size:20px; }
+.has-open-category .lecture-accordion__count { font-size:32px; }
+.lecture-accordion__panel { padding-bottom:20px; }
+.lecture-accordion__panel[hidden],.lecture-archive [hidden] { display:none; }
+.lecture-accordion__range { display:flex; align-items:center; justify-content:space-between; gap:12px; padding-bottom:12px; border-bottom:1px solid var(--rule); color:var(--paper-muted); font-size:12px; line-height:1.5; }
+.lecture-accordion__records { margin:0; padding:0; list-style:none; }
+.lecture-accordion__record { display:flex; align-items:center; gap:24px; width:100%; min-height:110px; padding:18px 0; border:0; border-bottom:1px solid var(--rule); background:transparent; color:var(--paper); text-align:left; cursor:pointer; font-family:var(--font-editorial); }
+.lecture-accordion__record-text { flex:1; min-width:0; }
+.lecture-accordion__record-title { display:block; max-width:760px; font-size:20px; font-weight:700; line-height:1.55; word-break:keep-all; overflow-wrap:break-word; }
+.lecture-accordion__record-meta { display:block; margin-top:7px; color:var(--paper-muted); font-size:13px; line-height:1.55; word-break:keep-all; overflow-wrap:break-word; }
+.lecture-accordion__record:hover .lecture-accordion__record-title { color:var(--paper-bright); text-decoration:underline; text-decoration-color:var(--red); text-underline-offset:5px; }
+.lecture-accordion__thumb { position:relative; display:flex; align-items:center; width:128px; height:78px; flex:0 0 128px; overflow:hidden; border:1px solid var(--rule); background:var(--ink-raised); }
+.lecture-accordion__thumb img { width:100%; height:100%; object-fit:contain; }
+.lecture-accordion__image-count { position:absolute; right:3px; bottom:3px; display:flex; align-items:center; gap:3px; padding:1px 4px; background:var(--paper); color:var(--ink); font-family:var(--font-meta); font-size:10px; line-height:16px; }
+.lecture-accordion__image-count svg { width:10px; height:10px; fill:none; stroke:currentColor; stroke-width:1; }
+.lecture-accordion__pagination { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:16px; }
+.lecture-accordion__pagination output { color:var(--paper-muted); font-family:var(--font-meta); font-size:12px; line-height:1.5; }
+.lecture-accordion__pagination > div { display:flex; gap:8px; }
+.lecture-accordion__pagination button { display:flex; align-items:center; justify-content:center; gap:8px; min-width:44px; min-height:44px; padding:8px 12px; border:1px solid var(--rule-bright); background:transparent; color:var(--paper); font-family:var(--font-editorial); font-size:13px; cursor:pointer; }
+.lecture-accordion__pagination svg { width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:1.2; }
+.lecture-accordion__pagination button:hover:not(:disabled) { border-color:var(--red); color:var(--paper-bright); }
+.lecture-accordion__pagination button:disabled { opacity:.35; cursor:default; }
+.lecture-archive__footer { margin-top:26px; padding-top:17px; border-top:1px solid var(--rule-bright); color:var(--paper); font-size:17px; line-height:1.9; }
+.lecture-archive__footer p { margin:0; }
+.lecture-archive__footer p + p { margin-top:8px; color:var(--paper-muted); font-size:13px; }
+.lecture-accordion-enabled .lecture-gallery__stage[hidden] { display:none; }
+.lecture-accordion-enabled .lecture-gallery__control--prev { left:4px; }
+.lecture-accordion-enabled .lecture-gallery__control--next { right:4px; }
+@media (min-width:1025px) {
+  .lecture-accordion-enabled .lecture-gallery:not([hidden]) { display:grid; }
+  .lecture-accordion-enabled .lecture-gallery__panel { width:min(100%,960px); }
+}
+@media (max-width:640px) {
+  .lecture-archive { padding-block:32px 56px; }
+  .lecture-archive .editorial-shell { padding-inline:22px; }
+  .lecture-archive__heading { margin-bottom:19px; }
+  .lecture-archive__heading .eyebrow { font-size:10px; letter-spacing:.12em; }
+  .lecture-archive__heading .section-title { font-size:48px; margin:12px 0 18px; }
+  .lecture-archive__scale { padding-bottom:18px; gap:12px; }
+  .lecture-archive__scale > div:first-child { gap:9px; }
+  .lecture-archive__scale strong { font-size:41px; }
+  .lecture-archive__scale span { font-size:13px; }
+  .lecture-archive__period span { font-size:11px; }
+  .lecture-archive__hint { margin-bottom:17px; font-size:13px; }
+  .lecture-accordion__trigger { min-height:78px; gap:14px; padding:14px 0; }
+  .lecture-accordion__category-title { font-size:18px; }
+  .lecture-accordion__description { font-size:11px; }
+  .lecture-accordion__count { font-size:29px; }
+  .lecture-accordion__toggle { width:22px; height:22px; flex-basis:22px; }
+  .lecture-accordion__category.is-open { margin-inline:-12px; padding-inline:12px; }
+  .has-open-category .lecture-accordion__trigger { min-height:66px; padding-block:12px; }
+  .has-open-category .lecture-accordion__category-title { font-size:16px; }
+  .has-open-category .lecture-accordion__count { font-size:25px; }
+  .lecture-accordion__panel { padding-bottom:16px; }
+  .lecture-accordion__range { padding-bottom:10px; font-size:10px; }
+  .lecture-accordion__record { gap:12px; padding:13px 0; min-height:110px; }
+  .lecture-accordion__record-title { font-size:15px; line-height:1.52; letter-spacing:-.015em; }
+  .lecture-accordion__record-meta { font-size:11px; }
+  .lecture-accordion__thumb { width:clamp(72px,23vw,96px); height:66px; flex-basis:clamp(72px,23vw,96px); }
+  .lecture-accordion__pagination { margin-top:14px; }
+  .lecture-accordion__pagination output { font-size:11px; }
+  .lecture-accordion__pagination button { font-size:11px; }
+  .lecture-archive__footer { font-size:15px; }
+  .lecture-archive__footer p + p { font-size:12px; }
+}

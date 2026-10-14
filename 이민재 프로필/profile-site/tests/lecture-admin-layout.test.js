@@ -95,7 +95,8 @@ test('tablet uses the compact lecture gallery instead of a full-list showcase', 
   const media = read('draft-v2-media.js');
   assert.match(media, /matchMedia\('\(max-width: 1024px\)'\)/);
   assert.match(css, /@media \(max-width:1024px\)[\s\S]+\.lecture-showcase-wrap \{ display:none; \}/);
-  assert.match(css, /@media \(min-width:1025px\) \{ \.lecture-gallery \{ display:none !important; \} \}/);
+  assert.match(css, /body:not\(\.lecture-accordion-enabled\) \.lecture-gallery \{ display:none;/);
+  assert.match(read('lecture-accordion.css'), /\.lecture-accordion-enabled \.lecture-gallery:not\(\[hidden\]\) \{ display:grid;/);
 });
 
 
