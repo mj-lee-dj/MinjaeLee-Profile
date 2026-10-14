@@ -87,3 +87,7 @@
   .lecture-archive__footer { font-size:15px; }
   .lecture-archive__footer p + p { font-size:12px; }
 }
+
+/* Keep a long image strip inside the viewer instead of widening its grid track. */
+.lecture-accordion-enabled .lecture-gallery { grid-template-columns:minmax(0,1fr); }
+.lecture-accordion-enabled .lecture-gallery__panel { min-width:0; }

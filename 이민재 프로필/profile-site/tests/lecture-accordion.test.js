@@ -263,3 +263,10 @@ test('the pre-correction 65-record draft keeps Live out of the accordion and hon
   assert.equal(storage.get('profileDraft.contentV1'), serialized);
   assert.equal(storage.get('profileDraft.lectureCuration'), storedCuration);
 });
+
+
+test('the all-image gallery constrains its grid track and panel on narrow viewports', () => {
+  const css = fs.readFileSync(path.join(root, 'lecture-accordion.css'), 'utf8');
+  assert.match(css, /\.lecture-accordion-enabled \.lecture-gallery \{ grid-template-columns:minmax\(0,1fr\); \}/);
+  assert.match(css, /\.lecture-accordion-enabled \.lecture-gallery__panel \{ min-width:0; \}/);
+});
