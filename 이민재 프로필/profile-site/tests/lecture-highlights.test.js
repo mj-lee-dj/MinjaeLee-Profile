@@ -15,7 +15,7 @@ test('highlights use exactly the existing five selected records in saved order',
   const selected = model.selectedHighlights(data, data.lectureCuration);
   assert.deepEqual(ids(selected), data.lectureCuration.highlights);
   assert.equal(selected.length, 5);
-  assert.deepEqual(ids(selected), ['l_mskiwlabhgr9u', 'l_mr29yai68xvad', 'l_mqcuqz7aplqgo', 'l6', 'lectures_mt5sy7fr']);
+  assert.deepEqual(ids(selected), ['lectures_mt5sy7fr', 'l_mr29yai68xvad', 'lectures_20261007_canva_korea', 'l_mskip8tt41oij', 'l_mskifjabnr1q2']);
   selected.forEach(item => assert.ok(item.images.length > 0));
 });
 

@@ -1760,11 +1760,11 @@ const profileData = {
   ],
   "lectureCuration": {
     "highlights": [
-      "l_mskiwlabhgr9u",
+      "lectures_mt5sy7fr",
       "l_mr29yai68xvad",
-      "l_mqcuqz7aplqgo",
-      "l6",
-      "lectures_mt5sy7fr"
+      "lectures_20261007_canva_korea",
+      "l_mskip8tt41oij",
+      "l_mskifjabnr1q2"
     ],
     "hidden": [],
     "label": "HIGHLIGHTS"

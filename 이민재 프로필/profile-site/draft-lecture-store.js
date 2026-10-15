@@ -1,14 +1,29 @@
 (() => {
   const key = 'profileDraft.lectureCuration';
   const defaults = [
-    'l_mskiwlabhgr9u',
+    'lectures_mt5sy7fr',
     'l_mr29yai68xvad',
-    'l_mqcuqz7aplqgo',
-    'l6',
-    'l_mls8mo9epkzye',
+    'lectures_20261007_canva_korea',
+    'l_mskip8tt41oij',
+    'l_mskifjabnr1q2',
   ];
   const defaultLabel = 'HIGHLIGHTS';
   const sourceCuration = profileData.lectureCuration && typeof profileData.lectureCuration === 'object' ? profileData.lectureCuration : null;
+  const selectionCorrectionId = '2026-10-selected-lecture-highlights';
+  const previousSelections = [
+    ['l_mskiwlabhgr9u', 'l_mr29yai68xvad', 'l_mqcuqz7aplqgo', 'l6', 'lectures_mt5sy7fr'],
+    ['l_mskiwlabhgr9u', 'l_mr29yai68xvad', 'l_mqcuqz7aplqgo', 'l6', 'l_mls8mo9epkzye'],
+  ];
+  const sameSelection = (left, right) => Array.isArray(left) && left.length === right.length && left.every((id, index) => id === right[index]);
+  const correctionPublished = () => sameSelection(sourceCuration?.highlights, defaults);
+
+  function reconcilePublishedSelection(candidate) {
+    if (!correctionPublished() || (Array.isArray(candidate?.curationMigrationIds) && candidate.curationMigrationIds.includes(selectionCorrectionId))) return candidate;
+    // Only replace the two known old defaults, never a customized selection,
+    // hidden list or label. Reading a public page must not write local storage.
+    if (!previousSelections.some((ids) => sameSelection(candidate?.highlights, ids))) return candidate;
+    return { ...candidate, highlights: [...sourceCuration.highlights] };
+  }
 
   function normalize(candidate, fill = true) {
     const lectures = profileData.lectures || [];
@@ -40,7 +55,7 @@
     }
     if (!stored) return normalize(sourceCuration);
     try {
-      return normalize(JSON.parse(stored));
+      return normalize(reconcilePublishedSelection(JSON.parse(stored)));
     } catch (error) {
       try {
         localStorage.removeItem(key);
@@ -55,7 +70,10 @@
   function save(candidate) {
     const value = normalize(candidate);
     try {
-      localStorage.setItem(key, JSON.stringify(value));
+      // Keep migration bookkeeping local, outside the public curation payload.
+      // A later explicit selection, including an old default, must stay chosen.
+      const stored = correctionPublished() ? { ...value, curationMigrationIds: [selectionCorrectionId] } : value;
+      localStorage.setItem(key, JSON.stringify(stored));
     } catch (error) {
       if (error?.name !== 'SecurityError') console.warn('강의 큐레이션 초안을 저장하지 못했습니다.', error);
       return null;
