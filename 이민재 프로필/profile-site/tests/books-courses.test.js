@@ -34,6 +34,30 @@ const expectedCourses = [
     images: ['uploads/5597b32125de.png'], image: 'uploads/5597b32125de.png', visible: true,
   },
 ];
+const defaultCourseTitleCover = 'uploads/b51a3fa17ffa.png';
+
+// These are in-memory test fixtures only. Never add placeholder records to the
+// published feeds just to exercise a second or third grid row.
+function expandedCollections(count) {
+  const data = structuredClone(published);
+  data.publications = Array.from({ length: count }, (_, index) => ({
+    ...structuredClone(published.publications[index % published.publications.length]),
+    id: `local_test_book_${index + 1}`,
+    title: `테스트 책 ${index + 1}: 긴 제목도 생략 없이 끝까지 보여야 합니다`,
+    link: `https://example.test/books/${index + 1}`,
+    images: ['uploads/b51a3fa17ffa.png'], image: 'uploads/b51a3fa17ffa.png',
+    visible: true,
+  }));
+  data.onlineCourses = Array.from({ length: count }, (_, index) => ({
+    ...structuredClone(published.onlineCourses[index % published.onlineCourses.length]),
+    id: `local_test_course_${index + 1}`,
+    title: `테스트 온라인 과정 ${index + 1}: 긴 제목과 연수 정보를 모두 표시합니다`,
+    platform: `테스트 연수원 ${index + 1}`, credit: `${index + 1}학점`,
+    link: `https://example.test/courses/${index + 1}`,
+    visible: true,
+  }));
+  return data;
+}
 
 // Exercise the real DOMContentLoaded callback. This minimal DOM only supplies the
 // nodes used by the renderer; browser layout and actual navigation need browser QA.
@@ -208,7 +232,7 @@ test('books render full visible titles, the same cover URLs and the same publish
   assert.equal(nodes.get('booksCountLabel').textContent, '/ 04');
 });
 
-test('every course is a single whole-card link containing its original image, title, provider, credit and CTA', () => {
+test('every course has one whole-card link with its intended cover above the full title, provider, credit and inline arrow', () => {
   const { courses, nodes } = render();
   const cards = byClass(courses, 'course-card');
   assert.equal(cards.length, 3);
@@ -220,21 +244,107 @@ test('every course is a single whole-card link containing its original image, ti
     assert.equal(byTag(card, 'a').length, 1, 'no separate image or CTA anchors');
     assertExternalLink(link, expected.link);
     const media = one(byClass(link, 'course-card__media'), 'media belongs to link');
-    const image = one(byTag(media, 'img'), 'one original thumbnail');
-    assert.equal(image.attrs.src, expected.image);
+    const image = one(byTag(media, 'img'), 'one course cover');
+    assert.equal(image.attrs.src, expected.id === 'oc_3' ? defaultCourseTitleCover : expected.image);
     assert.ok(image.attrs.alt.includes(expected.title));
     assert.equal(image.attrs.loading, 'lazy');
     assert.equal(text(one(byClass(link, 'course-card__title'), 'title belongs to link')), expected.title);
     assert.equal(text(one(byClass(link, 'course-card__provider'), 'provider belongs to link')), expected.platform);
     assert.equal(text(one(byClass(link, 'course-card__credit'), 'credit belongs to link')), expected.credit);
     const cta = one(byClass(link, 'course-card__cta'), 'CTA belongs to link');
-    assert.match(text(cta), /과정 보기/);
     assert.match(text(cta), /↗/);
     assert.notEqual(cta.tag, 'a');
+    assert.equal(cta.attrs['aria-hidden'], 'true', 'decorative arrow adds no duplicate accessible label');
+    assert.ok(hasClass(cta.parent, 'course-card__meta'), 'small arrow shares the metadata line');
+    assert.doesNotMatch(text(link), /과정 보기/, 'no separate CTA row repeats the whole-card action');
+    const content = one(byClass(link, 'course-card__content'), 'one course text area');
+    assert.deepEqual(link.children.filter((child) => typeof child !== 'string'), [media, content],
+      'natural reading order places the full-width cover before all text and metadata');
   });
   assert.equal(nodes.get('courseCount').textContent, '3과정');
   assert.equal(nodes.get('coursesCountLabel').textContent, '/ 03');
 });
+
+test('only the untouched oc_3 intro/title image pair uses its existing title-slide cover', () => {
+  const intro = expectedCourses[0].image;
+  const cases = [
+    { label: 'untouched published record', patch: {}, expected: defaultCourseTitleCover },
+    { label: 'legacy image field omitted', patch: { image: undefined }, expected: defaultCourseTitleCover },
+    { label: 'same gallery on another record', patch: { id: 'local_test_other_course' }, expected: intro },
+    { label: 'title cover intentionally first', patch: { images: [defaultCourseTitleCover, intro], image: defaultCourseTitleCover }, expected: defaultCourseTitleCover },
+    { label: 'intentionally selected intro only', patch: { images: [intro], image: intro }, expected: intro },
+    { label: 'replacement cover', patch: { images: ['uploads/local-cover.png'], image: 'uploads/local-cover.png' }, expected: 'uploads/local-cover.png' },
+    { label: 'custom cover before original gallery', patch: { images: ['uploads/custom-first.png', intro, defaultCourseTitleCover], image: 'uploads/custom-first.png' }, expected: 'uploads/custom-first.png' },
+    { label: 'expanded gallery is not the untouched default', patch: { images: [intro, defaultCourseTitleCover, 'uploads/custom-third.png'] }, expected: intro },
+    { label: 'image-only legacy replacement', patch: { images: [], image: 'uploads/custom-image-field.png' }, expected: 'uploads/custom-image-field.png' },
+    { label: 'conflicting legacy field disables the special case', patch: { image: 'uploads/custom-image-field.png' }, expected: intro },
+    { label: 'cleared image choice', patch: { images: [], image: '' }, expected: undefined },
+  ];
+  for (const { label, patch, expected } of cases) {
+    const data = structuredClone(published);
+    data.onlineCourses = [{ ...data.onlineCourses[0], ...patch }];
+    const { courses } = render(data);
+    const images = byTag(courses, 'img');
+    assert.equal(images.length, expected ? 1 : 0, label);
+    assert.equal(images[0]?.attrs.src, expected, label);
+  }
+});
+
+test('oc_3 local-admin cover choices remain authoritative and rendering never rewrites the saved draft', () => {
+  const initial = render(published, { loadStore: true });
+  const choices = [
+    ['uploads/local-admin-cover.png'],
+    ['uploads/local-admin-cover.png', ...expectedCourses[0].images],
+    [defaultCourseTitleCover, expectedCourses[0].image],
+    [expectedCourses[0].image],
+    [],
+  ];
+  for (const images of choices) {
+    const draft = plain(initial.context.window.ProfileContentStore.state);
+    const course = draft.onlineCourses.find((item) => item.id === 'oc_3');
+    Object.assign(course, { images, image: images[0] || '' });
+    const serialized = JSON.stringify(draft);
+    const storage = new Map([['profileDraft.contentV1', serialized]]);
+    const { courses } = render(published, { storage, loadStore: true });
+    const card = byClass(courses, 'course-card')[0];
+    const covers = byTag(card, 'img');
+    assert.equal(covers.length, images.length ? 1 : 0);
+    assert.equal(covers[0]?.attrs.src, images[0], `saved choice: ${images.join(', ') || 'no image'}`);
+    assert.equal(storage.get('profileDraft.contentV1'), serialized, 'cover rendering does not migrate or overwrite admin choices');
+  }
+});
+
+for (const count of [4, 5, 8, 9, 12]) {
+  test(`${count} local fixture books and courses all render in order without a more/filter/collapse control`, () => {
+    const data = expandedCollections(count);
+    const snapshot = JSON.stringify(data);
+    for (const loadStore of [false, true]) {
+      const { books, courses, nodes } = render(data, { loadStore });
+      for (const [tree, records, prefix] of [[books, data.publications, 'book'], [courses, data.onlineCourses, 'course']]) {
+        const cards = byClass(tree, `${prefix}-card`);
+        assert.equal(cards.length, count, `${prefix}: every record survives, including incomplete final rows`);
+        assert.deepEqual(titleTexts(tree, `${prefix}-card__title`), records.map((item) => item.title));
+        cards.forEach((card, index) => {
+          assertExternalLink(one(byTag(card, 'a'), 'one destination per card'), records[index].link);
+          for (const node of [card, one(byClass(card, `${prefix}-card__title`), 'one full title')]) {
+            assert.ok(!Object.hasOwn(node.attrs, 'hidden'));
+            assert.notEqual(node.attrs['aria-hidden'], 'true');
+            assert.doesNotMatch(node.attrs.style || '', /display\s*:\s*none|visibility\s*:\s*hidden/i);
+          }
+        });
+        for (const tag of ['button', 'input', 'select', 'details', 'summary']) {
+          assert.equal(byTag(tree, tag).length, 0, `${prefix}: no ${tag} needed to see the remaining records`);
+        }
+      }
+      assert.equal(nodes.get('bookCount').textContent, `${count}권`);
+      assert.equal(nodes.get('courseCount').textContent, `${count}과정`);
+      assert.equal(nodes.get('booksCountLabel').textContent, `/ ${String(count).padStart(2, '0')}`);
+      assert.equal(nodes.get('coursesCountLabel').textContent, `/ ${String(count).padStart(2, '0')}`);
+    }
+    assert.equal(JSON.stringify(data), snapshot, 'synthetic fixtures remain isolated and unchanged');
+    assert.deepEqual(JSON.parse(read('data_v3.json')), published, 'published JSON was not changed for a layout test');
+  });
+}
 
 test('explicit visibility flags are honored before rendering and counting', () => {
   const data = structuredClone(published);
@@ -390,45 +500,78 @@ for (const file of ['index.html', 'draft-v2.html']) {
     const sheets = byTag(tree, 'link').filter((node) => node.attrs.rel === 'stylesheet').map((node) => node.attrs.href.split('?')[0]);
     assert.equal(sheets.filter((href) => href === 'books-courses.css').length, 1);
     assert.ok(sheets.indexOf('books-courses.css') > sheets.indexOf('editorial-v4.css'), 'scoped overrides load after the legacy stylesheet');
-    assert.equal(byTag(books, 'input').length, 0, 'no search added');
-    assert.equal(byTag(books, 'button').length, 0, 'no link-copy controls added');
+    for (const tag of ['input', 'select', 'button', 'details', 'summary']) {
+      assert.equal(byTag(books, tag).length, 0, `no ${tag} for search, filtering, more, or collapse`);
+    }
   });
 }
 
-test('scoped CSS preserves four desktop/two mobile books and three desktop course columns', () => {
+test('scoped CSS uses fixed four-column desktop grids and lets additional records create new rows', () => {
   const rules = cssRules(read('books-courses.css'));
   assert.ok(rules.length > 0);
   rules.forEach((rule) => rule.selector.split(',').forEach((selector) => {
     assert.match(selector, /#books\b|\.works\b|\.course-collection\b/, `scoped selector: ${selector}`);
   }));
-  assert.equal(compact(styles(rules, 'book-grid', 1280)['grid-template-columns']), 'repeat(4,minmax(0,1fr))');
-  for (const width of [320, 390, 480]) {
+  for (const width of [901, 1024, 1280, 1440, 1920]) {
+    for (const grid of ['book-grid', 'course-grid']) {
+      const layout = styles(rules, grid, width);
+      assert.equal(compact(layout['grid-template-columns']), 'repeat(4,minmax(0,1fr))', `${width}px ${grid}`);
+      assert.ok(!layout['grid-auto-flow'] || layout['grid-auto-flow'] === 'row', `${grid} fills the next row`);
+      assert.ok(!layout['grid-template-rows'] || /^(none|auto)$/.test(layout['grid-template-rows']), `${grid} has no fixed row limit`);
+      assert.ok(!layout['max-height'] || layout['max-height'] === 'none', `${grid} is not height-capped`);
+      assert.ok(!layout.height || layout.height === 'auto', `${grid} can grow with the item count`);
+      assert.ok(!layout.overflow || /^(visible|initial|unset)$/.test(layout.overflow), `${grid} does not crop or scroll extra rows`);
+      assert.notEqual(layout['overflow-y'], 'hidden');
+      assert.notEqual(layout['overflow-y'], 'clip');
+    }
+  }
+  for (const width of [320, 390, 480, 640]) {
     assert.equal(compact(styles(rules, 'book-grid', width)['grid-template-columns']), 'repeat(2,minmax(0,1fr))', `${width}px books`);
   }
-  assert.equal(compact(styles(rules, 'course-grid', 1280)['grid-template-columns']), 'repeat(3,minmax(0,1fr))');
+  for (const width of [641, 768, 900]) {
+    for (const grid of ['book-grid', 'course-grid']) {
+      assert.equal(compact(styles(rules, grid, width)['grid-template-columns']), 'repeat(2,minmax(0,1fr))', `${width}px ${grid} tablet columns`);
+    }
+  }
+  for (const rule of rules) {
+    if (/\.(?:book|course)-card(?![\w-])/.test(rule.selector)) {
+      assert.notEqual(rule.declarations.display, 'none', `no hidden cards: ${rule.selector}`);
+      assert.notEqual(rule.declarations.visibility, 'hidden', `no hidden cards: ${rule.selector}`);
+    }
+  }
 });
 
-test('mobile courses use a single-column list with horizontal media-and-content rows', () => {
+test('mobile courses use one column with a large 16:9 cover stacked above their text', () => {
   const rules = cssRules(read('books-courses.css'));
-  for (const width of [320, 390, 480]) {
+  for (const width of [320, 390, 480, 640]) {
     assert.match(compact(styles(rules, 'course-grid', width)['grid-template-columns']), /^(?:1fr|minmax\(0,1fr\)|repeat\(1,minmax\(0,1fr\)\))$/);
     const link = styles(rules, 'course-card__link', width);
     const columns = compact(link['grid-template-columns']);
-    const horizontalGrid = link.display === 'grid' && /\)minmax\(0,1fr\)$/.test(columns);
-    const horizontalFlex = link.display === 'flex' && (!link['flex-direction'] || link['flex-direction'] === 'row');
-    assert.ok(horizontalGrid || horizontalFlex, `${width}px mobile course link needs two horizontal areas`);
+    const stackedGrid = link.display === 'grid' && /^(?:1fr|minmax\(0,1fr\)|repeat\(1,minmax\(0,1fr\)\))$/.test(columns);
+    const stackedFlex = link.display === 'flex' && link['flex-direction'] === 'column';
+    const stackedBlock = link.display === 'block';
+    assert.ok(stackedGrid || stackedFlex || stackedBlock, `${width}px course cover must stack above the text`);
+    const media = styles(rules, 'course-card__media', width);
+    assert.equal(compact(media['aspect-ratio']), '16/9', `${width}px cover keeps the complete slide ratio`);
+    assert.equal(media.width, '100%', `${width}px cover fills the card instead of becoming a side thumbnail`);
+    assert.ok(!media['max-width'] || /^(none|100%)$/.test(media['max-width']), 'no small thumbnail width cap');
+    assert.ok(!media.order || /^(0|initial|unset)$/.test(media.order), 'image retains the first reading position');
   }
 });
 
 test('titles stay fully readable, images use contain, and keyboard focus is visible', () => {
   const css = read('books-courses.css');
   const rules = cssRules(css);
-  for (const width of [390, 1280]) {
+  for (const width of [320, 390, 640, 768, 901, 1280]) {
     for (const name of ['book-card__title', 'course-card__title']) {
       const title = styles(rules, name, width);
       assert.notEqual(title.display, 'none');
       assert.notEqual(title['text-overflow'], 'ellipsis');
       assert.notEqual(title['white-space'], 'nowrap');
+      assert.ok(!title['max-height'] || title['max-height'] === 'none', `${width}px ${name} is not height-capped`);
+      assert.ok(!title.height || title.height === 'auto', `${width}px ${name} grows with the full title`);
+      assert.notEqual(title.overflow, 'hidden');
+      assert.notEqual(title.overflow, 'clip');
       assert.ok(!title['-webkit-line-clamp'] || /^(none|unset|initial)$/.test(title['-webkit-line-clamp']));
       assert.ok(!title['line-clamp'] || /^(none|unset|initial)$/.test(title['line-clamp']));
     }

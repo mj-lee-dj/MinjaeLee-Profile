@@ -9,6 +9,18 @@ document.addEventListener('DOMContentLoaded', () => {
   const externalUrl = (value) => /^https?:\/\//i.test(String(value ?? '')) ? String(value) : '';
   const assetUrl = (value) => { const candidate = String(value ?? ''); return candidate.startsWith('uploads/') || candidate.startsWith('assets/') || candidate.startsWith('https://') || candidate.startsWith('http://') || ['data:image/png;base64,', 'data:image/jpeg;base64,', 'data:image/webp;base64,', 'data:image/gif;base64,'].some((prefix) => candidate.startsWith(prefix)) ? candidate : ''; };
   const itemImage = (item) => assetUrl(item?.images?.[0] || item?.image || '');
+  const courseCover = (course) => {
+    const image = itemImage(course);
+    // Prefer the existing title cover only for this unchanged legacy image set.
+    // New or reordered administrator images retain their chosen cover.
+    const introduction = 'uploads/0a7f878c8f3b.png';
+    const titleCover = 'uploads/b51a3fa17ffa.png';
+    const legacyCover = course.id === 'oc_3' && image === introduction
+      && (!course.image || course.image === introduction)
+      && course.images?.length === 2
+      && course.images[0] === introduction && course.images[1] === titleCover;
+    return legacyCover ? titleCover : image;
+  };
   const itemLink = (item) => externalUrl(item?.link);
   const visible = (items) => (items || []).filter((item) => item.visible !== false);
   const mediaAction = () => '<span class="media-action" aria-hidden="true">OPEN <span>↗</span></span>';
@@ -52,14 +64,14 @@ document.addEventListener('DOMContentLoaded', () => {
       const title = `<h3 class="book-card__title">${escapeHtml(book.title)}</h3>`;
       return `<article class="book-card reveal-block">${linkWrap(book, cover + title, 'book-card__link')}<p class="book-card__meta">${escapeHtml([book.publisher, book.year].filter(Boolean).join(' · '))}</p></article>`;
     }).join('');
-    document.getElementById('courseGrid').innerHTML = courses.map((course, index) => {
-      const image = itemImage(course);
+    document.getElementById('courseGrid').innerHTML = courses.map((course) => {
+      const image = courseCover(course);
       const picture = image ? `<img src="${escapeHtml(image)}" width="1280" height="720" alt="${escapeHtml(course.title)} 연수 화면" loading="lazy">` : '';
       const media = `<div class="course-card__media media-frame media-frame--landscape">${picture}</div>`;
       const credit = course.credit ? `<span class="course-card__credit">${escapeHtml(course.credit)}</span>` : '';
-      const detail = `<div class="course-card__content"><h4 class="course-card__title">${escapeHtml(course.title)}</h4><p class="course-card__meta"><span class="course-card__provider">${escapeHtml(course.platform)}</span>${credit}</p></div>`;
-      const action = itemLink(course) ? '<span class="course-card__cta">과정 보기 <span aria-hidden="true">↗</span></span>' : '';
-      return `<article class="course-card reveal-block">${linkWrap(course, media + detail + action, 'course-card__link')}</article>`;
+      const action = itemLink(course) ? '<span class="course-card__cta" aria-hidden="true">↗</span>' : '';
+      const detail = `<div class="course-card__content"><h4 class="course-card__title">${escapeHtml(course.title)}</h4><p class="course-card__meta"><span class="course-card__provider">${escapeHtml(course.platform)}</span>${credit}${action}</p></div>`;
+      return `<article class="course-card reveal-block">${linkWrap(course, media + detail, 'course-card__link')}</article>`;
     }).join('');
   }
 
