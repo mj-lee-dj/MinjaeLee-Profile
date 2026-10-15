@@ -37,7 +37,7 @@
     const archive = document.getElementById('lectureAccordion');
     if (!archive) return;
     const mobile = matchMedia('(max-width: 640px)');
-    const state = { topic: '', pages: {}, highlight: 0 };
+    const state = { topic: '', pages: {} };
     const escape = (value) => String(value ?? '').replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#039;');
     const pad = (value) => String(value).padStart(2, '0');
     const asset = (value) => /^(?:uploads\/|assets\/|https?:\/\/|data:image\/(?:png|jpeg|webp|gif);base64,)/i.test(String(value || '')) ? String(value) : '';
@@ -46,41 +46,22 @@
     const hidden = () => window.ProfileLectureStore.load().hidden;
     const pageSize = () => mobile.matches ? 2 : 4;
     const highlightSection = document.getElementById('lectureHighlights');
-    const highlightPrevious = document.getElementById('lectureHighlightPrev');
-    const highlightNext = document.getElementById('lectureHighlightNext');
+    const highlightGrid = document.getElementById('lectureHighlightGrid');
+    let highlightMarkup = '';
     function renderHighlights() {
       const curation = window.ProfileLectureStore.load();
       const records = selectedHighlights(profileData, curation);
       highlightSection.hidden = !records.length;
-      if (!records.length) return;
-      state.highlight = Math.min(Math.max(0, state.highlight), records.length - 1);
-      const lecture = records[state.highlight];
-      const gallery = images(lecture);
       document.getElementById('lectureHighlightsHeading').textContent = curation.label || 'HIGHLIGHTS';
       document.getElementById('lectureHighlightsScope').textContent = `대표 강의 ${records.length}선 · 전체 ${summary(profileData, curation.hidden).total}개 기록 중`;
-      document.getElementById('lectureHighlightsPosition').textContent = `${pad(state.highlight + 1)} / ${pad(records.length)}`;
-      const feature = document.getElementById('lectureHighlightFeature');
-      feature.setAttribute('aria-label', `${records.length}개 중 ${state.highlight + 1}번째 대표 강의`);
-      const cover = gallery.length ? `<span class="lecture-highlights__image"><img src="${escape(gallery[0])}" alt="" width="1600" height="900"><span class="lecture-highlights__image-count">${gallery.length}장</span></span>` : '';
-      feature.innerHTML = `<button class="lecture-highlights__feature${gallery.length ? '' : ' is-text-only'}" type="button" data-highlight-id="${escape(lecture.id)}" aria-label="${escape(lecture.title)} 강의 자료 보기">${cover}<span class="lecture-highlights__copy"><span class="lecture-highlights__meta">${escape(lecture.year)} · ${escape(topicOf(lecture))}</span><span class="lecture-highlights__title">${escape(lecture.title)}</span><span class="lecture-highlights__org">${escape(lecture.org)}</span><span class="lecture-highlights__link">강의 자료 보기</span></span></button>`;
-      highlightPrevious.disabled = state.highlight === 0;
-      highlightNext.disabled = state.highlight === records.length - 1;
+      const markup = records.map((lecture) => {
+        const gallery = images(lecture);
+        const cover = gallery.length ? `<span class="lecture-highlights__image"><img src="${escape(gallery[0])}" alt="" width="1600" height="900" loading="lazy"><span class="lecture-highlights__image-count">${gallery.length}장</span></span>` : '';
+        return `<li><button class="lecture-highlights__feature${gallery.length ? '' : ' is-text-only'}" type="button" data-highlight-id="${escape(lecture.id)}" aria-label="${escape(lecture.title)} 강의 자료 보기">${cover}<span class="lecture-highlights__copy"><span class="lecture-highlights__meta">${escape(lecture.year)} · ${escape(topicOf(lecture))}</span><span class="lecture-highlights__title">${escape(lecture.title)}</span><span class="lecture-highlights__org">${escape(lecture.org)}</span><span class="lecture-highlights__link">강의 자료 보기</span></span></button></li>`;
+      }).join('');
+      // Category paging and viewport changes must not replace focused gallery triggers.
+      if (markup !== highlightMarkup) { highlightGrid.innerHTML = markup; highlightMarkup = markup; }
     }
-    function moveHighlight(delta) {
-      const focused = document.activeElement;
-      state.highlight += delta;
-      renderHighlights();
-      if (focused === highlightNext && highlightNext.disabled) highlightPrevious.focus({ preventScroll: true });
-      if (focused === highlightPrevious && highlightPrevious.disabled) highlightNext.focus({ preventScroll: true });
-    }
-    highlightPrevious.addEventListener('click', () => moveHighlight(-1));
-    highlightNext.addEventListener('click', () => moveHighlight(1));
-    highlightSection.addEventListener('keydown', (event) => {
-      if (!['ArrowLeft', 'ArrowRight'].includes(event.key)) return;
-      event.preventDefault();
-      const control = event.key === 'ArrowLeft' ? highlightPrevious : highlightNext;
-      if (!control.disabled) { control.focus({ preventScroll: true }); moveHighlight(event.key === 'ArrowLeft' ? -1 : 1); }
-    });
     highlightSection.addEventListener('click', (event) => {
       const trigger = event.target.closest('[data-highlight-id]');
       if (!trigger) return;

@@ -36,13 +36,15 @@ test('highlight selection leaves the archive total and all existing media untouc
   assert.equal(model.summary(data).total, 64);
 });
 
-test('highlights precede the full category archive and expose distinct accessible controls', () => {
+test('all highlights precede the category archive as a normal list without carousel controls', () => {
   const html = read('index.html');
   assert.ok(html.indexOf('id="lectureHighlights"') < html.indexOf('id="lectureArchiveCount"'));
   assert.ok(html.indexOf('id="lectureArchiveCount"') < html.indexOf('id="lectureAccordion"'));
-  assert.match(html, /aria-label="이전 대표 강의"/);
-  assert.match(html, /aria-label="다음 대표 강의"/);
-  assert.match(html, /id="lectureHighlightsPosition" aria-live="polite"/);
+  assert.match(html, /<ol class="lecture-highlights__grid" id="lectureHighlightGrid" aria-label="대표 강의"><\/ol>/);
+  assert.doesNotMatch(html, /lectureHighlightPrev|lectureHighlightNext|lectureHighlightsPosition|aria-roledescription="slide"/);
+  assert.doesNotMatch(read('lecture-accordion.js'), /moveHighlight|state\.highlight|highlightPrevious|highlightNext/);
+  assert.match(read('lecture-accordion.js'), /const markup = records\.map\(\(lecture\) =>/);
+  assert.match(read('lecture-accordion.js'), /if \(markup !== highlightMarkup\)/);
   assert.match(read('lecture-accordion.css'), /\.lecture-highlights__image img \{[^}]*object-fit:contain/);
   assert.doesNotMatch(read('lecture-accordion.js'), /setInterval\s*\(/);
 });
