@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('heroStatement').innerHTML = multilineHtml(personal.statement || '기술을 고르는 기준은\n언제나 교실입니다.');
     document.getElementById('heroPortrait').src = assetUrl(personal.draftPhoto) || 'assets/profile-2026.png';
     document.getElementById('heroPortrait').alt = `${personal.name || '이민재'} 프로필 사진`;
-    document.getElementById('lectureCount').textContent = personal.lectureCount || '150+';
+    document.getElementById('lectureCount').textContent = personal.lectureCount || '100+';
     [['heroInstagram', contact.instagram], ['contactInstagram', contact.instagram]].forEach(([id, href]) => document.getElementById(id).href = externalUrl(href));
     document.getElementById('heroEmail').href = `mailto:${contact.email || ''}`;
     document.getElementById('contactEmail').href = `mailto:${contact.email || ''}`;

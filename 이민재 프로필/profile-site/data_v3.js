@@ -181,7 +181,7 @@ const profileData = {
     "aboutTitle": "도구보다 맥락을,\n기술 너머 아이의 가능성을 켜다",
     "statement": "기술을 고르는 기준은\n언제나 교실입니다.",
     "draftPhoto": "assets/profile-2026.png",
-    "lectureCount": "150+"
+    "lectureCount": "100+"
   },
   "expertise": [
     "Google Workspace for Education",

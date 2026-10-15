@@ -170,6 +170,14 @@
     return state;
   }
 
+  function reconcileLectureCountCorrection(state) {
+    const id = '2026-10-hero-lecture-count';
+    if (state.contentMigrationIds.includes(id) || sourcePersonal.lectureCount !== '100+') return state;
+    if (state.personal.lectureCount === '150+') state.personal.lectureCount = '100+';
+    state.contentMigrationIds.push(id);
+    return state;
+  }
+
   function defaultState() {
     const contact = sourcePersonal.contact || {};
     const personal = {
@@ -177,7 +185,7 @@
       nameEn: text(sourcePersonal.nameEn, 100) || 'Minjae Lee',
       statement: '기술을 고르는 기준은\n언제나 교실입니다.',
       photo: asset(sourcePersonal.draftPhoto) || 'assets/profile-2026.png',
-      lectureCount: '150+',
+      lectureCount: text(sourcePersonal.lectureCount, 20) || '100+',
       email: text(contact.email, 320),
       instagram: url(contact.instagram),
     };
@@ -189,7 +197,7 @@
         : section === 'youtubeVideos' ? orderDefaultVideos(source) : source;
       state[section] = ordered.map((item, index) => normalizeItem(section, item, index)).filter(Boolean);
     });
-    return reconcileLectureCategoryCorrection(reconcileMediaCorrection(state));
+    return reconcileLectureCountCorrection(reconcileLectureCategoryCorrection(reconcileMediaCorrection(state)));
   }
 
   function normalize(candidate) {
@@ -212,7 +220,7 @@
       const source = Array.isArray(candidate[section]) ? candidate[section] : fallback[section];
       state[section] = source.map((item, index) => normalizeItem(section, item, index)).filter(Boolean);
     });
-    return reconcileLectureCategoryCorrection(reconcileMediaCorrection(state));
+    return reconcileLectureCountCorrection(reconcileLectureCategoryCorrection(reconcileMediaCorrection(state)));
   }
 
   function merge(base, candidate) {
