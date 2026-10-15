@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="editorial-final.css">
   <link rel="stylesheet" href="editorial-v2.css">
   <link rel="stylesheet" href="editorial-v3.css">
+  <link rel="stylesheet" href="books-courses.css?v=1792032900000">
 </head>
 <body class="editorial-site">
   <a class="skip-link" href="#main">본문으로 바로가기</a>
@@ -60,8 +61,11 @@
       <div class="editorial-shell">
         <div class="section-heading reveal-block"><p class="eyebrow">Published work &amp; online courses</p><h2 class="section-title" id="booksHeading">BOOKS <span class="section-title__count" id="booksCountLabel">/ 04</span></h2></div>
         <div class="book-grid" id="bookGrid"></div>
-        <div class="course-heading reveal-block"><p class="eyebrow">Recorded lectures</p><h3 class="section-title">ONLINE COURSES <span class="section-title__count" id="coursesCountLabel">/ 03</span></h3></div>
-        <div class="course-grid" id="courseGrid"></div>
+        <div class="course-collection" role="region" aria-labelledby="coursesHeading">
+          <div class="course-heading reveal-block"><p class="eyebrow">Recorded lectures</p><h3 class="section-title" id="coursesHeading">ONLINE COURSES <span class="section-title__count" id="coursesCountLabel">/ 03</span></h3></div>
+          <div class="course-grid" id="courseGrid"></div>
+          <p class="course-collection__hint">과정 보기를 누르면 연수원 안내로 이동합니다. <span aria-hidden="true">↗</span></p>
+        </div>
       </div>
     </section>
     <section class="video-section editorial-section" id="videos" aria-labelledby="videoHeading">
@@ -113,7 +117,7 @@
   <script src="draft-data.js"></script>
   <script src="draft-content-store.js"></script>
   <script src="draft-lecture-store.js"></script>
-  <script src="draft-v2.js"></script>
+  <script src="draft-v2.js?v=1792032900000"></script>
   <script src="draft-v2-media.js"></script>
 </body>
 </html>

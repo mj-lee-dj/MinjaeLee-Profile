@@ -49,15 +49,17 @@ document.addEventListener('DOMContentLoaded', () => {
       const cover = image
         ? `<div class="media-frame media-frame--book book-card__cover-image"><img src="${escapeHtml(image)}" width="900" height="1275" alt="${escapeHtml(book.title)} 책 표지" loading="lazy" referrerpolicy="no-referrer"></div>`
         : `<div class="book-card__cover"><span class="book-card__number">${twoDigits(index)}</span><h3 class="book-card__cover-title">${escapeHtml(book.title)}</h3></div>`;
-      return `<article class="book-card reveal-block">${linkWrap(book, itemLink(book) ? cover + mediaAction() : cover, 'book-card__link')}<p class="book-card__meta">${escapeHtml(book.publisher)} · ${escapeHtml(book.year)}</p></article>`;
+      const title = `<h3 class="book-card__title">${escapeHtml(book.title)}</h3>`;
+      return `<article class="book-card reveal-block">${linkWrap(book, cover + title, 'book-card__link')}<p class="book-card__meta">${escapeHtml([book.publisher, book.year].filter(Boolean).join(' · '))}</p></article>`;
     }).join('');
     document.getElementById('courseGrid').innerHTML = courses.map((course, index) => {
       const image = itemImage(course);
       const picture = image ? `<img src="${escapeHtml(image)}" width="1280" height="720" alt="${escapeHtml(course.title)} 연수 화면" loading="lazy">` : '';
-      const media = itemLink(course)
-        ? `<a class="media-frame media-frame--landscape" href="${escapeHtml(itemLink(course))}" target="_blank" rel="noopener">${picture}${mediaAction()}</a>`
-        : `<div class="media-frame media-frame--landscape">${picture}</div>`;
-      return `<article class="course-card reveal-block">${media}<span class="course-card__index">${twoDigits(index)}</span><h4 class="course-card__title">${escapeHtml(course.title)}</h4><p class="course-card__meta">${escapeHtml(course.platform)} · ${escapeHtml(course.credit)}</p></article>`;
+      const media = `<div class="course-card__media media-frame media-frame--landscape">${picture}</div>`;
+      const credit = course.credit ? `<span class="course-card__credit">${escapeHtml(course.credit)}</span>` : '';
+      const detail = `<div class="course-card__content"><h4 class="course-card__title">${escapeHtml(course.title)}</h4><p class="course-card__meta"><span class="course-card__provider">${escapeHtml(course.platform)}</span>${credit}</p></div>`;
+      const action = itemLink(course) ? '<span class="course-card__cta">과정 보기 <span aria-hidden="true">↗</span></span>' : '';
+      return `<article class="course-card reveal-block">${linkWrap(course, media + detail + action, 'course-card__link')}</article>`;
     }).join('');
   }
 
