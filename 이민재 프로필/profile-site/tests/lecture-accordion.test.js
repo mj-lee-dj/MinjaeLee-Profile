@@ -8,7 +8,7 @@ const root = path.join(__dirname, '..');
 const read = (name) => fs.readFileSync(path.join(root, name), 'utf8');
 const published = JSON.parse(read('data_v3.json'));
 const topics = ['AI', 'Google', 'Canva·에듀테크', '교사 업무·학급경영', '학부모·학생 강의', '강사코칭'];
-const counts = [13, 18, 10, 13, 4, 6];
+const counts = [13, 18, 10, 14, 3, 6];
 const oldLiveId = 'lectures_20261013_gemini_notebook_live_1';
 const plain = (value) => JSON.parse(JSON.stringify(value));
 const ids = (items) => Array.from(items, (item) => item.id);

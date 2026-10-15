@@ -170,6 +170,20 @@
     return state;
   }
 
+  function reconcileAssessmentLectureTopic(state) {
+    const id = '2026-10-assessment-lecture-topic';
+    const lectureId = 'l_mqcu97usa7rhx';
+    const topic = '교사 업무·학급경영';
+    if (state.contentMigrationIds.includes(id)) return state;
+    const published = sourceCollections.lectures.find((item) => item.id === lectureId);
+    if (published?.topic !== topic) return state;
+    const item = state.lectures.find((entry) => entry.id === lectureId);
+    // Update only this old topic; retain local edits and intentional deletions.
+    if (item?.topic === '학부모·학생 강의') item.topic = topic;
+    state.contentMigrationIds.push(id);
+    return state;
+  }
+
   function reconcileLectureCountCorrection(state) {
     const id = '2026-10-hero-lecture-count';
     if (state.contentMigrationIds.includes(id) || sourcePersonal.lectureCount !== '100+') return state;
@@ -197,7 +211,7 @@
         : section === 'youtubeVideos' ? orderDefaultVideos(source) : source;
       state[section] = ordered.map((item, index) => normalizeItem(section, item, index)).filter(Boolean);
     });
-    return reconcileLectureCountCorrection(reconcileLectureCategoryCorrection(reconcileMediaCorrection(state)));
+    return reconcileAssessmentLectureTopic(reconcileLectureCountCorrection(reconcileLectureCategoryCorrection(reconcileMediaCorrection(state))));
   }
 
   function normalize(candidate) {
@@ -220,7 +234,7 @@
       const source = Array.isArray(candidate[section]) ? candidate[section] : fallback[section];
       state[section] = source.map((item, index) => normalizeItem(section, item, index)).filter(Boolean);
     });
-    return reconcileLectureCountCorrection(reconcileLectureCategoryCorrection(reconcileMediaCorrection(state)));
+    return reconcileAssessmentLectureTopic(reconcileLectureCountCorrection(reconcileLectureCategoryCorrection(reconcileMediaCorrection(state))));
   }
 
   function merge(base, candidate) {
