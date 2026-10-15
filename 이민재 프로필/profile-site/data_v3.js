@@ -1763,7 +1763,7 @@ const profileData = {
       "lectures_mt5sy7fr",
       "l_mr29yai68xvad",
       "lectures_20261007_canva_korea",
-      "l_mskip8tt41oij",
+      "l_mskirvwkn6cbr",
       "l_mskifjabnr1q2"
     ],
     "hidden": [],

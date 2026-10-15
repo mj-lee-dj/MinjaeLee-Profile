@@ -7,11 +7,12 @@ const root = path.join(__dirname, '..');
 const published = JSON.parse(fs.readFileSync(path.join(root, 'data_v3.json'), 'utf8'));
 const script = fs.readFileSync(path.join(root, 'draft-lecture-store.js'), 'utf8');
 const key = 'profileDraft.lectureCuration';
-const next = ['lectures_mt5sy7fr', 'l_mr29yai68xvad', 'lectures_20261007_canva_korea', 'l_mskip8tt41oij', 'l_mskifjabnr1q2'];
+const next = ['lectures_mt5sy7fr', 'l_mr29yai68xvad', 'lectures_20261007_canva_korea', 'l_mskirvwkn6cbr', 'l_mskifjabnr1q2'];
 const previous = [
   ['l_mskiwlabhgr9u', 'l_mr29yai68xvad', 'l_mqcuqz7aplqgo', 'l6', 'lectures_mt5sy7fr'],
   ['l_mskiwlabhgr9u', 'l_mr29yai68xvad', 'l_mqcuqz7aplqgo', 'l6', 'l_mls8mo9epkzye'],
 ];
+const preceding = ['lectures_mt5sy7fr', 'l_mr29yai68xvad', 'lectures_20261007_canva_korea', 'l_mskip8tt41oij', 'l_mskifjabnr1q2'];
 const plain = value => JSON.parse(JSON.stringify(value));
 function start(candidate, data = published, storage = new Map()) {
   if (candidate !== undefined) storage.set(key, JSON.stringify(candidate));
@@ -78,11 +79,33 @@ test('malformed migration metadata cannot discard local hidden or label edits', 
 
 test('all five target records retain their original gallery images', () => {
   const selected = next.map(id => published.lectures.find(item => item.id === id));
-  assert.deepEqual(selected.map(item => item.images.length), [3, 3, 3, 3, 1]);
+  assert.deepEqual(selected.map(item => item.images.length), [3, 3, 3, 4, 1]);
   assert.equal(selected[2].image, 'uploads/20261007-canva-cover.webp');
-  assert.equal(selected[3].title, '[대전 중등 1정연수] NotebookLM으로 수업 및 학급경영에 날개 달기');
-  assert.equal(selected[3].org, '충남대학교');
+  assert.equal(selected[3].title, '[경남 중등 1정연수] NotebookLM 마스터 클래스');
+  assert.equal(selected[3].org, '경상국립대학교');
   assert.equal(selected[4].topic, '학부모·학생 강의');
   assert.equal(published.lectures.length, 64);
   assert.equal(published.youtubeVideos.length, 18);
+});
+
+test('the preceding published selection switches only its fourth record, with or without the prior marker', () => {
+  for (const curationMigrationIds of [[], ['2026-10-selected-lecture-highlights']]) {
+    const candidate = { highlights: preceding, hidden: ['l6'], label: '내 선택', curationMigrationIds };
+    const { data, storage } = start(candidate);
+    assert.deepEqual(plain(data.lectureCuration), { highlights: next, hidden: ['l6'], label: '내 선택' });
+    assert.equal(storage.get(key), JSON.stringify(candidate));
+  }
+});
+
+test('an intentional old-default save after the previous migration is not mistaken for stale defaults', () => {
+  const candidate = { highlights: previous[0], curationMigrationIds: ['2026-10-selected-lecture-highlights'] };
+  assert.deepEqual(plain(start(candidate).data.lectureCuration.highlights), previous[0]);
+});
+
+test('an explicit later return to the Daejeon selection survives reload', () => {
+  const first = start();
+  first.store.save({ highlights: preceding, hidden: [], label: '다시 선택' });
+  const second = start(undefined, published, first.storage);
+  assert.deepEqual(plain(second.data.lectureCuration.highlights), preceding);
+  assert.ok(JSON.parse(first.storage.get(key)).curationMigrationIds.includes('2026-10-gyeongnam-highlight'));
 });

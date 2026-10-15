@@ -4,12 +4,14 @@
     'lectures_mt5sy7fr',
     'l_mr29yai68xvad',
     'lectures_20261007_canva_korea',
-    'l_mskip8tt41oij',
+    'l_mskirvwkn6cbr',
     'l_mskifjabnr1q2',
   ];
   const defaultLabel = 'HIGHLIGHTS';
   const sourceCuration = profileData.lectureCuration && typeof profileData.lectureCuration === 'object' ? profileData.lectureCuration : null;
   const selectionCorrectionId = '2026-10-selected-lecture-highlights';
+  const gyeongnamCorrectionId = '2026-10-gyeongnam-highlight';
+  const previousPublishedSelection = ['lectures_mt5sy7fr', 'l_mr29yai68xvad', 'lectures_20261007_canva_korea', 'l_mskip8tt41oij', 'l_mskifjabnr1q2'];
   const previousSelections = [
     ['l_mskiwlabhgr9u', 'l_mr29yai68xvad', 'l_mqcuqz7aplqgo', 'l6', 'lectures_mt5sy7fr'],
     ['l_mskiwlabhgr9u', 'l_mr29yai68xvad', 'l_mqcuqz7aplqgo', 'l6', 'l_mls8mo9epkzye'],
@@ -18,10 +20,14 @@
   const correctionPublished = () => sameSelection(sourceCuration?.highlights, defaults);
 
   function reconcilePublishedSelection(candidate) {
-    if (!correctionPublished() || (Array.isArray(candidate?.curationMigrationIds) && candidate.curationMigrationIds.includes(selectionCorrectionId))) return candidate;
-    // Only replace the two known old defaults, never a customized selection,
-    // hidden list or label. Reading a public page must not write local storage.
-    if (!previousSelections.some((ids) => sameSelection(candidate?.highlights, ids))) return candidate;
+    if (!correctionPublished()) return candidate;
+    const applied = Array.isArray(candidate?.curationMigrationIds) ? candidate.curationMigrationIds : [];
+    if (applied.includes(gyeongnamCorrectionId)) return candidate;
+    // Migrate the immediately preceding published set or the untouched legacy
+    // defaults. Respect custom choices and explicit saves after each correction.
+    const priorPublished = sameSelection(candidate?.highlights, previousPublishedSelection);
+    const priorDefaults = !applied.includes(selectionCorrectionId) && previousSelections.some((ids) => sameSelection(candidate?.highlights, ids));
+    if (!priorPublished && !priorDefaults) return candidate;
     return { ...candidate, highlights: [...sourceCuration.highlights] };
   }
 
@@ -72,7 +78,7 @@
     try {
       // Keep migration bookkeeping local, outside the public curation payload.
       // A later explicit selection, including an old default, must stay chosen.
-      const stored = correctionPublished() ? { ...value, curationMigrationIds: [selectionCorrectionId] } : value;
+      const stored = correctionPublished() ? { ...value, curationMigrationIds: [selectionCorrectionId, gyeongnamCorrectionId] } : value;
       localStorage.setItem(key, JSON.stringify(stored));
     } catch (error) {
       if (error?.name !== 'SecurityError') console.warn('강의 큐레이션 초안을 저장하지 못했습니다.', error);

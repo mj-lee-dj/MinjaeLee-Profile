@@ -8,7 +8,7 @@ const root = path.join(__dirname, '..');
 const read = (name) => fs.readFileSync(path.join(root, name), 'utf8');
 const published = JSON.parse(read('data_v3.json'));
 const topics = ['AI', 'Google', 'Canva·에듀테크', '교사 업무·학급경영', '학부모·학생 강의', '강사코칭'];
-const counts = [8, 23, 10, 14, 4, 5];
+const counts = [13, 18, 10, 13, 4, 6];
 const oldLiveId = 'lectures_20261013_gemini_notebook_live_1';
 const plain = (value) => JSON.parse(JSON.stringify(value));
 const ids = (items) => Array.from(items, (item) => item.id);
@@ -111,18 +111,19 @@ test('out-of-range category pages clamp to the first or last page', () => {
     assert.deepEqual(ids(result.items), ids(expected.slice(0, 4)));
   }
   const last = archive.categoryPage(published, 'Google', 999, 4, []);
-  assert.equal(last.page, 5);
-  assert.equal(last.pages, 6);
-  assert.equal(last.start, 21);
-  assert.equal(last.end, 23);
-  assert.deepEqual(ids(last.items), ids(expected.slice(20)));
+  const lastPage = Math.ceil(expected.length / 4) - 1;
+  assert.equal(last.page, lastPage);
+  assert.equal(last.pages, lastPage + 1);
+  assert.equal(last.start, lastPage * 4 + 1);
+  assert.equal(last.end, expected.length);
+  assert.deepEqual(ids(last.items), ids(expected.slice(lastPage * 4)));
 });
 
 test('a short final page reports its actual end and does not borrow from another category', () => {
   const archive = model();
   const expected = published.lectures.filter((item) => item.topic === '강사코칭');
   const last = archive.categoryPage(published, '강사코칭', 1, 4, []);
-  assert.deepEqual(plain(last), { items: [expected[4]], total: 5, page: 1, pages: 2, start: 5, end: 5 });
+  assert.deepEqual(plain(last), { items: expected.slice(4), total: expected.length, page: 1, pages: 2, start: 5, end: expected.length });
 });
 
 test('hidden IDs and visible=false are excluded before counts and paging', () => {
@@ -135,8 +136,8 @@ test('hidden IDs and visible=false are excluded before counts and paging', () =>
   assert.deepEqual(ids(archive.visibleLectures(data, hidden)), ids(expected));
   assert.equal(archive.summary(data, hidden).total, 62);
   const result = archive.categoryPage(data, 'Google', 0, 4, hidden);
-  assert.equal(result.total, 21);
-  assert.equal(result.pages, 6);
+  assert.equal(result.total, google.length - 2);
+  assert.equal(result.pages, Math.ceil((google.length - 2) / 4));
   assert.deepEqual(ids(result.items), ids(google.slice(2, 6)));
 });
 
@@ -258,7 +259,7 @@ test('the pre-correction 65-record draft keeps Live out of the accordion and hon
   assert.equal(visible.length, 63);
   assert.ok(!visible.some((item) => item.id === oldLiveId || item.id === hiddenId));
   assert.ok(data.youtubeVideos.some((item) => item.id === 'youtubeVideos_20261013_gemini_notebook_live_1'));
-  assert.equal(archive.categoryPage(data, 'AI', 0, 4, curation.hidden).total, 8);
+  assert.equal(archive.categoryPage(data, 'AI', 0, 4, curation.hidden).total, 13);
   assert.equal(archive.categoryPage(data, 'Canva·에듀테크', 0, 4, curation.hidden).total, 9);
   assert.equal(storage.get('profileDraft.contentV1'), serialized);
   assert.equal(storage.get('profileDraft.lectureCuration'), storedCuration);
