@@ -1,6 +1,6 @@
 /*
   [Profile Data]
-  Updated at: 2026-10-14T22:22:00.000Z
+  Updated at: 2026-10-15T01:36:29.988Z
 */
 const profileData = {
   "youtubeVideos": [
@@ -21,6 +21,14 @@ const profileData = {
       "image": ""
     },
     {
+      "id": "yt_mlte5to1hm6o0",
+      "visible": true,
+      "title": "Google Classroom - 구글 클래스룸 처음 사용하시는 분들 필수영상! 기초부터 알려드립니다.",
+      "link": "https://www.youtube.com/watch?v=wGgF2MSds5E",
+      "images": [],
+      "image": ""
+    },
+    {
       "id": "yt_mo02cn2u4zwwl",
       "visible": true,
       "title": "2026 제1회 Canva Day",
@@ -31,14 +39,6 @@ const profileData = {
         "uploads/86c58f837954.png"
       ],
       "image": "uploads/5c6cccccc50f.png"
-    },
-    {
-      "id": "yt_mlte5to1hm6o0",
-      "visible": true,
-      "title": "Google Classroom - 구글 클래스룸 처음 사용하시는 분들 필수영상! 기초부터 알려드립니다.",
-      "link": "https://www.youtube.com/watch?v=wGgF2MSds5E",
-      "images": [],
-      "image": ""
     },
     {
       "id": "yt_sample",
@@ -361,7 +361,7 @@ const profileData = {
       "org": "Google Korea",
       "year": "2026",
       "category": "Google",
-      "topic": "Google",
+      "topic": "강사코칭",
       "link": "",
       "images": [
         "uploads/92fe7108a5b0.webp",
@@ -395,7 +395,7 @@ const profileData = {
       "org": "경상국립대학교",
       "year": "2026",
       "category": "Google/Gemini",
-      "topic": "Google",
+      "topic": "AI",
       "link": "",
       "images": [
         "uploads/0e6f7c5e3654.png",
@@ -404,7 +404,7 @@ const profileData = {
         "uploads/55bfb8a1e151.png"
       ],
       "image": "uploads/0e6f7c5e3654.png",
-      "highlight": true
+      "highlight": false
     },
     {
       "id": "l_mskip8tt41oij",
@@ -430,7 +430,7 @@ const profileData = {
       "org": "한국교원대학교",
       "year": "2026",
       "category": "Google/Gemini",
-      "topic": "교사 업무·학급경영",
+      "topic": "AI",
       "link": "",
       "images": [
         "uploads/0c50843966d3.png"
@@ -535,7 +535,7 @@ const profileData = {
       "org": "대전동부교육지원청",
       "year": "2026",
       "category": "Google/Gemini",
-      "topic": "교사 업무·학급경영",
+      "topic": "AI",
       "link": "",
       "images": [
         "uploads/aa7158647e52.png",
@@ -547,7 +547,7 @@ const profileData = {
         "uploads/e720538cfe42.png"
       ],
       "image": "uploads/aa7158647e52.png",
-      "highlight": true
+      "highlight": false
     },
     {
       "id": "l1",
@@ -556,13 +556,13 @@ const profileData = {
       "org": "고용노동부 · Google Korea 주관, 배재대학교",
       "year": "2025",
       "category": "Google/Gemini",
-      "topic": "Google",
+      "topic": "AI",
       "link": "",
       "images": [
         "uploads/2db4046159d2.png"
       ],
       "image": "uploads/2db4046159d2.png",
-      "highlight": true
+      "highlight": false
     },
     {
       "id": "l_mqcu97usa7rhx",
@@ -592,13 +592,13 @@ const profileData = {
       "org": "경기벌원초",
       "year": "2024",
       "category": "Google/Gemini",
-      "topic": "Google",
+      "topic": "교사 업무·학급경영",
       "link": "",
       "images": [
         "uploads/3111d8a1122d.png"
       ],
       "image": "uploads/3111d8a1122d.png",
-      "highlight": true
+      "highlight": false
     },
     {
       "id": "l_mqdcq680gbx2i",
@@ -688,13 +688,13 @@ const profileData = {
       "org": "대전혜광학교",
       "year": "2026",
       "category": "Google/Gemini",
-      "topic": "Google",
+      "topic": "AI",
       "link": "",
       "images": [
         "uploads/41f5b3761279.png"
       ],
       "image": "uploads/41f5b3761279.png",
-      "highlight": true
+      "highlight": false
     },
     {
       "id": "l_mo02gfjnypkr7",
