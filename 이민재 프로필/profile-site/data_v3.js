@@ -1,9 +1,17 @@
 /*
   [Profile Data]
-  Updated at: 2026-10-15T01:36:29.988Z
+  Updated at: 2026-10-20T15:39:00.000Z
 */
 const profileData = {
   "youtubeVideos": [
+    {
+      "id": "youtubeVideos_20261020_gemini_notebook_live_2",
+      "visible": true,
+      "title": "같은 자료지만, 결과물은 이렇게 달라집니다｜민재쌤의 Gemini Notebook [2강]",
+      "link": "https://www.youtube.com/watch?v=emaREWRd-R0",
+      "images": [],
+      "image": ""
+    },
     {
       "id": "youtubeVideos_20261013_gemini_notebook_live_1",
       "visible": true,

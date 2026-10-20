@@ -5,6 +5,7 @@ const path = require('node:path');
 const vm = require('node:vm');
 const root = path.join(__dirname, '..');
 const published = JSON.parse(fs.readFileSync(path.join(root, 'data_v3.json'), 'utf8'));
+const liveOne = published.youtubeVideos.find((item) => item.id === 'youtubeVideos_20261013_gemini_notebook_live_1');
 const script = fs.readFileSync(path.join(root, 'draft-content-store.js'), 'utf8');
 function start(data, storage = new Map()) {
   const context = {
@@ -19,7 +20,7 @@ function start(data, storage = new Map()) {
 function oldDraft() {
   const old = structuredClone(published);
   old.lectures = old.lectures.slice(3);
-  old.youtubeVideos = old.youtubeVideos.slice(1);
+  old.youtubeVideos = old.youtubeVideos.filter((item) => !item.id.startsWith('youtubeVideos_202610'));
   const candidate = start(old).store.state;
   delete candidate.contentMigrationIds;
   delete candidate.sourceLectureIds;
@@ -33,7 +34,8 @@ test('an old 61-record browser draft cannot hide the three newly published lectu
   assert.equal(data.lectures.length, 64);
   assert.deepEqual(data.lectures.slice(0, 3).map((item) => item.id), published.lectures.slice(0, 3).map((item) => item.id));
   assert.equal(data.lectures.filter((item) => item.topic === 'AI')[0].id, 'lectures_20260930_cheongsu_ai_design');
-  assert.equal(data.youtubeVideos[0].id, 'youtubeVideos_20261013_gemini_notebook_live_1');
+  assert.equal(data.youtubeVideos[0].id, published.youtubeVideos[0].id);
+  assert.equal(data.youtubeVideos.filter((item) => item.id === liveOne.id).length, 1);
   assert.equal(storage.get('profileDraft.contentV1'), serialized);
 });
 test('sync preserves existing draft edits, local-only lectures and unrelated sections', () => {
@@ -81,7 +83,7 @@ test('clean browsers keep the published lecture order and no draft baseline reac
 function preCorrectionDraft() {
   const candidate = structuredClone(start(published).store.state);
   delete candidate.contentMigrationIds;
-  candidate.youtubeVideos = candidate.youtubeVideos.filter((item) => item.id !== published.youtubeVideos[0].id);
+  candidate.youtubeVideos = candidate.youtubeVideos.filter((item) => item.id !== liveOne.id);
   candidate.lectures.slice(0, 3).forEach((item) => { item.images = []; item.image = ''; });
   candidate.lectures.unshift({ ...candidate.lectures[2], id: 'lectures_20261013_gemini_notebook_live_1', title: '교사에게 AI 딱 하나만 추천한다면', images: [], image: '' });
   candidate.sourceLectureIds.unshift('lectures_20261013_gemini_notebook_live_1');
@@ -95,14 +97,14 @@ test('the previous 65-record draft relocates Live and fills three slide gallerie
   const { data, store, storage } = start(published, new Map([['profileDraft.contentV1', serialized]]));
   assert.equal(data.lectures.length, 64);
   assert.ok(!data.lectures.some((item) => item.id === 'lectures_20261013_gemini_notebook_live_1'));
-  assert.equal(data.youtubeVideos.length, 18);
-  assert.equal(data.youtubeVideos[0].id, published.youtubeVideos[0].id);
+  assert.equal(data.youtubeVideos.length, 19);
+  assert.equal(data.youtubeVideos.filter((item) => item.id === liveOne.id).length, 1);
   assert.equal(data.lectures[3].title, '보존할 로컬 수정');
   data.lectures.slice(0, 3).forEach((item, index) => assert.deepEqual(item.images, published.lectures[index].images));
   assert.equal(storage.get('profileDraft.contentV1'), serialized);
   const merged = store.merge(published, candidate);
   assert.equal(merged.lectures.length, 64);
-  assert.equal(merged.youtubeVideos[0].id, published.youtubeVideos[0].id);
+  assert.equal(merged.youtubeVideos.filter((item) => item.id === liveOne.id).length, 1);
   assert.ok(!Object.hasOwn(merged, 'contentMigrationIds'));
 });
 
@@ -110,9 +112,9 @@ test('migration preserves custom images and an equivalent existing video link', 
   const candidate = preCorrectionDraft();
   candidate.lectures[1].images = ['uploads/local-custom.png'];
   candidate.lectures[1].image = 'uploads/local-custom.png';
-  candidate.youtubeVideos.unshift({ ...published.youtubeVideos[0], id: 'local-live-video', title: '로컬 영상 제목', link: 'https://www.youtube.com/watch?v=2Dqpsaqa0Jw&feature=share' });
+  candidate.youtubeVideos.unshift({ ...liveOne, id: 'local-live-video', title: '로컬 영상 제목', link: 'https://www.youtube.com/watch?v=2Dqpsaqa0Jw&feature=share' });
   const { data } = start(published, new Map([['profileDraft.contentV1', JSON.stringify(candidate)]]));
-  assert.equal(data.youtubeVideos.length, 18);
+  assert.equal(data.youtubeVideos.length, 19);
   assert.equal(data.youtubeVideos[0].title, '로컬 영상 제목');
   assert.deepEqual(Array.from(data.lectures[0].images), ['uploads/local-custom.png']);
 });
@@ -125,7 +127,7 @@ test('after explicit save, later video removal and image clearing are not resurr
   candidate.lectures[0].images = []; candidate.lectures[0].image = '';
   first.store.save(candidate);
   const next = start(published, first.storage);
-  assert.equal(next.data.youtubeVideos.length, 17);
+  assert.equal(next.data.youtubeVideos.length, 18);
   assert.equal(next.data.lectures[0].images.length, 0);
 });
 

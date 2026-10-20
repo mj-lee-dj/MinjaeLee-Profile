@@ -116,13 +116,6 @@
     return [...ordered, ...remaining];
   }
 
-  function orderDefaultVideos(videos) {
-    const next = [...videos];
-    const classroom = next.findIndex((video) => String(video.link || '').includes('wGgF2MSds5E'));
-    if (classroom > 2) next.splice(2, 0, next.splice(classroom, 1)[0]);
-    return next;
-  }
-
   function insert(section, items, item) {
     const next = [...items];
     if (section === 'lectures') next.unshift(item);
@@ -152,6 +145,25 @@
       }
     });
     state.contentMigrationIds.push(mediaCorrection.id);
+    return state;
+  }
+
+  function reconcileNotebookLiveTwo(state, allowAddition = true) {
+    const id = '2026-10-gemini-notebook-live-2';
+    const videoId = 'youtubeVideos_20261020_gemini_notebook_live_2';
+    if (state.contentMigrationIds.includes(id)) return state;
+    const published = sourceCollections.youtubeVideos.find((item) => item.id === videoId);
+    if (!published) return state;
+    const youtubeId = (link) => String(link || '').match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?(?:[^#]*&)?v=|embed\/|live\/|shorts\/))([\w-]{11})/)?.[1];
+    const publishedId = youtubeId(published.link);
+    // Add only the newly published replay to older drafts. Retain their order,
+    // edits, visibility and equivalent links; a saved deletion stays deleted.
+    // Source-shaped publish payloads have no draft version. Their explicit
+    // deletions are authoritative when the admin saves the published result.
+    if (allowAddition && !state.youtubeVideos.some((item) => item.id === videoId || (publishedId && youtubeId(item.link) === publishedId))) {
+      state.youtubeVideos.unshift(normalizeItem('youtubeVideos', published, 0));
+    }
+    state.contentMigrationIds.push(id);
     return state;
   }
 
@@ -208,10 +220,10 @@
       const source = clone(sourceCollections[section]);
       const ordered = section === 'publications'
         ? orderLegacyBooks(orderDefaultBooks(source))
-        : section === 'youtubeVideos' ? orderDefaultVideos(source) : source;
+        : source;
       state[section] = ordered.map((item, index) => normalizeItem(section, item, index)).filter(Boolean);
     });
-    return reconcileAssessmentLectureTopic(reconcileLectureCountCorrection(reconcileLectureCategoryCorrection(reconcileMediaCorrection(state))));
+    return reconcileNotebookLiveTwo(reconcileAssessmentLectureTopic(reconcileLectureCountCorrection(reconcileLectureCategoryCorrection(reconcileMediaCorrection(state)))));
   }
 
   function normalize(candidate) {
@@ -234,7 +246,7 @@
       const source = Array.isArray(candidate[section]) ? candidate[section] : fallback[section];
       state[section] = source.map((item, index) => normalizeItem(section, item, index)).filter(Boolean);
     });
-    return reconcileAssessmentLectureTopic(reconcileLectureCountCorrection(reconcileLectureCategoryCorrection(reconcileMediaCorrection(state))));
+    return reconcileNotebookLiveTwo(reconcileAssessmentLectureTopic(reconcileLectureCountCorrection(reconcileLectureCategoryCorrection(reconcileMediaCorrection(state)))), Object.hasOwn(candidate, 'version'));
   }
 
   function merge(base, candidate) {

@@ -85,7 +85,7 @@ test('all five target records retain their original gallery images', () => {
   assert.equal(selected[3].org, '경상국립대학교');
   assert.equal(selected[4].topic, '학부모·학생 강의');
   assert.equal(published.lectures.length, 64);
-  assert.equal(published.youtubeVideos.length, 18);
+  assert.equal(published.youtubeVideos.length, 19);
 });
 
 test('the preceding published selection switches only its fourth record, with or without the prior marker', () => {

@@ -42,11 +42,11 @@ test('three autumn lectures have slide images and the Live session belongs to Wa
   ]);
   assert.equal(data.lectures.length, 64);
   assert.ok(!data.lectures.some((item) => item.id === 'lectures_20261013_gemini_notebook_live_1'));
-  const live = data.youtubeVideos[0];
+  const live = data.youtubeVideos.find((item) => item.id === 'youtubeVideos_20261013_gemini_notebook_live_1');
   assert.equal(live.id, 'youtubeVideos_20261013_gemini_notebook_live_1');
   assert.equal(live.link, 'https://youtube.com/live/2Dqpsaqa0Jw');
   assert.deepEqual(live.images, []);
-  assert.equal(data.youtubeVideos.length, 18);
+  assert.equal(data.youtubeVideos.length, 19);
   data.lectures.slice(0, 3).forEach((item) => {
     assert.equal(item.visible, true);
     assert.equal(item.year, '2026');

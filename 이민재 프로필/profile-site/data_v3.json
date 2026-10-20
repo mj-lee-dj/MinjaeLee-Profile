@@ -1,6 +1,14 @@
 {
   "youtubeVideos": [
     {
+      "id": "youtubeVideos_20261020_gemini_notebook_live_2",
+      "visible": true,
+      "title": "같은 자료지만, 결과물은 이렇게 달라집니다｜민재쌤의 Gemini Notebook [2강]",
+      "link": "https://www.youtube.com/watch?v=emaREWRd-R0",
+      "images": [],
+      "image": ""
+    },
+    {
       "id": "youtubeVideos_20261013_gemini_notebook_live_1",
       "visible": true,
       "title": "[LIVE] 교사에게 AI 딱 하나만 추천한다면｜민재쌤의 Gemini Notebook [1강]",
