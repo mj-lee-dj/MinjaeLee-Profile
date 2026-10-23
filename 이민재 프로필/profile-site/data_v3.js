@@ -800,7 +800,7 @@ const profileData = {
       "visible": true,
       "title": "[학생 정보통신윤리 연수] 생성AI 안전하고 효과적으로 활용하기",
       "org": "충남고등학교",
-      "year": "2026",
+      "year": "2025",
       "category": "Google/Gemini",
       "topic": "학부모·학생 강의",
       "link": "",

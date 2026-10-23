@@ -196,6 +196,20 @@
     return state;
   }
 
+  function reconcileChungnamLectureYear(state, allowCorrection = true) {
+    const id = '2026-10-chungnam-student-lecture-year';
+    const lectureId = 'l_mls35x2biau7q';
+    if (state.contentMigrationIds.includes(id)) return state;
+    const published = sourceCollections.lectures.find((item) => item.id === lectureId);
+    if (published?.year !== '2025') return state;
+    const item = state.lectures.find((entry) => entry.id === lectureId);
+    // Correct only this old year; retain every other draft field and deletion.
+    // Source-shaped post-publish payloads are authoritative, including later edits.
+    if (allowCorrection && item?.year === '2026') item.year = '2025';
+    state.contentMigrationIds.push(id);
+    return state;
+  }
+
   function reconcileLectureCountCorrection(state) {
     const id = '2026-10-hero-lecture-count';
     if (state.contentMigrationIds.includes(id) || sourcePersonal.lectureCount !== '100+') return state;
@@ -223,7 +237,7 @@
         : source;
       state[section] = ordered.map((item, index) => normalizeItem(section, item, index)).filter(Boolean);
     });
-    return reconcileNotebookLiveTwo(reconcileAssessmentLectureTopic(reconcileLectureCountCorrection(reconcileLectureCategoryCorrection(reconcileMediaCorrection(state)))));
+    return reconcileChungnamLectureYear(reconcileNotebookLiveTwo(reconcileAssessmentLectureTopic(reconcileLectureCountCorrection(reconcileLectureCategoryCorrection(reconcileMediaCorrection(state))))));
   }
 
   function normalize(candidate) {
@@ -246,7 +260,7 @@
       const source = Array.isArray(candidate[section]) ? candidate[section] : fallback[section];
       state[section] = source.map((item, index) => normalizeItem(section, item, index)).filter(Boolean);
     });
-    return reconcileNotebookLiveTwo(reconcileAssessmentLectureTopic(reconcileLectureCountCorrection(reconcileLectureCategoryCorrection(reconcileMediaCorrection(state)))), Object.hasOwn(candidate, 'version'));
+    return reconcileChungnamLectureYear(reconcileNotebookLiveTwo(reconcileAssessmentLectureTopic(reconcileLectureCountCorrection(reconcileLectureCategoryCorrection(reconcileMediaCorrection(state)))), Object.hasOwn(candidate, 'version')), Object.hasOwn(candidate, 'version'));
   }
 
   function merge(base, candidate) {

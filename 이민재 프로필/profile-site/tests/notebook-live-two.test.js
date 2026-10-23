@@ -138,7 +138,7 @@ test('the replay migration waits for its source record and does not affect an ol
 test('public and admin entries cache-bust both changed runtime files with the same release identifier', () => {
   for (const name of ['index.html', 'admin.html', 'draft-v2.html', 'admin-profile-final.html']) {
     const html = read(name);
-    assert.match(html, /data_v3\.js\?v=1792510740000/);
-    assert.match(html, /draft-content-store\.js\?v=1792510740000/);
+    assert.match(html, /data_v3\.js\?v=1792724280000/);
+    assert.match(html, /draft-content-store\.js\?v=1792724280000/);
   }
 });
