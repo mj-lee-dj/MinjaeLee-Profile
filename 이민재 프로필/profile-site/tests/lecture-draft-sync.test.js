@@ -26,14 +26,14 @@ function oldDraft() {
   delete candidate.sourceLectureIds;
   return candidate;
 }
-test('an old 61-record browser draft cannot hide the three newly published lectures and relocated Live video', () => {
+test('a browser draft missing recently added records cannot hide the three newly published lectures and relocated Live video', () => {
   const candidate = oldDraft();
   const serialized = JSON.stringify(candidate);
   const storage = new Map([['profileDraft.contentV1', serialized]]);
   const { data } = start(published, storage);
-  assert.equal(data.lectures.length, 64);
+  assert.equal(data.lectures.length, 69);
   assert.deepEqual(data.lectures.slice(0, 3).map((item) => item.id), published.lectures.slice(0, 3).map((item) => item.id));
-  assert.equal(data.lectures.filter((item) => item.topic === 'AI')[0].id, 'lectures_20260930_cheongsu_ai_design');
+  assert.equal(data.lectures.filter((item) => item.topic === 'AI')[0].id, published.lectures.find((item) => item.topic === 'AI').id);
   assert.equal(data.youtubeVideos[0].id, published.youtubeVideos[0].id);
   assert.equal(data.youtubeVideos.filter((item) => item.id === liveOne.id).length, 1);
   assert.equal(storage.get('profileDraft.contentV1'), serialized);
@@ -44,7 +44,7 @@ test('sync preserves existing draft edits, local-only lectures and unrelated sec
   candidate.lectures.unshift({ ...candidate.lectures[0], id: 'local-only', title: '아직 공개하지 않은 강의' });
   candidate.personal.statement = '저장 전 선언문';
   const { data } = start(published, new Map([['profileDraft.contentV1', JSON.stringify(candidate)]]));
-  assert.equal(data.lectures.length, 65);
+  assert.equal(data.lectures.length, 70);
   assert.equal(data.lectures[3].id, 'local-only');
   assert.equal(data.lectures[4].title, '저장 전 수정 중인 강의');
   assert.equal(data.personal.statement, '저장 전 선언문');
@@ -56,7 +56,7 @@ test('saved explicit lecture removal remains removed on reload', () => {
   candidate.lectures = candidate.lectures.filter((item) => item.id !== published.lectures[0].id);
   first.store.save(candidate);
   const reloaded = start(published, first.storage);
-  assert.equal(reloaded.data.lectures.length, 63);
+  assert.equal(reloaded.data.lectures.length, 68);
   assert.ok(!reloaded.data.lectures.some((item) => item.id === published.lectures[0].id));
 });
 test('subsequent published lectures merge once without restoring saved deletions', () => {
@@ -84,26 +84,26 @@ function preCorrectionDraft() {
   const candidate = structuredClone(start(published).store.state);
   delete candidate.contentMigrationIds;
   candidate.youtubeVideos = candidate.youtubeVideos.filter((item) => item.id !== liveOne.id);
-  candidate.lectures.slice(0, 3).forEach((item) => { item.images = []; item.image = ''; });
+  candidate.lectures.filter((item) => ['lectures_20261007_canva_korea', 'lectures_20260930_cheongsu_ai_design', 'lectures_20260929_panam_chromebook'].includes(item.id)).forEach((item) => { item.images = []; item.image = ''; });
   candidate.lectures.unshift({ ...candidate.lectures[2], id: 'lectures_20261013_gemini_notebook_live_1', title: '교사에게 AI 딱 하나만 추천한다면', images: [], image: '' });
   candidate.sourceLectureIds.unshift('lectures_20261013_gemini_notebook_live_1');
   return candidate;
 }
 
-test('the previous 65-record draft relocates Live and fills three slide galleries without writing storage', () => {
+test('a draft with the old Live lecture relocates Live and fills three slide galleries without writing storage', () => {
   const candidate = preCorrectionDraft();
   candidate.lectures[4].title = '보존할 로컬 수정';
   const serialized = JSON.stringify(candidate);
   const { data, store, storage } = start(published, new Map([['profileDraft.contentV1', serialized]]));
-  assert.equal(data.lectures.length, 64);
+  assert.equal(data.lectures.length, 69);
   assert.ok(!data.lectures.some((item) => item.id === 'lectures_20261013_gemini_notebook_live_1'));
-  assert.equal(data.youtubeVideos.length, 19);
+  assert.equal(data.youtubeVideos.length, 21);
   assert.equal(data.youtubeVideos.filter((item) => item.id === liveOne.id).length, 1);
   assert.equal(data.lectures[3].title, '보존할 로컬 수정');
-  data.lectures.slice(0, 3).forEach((item, index) => assert.deepEqual(item.images, published.lectures[index].images));
+  data.lectures.filter((item) => ['lectures_20261007_canva_korea', 'lectures_20260930_cheongsu_ai_design', 'lectures_20260929_panam_chromebook'].includes(item.id)).forEach((item) => assert.deepEqual(item.images, published.lectures.find((source) => source.id === item.id).images));
   assert.equal(storage.get('profileDraft.contentV1'), serialized);
   const merged = store.merge(published, candidate);
-  assert.equal(merged.lectures.length, 64);
+  assert.equal(merged.lectures.length, 69);
   assert.equal(merged.youtubeVideos.filter((item) => item.id === liveOne.id).length, 1);
   assert.ok(!Object.hasOwn(merged, 'contentMigrationIds'));
 });
@@ -114,7 +114,7 @@ test('migration preserves custom images and an equivalent existing video link', 
   candidate.lectures[1].image = 'uploads/local-custom.png';
   candidate.youtubeVideos.unshift({ ...liveOne, id: 'local-live-video', title: '로컬 영상 제목', link: 'https://www.youtube.com/watch?v=2Dqpsaqa0Jw&feature=share' });
   const { data } = start(published, new Map([['profileDraft.contentV1', JSON.stringify(candidate)]]));
-  assert.equal(data.youtubeVideos.length, 19);
+  assert.equal(data.youtubeVideos.length, 21);
   assert.equal(data.youtubeVideos[0].title, '로컬 영상 제목');
   assert.deepEqual(Array.from(data.lectures[0].images), ['uploads/local-custom.png']);
 });
@@ -127,7 +127,7 @@ test('after explicit save, later video removal and image clearing are not resurr
   candidate.lectures[0].images = []; candidate.lectures[0].image = '';
   first.store.save(candidate);
   const next = start(published, first.storage);
-  assert.equal(next.data.youtubeVideos.length, 18);
+  assert.equal(next.data.youtubeVideos.length, 20);
   assert.equal(next.data.lectures[0].images.length, 0);
 });
 
@@ -268,12 +268,12 @@ test('audience correction coexists with the Live relocation and image migrations
   const candidate = preCorrectionDraft();
   Object.assign(sunam(candidate), { topic: 'Google', category: 'Google/Gemini' });
   const { data, store } = start(published, new Map([['profileDraft.contentV1', JSON.stringify(candidate)]]));
-  assert.equal(data.lectures.length, 64);
+  assert.equal(data.lectures.length, 69);
   assert.equal(sunam(data).topic, audienceTopic);
   assert.equal(sunam(data).category, audienceTopic);
   assert.ok(!data.lectures.some((item) => item.id === 'lectures_20261013_gemini_notebook_live_1'));
   assert.equal(data.youtubeVideos.filter((item) => item.id === 'youtubeVideos_20261013_gemini_notebook_live_1').length, 1);
-  data.lectures.slice(0, 3).forEach((item, index) => assert.deepEqual(item.images, published.lectures[index].images));
+  data.lectures.filter((item) => ['lectures_20261007_canva_korea', 'lectures_20260930_cheongsu_ai_design', 'lectures_20260929_panam_chromebook'].includes(item.id)).forEach((item) => assert.deepEqual(item.images, published.lectures.find((source) => source.id === item.id).images));
   assert.ok(store.state.contentMigrationIds.includes('2026-10-live-and-lecture-images'));
   assert.ok(store.state.contentMigrationIds.includes(sunamMigrationId));
 });

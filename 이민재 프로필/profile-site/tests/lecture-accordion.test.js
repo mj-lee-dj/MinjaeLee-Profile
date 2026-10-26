@@ -8,7 +8,7 @@ const root = path.join(__dirname, '..');
 const read = (name) => fs.readFileSync(path.join(root, name), 'utf8');
 const published = JSON.parse(read('data_v3.json'));
 const topics = ['AI', 'Google', 'Canva·에듀테크', '교사 업무·학급경영', '학부모·학생 강의', '강사코칭'];
-const counts = [13, 18, 10, 14, 3, 6];
+const counts = [17, 18, 11, 14, 3, 6];
 const oldLiveId = 'lectures_20261013_gemini_notebook_live_1';
 const plain = (value) => JSON.parse(JSON.stringify(value));
 const ids = (items) => Array.from(items, (item) => item.id);
@@ -66,13 +66,13 @@ test('archive exposes the six approved categories in the agreed order', () => {
   });
 });
 
-test('all 64 published lectures have the expected category counts and year range', () => {
+test('all 69 published lectures have the expected category counts and year range', () => {
   const archive = model();
   const visible = archive.visibleLectures(published, []);
-  assert.equal(visible.length, 64);
+  assert.equal(visible.length, 69);
   assert.deepEqual(ids(visible), ids(published.lectures));
   assert.deepEqual(topics.map((topic) => archive.categoryPage(published, topic, 0, 4, []).total), counts);
-  assert.deepEqual(plain(archive.summary(published, [])), { total: 64, topics: 6, years: [2022, 2026] });
+  assert.deepEqual(plain(archive.summary(published, [])), { total: 69, topics: 6, years: [2022, 2026] });
   assert.equal(counts.reduce((sum, count) => sum + count, 0), visible.length);
 });
 
@@ -134,7 +134,7 @@ test('hidden IDs and visible=false are excluded before counts and paging', () =>
   const hidden = [google[0].id, google[0].id, 'not-a-lecture'];
   const expected = data.lectures.filter((item) => item.visible !== false && !hidden.includes(item.id));
   assert.deepEqual(ids(archive.visibleLectures(data, hidden)), ids(expected));
-  assert.equal(archive.summary(data, hidden).total, 62);
+  assert.equal(archive.summary(data, hidden).total, 67);
   const result = archive.categoryPage(data, 'Google', 0, 4, hidden);
   assert.equal(result.total, google.length - 2);
   assert.equal(result.pages, Math.ceil((google.length - 2) / 4));
@@ -197,7 +197,7 @@ test('model calls preserve source order, local field edits and every gallery ima
   const first = archive.categoryPage(data, 'AI', 0, 2, hidden);
   archive.summary(data, hidden);
   assert.deepEqual(plain(first.items[0]), plain(local));
-  assert.deepEqual(ids(first.items), ['local-only', published.lectures[1].id]);
+  assert.deepEqual(ids(first.items), ['local-only', published.lectures.find((item) => item.topic === 'AI').id]);
   assert.deepEqual(ids(visible), ids(data.lectures.filter((item) => !hidden.includes(item.id))));
   assert.equal(JSON.stringify(data), before);
   assert.deepEqual(hidden, [data.lectures[3].id]);
@@ -210,7 +210,7 @@ test('the published JavaScript and JSON feeds expose the same archive data, with
   assert.deepEqual(plain(scriptData.lectures), published.lectures);
   const archive = model();
   const visible = archive.visibleLectures(scriptData, []);
-  assert.equal(visible.length, 64);
+  assert.equal(visible.length, 69);
   assert.ok(!visible.some((item) => item.id === oldLiveId));
   assert.ok(scriptData.youtubeVideos.some((item) => item.id === 'youtubeVideos_20261013_gemini_notebook_live_1'));
   published.lectures.slice(0, 3).forEach((lecture) => {
@@ -218,11 +218,11 @@ test('the published JavaScript and JSON feeds expose the same archive data, with
     const renderedData = page.items.find((item) => item.id === lecture.id);
     assert.ok(renderedData);
     assert.deepEqual(plain(renderedData.images), lecture.images);
-    assert.equal(renderedData.images.length, 3);
+    assert.equal(renderedData.images.length, lecture.images.length);
   });
 });
 
-test('a stale 61-record draft still supplies all published lectures to the accordion while preserving local edits', () => {
+test('a stale draft missing the first three records still supplies all published lectures to the accordion while preserving local edits', () => {
   const old = structuredClone(published);
   old.lectures = old.lectures.slice(3);
   const candidate = structuredClone(loadDraft(old).content.state);
@@ -233,14 +233,14 @@ test('a stale 61-record draft still supplies all published lectures to the accor
   const storage = new Map([['profileDraft.contentV1', serialized]]);
   const { data, archive, curation } = loadDraft(published, storage);
   const visible = archive.visibleLectures(data, curation.hidden);
-  assert.equal(visible.length, 64);
+  assert.equal(visible.length, 69);
   assert.deepEqual(ids(visible.slice(0, 3)), ids(published.lectures.slice(0, 3)));
   assert.equal(visible[3].title, '로컬에서 편집 중인 강의 제목');
   assert.deepEqual(topics.map((topic) => archive.categoryPage(data, topic, 0, 4, curation.hidden).total), counts);
   assert.equal(storage.get('profileDraft.contentV1'), serialized);
 });
 
-test('the pre-correction 65-record draft keeps Live out of the accordion and honors surviving hidden choices', () => {
+test('a draft with the old Live lecture keeps Live out of the accordion and honors surviving hidden choices', () => {
   const candidate = structuredClone(loadDraft().content.state);
   delete candidate.contentMigrationIds;
   candidate.youtubeVideos = candidate.youtubeVideos.filter((item) => item.id !== 'youtubeVideos_20261013_gemini_notebook_live_1');
@@ -255,12 +255,12 @@ test('the pre-correction 65-record draft keeps Live out of the accordion and hon
   ]);
   const { data, archive, curation } = loadDraft(published, storage);
   const visible = archive.visibleLectures(data, curation.hidden);
-  assert.equal(data.lectures.length, 64);
-  assert.equal(visible.length, 63);
+  assert.equal(data.lectures.length, 69);
+  assert.equal(visible.length, 68);
   assert.ok(!visible.some((item) => item.id === oldLiveId || item.id === hiddenId));
   assert.ok(data.youtubeVideos.some((item) => item.id === 'youtubeVideos_20261013_gemini_notebook_live_1'));
-  assert.equal(archive.categoryPage(data, 'AI', 0, 4, curation.hidden).total, 13);
-  assert.equal(archive.categoryPage(data, 'Canva·에듀테크', 0, 4, curation.hidden).total, 9);
+  assert.equal(archive.categoryPage(data, 'AI', 0, 4, curation.hidden).total, 16);
+  assert.equal(archive.categoryPage(data, 'Canva·에듀테크', 0, 4, curation.hidden).total, 11);
   assert.equal(storage.get('profileDraft.contentV1'), serialized);
   assert.equal(storage.get('profileDraft.lectureCuration'), storedCuration);
 });

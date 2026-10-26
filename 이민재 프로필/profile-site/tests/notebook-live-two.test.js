@@ -33,8 +33,8 @@ function oldDraft() {
   return plain(start(before).store.state);
 }
 
-test('October 20 session 2 has the verified title and replay, with no custom thumbnails or lecture duplicate', () => {
-  assert.deepEqual(published.youtubeVideos[0], {
+test('October 20 session 2 has the verified title and replay, with no custom thumbnails or duplicate replay', () => {
+  assert.deepEqual(published.youtubeVideos.find((item) => item.id === videoId), {
     id: videoId,
     visible: true,
     title: '같은 자료지만, 결과물은 이렇게 달라집니다｜민재쌤의 Gemini Notebook [2강]',
@@ -43,8 +43,8 @@ test('October 20 session 2 has the verified title and replay, with no custom thu
     image: '',
   });
   assert.equal(published.youtubeVideos.filter((item) => item.id === videoId).length, 1);
-  assert.equal(published.youtubeVideos.length, 19);
-  assert.equal(published.lectures.length, 64);
+  assert.equal(published.youtubeVideos.length, 21);
+  assert.equal(published.lectures.length, 69);
   assert.ok(!published.lectures.some((item) => /emaREWRd-R0|gemini_notebook_live_2/.test(JSON.stringify(item))));
   const context = vm.createContext({});
   vm.runInContext(read('data_v3.js'), context);
@@ -69,7 +69,7 @@ test('an 18-video draft receives only the new replay without overwriting edits o
   const storage = new Map([[key, serialized]]);
   const { store, writes } = start(published, storage);
   const expected = structuredClone(candidate);
-  expected.youtubeVideos.unshift(published.youtubeVideos[0]);
+  expected.youtubeVideos.unshift(published.youtubeVideos.find((item) => item.id === videoId));
   expected.contentMigrationIds.push(migrationId);
   assert.deepEqual(plain(store.state), expected);
   assert.equal(storage.get(key), serialized);
@@ -83,7 +83,7 @@ test('equivalent session-2 URLs never create a duplicate or overwrite local cont
     'https://www.youtube.com/watch?feature=share&v=emaREWRd-R0',
   ]) {
     const candidate = oldDraft();
-    const custom = { ...published.youtubeVideos[0], id: 'local-video', title: '보존할 로컬 영상', link, visible: false };
+    const custom = { ...published.youtubeVideos.find((item) => item.id === videoId), id: 'local-video', title: '보존할 로컬 영상', link, visible: false };
     candidate.youtubeVideos.splice(4, 0, custom);
     const { data } = start(published, new Map([[key, JSON.stringify(candidate)]]));
     assert.deepEqual(plain(data.youtubeVideos), candidate.youtubeVideos);
@@ -131,14 +131,14 @@ test('the replay migration waits for its source record and does not affect an ol
   const before = structuredClone(published);
   before.youtubeVideos = before.youtubeVideos.filter((item) => item.id !== videoId);
   const { data, store } = start(before);
-  assert.equal(data.youtubeVideos.length, 18);
+  assert.equal(data.youtubeVideos.length, 20);
   assert.ok(!store.state.contentMigrationIds.includes(migrationId));
 });
 
 test('public and admin entries cache-bust both changed runtime files with the same release identifier', () => {
   for (const name of ['index.html', 'admin.html', 'draft-v2.html', 'admin-profile-final.html']) {
     const html = read(name);
-    assert.match(html, /data_v3\.js\?v=1792724280000/);
-    assert.match(html, /draft-content-store\.js\?v=1792724280000/);
+    assert.match(html, /data_v3\.js\?v=20261026-materials/);
+    assert.match(html, /draft-content-store\.js\?v=20261026-materials/);
   }
 });

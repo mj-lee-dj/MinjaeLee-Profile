@@ -78,12 +78,12 @@ test('both published feeds move only the assessment topic while retaining its co
   });
 });
 
-test('published archive counts are 14 teacher, 3 parent/student and 64 total without duplicating the target', () => {
+test('published archive counts are 14 teacher, 3 parent/student and 69 total without duplicating the target', () => {
   const archive = archiveModel();
   const topics = ['AI', 'Google', 'Canva·에듀테크', nextTopic, previousTopic, '강사코칭'];
-  assert.equal(published.lectures.length, 64);
-  assert.deepEqual(topics.map((topic) => archive.categoryPage(published, topic, 0, 100, []).total), [13, 18, 10, 14, 3, 6]);
-  assert.equal(archive.summary(published, []).total, 64);
+  assert.equal(published.lectures.length, 69);
+  assert.deepEqual(topics.map((topic) => archive.categoryPage(published, topic, 0, 100, []).total), [17, 18, 11, 14, 3, 6]);
+  assert.equal(archive.summary(published, []).total, 69);
   const teacherPage = archive.categoryPage(published, nextTopic, 0, 100, []);
   const parentPage = archive.categoryPage(published, previousTopic, 0, 100, []);
   assert.equal(teacherPage.items.filter((item) => item.id === lectureId).length, 1);
@@ -173,7 +173,7 @@ test('a deleted target is not restored by load, normalization or publish merge',
   const serialized = JSON.stringify(candidate);
   const { data, store, storage, writes } = start(published, new Map([[key, serialized]]));
   assert.deepEqual(plain(store.state), expected);
-  assert.equal(data.lectures.length, 63);
+  assert.equal(data.lectures.length, 68);
   assert.equal(target(data), undefined);
   assert.equal(target(store.normalize(store.state)), undefined);
   assert.equal(target(store.merge(published, store.state)), undefined);

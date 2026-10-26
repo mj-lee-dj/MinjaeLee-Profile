@@ -33,7 +33,7 @@ test('highlight selection leaves the archive total and all existing media untouc
   const before = JSON.stringify(data);
   model.selectedHighlights(data, data.lectureCuration);
   assert.equal(JSON.stringify(data), before);
-  assert.equal(model.summary(data).total, 64);
+  assert.equal(model.summary(data).total, 69);
 });
 
 test('all highlights precede the category archive as a normal list without carousel controls', () => {

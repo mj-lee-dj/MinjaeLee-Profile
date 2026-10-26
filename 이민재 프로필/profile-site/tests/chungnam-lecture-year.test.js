@@ -31,8 +31,8 @@ test('the exact Chungnam student lecture is 2025 in synchronized feeds, with inv
   assert.equal(item.org, '충남고등학교');
   assert.equal(item.title, '[학생 정보통신윤리 연수] 생성AI 안전하고 효과적으로 활용하기');
   assert.equal(item.images.length, 7);
-  assert.equal(published.lectures.length, 64);
-  assert.equal(published.youtubeVideos.length, 19);
+  assert.equal(published.lectures.length, 69);
+  assert.equal(published.youtubeVideos.length, 21);
   const context = vm.createContext({}); vm.runInContext(read('data_v3.js'), context);
   assert.deepEqual(plain(vm.runInContext('profileData', context)), published);
 });

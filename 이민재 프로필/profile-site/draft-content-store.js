@@ -87,6 +87,7 @@
     });
     if (!result.title) return null;
     if (section === 'lectures') {
+      if (item.linkLabel) result.linkLabel = text(item.linkLabel, 160);
       result.topic = lectureTopics.includes(result.topic) ? result.topic : inferLectureTopic(result);
       result.category = result.category || result.topic;
     }
@@ -167,6 +168,28 @@
     return state;
   }
 
+  function reconcileOctoberMaterials(state, allowAddition = true) {
+    const id = '2026-10-26-lecture-materials';
+    if (state.contentMigrationIds.includes(id)) return state;
+    const ids = ['youtubeVideos_20261027_gemini_notebook_live_3', 'youtubeVideos_20261007_canva_korea'];
+    const published = ids.map((entryId) => sourceCollections.youtubeVideos.find((item) => item.id === entryId));
+    if (published.some((item) => !item)) return state;
+    const youtubeId = (link) => String(link || '').match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?(?:[^#]*&)?v=|embed\/|live\/|shorts\/))([\w-]{11})/)?.[1];
+    if (allowAddition) {
+      const additions = published.filter((item) => !state.youtubeVideos.some((entry) =>
+        entry.id === item.id || entry.link === item.link ||
+        (item.id === ids[0] && youtubeId(entry.link) === 'x88cs2TdrBY')));
+      // Preserve local order, edits and visibility. Only unseen videos are added.
+      state.youtubeVideos.unshift(...additions.map((item, index) => normalizeItem('youtubeVideos', item, index)));
+      const canvaId = 'lectures_20261007_canva_korea';
+      const canva = state.lectures.find((item) => item.id === canvaId);
+      const sourceCanva = sourceCollections.lectures.find((item) => item.id === canvaId);
+      if (canva && !canva.link && sourceCanva?.link) canva.link = sourceCanva.link;
+    }
+    state.contentMigrationIds.push(id);
+    return state;
+  }
+
   function reconcileLectureCategoryCorrection(state) {
     if (state.contentMigrationIds.includes(lectureCategoryCorrection.id)) return state;
     const published = sourceCollections.lectures.find((item) => item.id === lectureCategoryCorrection.lectureId);
@@ -237,7 +260,7 @@
         : source;
       state[section] = ordered.map((item, index) => normalizeItem(section, item, index)).filter(Boolean);
     });
-    return reconcileChungnamLectureYear(reconcileNotebookLiveTwo(reconcileAssessmentLectureTopic(reconcileLectureCountCorrection(reconcileLectureCategoryCorrection(reconcileMediaCorrection(state))))));
+    return reconcileOctoberMaterials(reconcileChungnamLectureYear(reconcileNotebookLiveTwo(reconcileAssessmentLectureTopic(reconcileLectureCountCorrection(reconcileLectureCategoryCorrection(reconcileMediaCorrection(state)))))));
   }
 
   function normalize(candidate) {
@@ -260,7 +283,7 @@
       const source = Array.isArray(candidate[section]) ? candidate[section] : fallback[section];
       state[section] = source.map((item, index) => normalizeItem(section, item, index)).filter(Boolean);
     });
-    return reconcileChungnamLectureYear(reconcileNotebookLiveTwo(reconcileAssessmentLectureTopic(reconcileLectureCountCorrection(reconcileLectureCategoryCorrection(reconcileMediaCorrection(state)))), Object.hasOwn(candidate, 'version')), Object.hasOwn(candidate, 'version'));
+    return reconcileOctoberMaterials(reconcileChungnamLectureYear(reconcileNotebookLiveTwo(reconcileAssessmentLectureTopic(reconcileLectureCountCorrection(reconcileLectureCategoryCorrection(reconcileMediaCorrection(state)))), Object.hasOwn(candidate, 'version')), Object.hasOwn(candidate, 'version')), Object.hasOwn(candidate, 'version'));
   }
 
   function merge(base, candidate) {

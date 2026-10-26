@@ -83,7 +83,7 @@ test('both published feeds contain the approved 100+ hero count and identical pr
   assert.deepEqual(javascriptData, published);
   assert.equal(published.publications.length, 4);
   assert.equal(published.onlineCourses.length, 3);
-  assert.equal(published.lectures.length, 64, 'the aggregate label does not add or remove archive records');
+  assert.equal(published.lectures.length, 69, 'the aggregate label does not add or remove archive records');
 });
 
 for (const filename of ['index.html', 'draft-v2.html']) {

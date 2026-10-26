@@ -1,6 +1,16 @@
 {
   "youtubeVideos": [
     {
+      "id": "youtubeVideos_20261027_gemini_notebook_live_3",
+      "visible": true,
+      "title": "멋진 슬라이드, 내 생각대로 쉽고 빠르게｜민재쌤의 Gemini Notebook [3강]",
+      "link": "https://joo.is/민재쌤노트북3강",
+      "images": [
+        "uploads/20261027-gemini-notebook-watch.webp"
+      ],
+      "image": "uploads/20261027-gemini-notebook-watch.webp"
+    },
+    {
       "id": "youtubeVideos_20261020_gemini_notebook_live_2",
       "visible": true,
       "title": "같은 자료지만, 결과물은 이렇게 달라집니다｜민재쌤의 Gemini Notebook [2강]",
@@ -15,6 +25,16 @@
       "link": "https://youtube.com/live/2Dqpsaqa0Jw",
       "images": [],
       "image": ""
+    },
+    {
+      "id": "youtubeVideos_20261007_canva_korea",
+      "visible": true,
+      "title": "기초부터 교실 활용까지 Canva의 정석",
+      "link": "https://t2c.kr/watch/session_b40b4fab-f25c-4a31-be30-19de16e75a0b/video_canva_basics_20261007",
+      "images": [
+        "uploads/20261007-canva-cover.webp"
+      ],
+      "image": "uploads/20261007-canva-cover.webp"
     },
     {
       "id": "youtubeVideos_mt3md3pm",
@@ -308,6 +328,86 @@
   ],
   "lectures": [
     {
+      "id": "lectures_20261027_gemini_notebook_materials_3",
+      "visible": true,
+      "title": "멋진 슬라이드, 내 생각대로 쉽고 빠르게｜민재쌤의 Gemini Notebook [3강]",
+      "org": "G-CREATOR · 2026.10.27",
+      "year": "2026",
+      "category": "AI",
+      "topic": "AI",
+      "link": "https://drive.google.com/file/d/14MTD0kR6BIqLnK7kYzsux5tyl_JiV1k6/view",
+      "images": [
+        "uploads/20261027-gemini-notebook-cover.webp",
+        "uploads/20261027-gemini-notebook-scene-1.webp",
+        "uploads/20261027-gemini-notebook-scene-2.webp"
+      ],
+      "image": "uploads/20261027-gemini-notebook-cover.webp",
+      "highlight": false,
+      "linkLabel": "3강 강의자료 · PNG 28장 ZIP"
+    },
+    {
+      "id": "lectures_20261026_cnu_generative_ai",
+      "visible": true,
+      "title": "예비교사를 위한 생성AI 활용법",
+      "org": "충남대학교 건설공학교육과 · 2026.10.26",
+      "year": "2026",
+      "category": "AI",
+      "topic": "AI",
+      "link": "https://joo.is/261026충남대",
+      "images": [
+        "uploads/20261026-cnu-ai-cover.webp"
+      ],
+      "image": "uploads/20261026-cnu-ai-cover.webp",
+      "highlight": false,
+      "linkLabel": "강의 자료 허브"
+    },
+    {
+      "id": "lectures_20261021_galaxy_teacher_lab",
+      "visible": true,
+      "title": "교사가 편해지는 갤럭시 수업 루틴",
+      "org": "삼성전자 갤럭시 티처랩 · 대전문정초 · 2026.10.21",
+      "year": "2026",
+      "category": "에듀테크",
+      "topic": "Canva·에듀테크",
+      "link": "https://drive.google.com/file/d/1gf0wXR6AEzhoAPPzn5RRAisBasJhj2hC/view",
+      "images": [],
+      "image": "",
+      "highlight": false,
+      "linkLabel": "참가자 한 장 요약 · PDF"
+    },
+    {
+      "id": "lectures_20261020_gemini_notebook_materials_2",
+      "visible": true,
+      "title": "같은 자료지만, 결과물은 이렇게 달라집니다｜민재쌤의 Gemini Notebook [2강]",
+      "org": "G-CREATOR · 2026.10.20",
+      "year": "2026",
+      "category": "AI",
+      "topic": "AI",
+      "link": "https://docs.google.com/presentation/d/1HEO4yDLYScz6RDIPEX09rDLOwMhy3vi2/edit",
+      "images": [
+        "uploads/20261020-gemini-notebook-cover.webp",
+        "uploads/20261020-gemini-notebook-scene-1.webp",
+        "uploads/20261020-gemini-notebook-scene-2.webp"
+      ],
+      "image": "uploads/20261020-gemini-notebook-cover.webp",
+      "highlight": false
+    },
+    {
+      "id": "lectures_20261013_gemini_notebook_materials_1",
+      "visible": true,
+      "title": "교사에게 AI 딱 하나만 추천한다면｜민재쌤의 Gemini Notebook [1강]",
+      "org": "G-CREATOR · 2026.10.13",
+      "year": "2026",
+      "category": "AI",
+      "topic": "AI",
+      "link": "https://docs.google.com/presentation/d/1mIrQuVq2TKMTvTFOSLVl3j5xqr1tmJJw/edit",
+      "images": [
+        "uploads/20261013-gemini-notebook-cover.webp"
+      ],
+      "image": "uploads/20261013-gemini-notebook-cover.webp",
+      "highlight": false
+    },
+    {
       "id": "lectures_20261007_canva_korea",
       "visible": true,
       "title": "기초부터 교실 활용까지 Canva의 정석",
@@ -315,7 +415,7 @@
       "year": "2026",
       "category": "Canva",
       "topic": "Canva·에듀테크",
-      "link": "",
+      "link": "https://t2c.kr/watch/session_b40b4fab-f25c-4a31-be30-19de16e75a0b/video_canva_basics_20261007",
       "images": [
         "uploads/20261007-canva-cover.webp",
         "uploads/20261007-canva-scene-1.webp",

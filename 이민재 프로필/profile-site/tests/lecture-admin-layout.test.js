@@ -34,23 +34,23 @@ test('new lectures are inserted before older records while other collections kee
 
 test('three autumn lectures have slide images and the Live session belongs to Watch', () => {
   const data = JSON.parse(read('data_v3.json'));
-  assert.deepEqual(data.lectures.slice(0, 4).map((item) => item.id), [
+  assert.deepEqual(data.lectures.slice(5, 9).map((item) => item.id), [
     'lectures_20261007_canva_korea',
     'lectures_20260930_cheongsu_ai_design',
     'lectures_20260929_panam_chromebook',
     'lectures_mt5sy7fr',
   ]);
-  assert.equal(data.lectures.length, 64);
+  assert.equal(data.lectures.length, 69);
   assert.ok(!data.lectures.some((item) => item.id === 'lectures_20261013_gemini_notebook_live_1'));
   const live = data.youtubeVideos.find((item) => item.id === 'youtubeVideos_20261013_gemini_notebook_live_1');
   assert.equal(live.id, 'youtubeVideos_20261013_gemini_notebook_live_1');
   assert.equal(live.link, 'https://youtube.com/live/2Dqpsaqa0Jw');
   assert.deepEqual(live.images, []);
-  assert.equal(data.youtubeVideos.length, 19);
-  data.lectures.slice(0, 3).forEach((item) => {
+  assert.equal(data.youtubeVideos.length, 21);
+  data.lectures.slice(5, 8).forEach((item) => {
     assert.equal(item.visible, true);
     assert.equal(item.year, '2026');
-    assert.equal(item.link, '');
+    if (item.id !== 'lectures_20261007_canva_korea') assert.equal(item.link, '');
     assert.equal(item.images.length, 3);
     assert.equal(item.image, item.images[0]);
     item.images.forEach((image) => assert.ok(fs.existsSync(path.join(root, image))));

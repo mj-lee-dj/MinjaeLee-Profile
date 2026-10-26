@@ -70,6 +70,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const lecture = state.galleryLecture; const images = lectureImages(lecture); if (!lecture) return;
     document.getElementById('lectureGalleryLectureTitle').textContent = lecture.title;
     document.getElementById('lectureGalleryOrg').textContent = [lecture.org, lecture.year].filter(Boolean).join(' · ');
+    let materialLink = document.getElementById('lectureGalleryLink');
+    if (!materialLink) {
+      materialLink = document.createElement('a');
+      materialLink.id = 'lectureGalleryLink';
+      materialLink.className = 'lecture-gallery__link';
+      materialLink.target = '_blank';
+      materialLink.rel = 'noopener';
+      materialLink.textContent = '강의 자료 · 영상 열기 ↗';
+      document.querySelector('.lecture-gallery__meta').append(materialLink);
+    }
+    const materialUrl = externalUrl(lecture.link);
+    materialLink.textContent = `${lecture.linkLabel || '강의 자료 · 영상 열기'} ↗`;
+    materialLink.hidden = !materialUrl;
+    if (materialUrl) materialLink.href = materialUrl;
+    else materialLink.removeAttribute('href');
     document.getElementById('lectureGalleryStage').hidden = !images.length;
     document.getElementById('lectureGalleryThumbs').hidden = !images.length;
     if (!images.length) { document.getElementById('lectureGalleryCount').textContent = ''; return; }
@@ -110,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (event.key === 'ArrowLeft' && state.galleryIndex > 0) { event.preventDefault(); moveGallery(-1); }
       if (event.key === 'ArrowRight' && state.galleryIndex < lectureImages(state.galleryLecture).length - 1) { event.preventDefault(); moveGallery(1); }
       if (event.key !== 'Tab') return;
-      const focusable = [...gallery.querySelectorAll('button:not(:disabled)')].filter((button) => button.getClientRects().length); const first = focusable[0]; const last = focusable.at(-1);
+      const focusable = [...gallery.querySelectorAll('button:not(:disabled), a[href]')].filter((control) => control.getClientRects().length); const first = focusable[0]; const last = focusable.at(-1);
       if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
       if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
     });

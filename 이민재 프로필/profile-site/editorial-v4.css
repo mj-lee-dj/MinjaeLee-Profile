@@ -82,6 +82,9 @@
 .lecture-gallery__meta { padding-top:var(--space-5); border-top:1px solid var(--rule); }
 .lecture-gallery__meta h3 { margin:0; font-size:clamp(1.3rem,6vw,1.8rem); line-height:1.45; text-wrap:balance; word-break:keep-all; }
 .lecture-gallery__meta p { margin:var(--space-3) 0 0; color:var(--paper-muted-readable); font-family:var(--font-meta); font-size:var(--type-meta-readable); }
+.lecture-gallery__link { display:inline-flex; align-items:center; min-height:44px; margin-top:var(--space-3); color:var(--paper-bright); text-underline-offset:.25em; }
+.lecture-gallery__link[hidden] { display:none; }
+.lecture-gallery__link:focus-visible { outline:2px solid var(--red); outline-offset:4px; }
 .lecture-gallery-open { overflow:hidden; }
 @media (max-width:1024px) and (min-width:641px) {
   .video-card { flex-basis:var(--video-card-tablet-basis); }
