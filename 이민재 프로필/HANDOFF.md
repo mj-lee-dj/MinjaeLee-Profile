@@ -1,61 +1,53 @@
 # HANDOFF — 이민재 프로필 사이트
 
-- 마지막 갱신: 2026-08-25 KST
-- 현재 목표: Lectures 카테고리 갤러리·전체 강의 CTA·최신 Watch 공개 수정 운영 반영 완료
-- 작업 브랜치: `codex/web-media-layout` 격리 worktree, `main` 병합 완료
-- 배포 상태: Production Ready; 릴리스 기준 `8f6e020`
-- 이전 Preview: `https://minjae-lee-profile-git-cod-2a4a4c-minjae-lees-projects-af61ee98.vercel.app/`
-
-## 운영 기준선
-
-- 운영 URL: `https://minjae-lee-profile.vercel.app/`
-- 관리자 URL: `https://minjae-lee-profile.vercel.app/admin.html`
+- 마지막 갱신: 2026-10-26 KST
+- 상태: 10월 강의 자료·Watch 공개 반영 및 운영 검증 완료
+- 작업 브랜치: `main` (GitHub 연결을 통해 정상 fast-forward 반영)
+- 콘텐츠 릴리스: `a88aa7feb86a41080ba56d7730ecd5173832576f`
+- 콘텐츠 트리: `fecd6409c16238edaf7813ce54dd74a4360564bd`
+- Production: `dpl_CMABb5Psyr5YPXdyJGmFjqYtxe8n` — READY, GitHub Vercel success
+- 운영 URL: https://minjae-lee-profile.vercel.app/
 - Vercel Root: `이민재 프로필/profile-site`
-- 공개 데이터: `profile-site/data_v3.js`, `profile-site/data_v3.json`
-- 공개·관리 진입점: `profile-site/index.html`, `profile-site/admin.html`
-- 서버 경계: `profile-site/api/admin.mjs`, `api/_handler.js`, `api/_core.js`
-- 디자인 계약: `profile-site/DESIGN.md`
+- 데이터 원본: `profile-site/data_v3.js`, JSON 동기화: `profile-site/data_v3.json`
 
-## 이번 수정
+## 반영 내용
 
-- HIGHLIGHTS와 개별 주제의 데스크톱 gallery layout을 분리
-- HIGHLIGHTS는 5개 ledger 전체 높이와 오른쪽 1+2 gallery 높이를 동일하게 유지
-- AI·Google 등 개별 주제는 선택 행과 같은 Y축에 최대 3장의 16:9 썸네일을 가로로 배치
-- 개별 주제 오른쪽에서 중복되던 제목을 숨겨 선택 행과 썸네일이 한 줄의 시각 단위가 되도록 조정
-- 1024px 이하는 오른쪽 고정 gallery를 숨기고 행 썸네일 클릭 시 기존 상세 gallery 사용
-- 1024px 이하 상세 gallery의 이전·다음 원형 컨트롤을 화면 안쪽에 배치해 내부 가로 넘침 제거
-- `전체 강의 보기`를 넓은 상아색 박스에서 compact editorial text CTA로 변경
-- 2026-08-23 관리자 저장에서 비공개로 전환됐던 최신 Watch 항목을 다시 공개
-- 최신 Google 강의는 기존대로 Google 목록 최상단에 유지
-- Watch 외부 링크 검증식을 수정해 17개 카드가 실제 YouTube 주소를 유지하도록 복구
-- 관련 디자인 계약과 회귀 테스트 갱신
+- Gemini Notebook 1·2회 자료를 AI에 추가. 기존 Watch 두 항목은 그대로 보존.
+- Gemini Notebook 3회 AI 자료와 Watch 추가. 공개 영상의 정확한 제목 및 사용자 방송 주소 사용.
+- 3회 자료는 공개 `3강_SWISS_28장_PNG.zip` 단일 파일. Markdown 제작 index·발표자 노트·편집원본 폴더 제외.
+- Canva Korea 10/7 기존 강의 카드에 t2c 시청 링크 보완, 같은 주소의 Watch 항목 추가.
+- 10/26 충남대학교 건설공학교육과 생성AI 강의 자료 허브를 AI에 추가.
+- 10/21 삼성전자 갤럭시 티처랩 기록을 Canva·에듀테크에 추가. 공개 참가자 요약 PDF만 연결.
+- 강사 전용 Galaxy 덱, 미확인 후기·인원·실적, 3회 진행 전 배지 미사용.
+- 새 강의 5개 / 새 Watch 2개. 최종 강의 69개, Watch 21개. 기존 다른 프로필·기록 보존.
+- 실제 공개 교안 표지·장면과 방송 썸네일 9개 사용. Canva 기존 이미지 재사용.
+- 상세 gallery에 외부 자료 링크 표시, Tab 포커스 순환에 링크 포함.
+- 오래된 브라우저 초안에는 새 Watch와 빈 Canva 링크만 보완. 사용자 편집·삭제·공개 상태 보존.
 
 ## 검증
 
-- 전체 Node 테스트 27/27 통과
-- JavaScript 문법 검사와 `git diff --check` 통과
-- 1280px HIGHLIGHTS: 목록·gallery 높이 646.45px 동일
-- 1280px Google: 선택 행 Y=273.36px, gallery Y=273.36px; 3장 각각 212.98×119.80px
-- 375px·768px·1280px 가로 넘침 0
-- 모바일·태블릿 오른쪽 고정 gallery 숨김 및 기존 상세 gallery 경로 유지
-- 375px 상세 gallery client/scroll 너비 375px 동일, 이전·다음 컨트롤 x=21–354px 내 포함
-- 768px 상세 gallery·panel·stage 내부 가로 넘침 0, 원형 컨트롤 x=45–723px 내 포함
-- CTA 143.97×48px, 투명 배경, 글자·화살표 이탈 없음
-- Watch 17개 렌더링, 최신 `Gemini & NotebookLM으로 똑똑하게 해외여행 준비하기` 첫 항목 확인
-- Watch 17개 링크 모두 절대 `https://` 주소이며 첫 항목의 실제 YouTube 목적지 확인
-- 독립 시각 QA 2회 PASS: 1280/768/375 레이아웃·CJK·modal 내부 폭·Watch 링크 실동작 확인
-- 운영 URL HTTP 200 및 Vercel 배포 성공 상태 확인
-- 운영 데이터: 최신 Google 강의 1건(중복 없음), 공개 Watch 17건, 최신 Watch 첫 항목 확인
-- 운영 화면 1280px·375px 수동 QA 통과, 콘솔 오류·경고 없음
+- Node 테스트 140/140 통과. `node --test --test-reporter=tap tests/*.test.js tests/*.test.mjs`
+- JavaScript 구문 검사 및 `git diff --check` 통과. 정적 사이트로 별도 package/build/lint 명령 없음.
+- 별도 headless Chrome에서 로컬·운영 1280px / 375px 확인.
+- AI 신규 4개, Canva·Galaxy, Watch 21개, 각 자료 링크·갤러리·Tab 포커스 검증.
+- 가로 넘침 0, 확인한 이미지 오류 0, 페이지 JS 오류 0.
+- 운영 HTML/JS/CSS 및 새 이미지 18개 응답 HTTP 200, Git blob SHA 전부 일치.
+- 기존 강의 64개와 Watch 19개 보존 대조, 기존 Canva의 빈 링크만 변경.
+- 10/23 충남고 2025년 정정 유지.
 
-## 다음 작업
+## 자료 확인·주의
 
-- 다음 콘텐츠 수정 전 `git fetch` 후 `origin/main`과 동기화
-- 관리자 저장과 코드 작업이 겹칠 경우 ID 중복·공개 상태를 병합 후 schema test로 검증
+- 1·2회 덱, 3회 PNG ZIP, Galaxy 참가자 PDF, CNU 최신 덱: anyone reader / 검색 노출 false 확인.
+- 3회 방송: `https://joo.is/민재쌤노트북3강` → YouTube `x88cs2TdrBY`; oEmbed의 정확 제목 확인.
+- CNU 연결: `https://joo.is/261026충남대`; 최신 덱의 실제 표지만 사용, 발표 파일 미교체.
+- Canva 시청 페이지 HTTP 200. 로그인 안내는 진도 저장용이며 익명 전체 재생을 보증하지 않음.
+- 요청 외 활동은 공개 근거가 충분한 누락을 확인하지 못해 추가하지 않음. Instagram 개별 게시물 접근에는 제약이 있었음.
 
-## 보안·기기 전환
+## 다음 작업·기기 전환
 
-- 다중 기기 기준: `MULTI_DEVICE_WORKFLOW.md`
-- 운영 비밀 이름: `ADMIN_PASSWORD`, `ADMIN_SESSION_SECRET`, `GITHUB_ADMIN_TOKEN`
-- 비밀값은 Git·문서에 기록하지 않으며 저장소 콘텐츠와 이미지는 공개 자료로 취급
-- 운영 장애 시 Vercel 직전 Ready 배포 Instant Rollback 사용
+- `.agents/AGENTS.md`와 `MULTI_DEVICE_WORKFLOW.md`의 세션 게이트 준수.
+- 다음 새 세션 및 배포 전 fetch 후 원격 main과 사용자 변경 확인.
+- CLI Git 인증 대기는 종료했고 새 로그인·권한 변경 없이 기존 GitHub 연결로 반영.
+- 원격 전체 트리는 로컬 검증 커밋 `caa3ced`와 동일. 로컬 기준 커밋은 별도 codex 브랜치에 보존.
+- 관리자 저장은 이번 작업에서 사용하지 않음. 기존 인증 설정과 다른 앱·ASide 작업 미변경.
+- 비밀값·개인 세션 기록을 읽거나 Git·로그에 추가하지 않음.
