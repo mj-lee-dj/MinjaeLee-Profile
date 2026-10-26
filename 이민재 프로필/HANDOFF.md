@@ -1,11 +1,11 @@
 # HANDOFF — 이민재 프로필 사이트
 
 - 마지막 갱신: 2026-10-26 KST
-- 상태: 10월 자료 후속 수정·운영 검증 완료 — 기존 방문자 Watch 누락 복구 및 Canva 순서 조정
+- 상태: Galaxy 제목·실제 요약 이미지 후속 수정 및 운영 검증 완료. 기존 Canva 정렬·재방문 복구 유지.
 - 작업 브랜치: `main` (GitHub 연결을 통해 정상 fast-forward 반영)
-- 콘텐츠·재방문 수정 릴리스: `edd1775bde8ee19bc8142d55f6195eae2579cc3f`
-- 콘텐츠 트리: `635d78f8c1f5e20b348a697f7ac012e8ac834877`
-- Production: `dpl_B6wJsf7QmiBiv6oaBCagvQrPuM7X` — READY, GitHub Vercel success, 운영 별칭 확인
+- 최신 콘텐츠 릴리스: `4a27a4d86bfc99bf986a8cf6e843214443cc9b57`
+- 콘텐츠 트리: `c9f75c9fe79d777f837bc38e7282c71fe43ecdf8`
+- Production: `dpl_ARphFxt3sMuUQ7Q5Dk7ukqoANT1X` — READY, GitHub Vercel success, 운영 별칭 확인
 - 운영 URL: https://minjae-lee-profile.vercel.app/
 - Vercel Root: `이민재 프로필/profile-site`
 - 데이터 원본: `profile-site/data_v3.js`, JSON 동기화: `profile-site/data_v3.json`
@@ -55,6 +55,7 @@
 - 공개 참가자 PDF `1gf0wXR6AEzhoAPPzn5RRAisBasJhj2hC`의 실제 1쪽 전체를 `uploads/20261021-galaxy-participant-summary.webp`(1697×2400, 281,352 bytes)로 렌더링. anyone reader 재확인, 원본 PDF 링크 유지.
 - 원 강사 덱·생성 이미지·새 디자인은 사용하지 않음. 세로 자료는 갤러리 패널 전체 폭으로 표시하며 가로 슬라이드로 바꾸면 기존 비율 복원.
 - 기존 Galaxy 초안의 원래 제목과 빈 이미지만 보완. 사용자 제목·이미지·숨김·삭제와 저장소 원문, Canva 배치 보존. 이후 명시적 저장은 그대로 유지.
+- 로컬·운영 1280/375px 신규·기존 초안 4조합에서 이미지·새 제목·PDF 링크·열기/닫기·재방문 확인. 가로 슬라이드 비율 복원 및 페이지 오류 없음. 운영 변경 파일 9개(이미지 포함)는 원격 blob SHA 일치.
 
 - 1·2회 덱, 3회 PNG ZIP, Galaxy 참가자 PDF, CNU 최신 덱: anyone reader / 검색 노출 false 확인.
 - 3회 방송: `https://joo.is/민재쌤노트북3강` → YouTube `x88cs2TdrBY`; oEmbed의 정확 제목 확인.
@@ -67,6 +68,6 @@
 - `.agents/AGENTS.md`와 `MULTI_DEVICE_WORKFLOW.md`의 세션 게이트 준수.
 - 다음 새 세션 및 배포 전 fetch 후 원격 main과 사용자 변경 확인.
 - CLI Git 인증 대기는 종료했고 새 로그인·권한 변경 없이 기존 GitHub 연결로 반영.
-- 원격 후속 트리는 로컬 검증 커밋 `3e85423`과 동일. 로컬 기준 커밋은 별도 codex 브랜치에 보존.
+- 최신 원격 콘텐츠 트리는 로컬 검증 커밋 `e302c38`과 동일. 로컬 기준 커밋은 별도 codex 브랜치에 보존.
 - 관리자 저장은 이번 작업에서 사용하지 않음. 기존 인증 설정과 다른 앱·ASide 작업 미변경.
 - 비밀값·개인 세션 기록을 읽거나 Git·로그에 추가하지 않음.
