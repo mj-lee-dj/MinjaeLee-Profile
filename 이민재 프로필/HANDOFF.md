@@ -1,11 +1,11 @@
 # HANDOFF — 이민재 프로필 사이트
 
 - 마지막 갱신: 2026-10-26 KST
-- 상태: 10월 자료 후속 수정 — 기존 방문자 Watch 누락 복구 및 Canva 순서 조정
+- 상태: 10월 자료 후속 수정·운영 검증 완료 — 기존 방문자 Watch 누락 복구 및 Canva 순서 조정
 - 작업 브랜치: `main` (GitHub 연결을 통해 정상 fast-forward 반영)
-- 콘텐츠 릴리스: `a88aa7feb86a41080ba56d7730ecd5173832576f`
-- 콘텐츠 트리: `fecd6409c16238edaf7813ce54dd74a4360564bd`
-- Production: `dpl_CMABb5Psyr5YPXdyJGmFjqYtxe8n` — READY, GitHub Vercel success
+- 콘텐츠·재방문 수정 릴리스: `edd1775bde8ee19bc8142d55f6195eae2579cc3f`
+- 콘텐츠 트리: `635d78f8c1f5e20b348a697f7ac012e8ac834877`
+- Production: `dpl_B6wJsf7QmiBiv6oaBCagvQrPuM7X` — READY, GitHub Vercel success, 운영 별칭 확인
 - 운영 URL: https://minjae-lee-profile.vercel.app/
 - Vercel Root: `이민재 프로필/profile-site`
 - 데이터 원본: `profile-site/data_v3.js`, JSON 동기화: `profile-site/data_v3.json`
@@ -43,6 +43,9 @@
 - AI 신규 4개, Canva·Galaxy, Watch 21개, 각 자료 링크·갤러리·Tab 포커스 검증.
 - 가로 넘침 0, 확인한 이미지 오류 0, 페이지 JS 오류 0.
 - 운영 HTML/JS/CSS 및 새 이미지 18개 응답 HTTP 200, Git blob SHA 전부 일치.
+- 후속 수정의 운영 HTML·데이터·스크립트 9개도 원격 `edd1775`의 Git blob SHA와 일치.
+- 로컬·운영 1280px / 375px에서 신규 방문, 구형 초안, 잘못 남은 완료 표시, 수정·숨김 초안을 각각 검증. 저장 원문 보존 및 새로고침 후 정렬 유지.
+- 열린 운영 탭의 새 HTML 버전 감지·1회 갱신·반복 갱신 없음 검증. 임의로 숨긴 2개는 숨김 상태를 유지하며 기본 공개 Watch는 21개.
 - 기존 강의 64개와 Watch 19개 보존 대조, 기존 Canva의 빈 링크만 변경.
 - 10/23 충남고 2025년 정정 유지.
 
@@ -59,6 +62,6 @@
 - `.agents/AGENTS.md`와 `MULTI_DEVICE_WORKFLOW.md`의 세션 게이트 준수.
 - 다음 새 세션 및 배포 전 fetch 후 원격 main과 사용자 변경 확인.
 - CLI Git 인증 대기는 종료했고 새 로그인·권한 변경 없이 기존 GitHub 연결로 반영.
-- 원격 전체 트리는 로컬 검증 커밋 `caa3ced`와 동일. 로컬 기준 커밋은 별도 codex 브랜치에 보존.
+- 원격 후속 트리는 로컬 검증 커밋 `3e85423`과 동일. 로컬 기준 커밋은 별도 codex 브랜치에 보존.
 - 관리자 저장은 이번 작업에서 사용하지 않음. 기존 인증 설정과 다른 앱·ASide 작업 미변경.
 - 비밀값·개인 세션 기록을 읽거나 Git·로그에 추가하지 않음.
