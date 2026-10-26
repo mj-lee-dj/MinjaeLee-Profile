@@ -375,9 +375,11 @@ const profileData = {
       "topic": "Canva·에듀테크",
       "link": "https://drive.google.com/file/d/1gf0wXR6AEzhoAPPzn5RRAisBasJhj2hC/view",
       "images": [
+        "uploads/20261021-galaxy-cover.webp",
+        "uploads/20261021-galaxy-watch.webp",
         "uploads/20261021-galaxy-participant-summary.webp"
       ],
-      "image": "uploads/20261021-galaxy-participant-summary.webp",
+      "image": "uploads/20261021-galaxy-cover.webp",
       "highlight": false,
       "linkLabel": "참가자 한 장 요약 · PDF"
     },
@@ -1874,7 +1876,7 @@ const profileData = {
       "lectures_20261007_canva_korea",
       "l_mr29yai68xvad",
       "l_mskirvwkn6cbr",
-      "l_mskifjabnr1q2"
+      "lectures_20261021_galaxy_teacher_lab"
     ],
     "hidden": [],
     "label": "HIGHLIGHTS"

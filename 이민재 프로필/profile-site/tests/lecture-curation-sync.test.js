@@ -7,7 +7,7 @@ const root = path.join(__dirname, '..');
 const published = JSON.parse(fs.readFileSync(path.join(root, 'data_v3.json'), 'utf8'));
 const script = fs.readFileSync(path.join(root, 'draft-lecture-store.js'), 'utf8');
 const key = 'profileDraft.lectureCuration';
-const next = ['lectures_mt5sy7fr', 'lectures_20261007_canva_korea', 'l_mr29yai68xvad', 'l_mskirvwkn6cbr', 'l_mskifjabnr1q2'];
+const next = ['lectures_mt5sy7fr', 'lectures_20261007_canva_korea', 'l_mr29yai68xvad', 'l_mskirvwkn6cbr', 'lectures_20261021_galaxy_teacher_lab'];
 const previous = [
   ['l_mskiwlabhgr9u', 'l_mr29yai68xvad', 'l_mqcuqz7aplqgo', 'l6', 'lectures_mt5sy7fr'],
   ['l_mskiwlabhgr9u', 'l_mr29yai68xvad', 'l_mqcuqz7aplqgo', 'l6', 'l_mls8mo9epkzye'],
@@ -89,11 +89,11 @@ test('malformed migration metadata cannot discard local hidden or label edits', 
 
 test('all five target records retain their original gallery images', () => {
   const selected = next.map(id => published.lectures.find(item => item.id === id));
-  assert.deepEqual(selected.map(item => item.images.length), [3, 3, 3, 4, 1]);
+  assert.deepEqual(selected.map(item => item.images.length), [3, 3, 3, 4, 3]);
   assert.equal(selected[1].image, 'uploads/20261007-canva-cover.webp');
   assert.equal(selected[3].title, '[경남 중등 1정연수] NotebookLM 마스터 클래스');
   assert.equal(selected[3].org, '경상국립대학교');
-  assert.equal(selected[4].topic, '학부모·학생 강의');
+  assert.equal(selected[4].topic, 'Canva·에듀테크');
   assert.equal(published.lectures.length, 69);
   assert.equal(published.youtubeVideos.length, 21);
 });
@@ -118,4 +118,22 @@ test('an explicit later return to the Daejeon selection survives reload', () => 
   const second = start(undefined, published, first.storage);
   assert.deepEqual(plain(second.data.lectureCuration.highlights), preceding);
   assert.ok(JSON.parse(first.storage.get(key)).curationMigrationIds.includes('2026-10-gyeongnam-highlight'));
+});
+
+test('previously migrated Sunam slot becomes Galaxy while preserving hidden records and saved bytes', () => {
+  const candidate = { highlights: [...next.slice(0,4),'l_mskifjabnr1q2'], hidden: [next[4], 'l_mskifjabnr1q2'], label: '내 대표 강의', curationMigrationIds: ['2026-10-selected-lecture-highlights','2026-10-gyeongnam-highlight','2026-10-26-canva-second-highlight'] };
+  const first = start(candidate);
+  assert.deepEqual(plain(first.data.lectureCuration), { highlights: next, hidden: candidate.hidden, label: candidate.label });
+  assert.equal(first.storage.get(key), JSON.stringify(candidate));
+  assert.deepEqual(plain(first.data.lectures), published.lectures);
+  assert.equal(first.data.lectures.find(x=>x.id==='l_mskifjabnr1q2').org, '김해수남고등학교');
+  first.store.save(candidate);
+  assert.deepEqual(plain(start(undefined,published,first.storage).data.lectureCuration.highlights), candidate.highlights);
+});
+
+test('Galaxy replacement preserves a custom slot order and does not duplicate an existing Galaxy selection', () => {
+  const candidate = { highlights: [next[2],next[4],'l_mskifjabnr1q2',next[0],next[1]], hidden: ['l_mskifjabnr1q2'], label: '맞춤' };
+  const { data } = start(candidate);
+  assert.deepEqual(plain(data.lectureCuration.highlights), [next[2],next[4],next[0],next[1],next[3]]);
+  assert.deepEqual(plain(data.lectureCuration.hidden), candidate.hidden);
 });

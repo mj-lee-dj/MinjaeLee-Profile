@@ -5,7 +5,7 @@
     'lectures_20261007_canva_korea',
     'l_mr29yai68xvad',
     'l_mskirvwkn6cbr',
-    'l_mskifjabnr1q2',
+    'lectures_20261021_galaxy_teacher_lab',
   ];
   const defaultLabel = 'HIGHLIGHTS';
   const sourceCuration = profileData.lectureCuration && typeof profileData.lectureCuration === 'object' ? profileData.lectureCuration : null;
@@ -13,6 +13,10 @@
   const gyeongnamCorrectionId = '2026-10-gyeongnam-highlight';
   const canvaOrderId = '2026-10-26-canva-second-highlight';
   const canvaId = 'lectures_20261007_canva_korea';
+  const galaxyHighlightId = '2026-10-26-galaxy-highlight';
+  const galaxyId = 'lectures_20261021_galaxy_teacher_lab';
+  const sunamId = 'l_mskifjabnr1q2';
+  const galaxyHighlightPublished = () => sameSelection(sourceCuration?.highlights, defaults);
   const canvaOrderPublished = () => sourceCuration?.highlights?.[0] === defaults[0] && sourceCuration?.highlights?.[1] === canvaId;
   const previousPublishedSelection = ['lectures_mt5sy7fr', 'l_mr29yai68xvad', 'lectures_20261007_canva_korea', 'l_mskip8tt41oij', 'l_mskifjabnr1q2'];
   const previousSelections = [
@@ -21,6 +25,17 @@
   ];
   const sameSelection = (left, right) => Array.isArray(left) && left.length === right.length && left.every((id, index) => id === right[index]);
   const correctionPublished = () => sameSelection(sourceCuration?.highlights, defaults) || canvaOrderPublished();
+
+  function reconcileGalaxyHighlight(candidate) {
+    if (!galaxyHighlightPublished() || (Array.isArray(candidate?.curationMigrationIds) && candidate.curationMigrationIds.includes(galaxyHighlightId))) return candidate;
+    const highlights = [...(candidate?.highlights || [])];
+    const index = highlights.indexOf(sunamId);
+    if (index < 0) return candidate;
+    // Replace only the requested slot. Preserve custom ordering, hidden records
+    // and labels; the Sunam lecture itself remains in the archive.
+    highlights.splice(index, 1, galaxyId);
+    return { ...candidate, highlights: [...new Set(highlights)] };
+  }
 
   function reconcileCanvaOrder(candidate) {
     if (!canvaOrderPublished() || (Array.isArray(candidate?.curationMigrationIds) && candidate.curationMigrationIds.includes(canvaOrderId))) return candidate;
@@ -76,7 +91,7 @@
     }
     if (!stored) return normalize(sourceCuration);
     try {
-      return normalize(reconcileCanvaOrder(reconcilePublishedSelection(JSON.parse(stored))));
+      return normalize(reconcileGalaxyHighlight(reconcileCanvaOrder(reconcilePublishedSelection(JSON.parse(stored)))));
     } catch (error) {
       try {
         localStorage.removeItem(key);
@@ -93,7 +108,7 @@
     try {
       // Keep migration bookkeeping local, outside the public curation payload.
       // A later explicit selection, including an old default, must stay chosen.
-      const stored = correctionPublished() ? { ...value, curationMigrationIds: [selectionCorrectionId, gyeongnamCorrectionId, ...(canvaOrderPublished() ? [canvaOrderId] : [])] } : value;
+      const stored = correctionPublished() ? { ...value, curationMigrationIds: [selectionCorrectionId, gyeongnamCorrectionId, ...(canvaOrderPublished() ? [canvaOrderId] : []), ...(galaxyHighlightPublished() ? [galaxyHighlightId] : [])] } : value;
       localStorage.setItem(key, JSON.stringify(stored));
     } catch (error) {
       if (error?.name !== 'SecurityError') console.warn('강의 큐레이션 초안을 저장하지 못했습니다.', error);
