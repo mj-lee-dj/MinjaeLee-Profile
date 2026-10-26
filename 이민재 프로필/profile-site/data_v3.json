@@ -364,14 +364,16 @@
     {
       "id": "lectures_20261021_galaxy_teacher_lab",
       "visible": true,
-      "title": "교사가 편해지는 갤럭시 수업 루틴",
+      "title": "삼성전자 갤럭시 티처랩 | 교사가 편해지는 갤럭시 수업 루틴",
       "org": "삼성전자 갤럭시 티처랩 · 대전문정초 · 2026.10.21",
       "year": "2026",
       "category": "에듀테크",
       "topic": "Canva·에듀테크",
       "link": "https://drive.google.com/file/d/1gf0wXR6AEzhoAPPzn5RRAisBasJhj2hC/view",
-      "images": [],
-      "image": "",
+      "images": [
+        "uploads/20261021-galaxy-participant-summary.webp"
+      ],
+      "image": "uploads/20261021-galaxy-participant-summary.webp",
       "highlight": false,
       "linkLabel": "참가자 한 장 요약 · PDF"
     },

@@ -89,7 +89,18 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('lectureGalleryThumbs').hidden = !images.length;
     if (!images.length) { document.getElementById('lectureGalleryCount').textContent = ''; return; }
     state.galleryIndex = Math.max(0, Math.min(state.galleryIndex, images.length - 1));
-    const image = document.getElementById('lectureGalleryImage'); image.src = images[state.galleryIndex]; image.alt = `${lecture.title} 강의 자료 ${state.galleryIndex + 1}`;
+    const image = document.getElementById('lectureGalleryImage');
+    const stage = document.getElementById('lectureGalleryStage');
+    const fitDocument = () => {
+      // Portrait handouts need the full panel width; keep the existing frame
+      // for landscape slides. Reset on every image so ratios cannot leak.
+      if (image.naturalHeight > image.naturalWidth && image.naturalWidth) stage.style.aspectRatio = `${image.naturalWidth} / ${image.naturalHeight}`;
+      else stage.style.removeProperty('aspect-ratio');
+    };
+    stage.style.removeProperty('aspect-ratio');
+    image.onload = fitDocument;
+    image.src = images[state.galleryIndex]; image.alt = `${lecture.title} 강의 자료 ${state.galleryIndex + 1}`;
+    if (image.complete && image.naturalWidth) fitDocument();
     document.getElementById('lectureGalleryCount').textContent = `${state.galleryIndex + 1} / ${images.length}`;
     document.getElementById('lectureGalleryThumbs').innerHTML = images.map((src, index) => `<button class="lecture-gallery__thumb" type="button" data-gallery-index="${index}" aria-label="${index + 1}번째 이미지 보기" aria-current="${index === state.galleryIndex}"><img src="${escapeHtml(src)}" width="320" height="180" alt=""></button>`).join('');
     document.querySelector('[data-gallery-prev]').disabled = images.length < 2 || state.galleryIndex === 0;

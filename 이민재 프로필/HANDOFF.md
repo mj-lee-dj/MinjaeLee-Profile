@@ -37,7 +37,7 @@
 
 ## 검증
 
-- Node 테스트 148/148 통과. `node --test --test-reporter=tap tests/*.test.js tests/*.test.mjs`
+- Node 테스트 153/153 통과. `node --test --test-reporter=tap tests/*.test.js tests/*.test.mjs`
 - JavaScript 구문 검사 및 `git diff --check` 통과. 정적 사이트로 별도 package/build/lint 명령 없음.
 - 별도 headless Chrome에서 로컬·운영 1280px / 375px 확인.
 - AI 신규 4개, Canva·Galaxy, Watch 21개, 각 자료 링크·갤러리·Tab 포커스 검증.
@@ -50,6 +50,11 @@
 - 10/23 충남고 2025년 정정 유지.
 
 ## 자료 확인·주의
+
+- Galaxy 후속: 기존 빈 `images` 배열로 상세 갤러리가 숨겨진 문제를 수정. 제목을 `삼성전자 갤럭시 티처랩 | 교사가 편해지는 갤럭시 수업 루틴`으로 보완.
+- 공개 참가자 PDF `1gf0wXR6AEzhoAPPzn5RRAisBasJhj2hC`의 실제 1쪽 전체를 `uploads/20261021-galaxy-participant-summary.webp`(1697×2400, 281,352 bytes)로 렌더링. anyone reader 재확인, 원본 PDF 링크 유지.
+- 원 강사 덱·생성 이미지·새 디자인은 사용하지 않음. 세로 자료는 갤러리 패널 전체 폭으로 표시하며 가로 슬라이드로 바꾸면 기존 비율 복원.
+- 기존 Galaxy 초안의 원래 제목과 빈 이미지만 보완. 사용자 제목·이미지·숨김·삭제와 저장소 원문, Canva 배치 보존. 이후 명시적 저장은 그대로 유지.
 
 - 1·2회 덱, 3회 PNG ZIP, Galaxy 참가자 PDF, CNU 최신 덱: anyone reader / 검색 노출 false 확인.
 - 3회 방송: `https://joo.is/민재쌤노트북3강` → YouTube `x88cs2TdrBY`; oEmbed의 정확 제목 확인.

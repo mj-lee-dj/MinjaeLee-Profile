@@ -216,6 +216,26 @@
     return state;
   }
 
+  const galaxyMaterialsId = '2026-10-26-galaxy-title-image';
+  const galaxyLectureId = 'lectures_20261021_galaxy_teacher_lab';
+  const galaxyTitle = '삼성전자 갤럭시 티처랩 | 교사가 편해지는 갤럭시 수업 루틴';
+  const galaxySource = () => sourceCollections.lectures.find((item) => item.id === galaxyLectureId);
+  const galaxyPublished = () => galaxySource()?.title === galaxyTitle && normalizedImages(galaxySource()).length > 0;
+  function reconcileGalaxyMaterials(state) {
+    if (!galaxyPublished() || state.contentMigrationIds.includes(galaxyMaterialsId)) return state;
+    const item = state.lectures.find((entry) => entry.id === galaxyLectureId);
+    if (item) {
+      if (item.title === '교사가 편해지는 갤럭시 수업 루틴') item.title = galaxyTitle;
+      if (!normalizedImages(item).length) {
+        item.images = normalizedImages(galaxySource());
+        item.image = item.images[0];
+      }
+    }
+    // Preserve custom titles, images, visibility and intentional deletions.
+    state.contentMigrationIds.push(galaxyMaterialsId);
+    return state;
+  }
+
   function reconcileAssessmentLectureTopic(state) {
     const id = '2026-10-assessment-lecture-topic';
     const lectureId = 'l_mqcu97usa7rhx';
@@ -271,7 +291,7 @@
         : source;
       state[section] = ordered.map((item, index) => normalizeItem(section, item, index)).filter(Boolean);
     });
-    return reconcileCanvaWatchOrder(reconcileOctoberMaterials(reconcileChungnamLectureYear(reconcileNotebookLiveTwo(reconcileAssessmentLectureTopic(reconcileLectureCountCorrection(reconcileLectureCategoryCorrection(reconcileMediaCorrection(state))))))));
+    return reconcileGalaxyMaterials(reconcileCanvaWatchOrder(reconcileOctoberMaterials(reconcileChungnamLectureYear(reconcileNotebookLiveTwo(reconcileAssessmentLectureTopic(reconcileLectureCountCorrection(reconcileLectureCategoryCorrection(reconcileMediaCorrection(state)))))))));
   }
 
   function normalize(candidate) {
@@ -369,6 +389,7 @@
         ? candidate.sourceYoutubeIds : (Array.isArray(candidate?.youtubeVideos) ? candidate.youtubeVideos : []).map((item) => item?.id));
       reconcileOctoberMaterials(value, true, seenWatchIds);
       reconcileCanvaWatchOrder(value);
+      reconcileGalaxyMaterials(value);
       return value;
     } catch (error) {
       console.warn('손상된 통합 콘텐츠 초안을 기본값으로 복구했습니다.', error);
@@ -380,6 +401,7 @@
     const value = normalize(candidate);
     // A subsequent explicit reorder must remain chosen after publish/reload.
     if (canvaWatchFirst() && !value.contentMigrationIds.includes(canvaWatchOrderId)) value.contentMigrationIds.push(canvaWatchOrderId);
+    if (galaxyPublished() && !value.contentMigrationIds.includes(galaxyMaterialsId)) value.contentMigrationIds.push(galaxyMaterialsId);
     try {
       localStorage.setItem(key, JSON.stringify(value));
     } catch (error) {
