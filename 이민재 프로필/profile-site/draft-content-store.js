@@ -168,15 +168,15 @@
     return state;
   }
 
-  function reconcileOctoberMaterials(state, allowAddition = true) {
+  function reconcileOctoberMaterials(state, allowAddition = true, seenWatchIds = null) {
     const id = '2026-10-26-lecture-materials';
-    if (state.contentMigrationIds.includes(id)) return state;
+    if (state.contentMigrationIds.includes(id) && !seenWatchIds) return state;
     const ids = ['youtubeVideos_20261027_gemini_notebook_live_3', 'youtubeVideos_20261007_canva_korea'];
     const published = ids.map((entryId) => sourceCollections.youtubeVideos.find((item) => item.id === entryId));
     if (published.some((item) => !item)) return state;
     const youtubeId = (link) => String(link || '').match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?(?:[^#]*&)?v=|embed\/|live\/|shorts\/))([\w-]{11})/)?.[1];
     if (allowAddition) {
-      const additions = published.filter((item) => !state.youtubeVideos.some((entry) =>
+      const additions = published.filter((item) => !seenWatchIds?.has(item.id) && !state.youtubeVideos.some((entry) =>
         entry.id === item.id || entry.link === item.link ||
         (item.id === ids[0] && youtubeId(entry.link) === 'x88cs2TdrBY')));
       // Preserve local order, edits and visibility. Only unseen videos are added.
@@ -184,9 +184,9 @@
       const canvaId = 'lectures_20261007_canva_korea';
       const canva = state.lectures.find((item) => item.id === canvaId);
       const sourceCanva = sourceCollections.lectures.find((item) => item.id === canvaId);
-      if (canva && !canva.link && sourceCanva?.link) canva.link = sourceCanva.link;
+      if (!seenWatchIds?.has(ids[1]) && canva && !canva.link && sourceCanva?.link) canva.link = sourceCanva.link;
     }
-    state.contentMigrationIds.push(id);
+    if (!state.contentMigrationIds.includes(id)) state.contentMigrationIds.push(id);
     return state;
   }
 
@@ -202,6 +202,17 @@
       if (item.category === lectureCategoryCorrection.previousCategory) item.category = published.category;
     }
     state.contentMigrationIds.push(lectureCategoryCorrection.id);
+    return state;
+  }
+
+  const canvaWatchOrderId = '2026-10-26-canva-watch-first';
+  const canvaWatchId = 'youtubeVideos_20261007_canva_korea';
+  const canvaWatchFirst = () => sourceCollections.youtubeVideos[0]?.id === canvaWatchId;
+  function reconcileCanvaWatchOrder(state) {
+    if (!canvaWatchFirst() || state.contentMigrationIds.includes(canvaWatchOrderId)) return state;
+    const index = state.youtubeVideos.findIndex((item) => item.id === canvaWatchId);
+    if (index > 0) state.youtubeVideos.unshift(...state.youtubeVideos.splice(index, 1));
+    state.contentMigrationIds.push(canvaWatchOrderId);
     return state;
   }
 
@@ -252,7 +263,7 @@
       email: text(contact.email, 320),
       instagram: url(contact.instagram),
     };
-    const state = { version: 1, photoDirty: false, personal, sourceLectureIds: sourceCollections.lectures.map((item) => item.id), contentMigrationIds: [] };
+    const state = { version: 1, photoDirty: false, personal, sourceLectureIds: sourceCollections.lectures.map((item) => item.id), sourceYoutubeIds: sourceCollections.youtubeVideos.map((item) => item.id), contentMigrationIds: [] };
     collectionKeys.forEach((section) => {
       const source = clone(sourceCollections[section]);
       const ordered = section === 'publications'
@@ -260,7 +271,7 @@
         : source;
       state[section] = ordered.map((item, index) => normalizeItem(section, item, index)).filter(Boolean);
     });
-    return reconcileOctoberMaterials(reconcileChungnamLectureYear(reconcileNotebookLiveTwo(reconcileAssessmentLectureTopic(reconcileLectureCountCorrection(reconcileLectureCategoryCorrection(reconcileMediaCorrection(state)))))));
+    return reconcileCanvaWatchOrder(reconcileOctoberMaterials(reconcileChungnamLectureYear(reconcileNotebookLiveTwo(reconcileAssessmentLectureTopic(reconcileLectureCountCorrection(reconcileLectureCategoryCorrection(reconcileMediaCorrection(state))))))));
   }
 
   function normalize(candidate) {
@@ -278,7 +289,7 @@
       email: text(candidatePersonal.email, 320) || fallback.personal.email,
       instagram: url(candidatePersonal.instagram) || fallback.personal.instagram,
     };
-    const state = { version: 1, photoDirty, personal, sourceLectureIds: sourceCollections.lectures.map((item) => item.id), contentMigrationIds: Array.isArray(candidate.contentMigrationIds) ? candidate.contentMigrationIds.filter((id) => typeof id === 'string') : [] };
+    const state = { version: 1, photoDirty, personal, sourceLectureIds: sourceCollections.lectures.map((item) => item.id), sourceYoutubeIds: sourceCollections.youtubeVideos.map((item) => item.id), contentMigrationIds: Array.isArray(candidate.contentMigrationIds) ? candidate.contentMigrationIds.filter((id) => typeof id === 'string') : [] };
     collectionKeys.forEach((section) => {
       const source = Array.isArray(candidate[section]) ? candidate[section] : fallback[section];
       state[section] = source.map((item, index) => normalizeItem(section, item, index)).filter(Boolean);
@@ -350,6 +361,14 @@
         .filter((item) => !baselineIds.has(item.id) && !draftIds.has(item.id))
         .map((item, index) => normalizeItem('lectures', item, index)).filter(Boolean);
       value.lectures = [...additions, ...value.lectures];
+      // Old source-shaped drafts could record the October migration without
+      // adding its videos. Repair that read path using the original baseline,
+      // not the migration marker. Saving records the current baseline so later
+      // intentional deletions remain authoritative. Never rewrite stored bytes.
+      const seenWatchIds = new Set(Array.isArray(candidate?.sourceYoutubeIds)
+        ? candidate.sourceYoutubeIds : (Array.isArray(candidate?.youtubeVideos) ? candidate.youtubeVideos : []).map((item) => item?.id));
+      reconcileOctoberMaterials(value, true, seenWatchIds);
+      reconcileCanvaWatchOrder(value);
       return value;
     } catch (error) {
       console.warn('손상된 통합 콘텐츠 초안을 기본값으로 복구했습니다.', error);
@@ -359,6 +378,8 @@
 
   function save(candidate) {
     const value = normalize(candidate);
+    // A subsequent explicit reorder must remain chosen after publish/reload.
+    if (canvaWatchFirst() && !value.contentMigrationIds.includes(canvaWatchOrderId)) value.contentMigrationIds.push(canvaWatchOrderId);
     try {
       localStorage.setItem(key, JSON.stringify(value));
     } catch (error) {

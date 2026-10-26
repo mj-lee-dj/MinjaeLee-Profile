@@ -7,7 +7,7 @@ const root = path.join(__dirname, '..');
 const published = JSON.parse(fs.readFileSync(path.join(root, 'data_v3.json'), 'utf8'));
 const script = fs.readFileSync(path.join(root, 'draft-lecture-store.js'), 'utf8');
 const key = 'profileDraft.lectureCuration';
-const next = ['lectures_mt5sy7fr', 'l_mr29yai68xvad', 'lectures_20261007_canva_korea', 'l_mskirvwkn6cbr', 'l_mskifjabnr1q2'];
+const next = ['lectures_mt5sy7fr', 'lectures_20261007_canva_korea', 'l_mr29yai68xvad', 'l_mskirvwkn6cbr', 'l_mskifjabnr1q2'];
 const previous = [
   ['l_mskiwlabhgr9u', 'l_mr29yai68xvad', 'l_mqcuqz7aplqgo', 'l6', 'lectures_mt5sy7fr'],
   ['l_mskiwlabhgr9u', 'l_mr29yai68xvad', 'l_mqcuqz7aplqgo', 'l6', 'l_mls8mo9epkzye'],
@@ -33,6 +33,16 @@ test('clean browsers use the approved five highlights once in the requested orde
   assert.deepEqual(plain(store.defaults), next);
   assert.equal(new Set(data.lectureCuration.highlights).size, 5);
   assert.equal(storage.size, 0);
+});
+
+test('previously migrated highlights move only Canva second and preserve saved bytes', () => {
+  const highlights=[next[0],next[2],next[1],...next.slice(3)];
+  const candidate={highlights,hidden:[next[4]],label:'내 대표 강의',curationMigrationIds:['2026-10-selected-lecture-highlights','2026-10-gyeongnam-highlight']};
+  const first=start(candidate);
+  assert.deepEqual(plain(first.data.lectureCuration),{highlights:next,hidden:candidate.hidden,label:candidate.label});
+  assert.equal(first.storage.get(key),JSON.stringify(candidate));
+  first.store.save(candidate);
+  assert.deepEqual(plain(start(undefined,published,first.storage).data.lectureCuration.highlights),highlights);
 });
 
 previous.forEach((highlights, index) => {
@@ -80,7 +90,7 @@ test('malformed migration metadata cannot discard local hidden or label edits', 
 test('all five target records retain their original gallery images', () => {
   const selected = next.map(id => published.lectures.find(item => item.id === id));
   assert.deepEqual(selected.map(item => item.images.length), [3, 3, 3, 4, 1]);
-  assert.equal(selected[2].image, 'uploads/20261007-canva-cover.webp');
+  assert.equal(selected[1].image, 'uploads/20261007-canva-cover.webp');
   assert.equal(selected[3].title, '[경남 중등 1정연수] NotebookLM 마스터 클래스');
   assert.equal(selected[3].org, '경상국립대학교');
   assert.equal(selected[4].topic, '학부모·학생 강의');
@@ -88,7 +98,7 @@ test('all five target records retain their original gallery images', () => {
   assert.equal(published.youtubeVideos.length, 21);
 });
 
-test('the preceding published selection switches only its fourth record, with or without the prior marker', () => {
+test('the preceding published selection adopts the current approved highlights, with or without the prior marker', () => {
   for (const curationMigrationIds of [[], ['2026-10-selected-lecture-highlights']]) {
     const candidate = { highlights: preceding, hidden: ['l6'], label: '내 선택', curationMigrationIds };
     const { data, storage } = start(candidate);

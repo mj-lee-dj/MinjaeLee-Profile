@@ -30,6 +30,7 @@ function stale() {
   return plain(start(before).store.state);
 }
 test('October materials use the requested topics, public sources and single Watch entries', () => {
+  assert.equal(published.youtubeVideos[0].id,watchIds[1]);
   assert.equal(published.lectures.length, 69);
   assert.equal(published.youtubeVideos.length, 21);
   const records = lectureIds.map(id => published.lectures.find(x => x.id === id));
@@ -48,6 +49,20 @@ test('October materials use the requested topics, public sources and single Watc
   assert.equal(canva.images.length, 3);
   records.flatMap(x=>x.images).forEach(image=>assert.ok(fs.existsSync(path.join(root,image))));
 });
+test('old Watch ordering moves only Canva first and later explicit reorders survive reload', () => {
+  const candidate=plain(start().store.state);
+  candidate.contentMigrationIds=candidate.contentMigrationIds.filter(x=>x!=='2026-10-26-canva-watch-first');
+  const canva=candidate.youtubeVideos.shift();
+  candidate.youtubeVideos.splice(3,0,canva);
+  const before=JSON.stringify(candidate);
+  const first=start(published,new Map([[key,before]]));
+  assert.equal(first.data.youtubeVideos[0].id,watchIds[1]);
+  assert.deepEqual(plain(first.data.youtubeVideos.slice(1)),candidate.youtubeVideos.filter(x=>x.id!==watchIds[1]));
+  assert.equal(first.storage.get(key),before);
+  first.store.save(candidate);
+  assert.deepEqual(plain(start(published,first.storage).data.youtubeVideos),candidate.youtubeVideos);
+});
+
 test('old drafts gain materials and missing Watch records while keeping edits and stored bytes', () => {
   const candidate = stale();
   candidate.lectures[1].title = '로컬 수정';
@@ -65,7 +80,7 @@ test('old drafts gain materials and missing Watch records while keeping edits an
 });
 test('equivalent direct broadcast links and custom Canva links are preserved without duplication', () => {
   const candidate = stale();
-  candidate.youtubeVideos.unshift({ ...published.youtubeVideos[0], id:'local-broadcast', link:'https://youtu.be/x88cs2TdrBY', visible:false });
+  candidate.youtubeVideos.unshift({ ...published.youtubeVideos.find(x=>x.id===watchIds[0]), id:'local-broadcast', link:'https://youtu.be/x88cs2TdrBY', visible:false });
   candidate.lectures.find(x=>x.id==='lectures_20261007_canva_korea').link='https://example.com/edited';
   const {data}=start(published,new Map([[key,JSON.stringify(candidate)]]));
   assert.equal(data.youtubeVideos.length,21);
@@ -85,4 +100,40 @@ test('explicit deletions and cleared links remain authoritative through publish 
   assert.deepEqual(plain(reloaded.data.lectures),payload.lectures);
   assert.deepEqual(plain(reloaded.data.youtubeVideos),payload.youtubeVideos);
   assert.ok(!Object.hasOwn(payload,'contentMigrationIds'));
+});
+
+for (const marked of [false, true]) {
+  test(`legacy source-shaped drafts recover missing Watch entries (migration marked: ${marked})`, () => {
+    const candidate = stale();
+    delete candidate.version;
+    delete candidate.sourceYoutubeIds;
+    if (marked) candidate.contentMigrationIds.push(migration);
+    candidate.youtubeVideos.reverse();
+    candidate.youtubeVideos[0].title = '보존할 편집';
+    candidate.youtubeVideos[0].visible = false;
+    candidate.lectures[0].title = '보존할 강의';
+    const serialized = JSON.stringify(candidate);
+    const {data,store,storage,writes} = start(published,new Map([[key,serialized]]));
+    assert.equal(data.youtubeVideos.length,21);
+    assert.deepEqual(plain(data.youtubeVideos.slice(2)),candidate.youtubeVideos);
+    assert.equal(data.lectures.find(x=>x.id===candidate.lectures[0].id).title,'보존할 강의');
+    assert.equal(data.lectures.find(x=>x.id==='lectures_20261007_canva_korea').link,published.lectures.find(x=>x.id==='lectures_20261007_canva_korea').link);
+    assert.equal(store.state.contentMigrationIds.filter(x=>x===migration).length,1);
+    assert.equal(storage.get(key),serialized);
+    assert.deepEqual(writes,[]);
+  });
+}
+
+test('legacy repair preserves hidden new entries and custom links even with a stale migration marker', () => {
+  const candidate=stale();
+  delete candidate.version;
+  delete candidate.sourceYoutubeIds;
+  candidate.contentMigrationIds.push(migration);
+  candidate.youtubeVideos.unshift({...published.youtubeVideos.find(x=>x.id===watchIds[0]),visible:false,title:'숨긴 방송'});
+  candidate.lectures.find(x=>x.id==='lectures_20261007_canva_korea').link='https://example.com/custom';
+  const {data}=start(published,new Map([[key,JSON.stringify(candidate)]]));
+  assert.equal(data.youtubeVideos.filter(x=>x.id===watchIds[0]).length,1);
+  assert.equal(data.youtubeVideos.find(x=>x.id===watchIds[0]).visible,false);
+  assert.equal(data.youtubeVideos.find(x=>x.id===watchIds[0]).title,'숨긴 방송');
+  assert.equal(data.lectures.find(x=>x.id==='lectures_20261007_canva_korea').link,'https://example.com/custom');
 });

@@ -1,6 +1,16 @@
 {
   "youtubeVideos": [
     {
+      "id": "youtubeVideos_20261007_canva_korea",
+      "visible": true,
+      "title": "기초부터 교실 활용까지 Canva의 정석",
+      "link": "https://t2c.kr/watch/session_b40b4fab-f25c-4a31-be30-19de16e75a0b/video_canva_basics_20261007",
+      "images": [
+        "uploads/20261007-canva-cover.webp"
+      ],
+      "image": "uploads/20261007-canva-cover.webp"
+    },
+    {
       "id": "youtubeVideos_20261027_gemini_notebook_live_3",
       "visible": true,
       "title": "멋진 슬라이드, 내 생각대로 쉽고 빠르게｜민재쌤의 Gemini Notebook [3강]",
@@ -25,16 +35,6 @@
       "link": "https://youtube.com/live/2Dqpsaqa0Jw",
       "images": [],
       "image": ""
-    },
-    {
-      "id": "youtubeVideos_20261007_canva_korea",
-      "visible": true,
-      "title": "기초부터 교실 활용까지 Canva의 정석",
-      "link": "https://t2c.kr/watch/session_b40b4fab-f25c-4a31-be30-19de16e75a0b/video_canva_basics_20261007",
-      "images": [
-        "uploads/20261007-canva-cover.webp"
-      ],
-      "image": "uploads/20261007-canva-cover.webp"
     },
     {
       "id": "youtubeVideos_mt3md3pm",
@@ -1865,8 +1865,8 @@
   "lectureCuration": {
     "highlights": [
       "lectures_mt5sy7fr",
-      "l_mr29yai68xvad",
       "lectures_20261007_canva_korea",
+      "l_mr29yai68xvad",
       "l_mskirvwkn6cbr",
       "l_mskifjabnr1q2"
     ],

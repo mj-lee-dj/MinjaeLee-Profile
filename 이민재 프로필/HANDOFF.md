@@ -1,7 +1,7 @@
 # HANDOFF — 이민재 프로필 사이트
 
 - 마지막 갱신: 2026-10-26 KST
-- 상태: 10월 강의 자료·Watch 공개 반영 및 운영 검증 완료
+- 상태: 10월 자료 후속 수정 — 기존 방문자 Watch 누락 복구 및 Canva 순서 조정
 - 작업 브랜치: `main` (GitHub 연결을 통해 정상 fast-forward 반영)
 - 콘텐츠 릴리스: `a88aa7feb86a41080ba56d7730ecd5173832576f`
 - 콘텐츠 트리: `fecd6409c16238edaf7813ce54dd74a4360564bd`
@@ -24,9 +24,20 @@
 - 상세 gallery에 외부 자료 링크 표시, Tab 포커스 순환에 링크 포함.
 - 오래된 브라우저 초안에는 새 Watch와 빈 Canva 링크만 보완. 사용자 편집·삭제·공개 상태 보존.
 
+## 10/26 재방문 오류·정렬 후속
+
+- 이전 운영 배포는 정상(강의 69 / Watch 21)이었으나, `profileDraft.contentV1`의 version 없는 구형 사본이 Watch 19개를 덮어쓰는 증상을 재현.
+- 기존 코드가 추가 없이 마이그레이션 완료 표시만 남긴 상태도 복구. 이번 두 Watch와 빈 Canva 링크만 보완하며 저장소 원문은 변경하지 않음.
+- Watch 원본 ID 기준을 로컬 초안 메타데이터에 추적하여 이후 명시적 삭제·재정렬은 보존. 게시 payload에 메타데이터가 새지 않음.
+- 사용자 추가 요청: Lecture 기본 대표 카드 GES 1번 유지, Canva 2번 큰 자리, AI 워크플로 3번. 주제별 아카이브 순서는 그대로 유지.
+- Watch Canva를 맨 앞에 이동. 나머지 항목·자료 링크·이미지·수정·숨김은 보존.
+- 기존 큐레이션 완료 표시가 있어도 이전 Canva 3번 선택을 2번으로 보완. 이후 명시적으로 저장한 선택은 유지.
+- 공개 탭 pageshow/focus/visibility 및 보이는 탭의 60초 확인으로 새 HTML 자산 버전을 감지해 한 번 갱신. 오프라인/동일 버전에서 반복 새로고침하지 않음.
+- 이미 구버전으로 열린 탭은 최초 한 번 정상 새로고침 필요. 캐시나 저장소 전체 삭제는 필요 없음.
+
 ## 검증
 
-- Node 테스트 140/140 통과. `node --test --test-reporter=tap tests/*.test.js tests/*.test.mjs`
+- Node 테스트 148/148 통과. `node --test --test-reporter=tap tests/*.test.js tests/*.test.mjs`
 - JavaScript 구문 검사 및 `git diff --check` 통과. 정적 사이트로 별도 package/build/lint 명령 없음.
 - 별도 headless Chrome에서 로컬·운영 1280px / 375px 확인.
 - AI 신규 4개, Canva·Galaxy, Watch 21개, 각 자료 링크·갤러리·Tab 포커스 검증.

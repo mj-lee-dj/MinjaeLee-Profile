@@ -115,7 +115,7 @@ test('migration preserves custom images and an equivalent existing video link', 
   candidate.youtubeVideos.unshift({ ...liveOne, id: 'local-live-video', title: '로컬 영상 제목', link: 'https://www.youtube.com/watch?v=2Dqpsaqa0Jw&feature=share' });
   const { data } = start(published, new Map([['profileDraft.contentV1', JSON.stringify(candidate)]]));
   assert.equal(data.youtubeVideos.length, 21);
-  assert.equal(data.youtubeVideos[0].title, '로컬 영상 제목');
+  assert.equal(data.youtubeVideos.find(item => item.id === 'local-live-video').title, '로컬 영상 제목');
   assert.deepEqual(Array.from(data.lectures[0].images), ['uploads/local-custom.png']);
 });
 
@@ -172,7 +172,7 @@ test('the exact 2026 Sunam lecture is published under the audience category in b
   assert.deepEqual(lecture.images, ['uploads/11e803f03cdf.png']);
   const scriptData = fs.readFileSync(path.join(root, 'data_v3.js'), 'utf8').split('const profileData = ')[1];
   const jsonData = fs.readFileSync(path.join(root, 'data_v3.json'), 'utf8');
-  assert.equal(scriptData.replace(/;\s*$/, '\n'), jsonData);
+  assert.equal(scriptData.replace(/\r\n/g, '\n').replace(/;\s*$/, '\n'), jsonData.replace(/\r\n/g, '\n'));
 });
 
 test('a stale Sunam draft changes only its legacy classification without writing stored bytes', () => {

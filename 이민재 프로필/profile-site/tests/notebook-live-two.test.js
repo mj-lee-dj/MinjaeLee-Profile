@@ -70,6 +70,7 @@ test('an 18-video draft receives only the new replay without overwriting edits o
   const { store, writes } = start(published, storage);
   const expected = structuredClone(candidate);
   expected.youtubeVideos.unshift(published.youtubeVideos.find((item) => item.id === videoId));
+  expected.sourceYoutubeIds = published.youtubeVideos.map((item) => item.id);
   expected.contentMigrationIds.push(migrationId);
   assert.deepEqual(plain(store.state), expected);
   assert.equal(storage.get(key), serialized);
@@ -138,7 +139,7 @@ test('the replay migration waits for its source record and does not affect an ol
 test('public and admin entries cache-bust both changed runtime files with the same release identifier', () => {
   for (const name of ['index.html', 'admin.html', 'draft-v2.html', 'admin-profile-final.html']) {
     const html = read(name);
-    assert.match(html, /data_v3\.js\?v=20261026-materials/);
-    assert.match(html, /draft-content-store\.js\?v=20261026-materials/);
+    assert.match(html, /data_v3\.js\?v=20261026-revisit/);
+    assert.match(html, /draft-content-store\.js\?v=20261026-revisit/);
   }
 });

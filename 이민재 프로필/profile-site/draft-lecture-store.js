@@ -2,8 +2,8 @@
   const key = 'profileDraft.lectureCuration';
   const defaults = [
     'lectures_mt5sy7fr',
-    'l_mr29yai68xvad',
     'lectures_20261007_canva_korea',
+    'l_mr29yai68xvad',
     'l_mskirvwkn6cbr',
     'l_mskifjabnr1q2',
   ];
@@ -11,13 +11,28 @@
   const sourceCuration = profileData.lectureCuration && typeof profileData.lectureCuration === 'object' ? profileData.lectureCuration : null;
   const selectionCorrectionId = '2026-10-selected-lecture-highlights';
   const gyeongnamCorrectionId = '2026-10-gyeongnam-highlight';
+  const canvaOrderId = '2026-10-26-canva-second-highlight';
+  const canvaId = 'lectures_20261007_canva_korea';
+  const canvaOrderPublished = () => sourceCuration?.highlights?.[0] === defaults[0] && sourceCuration?.highlights?.[1] === canvaId;
   const previousPublishedSelection = ['lectures_mt5sy7fr', 'l_mr29yai68xvad', 'lectures_20261007_canva_korea', 'l_mskip8tt41oij', 'l_mskifjabnr1q2'];
   const previousSelections = [
     ['l_mskiwlabhgr9u', 'l_mr29yai68xvad', 'l_mqcuqz7aplqgo', 'l6', 'lectures_mt5sy7fr'],
     ['l_mskiwlabhgr9u', 'l_mr29yai68xvad', 'l_mqcuqz7aplqgo', 'l6', 'l_mls8mo9epkzye'],
   ];
   const sameSelection = (left, right) => Array.isArray(left) && left.length === right.length && left.every((id, index) => id === right[index]);
-  const correctionPublished = () => sameSelection(sourceCuration?.highlights, defaults);
+  const correctionPublished = () => sameSelection(sourceCuration?.highlights, defaults) || canvaOrderPublished();
+
+  function reconcileCanvaOrder(candidate) {
+    if (!canvaOrderPublished() || (Array.isArray(candidate?.curationMigrationIds) && candidate.curationMigrationIds.includes(canvaOrderId))) return candidate;
+    const highlights = [...(candidate?.highlights || [])];
+    const index = highlights.indexOf(canvaId);
+    // Move the existing Canva selection into the second large card. Keep
+    // custom selections, visibility, labels and every other relative position.
+    if (highlights[0] !== defaults[0] || index < 2) return candidate;
+    highlights.splice(index, 1);
+    highlights.splice(1, 0, canvaId);
+    return { ...candidate, highlights };
+  }
 
   function reconcilePublishedSelection(candidate) {
     if (!correctionPublished()) return candidate;
@@ -61,7 +76,7 @@
     }
     if (!stored) return normalize(sourceCuration);
     try {
-      return normalize(reconcilePublishedSelection(JSON.parse(stored)));
+      return normalize(reconcileCanvaOrder(reconcilePublishedSelection(JSON.parse(stored))));
     } catch (error) {
       try {
         localStorage.removeItem(key);
@@ -78,7 +93,7 @@
     try {
       // Keep migration bookkeeping local, outside the public curation payload.
       // A later explicit selection, including an old default, must stay chosen.
-      const stored = correctionPublished() ? { ...value, curationMigrationIds: [selectionCorrectionId, gyeongnamCorrectionId] } : value;
+      const stored = correctionPublished() ? { ...value, curationMigrationIds: [selectionCorrectionId, gyeongnamCorrectionId, ...(canvaOrderPublished() ? [canvaOrderId] : [])] } : value;
       localStorage.setItem(key, JSON.stringify(stored));
     } catch (error) {
       if (error?.name !== 'SecurityError') console.warn('강의 큐레이션 초안을 저장하지 못했습니다.', error);
