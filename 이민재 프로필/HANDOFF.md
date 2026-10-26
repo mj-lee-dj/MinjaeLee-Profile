@@ -1,11 +1,11 @@
 # HANDOFF — 이민재 프로필 사이트
 
 - 마지막 갱신: 2026-10-26 KST
-- 상태: Galaxy 제목·실제 요약 이미지 후속 수정 및 운영 검증 완료. 기존 Canva 정렬·재방문 복구 유지.
+- 상태: Galaxy 실제 표지·워치·참가자 요약 3장 및 하이라이트 교체 운영 검증 완료. 기존 Canva 정렬·재방문 복구 유지.
 - 작업 브랜치: `main` (GitHub 연결을 통해 정상 fast-forward 반영)
-- 최신 콘텐츠 릴리스: `4a27a4d86bfc99bf986a8cf6e843214443cc9b57`
-- 콘텐츠 트리: `c9f75c9fe79d777f837bc38e7282c71fe43ecdf8`
-- Production: `dpl_ARphFxt3sMuUQ7Q5Dk7ukqoANT1X` — READY, GitHub Vercel success, 운영 별칭 확인
+- 최신 콘텐츠 릴리스: `582ad541b5b8c304065050c8bd9fe439a1e30823`
+- 콘텐츠 트리: `58b405370a26fc05df60d2d6d5261dbed70afda0`
+- Production: `dpl_6hBxC6EEPLzEP2qcvczmAxN4k2ec` — READY, GitHub Vercel success, 운영 별칭 확인
 - 운영 URL: https://minjae-lee-profile.vercel.app/
 - Vercel Root: `이민재 프로필/profile-site`
 - 데이터 원본: `profile-site/data_v3.js`, JSON 동기화: `profile-site/data_v3.json`
@@ -18,7 +18,7 @@
 - Canva Korea 10/7 기존 강의 카드에 t2c 시청 링크 보완, 같은 주소의 Watch 항목 추가.
 - 10/26 충남대학교 건설공학교육과 생성AI 강의 자료 허브를 AI에 추가.
 - 10/21 삼성전자 갤럭시 티처랩 기록을 Canva·에듀테크에 추가. 공개 참가자 요약 PDF만 연결.
-- 강사 전용 Galaxy 덱, 미확인 후기·인원·실적, 3회 진행 전 배지 미사용.
+- Galaxy 전체 강사 덱 링크·제작 인수인계 문서는 비공개 유지. 미확인 후기·인원·실적, 3회 진행 전 배지 미사용.
 - 새 강의 5개 / 새 Watch 2개. 최종 강의 69개, Watch 21개. 기존 다른 프로필·기록 보존.
 - 실제 공개 교안 표지·장면과 방송 썸네일 9개 사용. Canva 기존 이미지 재사용.
 - 상세 gallery에 외부 자료 링크 표시, Tab 포커스 순환에 링크 포함.
@@ -37,7 +37,7 @@
 
 ## 검증
 
-- Node 테스트 153/153 통과. `node --test --test-reporter=tap tests/*.test.js tests/*.test.mjs`
+- Node 테스트 158/158 통과. `node --test --test-reporter=tap tests/*.test.js tests/*.test.mjs`
 - JavaScript 구문 검사 및 `git diff --check` 통과. 정적 사이트로 별도 package/build/lint 명령 없음.
 - 별도 headless Chrome에서 로컬·운영 1280px / 375px 확인.
 - AI 신규 4개, Canva·Galaxy, Watch 21개, 각 자료 링크·갤러리·Tab 포커스 검증.
@@ -51,11 +51,13 @@
 
 ## 자료 확인·주의
 
-- Galaxy 후속: 기존 빈 `images` 배열로 상세 갤러리가 숨겨진 문제를 수정. 제목을 `삼성전자 갤럭시 티처랩 | 교사가 편해지는 갤럭시 수업 루틴`으로 보완.
-- 공개 참가자 PDF `1gf0wXR6AEzhoAPPzn5RRAisBasJhj2hC`의 실제 1쪽 전체를 `uploads/20261021-galaxy-participant-summary.webp`(1697×2400, 281,352 bytes)로 렌더링. anyone reader 재확인, 원본 PDF 링크 유지.
-- 원 강사 덱·생성 이미지·새 디자인은 사용하지 않음. 세로 자료는 갤러리 패널 전체 폭으로 표시하며 가로 슬라이드로 바꾸면 기존 비율 복원.
-- 기존 Galaxy 초안의 원래 제목과 빈 이미지만 보완. 사용자 제목·이미지·숨김·삭제와 저장소 원문, Canva 배치 보존. 이후 명시적 저장은 그대로 유지.
-- 로컬·운영 1280/375px 신규·기존 초안 4조합에서 이미지·새 제목·PDF 링크·열기/닫기·재방문 확인. 가로 슬라이드 비율 복원 및 페이지 오류 없음. 운영 변경 파일 9개(이미지 포함)는 원격 blob SHA 일치.
+- Galaxy 최신 요청: 대표 썸네일과 갤러리를 실제 강의 표지 → 워치 페이지 → 참가자 한 장 요약 PDF 순서로 변경. 세 번째 문서는 사용자 확인 완료.
+- 원본 `[261021] 교사가 편해지는 갤럭시 수업 루틴(이민재)_QR교체.pptx`의 1쪽 표지·5쪽 워치 장면을 원래 로고와 배치 그대로 추출. 두 장만 공개하며 덱 전체·발표자 노트·내부 HANDOFF.md는 게시하지 않음.
+- `uploads/20261021-galaxy-cover.webp`(1920×1080, 118,748 bytes), `20261021-galaxy-watch.webp`(1920×1080, 185,416 bytes). 참가자 요약 이미지(1697×2400, 281,352 bytes)와 공개 PDF 링크는 재사용.
+- 기존 요약 단독 이미지·빈 이미지 초안을 새 3장으로 보완. 이전 마이그레이션 완료 상태도 처리하고 사용자 제목·이미지·숨김·삭제와 저장 원문은 보존. 이후 명시적 저장은 유지.
+- 하이라이트 김해수남고 자리만 Galaxy로 교체. 김해수남고 강의는 아카이브에 유지. GES 첫째·Canva 둘째 큰 카드, Watch Canva 첫째 순서 보존.
+- 로컬·운영 1280/375px 신규·기존 초안 4조합: 3장 순서·표지 썸네일·하이라이트·PDF 링크·열기/닫기·재방문·원문 저장 보존 통과. 페이지 JS 오류·가로 넘침 없음. 변경 운영 파일 10개는 원격 blob SHA와 일치.
+- 운영 headless 브라우저에서 이전 73453ce 탭 → 새 배포 감지 후 1회 자동 갱신, 이미지·하이라이트 변경과 저장 초안 보존, 반복 갱신 없음 확인. 증빙은 작업 폴더 verification/galaxy-selected-live-*.png 및 JSON.
 
 - 1·2회 덱, 3회 PNG ZIP, Galaxy 참가자 PDF, CNU 최신 덱: anyone reader / 검색 노출 false 확인.
 - 3회 방송: `https://joo.is/민재쌤노트북3강` → YouTube `x88cs2TdrBY`; oEmbed의 정확 제목 확인.
@@ -68,6 +70,6 @@
 - `.agents/AGENTS.md`와 `MULTI_DEVICE_WORKFLOW.md`의 세션 게이트 준수.
 - 다음 새 세션 및 배포 전 fetch 후 원격 main과 사용자 변경 확인.
 - CLI Git 인증 대기는 종료했고 새 로그인·권한 변경 없이 기존 GitHub 연결로 반영.
-- 최신 원격 콘텐츠 트리는 로컬 검증 커밋 `e302c38`과 동일. 로컬 기준 커밋은 별도 codex 브랜치에 보존.
+- 최신 원격 콘텐츠 트리는 로컬 검증 커밋 `44c112c`과 동일. 로컬 기준 커밋은 별도 codex 브랜치에 보존.
 - 관리자 저장은 이번 작업에서 사용하지 않음. 기존 인증 설정과 다른 앱·ASide 작업 미변경.
 - 비밀값·개인 세션 기록을 읽거나 Git·로그에 추가하지 않음.
