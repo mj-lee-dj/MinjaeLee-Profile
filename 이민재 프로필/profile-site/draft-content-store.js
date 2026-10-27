@@ -216,6 +216,22 @@
     return state;
   }
 
+  const cnuImagesId = '2026-10-27-cnu-selected-images';
+  const cnuSource = () => sourceCollections.lectures.find((item) => item.id === 'lectures_20261026_cnu_generative_ai');
+  const cnuImagesPublished = () => normalizedImages(cnuSource()).length === 3
+    && normalizedImages(cnuSource())[0] === 'uploads/20261026-cnu-ai-cover-no-url.webp';
+  function reconcileCnuImages(state) {
+    if (!cnuImagesPublished() || state.contentMigrationIds.includes(cnuImagesId)) return state;
+    const item = state.lectures.find((entry) => entry.id === cnuSource().id);
+    const images = normalizedImages(item);
+    if (item && images.length === 1 && images[0] === 'uploads/20261026-cnu-ai-cover.webp') {
+      item.images = normalizedImages(cnuSource());
+      item.image = item.images[0];
+    }
+    state.contentMigrationIds.push(cnuImagesId);
+    return state;
+  }
+
   const galaxyMaterialsId = '2026-10-26-galaxy-title-image';
   const galaxyLectureId = 'lectures_20261021_galaxy_teacher_lab';
   const galaxyTitle = '삼성전자 갤럭시 티처랩 | 교사가 편해지는 갤럭시 수업 루틴';
@@ -309,6 +325,7 @@
         : source;
       state[section] = ordered.map((item, index) => normalizeItem(section, item, index)).filter(Boolean);
     });
+    reconcileCnuImages(state);
     return reconcileGalaxySelectedImages(reconcileGalaxyMaterials(reconcileCanvaWatchOrder(reconcileOctoberMaterials(reconcileChungnamLectureYear(reconcileNotebookLiveTwo(reconcileAssessmentLectureTopic(reconcileLectureCountCorrection(reconcileLectureCategoryCorrection(reconcileMediaCorrection(state))))))))));
   }
 
@@ -409,6 +426,7 @@
       reconcileCanvaWatchOrder(value);
       reconcileGalaxyMaterials(value);
       reconcileGalaxySelectedImages(value);
+      reconcileCnuImages(value);
       return value;
     } catch (error) {
       console.warn('손상된 통합 콘텐츠 초안을 기본값으로 복구했습니다.', error);
@@ -422,6 +440,7 @@
     if (canvaWatchFirst() && !value.contentMigrationIds.includes(canvaWatchOrderId)) value.contentMigrationIds.push(canvaWatchOrderId);
     if (galaxyPublished() && !value.contentMigrationIds.includes(galaxyMaterialsId)) value.contentMigrationIds.push(galaxyMaterialsId);
     if (galaxySelectedImagesPublished() && !value.contentMigrationIds.includes(galaxySelectedImagesId)) value.contentMigrationIds.push(galaxySelectedImagesId);
+    if (cnuImagesPublished() && !value.contentMigrationIds.includes(cnuImagesId)) value.contentMigrationIds.push(cnuImagesId);
     try {
       localStorage.setItem(key, JSON.stringify(value));
     } catch (error) {

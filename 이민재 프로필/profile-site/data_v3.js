@@ -359,9 +359,11 @@ const profileData = {
       "topic": "AI",
       "link": "https://joo.is/261026충남대",
       "images": [
-        "uploads/20261026-cnu-ai-cover.webp"
+        "uploads/20261026-cnu-ai-cover-no-url.webp",
+        "uploads/20261026-cnu-ai-content-first.webp",
+        "uploads/20261026-cnu-ai-supports-content.webp"
       ],
-      "image": "uploads/20261026-cnu-ai-cover.webp",
+      "image": "uploads/20261026-cnu-ai-cover-no-url.webp",
       "highlight": false,
       "linkLabel": "강의 자료 허브"
     },
