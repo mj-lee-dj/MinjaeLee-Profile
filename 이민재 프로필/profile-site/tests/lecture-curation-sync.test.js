@@ -94,8 +94,8 @@ test('all five target records retain their original gallery images', () => {
   assert.equal(selected[3].title, '[경남 중등 1정연수] NotebookLM 마스터 클래스');
   assert.equal(selected[3].org, '경상국립대학교');
   assert.equal(selected[4].topic, 'Canva·에듀테크');
-  assert.equal(published.lectures.length, 69);
-  assert.equal(published.youtubeVideos.length, 21);
+  assert.equal(published.lectures.length, 72);
+  assert.equal(published.youtubeVideos.length, 22);
 });
 
 test('the preceding published selection adopts the current approved highlights, with or without the prior marker', () => {

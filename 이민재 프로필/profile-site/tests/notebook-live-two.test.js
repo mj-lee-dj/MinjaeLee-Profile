@@ -43,8 +43,8 @@ test('October 20 session 2 has the verified title and replay, with no custom thu
     image: '',
   });
   assert.equal(published.youtubeVideos.filter((item) => item.id === videoId).length, 1);
-  assert.equal(published.youtubeVideos.length, 21);
-  assert.equal(published.lectures.length, 69);
+  assert.equal(published.youtubeVideos.length, 22);
+  assert.equal(published.lectures.length, 72);
   assert.ok(!published.lectures.some((item) => /emaREWRd-R0|gemini_notebook_live_2/.test(JSON.stringify(item))));
   const context = vm.createContext({});
   vm.runInContext(read('data_v3.js'), context);
@@ -132,14 +132,14 @@ test('the replay migration waits for its source record and does not affect an ol
   const before = structuredClone(published);
   before.youtubeVideos = before.youtubeVideos.filter((item) => item.id !== videoId);
   const { data, store } = start(before);
-  assert.equal(data.youtubeVideos.length, 20);
+  assert.equal(data.youtubeVideos.length, 21);
   assert.ok(!store.state.contentMigrationIds.includes(migrationId));
 });
 
 test('public and admin entries cache-bust both changed runtime files with the same release identifier', () => {
   for (const name of ['index.html', 'admin.html', 'draft-v2.html', 'admin-profile-final.html']) {
     const html = read(name);
-    assert.match(html, /data_v3\.js\?v=20261027-cnu-images/);
-    assert.match(html, /draft-content-store\.js\?v=20261027-cnu-images/);
+    assert.match(html, /data_v3\.js\?v=20261105-three-lectures/);
+    assert.match(html, /draft-content-store\.js\?v=20261105-three-lectures/);
   }
 });

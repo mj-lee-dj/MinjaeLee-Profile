@@ -31,8 +31,8 @@ function stale() {
 }
 test('October materials use the requested topics, public sources and single Watch entries', () => {
   assert.equal(published.youtubeVideos[0].id,watchIds[1]);
-  assert.equal(published.lectures.length, 69);
-  assert.equal(published.youtubeVideos.length, 21);
+  assert.equal(published.lectures.length, 72);
+  assert.equal(published.youtubeVideos.length, 22);
   const records = lectureIds.map(id => published.lectures.find(x => x.id === id));
   assert.deepEqual(records.map(x => x.topic), ['AI','AI','Canva·에듀테크','AI','AI']);
   for (const section of ['lectures','youtubeVideos']) assert.equal(new Set(published[section].map(x=>x.id)).size, published[section].length);
@@ -70,7 +70,7 @@ test('old drafts gain materials and missing Watch records while keeping edits an
   candidate.youtubeVideos[0].visible = false;
   const serialized = JSON.stringify(candidate);
   const {data,store,writes,storage} = start(published,new Map([[key,serialized]]));
-  assert.equal(data.lectures.length,69);
+  assert.equal(data.lectures.length,72);
   assert.deepEqual(data.lectures.slice(0,5).map(x=>x.id),lectureIds);
   assert.equal(data.lectures[6].title,'로컬 수정');
   assert.deepEqual(plain(data.youtubeVideos.slice(2)),candidate.youtubeVideos);
@@ -83,7 +83,7 @@ test('equivalent direct broadcast links and custom Canva links are preserved wit
   candidate.youtubeVideos.unshift({ ...published.youtubeVideos.find(x=>x.id===watchIds[0]), id:'local-broadcast', link:'https://youtu.be/x88cs2TdrBY', visible:false });
   candidate.lectures.find(x=>x.id==='lectures_20261007_canva_korea').link='https://example.com/edited';
   const {data}=start(published,new Map([[key,JSON.stringify(candidate)]]));
-  assert.equal(data.youtubeVideos.length,21);
+  assert.equal(data.youtubeVideos.length,22);
   assert.equal(data.youtubeVideos.filter(x=>x.id===watchIds[0]).length,0);
   assert.equal(data.youtubeVideos.find(x=>x.id==='local-broadcast').visible,false);
   assert.equal(data.lectures.find(x=>x.id==='lectures_20261007_canva_korea').link,'https://example.com/edited');
@@ -114,7 +114,7 @@ for (const marked of [false, true]) {
     candidate.lectures[0].title = '보존할 강의';
     const serialized = JSON.stringify(candidate);
     const {data,store,storage,writes} = start(published,new Map([[key,serialized]]));
-    assert.equal(data.youtubeVideos.length,21);
+    assert.equal(data.youtubeVideos.length,22);
     assert.deepEqual(plain(data.youtubeVideos.slice(2)),candidate.youtubeVideos);
     assert.equal(data.lectures.find(x=>x.id===candidate.lectures[0].id).title,'보존할 강의');
     assert.equal(data.lectures.find(x=>x.id==='lectures_20261007_canva_korea').link,published.lectures.find(x=>x.id==='lectures_20261007_canva_korea').link);

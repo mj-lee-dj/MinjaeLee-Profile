@@ -1,6 +1,6 @@
 /*
   [Profile Data]
-  Updated at: 2026-10-26
+  Updated at: 2026-11-05
 */
 const profileData = {
   "youtubeVideos": [
@@ -13,6 +13,16 @@ const profileData = {
         "uploads/20261007-canva-cover.webp"
       ],
       "image": "uploads/20261007-canva-cover.webp"
+    },
+    {
+      "id": "youtubeVideos_20261103_gemini_notebook_live_4",
+      "visible": true,
+      "title": "시험 준비부터 복습까지, 내 공부가 달라집니다｜민재쌤의 Gemini Notebook [4강]",
+      "link": "https://www.youtube.com/live/z8dgqCXs6TY",
+      "images": [
+        "uploads/20261103-gemini-notebook-cover.webp"
+      ],
+      "image": "uploads/20261103-gemini-notebook-cover.webp"
     },
     {
       "id": "youtubeVideos_20261027_gemini_notebook_live_3",
@@ -331,6 +341,58 @@ const profileData = {
     }
   ],
   "lectures": [
+    {
+      "id": "lectures_20261103_gemini_notebook_materials_4",
+      "visible": true,
+      "title": "시험 준비부터 복습까지, 내 공부가 달라집니다｜민재쌤의 Gemini Notebook [4강]",
+      "org": "G-CREATOR · 2026.11.03",
+      "year": "2026",
+      "category": "AI",
+      "topic": "AI",
+      "link": "https://www.youtube.com/live/z8dgqCXs6TY",
+      "images": [
+        "uploads/20261103-gemini-notebook-cover.webp",
+        "uploads/20261103-gemini-notebook-scene-1-mindmap.webp",
+        "uploads/20261103-gemini-notebook-scene-2-coach.webp"
+      ],
+      "image": "uploads/20261103-gemini-notebook-cover.webp",
+      "highlight": false,
+      "linkLabel": "4강 라이브 다시보기"
+    },
+    {
+      "id": "lectures_20261102_google_certified_trainer",
+      "visible": true,
+      "title": "구글 공인 트레이너 인증 준비와 TSA",
+      "org": "충남대학교 x GEG대전 x 오늘배움",
+      "year": "2026",
+      "category": "Google",
+      "topic": "Google",
+      "link": "",
+      "images": [
+        "uploads/20261102-google-trainer-cover.webp",
+        "uploads/20261102-google-trainer-scene-1.webp",
+        "uploads/20261102-google-trainer-scene-2.webp"
+      ],
+      "image": "uploads/20261102-google-trainer-cover.webp",
+      "highlight": false
+    },
+    {
+      "id": "lectures_20261028_duncheon_digital_routines",
+      "visible": true,
+      "title": "실제 교실 디지털 루틴 및 AI 활용",
+      "org": "둔천초등학교 · 2026.10.28",
+      "year": "2026",
+      "category": "에듀테크/AI",
+      "topic": "교사 업무·학급경영",
+      "link": "",
+      "images": [
+        "uploads/20261028-duncheon-cover.webp",
+        "uploads/20261028-duncheon-scene-1.webp",
+        "uploads/20261028-duncheon-scene-2.webp"
+      ],
+      "image": "uploads/20261028-duncheon-cover.webp",
+      "highlight": false
+    },
     {
       "id": "lectures_20261027_gemini_notebook_materials_3",
       "visible": true,

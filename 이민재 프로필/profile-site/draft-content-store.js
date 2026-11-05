@@ -190,6 +190,22 @@
     return state;
   }
 
+  function reconcileNovemberLive(state, seenWatchIds) {
+    const videoId = 'youtubeVideos_20261103_gemini_notebook_live_4';
+    const published = sourceCollections.youtubeVideos.find((item) => item.id === videoId);
+    if (!published || seenWatchIds.has(videoId)) return state;
+    const youtubeId = (link) => String(link || '').match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?(?:[^#]*&)?v=|embed\/|live\/|shorts\/))([\w-]{11})/)?.[1];
+    const broadcastId = youtubeId(published.link);
+    if (state.youtubeVideos.some((item) => item.id === videoId || item.link === published.link ||
+      (broadcastId && youtubeId(item.link) === broadcastId))) return state;
+    // Only the read path adds unseen published content. Explicit saves retain
+    // the current source baseline, so later deletions stay deleted. Never write
+    // storage while loading or replace existing fields, visibility or order.
+    const canvaIndex = state.youtubeVideos.findIndex((item) => item.id === 'youtubeVideos_20261007_canva_korea');
+    state.youtubeVideos.splice(canvaIndex < 0 ? 0 : canvaIndex + 1, 0, normalizeItem('youtubeVideos', published, 0));
+    return state;
+  }
+
   function reconcileLectureCategoryCorrection(state) {
     if (state.contentMigrationIds.includes(lectureCategoryCorrection.id)) return state;
     const published = sourceCollections.lectures.find((item) => item.id === lectureCategoryCorrection.lectureId);
@@ -424,6 +440,7 @@
         ? candidate.sourceYoutubeIds : (Array.isArray(candidate?.youtubeVideos) ? candidate.youtubeVideos : []).map((item) => item?.id));
       reconcileOctoberMaterials(value, true, seenWatchIds);
       reconcileCanvaWatchOrder(value);
+      reconcileNovemberLive(value, seenWatchIds);
       reconcileGalaxyMaterials(value);
       reconcileGalaxySelectedImages(value);
       reconcileCnuImages(value);
