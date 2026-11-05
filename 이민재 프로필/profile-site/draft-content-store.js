@@ -251,6 +251,29 @@
     return state;
   }
 
+  const liveFourThumbnailId = '2026-11-05-live-four-watch-thumbnail';
+  const liveFourWatchId = 'youtubeVideos_20261103_gemini_notebook_live_4';
+  const liveFourWatchImage = 'uploads/20261103-gemini-notebook-watch.jpg';
+  const liveFourThumbnailPublished = () => {
+    const images = normalizedImages(sourceCollections.youtubeVideos.find((item) => item.id === liveFourWatchId));
+    return images.length === 1 && images[0] === liveFourWatchImage;
+  };
+  function reconcileLiveFourThumbnail(state) {
+    if (!liveFourThumbnailPublished() || state.contentMigrationIds.includes(liveFourThumbnailId)) return state;
+    state.youtubeVideos.forEach((item) => {
+      const broadcastId = String(item.link || '').match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?(?:[^#]*&)?v=|embed\/|live\/|shorts\/))([\w-]{11})/)?.[1];
+      const images = normalizedImages(item);
+      if ((item.id === liveFourWatchId || broadcastId === 'z8dgqCXs6TY') && images.length === 1 && images[0] === 'uploads/20261103-gemini-notebook-cover.webp') {
+        item.images = [liveFourWatchImage];
+        item.image = liveFourWatchImage;
+      }
+    });
+    // Correct only the old deck cover. Never recreate deleted entries or replace
+    // custom media, and allow later explicit saves to select any image.
+    state.contentMigrationIds.push(liveFourThumbnailId);
+    return state;
+  }
+
   const cnuImagesId = '2026-10-27-cnu-selected-images';
   const cnuSource = () => sourceCollections.lectures.find((item) => item.id === 'lectures_20261026_cnu_generative_ai');
   const cnuImagesPublished = () => normalizedImages(cnuSource()).length === 3
@@ -362,6 +385,7 @@
     });
     reconcileCnuImages(state);
     reconcileNotebookWatchOrder(state);
+    reconcileLiveFourThumbnail(state);
     return reconcileGalaxySelectedImages(reconcileGalaxyMaterials(reconcileCanvaWatchOrder(reconcileOctoberMaterials(reconcileChungnamLectureYear(reconcileNotebookLiveTwo(reconcileAssessmentLectureTopic(reconcileLectureCountCorrection(reconcileLectureCategoryCorrection(reconcileMediaCorrection(state))))))))));
   }
 
@@ -462,6 +486,7 @@
       reconcileCanvaWatchOrder(value);
       reconcileNovemberLive(value, seenWatchIds);
       reconcileNotebookWatchOrder(value);
+      reconcileLiveFourThumbnail(value);
       reconcileGalaxyMaterials(value);
       reconcileGalaxySelectedImages(value);
       reconcileCnuImages(value);
@@ -475,6 +500,7 @@
   function save(candidate) {
     const value = normalize(candidate);
     // A subsequent explicit reorder must remain chosen after publish/reload.
+    if (liveFourThumbnailPublished() && !value.contentMigrationIds.includes(liveFourThumbnailId)) value.contentMigrationIds.push(liveFourThumbnailId);
     if (notebookWatchOrderPublished() && !value.contentMigrationIds.includes(notebookWatchOrderId)) value.contentMigrationIds.push(notebookWatchOrderId);
     if (canvaWatchFirst() && !value.contentMigrationIds.includes(canvaWatchOrderId)) value.contentMigrationIds.push(canvaWatchOrderId);
     if (galaxyPublished() && !value.contentMigrationIds.includes(galaxyMaterialsId)) value.contentMigrationIds.push(galaxyMaterialsId);

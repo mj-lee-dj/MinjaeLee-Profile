@@ -20,9 +20,9 @@ const profileData = {
       "title": "시험 준비부터 복습까지, 내 공부가 달라집니다｜민재쌤의 Gemini Notebook [4강]",
       "link": "https://www.youtube.com/live/z8dgqCXs6TY",
       "images": [
-        "uploads/20261103-gemini-notebook-cover.webp"
+        "uploads/20261103-gemini-notebook-watch.jpg"
       ],
-      "image": "uploads/20261103-gemini-notebook-cover.webp"
+      "image": "uploads/20261103-gemini-notebook-watch.jpg"
     },
     {
       "id": "youtubeVideos_20261027_gemini_notebook_live_3",
