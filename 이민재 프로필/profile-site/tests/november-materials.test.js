@@ -89,3 +89,48 @@ test('November does not resurrect previously deleted baseline records',()=>{
   assert.equal(result.data.lectures.some(x=>x.id===deletedLecture),false);
   assert.equal(result.data.youtubeVideos.some(x=>x.id===deletedVideo),false);
 });
+
+const orderMigration = '2026-11-05-watch-notebook-order';
+const requestedOrder = ['youtubeVideos_20261007_canva_korea', videoId, 'youtubeVideos_20261027_gemini_notebook_live_3', 'youtubeVideos_20261020_gemini_notebook_live_2', 'youtubeVideos_20261013_gemini_notebook_live_1'];
+for (const legacy of [false,true]) test(`requested Watch order migrates once without altering records or stored bytes (legacy: ${legacy})`,()=>{
+  const candidate=plain(start().store.state);
+  candidate.contentMigrationIds=candidate.contentMigrationIds.filter(id=>id!==orderMigration);
+  if(legacy) delete candidate.version;
+  candidate.youtubeVideos.reverse();
+  candidate.youtubeVideos.find(item=>item.id===videoId).visible=false;
+  candidate.youtubeVideos.find(item=>item.id===videoId).title='편집한 4강';
+  const serialized=JSON.stringify(candidate);
+  const first=start(published,new Map([[key,serialized]]));
+  assert.deepEqual(first.data.youtubeVideos.slice(0,5).map(item=>item.id),requestedOrder);
+  for(const original of candidate.youtubeVideos) assert.deepEqual(plain(first.data.youtubeVideos.find(item=>item.id===original.id)),original);
+  assert.deepEqual(plain(first.data.youtubeVideos.slice(5)),candidate.youtubeVideos.filter(item=>!requestedOrder.includes(item.id)));
+  assert.equal(first.storage.get(key),serialized);
+  assert.deepEqual(first.writes,[]);
+  assert.equal(first.store.state.contentMigrationIds.filter(id=>id===orderMigration).length,1);
+  const reordered=plain(first.store.state);
+  reordered.youtubeVideos.reverse();
+  first.store.save(reordered);
+  assert.deepEqual(plain(start(published,first.storage).data.youtubeVideos),reordered.youtubeVideos);
+});
+test('requested Watch ordering preserves deletions and explicit source-shaped saves',()=>{
+  const candidate=plain(start().store.state);
+  candidate.contentMigrationIds=candidate.contentMigrationIds.filter(id=>id!==orderMigration);
+  candidate.youtubeVideos=candidate.youtubeVideos.filter(item=>item.id!==videoId && item.id!==requestedOrder[2]).reverse();
+  const first=start(published,new Map([[key,JSON.stringify(candidate)]]));
+  assert.deepEqual(first.data.youtubeVideos.slice(0,3).map(item=>item.id),requestedOrder.filter(id=>id!==videoId && id!==requestedOrder[2]));
+  const payload=first.store.merge(published,first.store.state);
+  payload.youtubeVideos.reverse();
+  first.store.save(payload);
+  assert.deepEqual(plain(start(published,first.storage).data.youtubeVideos),payload.youtubeVideos);
+  assert.equal(Object.hasOwn(payload,'contentMigrationIds'),false);
+});
+test('Watch order migration waits for matching published source order',()=>{
+  const before=structuredClone(published);
+  before.youtubeVideos.reverse();
+  const candidate=plain(start(before).store.state);
+  assert.equal(candidate.contentMigrationIds.includes(orderMigration),false);
+  const stored=JSON.stringify(candidate);
+  const result=start(before,new Map([[key,stored]]));
+  assert.equal(result.store.state.contentMigrationIds.includes(orderMigration),false);
+  assert.deepEqual(plain(result.data.youtubeVideos),candidate.youtubeVideos);
+});

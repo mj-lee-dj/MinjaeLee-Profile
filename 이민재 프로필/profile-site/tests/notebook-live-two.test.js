@@ -72,6 +72,9 @@ test('an 18-video draft receives only the new replay without overwriting edits o
   expected.youtubeVideos.unshift(published.youtubeVideos.find((item) => item.id === videoId));
   expected.sourceYoutubeIds = published.youtubeVideos.map((item) => item.id);
   expected.contentMigrationIds.push(migrationId);
+  const priority = published.youtubeVideos.slice(0, 5).map(item => item.id);
+  expected.youtubeVideos = [...priority.flatMap(id => expected.youtubeVideos.filter(item => item.id === id)), ...expected.youtubeVideos.filter(item => !priority.includes(item.id))];
+  expected.contentMigrationIds.push('2026-11-05-watch-notebook-order');
   assert.deepEqual(plain(store.state), expected);
   assert.equal(storage.get(key), serialized);
   assert.deepEqual(writes, []);

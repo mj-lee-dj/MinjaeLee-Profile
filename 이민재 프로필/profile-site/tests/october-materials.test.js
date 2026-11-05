@@ -14,6 +14,10 @@ const lectureIds = [
   'lectures_20261013_gemini_notebook_materials_1',
 ];
 const plain = value => JSON.parse(JSON.stringify(value));
+const requestedWatchOrder = items => {
+  const priority = published.youtubeVideos.slice(0, 5).map(item => item.id);
+  return [...priority.flatMap(id => items.filter(item => item.id === id)), ...items.filter(item => !priority.includes(item.id))];
+};
 function start(data = published, storage = new Map()) {
   const writes = [];
   const context = { profileData: structuredClone(data), structuredClone, console,
@@ -73,7 +77,7 @@ test('old drafts gain materials and missing Watch records while keeping edits an
   assert.equal(data.lectures.length,72);
   assert.deepEqual(data.lectures.slice(0,5).map(x=>x.id),lectureIds);
   assert.equal(data.lectures[6].title,'로컬 수정');
-  assert.deepEqual(plain(data.youtubeVideos.slice(2)),candidate.youtubeVideos);
+  assert.deepEqual(plain(data.youtubeVideos),requestedWatchOrder([...watchIds.map(id=>published.youtubeVideos.find(item=>item.id===id)),...candidate.youtubeVideos]));
   assert.equal(store.state.contentMigrationIds.filter(x=>x===migration).length,1);
   assert.equal(storage.get(key),serialized);
   assert.deepEqual(writes,[]);
@@ -115,7 +119,7 @@ for (const marked of [false, true]) {
     const serialized = JSON.stringify(candidate);
     const {data,store,storage,writes} = start(published,new Map([[key,serialized]]));
     assert.equal(data.youtubeVideos.length,22);
-    assert.deepEqual(plain(data.youtubeVideos.slice(2)),candidate.youtubeVideos);
+    assert.deepEqual(plain(data.youtubeVideos),requestedWatchOrder([...watchIds.map(id=>published.youtubeVideos.find(item=>item.id===id)),...candidate.youtubeVideos]));
     assert.equal(data.lectures.find(x=>x.id===candidate.lectures[0].id).title,'보존할 강의');
     assert.equal(data.lectures.find(x=>x.id==='lectures_20261007_canva_korea').link,published.lectures.find(x=>x.id==='lectures_20261007_canva_korea').link);
     assert.equal(store.state.contentMigrationIds.filter(x=>x===migration).length,1);

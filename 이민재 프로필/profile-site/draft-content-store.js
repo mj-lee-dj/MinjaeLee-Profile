@@ -232,6 +232,25 @@
     return state;
   }
 
+  const notebookWatchOrderId = '2026-11-05-watch-notebook-order';
+  const notebookWatchIds = [
+    'youtubeVideos_20261007_canva_korea',
+    'youtubeVideos_20261103_gemini_notebook_live_4',
+    'youtubeVideos_20261027_gemini_notebook_live_3',
+    'youtubeVideos_20261020_gemini_notebook_live_2',
+    'youtubeVideos_20261013_gemini_notebook_live_1',
+  ];
+  const notebookWatchOrderPublished = () => notebookWatchIds.every((id, index) => sourceCollections.youtubeVideos[index]?.id === id);
+  function reconcileNotebookWatchOrder(state) {
+    if (!notebookWatchOrderPublished() || state.contentMigrationIds.includes(notebookWatchOrderId)) return state;
+    // Reorder existing records only, preserving edits, visibility, deletions and
+    // the relative order of every unrelated record. Later explicit saves win.
+    const selected = notebookWatchIds.flatMap((id) => state.youtubeVideos.filter((item) => item.id === id));
+    state.youtubeVideos = [...selected, ...state.youtubeVideos.filter((item) => !notebookWatchIds.includes(item.id))];
+    state.contentMigrationIds.push(notebookWatchOrderId);
+    return state;
+  }
+
   const cnuImagesId = '2026-10-27-cnu-selected-images';
   const cnuSource = () => sourceCollections.lectures.find((item) => item.id === 'lectures_20261026_cnu_generative_ai');
   const cnuImagesPublished = () => normalizedImages(cnuSource()).length === 3
@@ -342,6 +361,7 @@
       state[section] = ordered.map((item, index) => normalizeItem(section, item, index)).filter(Boolean);
     });
     reconcileCnuImages(state);
+    reconcileNotebookWatchOrder(state);
     return reconcileGalaxySelectedImages(reconcileGalaxyMaterials(reconcileCanvaWatchOrder(reconcileOctoberMaterials(reconcileChungnamLectureYear(reconcileNotebookLiveTwo(reconcileAssessmentLectureTopic(reconcileLectureCountCorrection(reconcileLectureCategoryCorrection(reconcileMediaCorrection(state))))))))));
   }
 
@@ -441,6 +461,7 @@
       reconcileOctoberMaterials(value, true, seenWatchIds);
       reconcileCanvaWatchOrder(value);
       reconcileNovemberLive(value, seenWatchIds);
+      reconcileNotebookWatchOrder(value);
       reconcileGalaxyMaterials(value);
       reconcileGalaxySelectedImages(value);
       reconcileCnuImages(value);
@@ -454,6 +475,7 @@
   function save(candidate) {
     const value = normalize(candidate);
     // A subsequent explicit reorder must remain chosen after publish/reload.
+    if (notebookWatchOrderPublished() && !value.contentMigrationIds.includes(notebookWatchOrderId)) value.contentMigrationIds.push(notebookWatchOrderId);
     if (canvaWatchFirst() && !value.contentMigrationIds.includes(canvaWatchOrderId)) value.contentMigrationIds.push(canvaWatchOrderId);
     if (galaxyPublished() && !value.contentMigrationIds.includes(galaxyMaterialsId)) value.contentMigrationIds.push(galaxyMaterialsId);
     if (galaxySelectedImagesPublished() && !value.contentMigrationIds.includes(galaxySelectedImagesId)) value.contentMigrationIds.push(galaxySelectedImagesId);
